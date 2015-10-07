@@ -1,15 +1,50 @@
 # Camunda Process Test Coverage
 
-Helper library to visualize which parts of a BPMN process have been covered by a unit test.
+## Introduction
+This tool supports in analyzing and visualizing the process test coverage of a BPMN process.
 
 ![Screenshot](screenshot.png)
 
+The tool creates test coverage reports for:
+
+* Single test cases: The process coverage is visualized by marking those tasks and events with a green color which have be traversed by the test case.
+* Entire test suites: The process coverage is visualized by marking those tasks and events with a green color which have be traversed by any of the test suite's test cases.
 
 ## Get started
 
-_A quick description how your project can be used, including where the relevant resources can be obtained from.
-Put into another file if too big._
+Add this Maven Dependency to your project:
 
+```
+<dependency>
+  <groupId>org.camunda.bpm.extension</groupId>
+  <artifactId>camunda-process-test-coverage</artifactId>
+  <version>0.2.4-SNAPSHOT</version>
+  <scope>test</scope>
+</dependency>
+```
+
+Have a look at the [ProcessTestCoverageTest](src/test/java/org/camunda/bpm/consulting/process_test_coverage/ProcessTestCoverageTest.java):
+
+- In a tearDown() or @AfterClass method for the Test Class coverage
+```java
+  @After
+  public void calculateCoverage() throws Exception {
+    // calculate coverage for all tests
+    ProcessTestCoverage.calculate(processEngineRule.getProcessEngine());
+  }  
+```
+
+- In the actual test methods to get coverage for test cases
+```java
+ProcessTestCoverage.calculate(processInstance, processEngineRule.getProcessEngine());
+```
+
+## Remarks to run this application
+1. mvn clean test
+2. Open html files which are created in the directory target/process-test-coverage/
+
+## Known Limitations
+Test cases that deploy different version of the same process (same process definition key) are currently not supported and will result in miss-leading reports. Just make sure all your processes have unique process definition keys (in BPMN XML //process@id).
 
 ## Resources
 
