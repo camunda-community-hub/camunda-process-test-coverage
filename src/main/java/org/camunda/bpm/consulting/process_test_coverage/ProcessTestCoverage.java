@@ -6,6 +6,8 @@ import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.history.HistoricProcessInstance;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.model.bpmn.BpmnModelInstance;
+import org.camunda.bpm.model.bpmn.instance.FlowNode;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -38,7 +40,7 @@ public class ProcessTestCoverage {
 	    HistoricProcessInstance processInstance = getProcessInstance(processInstanceId, processEngine);
 			String bpmnXml = getBpmnXml(processInstance, processEngine);
 			List<HistoricActivityInstance> activities = getAuditTrail(processInstanceId, processEngine);
-
+			
 			// write report for caller 
       String reportName = caller + ".html";
       BpmnJsReport.highlightActivities(bpmnXml, activities, reportName, targetDir);
@@ -59,11 +61,20 @@ public class ProcessTestCoverage {
 		try {
 			List<ProcessDefinition> processDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().list();
 			for (ProcessDefinition processDefinition : processDefinitions) {
+
+//			  processEngine.getRepositoryService().getProcessModel(processDefinition.getId());
+			  
+			  BpmnModelInstance modelInstance = processEngine.getRepositoryService().getBpmnModelInstance(processDefinition.getId());
+			  Collection<FlowNode> flowNodes = modelInstance.getModelElementsByType(FlowNode.class);
+			  
+			  
 			  String bpmnXml = getBpmnXml(processDefinition);
 				List<HistoricActivityInstance> activities = processEngine.getHistoryService().createHistoricActivityInstanceQuery().processDefinitionId(processDefinition.getId()).list();
 	      Set<String> coveredAcivityIds = callculateProcessCoverage(processDefinition.getKey(), activities);
 				String reportName = processDefinition.getKey() + ".html";
 	      BpmnJsReport.highlightActivities(bpmnXml, coveredAcivityIds, reportName, targetDir);
+
+	      System.out.println(coveredAcivityIds.size() + "/" + flowNodes.size());
 			}
 		} catch (IOException e) {
       throw new RuntimeException(e);

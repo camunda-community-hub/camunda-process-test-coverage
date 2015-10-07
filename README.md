@@ -46,6 +46,8 @@ ProcessTestCoverage.calculate(processInstance, processEngineRule.getProcessEngin
 ## Known Limitations
 Test cases that deploy different version of the same process (same process definition key) are currently not supported and will result in miss-leading reports. Just make sure all your processes have unique process definition keys (in BPMN XML //process@id).
 
+* Reports for an individual test method can only contain one process
+
 ## Resources
 
 * [Issue Tracker](https://github.com/camunda/camunda-process-test-coverage/issues)
