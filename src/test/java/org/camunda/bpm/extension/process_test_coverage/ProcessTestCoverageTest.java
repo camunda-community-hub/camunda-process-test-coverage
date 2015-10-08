@@ -5,50 +5,50 @@ import java.util.Map;
 
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
-import org.camunda.bpm.engine.test.ProcessEngineTestCase;
-import org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverage;
+import org.camunda.bpm.engine.test.TestCoverageProcessEngineRule;
+import org.camunda.bpm.engine.test.coverage.ProcessTestCoverage;
+import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * Test case starting an in-memory database-backed Process Engine.
  */
-public class ProcessTestCoverageTest extends ProcessEngineTestCase {
+public class ProcessTestCoverageTest {
 
   private static final String PROCESS_DEFINITION_KEY = "process-test-coverage";
   
-  @Override
-  protected void tearDown() throws Exception {
-    // calculate coverage for all tests
-    ProcessTestCoverage.calculate(processEngine);
-    // TODO identify for which method the tearDown is called, e.g. using: String testCaseName = this.getClass().getName() + "." + getName();
-    super.tearDown();
-  }
+  @Rule
+  public TestCoverageProcessEngineRule rule = new TestCoverageProcessEngineRule();
 
+  @Test
   @Deployment(resources = "process.bpmn")
   public void testPathA() {
     Map<String, Object> variables = new HashMap<String, Object>();
     variables.put("path", "A");
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+    ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
 
     // calculate coverage for this method, but also add to the overall coverage of the process
-    ProcessTestCoverage.calculate(processInstance, processEngine);
+    ProcessTestCoverage.calculate(processInstance, rule.getProcessEngine());
   }
 
+  @Test
   @Deployment(resources = "process.bpmn")
   public void testPathB() {
     Map<String, Object> variables = new HashMap<String, Object>();
     variables.put("path", "B");
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+    ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
     
     // calculate coverage for this method, but also add to the overall coverage of the process
-    ProcessTestCoverage.calculate(processInstance.getId(), processEngine);
+    ProcessTestCoverage.calculate(processInstance.getId(), rule.getProcessEngine());
   }
   
+  @Test
   @Deployment(resources = "transactionBoundaryTest.bpmn")
   public void testTxBoundaries() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionBoundaryTest");
+    ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey("transactionBoundaryTest");
     
     // calculate coverage for this method, but also add to the overall coverage of the process
-    ProcessTestCoverage.calculate(processInstance.getId(), processEngine);
+    ProcessTestCoverage.calculate(processInstance.getId(), rule.getProcessEngine());
   }
   
 }
