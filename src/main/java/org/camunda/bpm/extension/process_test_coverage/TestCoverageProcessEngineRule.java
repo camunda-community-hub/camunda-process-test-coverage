@@ -1,9 +1,9 @@
-package org.camunda.bpm.engine.test;
+package org.camunda.bpm.extension.process_test_coverage;
 
 import java.util.List;
 
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.engine.test.coverage.ProcessTestCoverage;
+import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.FlowElement;
 import org.junit.runner.Description;
@@ -11,8 +11,8 @@ import org.junit.runner.Description;
 public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
 	public static enum TypeIncludedInCoverage {
-		
-		FlowNode(org.camunda.bpm.model.bpmn.instance.FlowNode.class);
+	
+		FlowElement(org.camunda.bpm.model.bpmn.instance.FlowElement.class);
 		
 		private Class<? extends FlowElement> coveredTypeClass;
 		

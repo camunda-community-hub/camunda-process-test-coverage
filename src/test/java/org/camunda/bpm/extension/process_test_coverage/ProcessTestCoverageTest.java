@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
-import org.camunda.bpm.engine.test.TestCoverageProcessEngineRule;
-import org.camunda.bpm.engine.test.coverage.ProcessTestCoverage;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -42,7 +40,7 @@ public class ProcessTestCoverageTest {
     ProcessTestCoverage.calculate(processInstance.getId(), rule.getProcessEngine());
   }
   
-  @Test
+//  @Test
   @Deployment(resources = "transactionBoundaryTest.bpmn")
   public void testTxBoundaries() {
     ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey("transactionBoundaryTest");
