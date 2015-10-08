@@ -43,4 +43,12 @@ public class ProcessTestCoverageTest extends ProcessEngineTestCase {
     ProcessTestCoverage.calculate(processInstance.getId(), processEngine);
   }
   
+  @Deployment(resources = "transactionBoundaryTest.bpmn")
+  public void testTxBoundaries() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionBoundaryTest");
+    
+    // calculate coverage for this method, but also add to the overall coverage of the process
+    ProcessTestCoverage.calculate(processInstance.getId(), processEngine);
+  }
+  
 }
