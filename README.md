@@ -64,6 +64,7 @@ Test cases that deploy different version of the same process (same process defin
 - Calculate Flow Node Coverage in percent
 - Calculate Path Coverage in percent
 - Visualize technical attributes
+- Jenkins integration
 
 **done**
 
