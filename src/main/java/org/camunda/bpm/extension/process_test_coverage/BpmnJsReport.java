@@ -1,4 +1,4 @@
-package org.camunda.bpm.consulting.process_test_coverage;
+package org.camunda.bpm.extension.process_test_coverage;
 
 import java.io.File;
 import java.io.FileOutputStream;

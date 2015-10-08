@@ -1,4 +1,4 @@
-package org.camunda.bpm.consulting.process_test_coverage;
+package org.camunda.bpm.extension.process_test_coverage;
 
 import org.apache.commons.io.IOUtils;
 import org.camunda.bpm.engine.ProcessEngine;
