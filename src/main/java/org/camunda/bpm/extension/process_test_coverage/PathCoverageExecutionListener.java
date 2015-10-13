@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.ExecutionListener;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageTestRunState;
 
 public class PathCoverageExecutionListener implements ExecutionListener {
 
@@ -12,8 +13,10 @@ public class PathCoverageExecutionListener implements ExecutionListener {
 
 	@Override
 	public void notify(DelegateExecution execution) throws Exception {
+		// TODO cleanup
 		log.info("  [transitionId: " + execution.getCurrentTransitionId() + "]" + execution);
-		System.out.println("notify(" + execution + ")");
+		System.err.println("notify(" + execution + ")");
+		TestCoverageTestRunState.notifyCoveredSequenceFlow(execution.getProcessDefinitionId(),execution.getCurrentTransitionId());
 	}
 
 }
