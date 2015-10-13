@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_EUzx0G29EeWGEdUu3D0IIw" exporter="camunda modeler" exporterVersion="2.7.0" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:collaboration id="_Collaboration_4">
+    <bpmn2:participant id="_Participant_2" name="Executable Process" processRef="Process_1"/>
+    <bpmn2:participant id="Participant_1" name="Non-executable" processRef="Process_2"/>
+  </bpmn2:collaboration>
+  <bpmn2:process id="Process_1" isExecutable="true">
+    <bpmn2:startEvent id="StartEvent_1">
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:subProcess id="SubProcess_1">
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+      <bpmn2:startEvent id="StartEvent_3">
+        <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+      </bpmn2:startEvent>
+      <bpmn2:endEvent id="EndEvent_4">
+        <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+      </bpmn2:endEvent>
+      <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="StartEvent_3" targetRef="EndEvent_4"/>
+    </bpmn2:subProcess>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="StartEvent_1" targetRef="SubProcess_1"/>
+    <bpmn2:endEvent id="EndEvent_3">
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="SubProcess_1" targetRef="EndEvent_3"/>
+  </bpmn2:process>
+  <bpmn2:process id="Process_2" isExecutable="false">
+    <bpmn2:startEvent id="StartEvent_2">
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:endEvent id="EndEvent_2">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="StartEvent_2" targetRef="EndEvent_2"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_4">
+      <bpmndi:BPMNShape id="_BPMNShape_Participant_9" bpmnElement="_Participant_2" isHorizontal="true">
+        <dc:Bounds height="215.0" width="540.0" x="24.0" y="24.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Participant_10" bpmnElement="Participant_1" isHorizontal="true">
+        <dc:Bounds height="100.0" width="600.0" x="24.0" y="276.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_8" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="106.0" y="112.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_9" bpmnElement="StartEvent_2">
+        <dc:Bounds height="36.0" width="36.0" x="108.0" y="309.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="126.0" y="350.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_24" bpmnElement="EndEvent_2">
+        <dc:Bounds height="36.0" width="36.0" x="194.0" y="309.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_StartEvent_9" targetElement="_BPMNShape_EndEvent_24">
+        <di:waypoint xsi:type="dc:Point" x="144.0" y="327.0"/>
+        <di:waypoint xsi:type="dc:Point" x="194.0" y="327.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_3" bpmnElement="SubProcess_1" isExpanded="true">
+        <dc:Bounds height="150.0" width="200.0" x="192.0" y="55.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_StartEvent_8" targetElement="_BPMNShape_SubProcess_3">
+        <di:waypoint xsi:type="dc:Point" x="142.0" y="130.0"/>
+        <di:waypoint xsi:type="dc:Point" x="192.0" y="130.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_25" bpmnElement="EndEvent_3">
+        <dc:Bounds height="36.0" width="36.0" x="442.0" y="112.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_SubProcess_3" targetElement="_BPMNShape_EndEvent_25">
+        <di:waypoint xsi:type="dc:Point" x="392.0" y="130.0"/>
+        <di:waypoint xsi:type="dc:Point" x="442.0" y="130.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_10" bpmnElement="StartEvent_3">
+        <dc:Bounds height="36.0" width="36.0" x="233.0" y="104.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_26" bpmnElement="EndEvent_4">
+        <dc:Bounds height="36.0" width="36.0" x="319.0" y="104.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="_BPMNShape_StartEvent_10" targetElement="_BPMNShape_EndEvent_26">
+        <di:waypoint xsi:type="dc:Point" x="269.0" y="122.0"/>
+        <di:waypoint xsi:type="dc:Point" x="319.0" y="122.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
