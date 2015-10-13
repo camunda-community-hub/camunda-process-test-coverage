@@ -27,7 +27,6 @@ public class ProcessTestClassRuleCoverageTest {
 	@Rule // does the deployment ATM
 	public TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create()
 			.reportCoverageAfter().build();
-
 	
 	@Test
 	@Deployment(resources = "process.bpmn")
@@ -45,20 +44,6 @@ public class ProcessTestClassRuleCoverageTest {
 		variables.put("path", "B");
 		ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY,
 				variables);
-
-		// calculate coverage for this method, but also add to the overall
-		// coverage of the process
-		ProcessTestCoverage.calculate(processInstance.getId(), rule.getProcessEngine());
-	}
-
-	// @Test
-	@Deployment(resources = "transactionBoundaryTest.bpmn")
-	public void testTxBoundaries() {
-		ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey("transactionBoundaryTest");
-
-		// calculate coverage for this method, but also add to the overall
-		// coverage of the process
-		ProcessTestCoverage.calculate(processInstance.getId(), rule.getProcessEngine());
 	}
 
 }
