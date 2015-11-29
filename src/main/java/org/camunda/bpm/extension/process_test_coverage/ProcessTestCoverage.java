@@ -26,6 +26,11 @@ public class ProcessTestCoverage {
 
 	private static Map<String, Set<String>> processCoverage = new HashMap<String, Set<String>>();
 
+	private static TestCoverageTestRunState getTestCoverageTestRunState() {
+		return TestCoverageTestRunState.INSTANCE(); //XXX
+	}
+
+	
 	/**
 	 * calculate coverage for this, but also add to the overall coverage of the
 	 * process
@@ -46,7 +51,7 @@ public class ProcessTestCoverage {
 		try {
 			HistoricProcessInstance processInstance = getProcessInstance(processInstanceId, processEngine);
 			String bpmnXml = getBpmnXml(processInstance, processEngine);
-			List<HistoricActivityInstance> activities = getAuditTrail(processInstanceId, processEngine);
+			List<String> activities = getAuditTrail(processInstanceId, processEngine);
 
 			// write report for caller
 			String reportName = caller + ".html";
@@ -80,16 +85,16 @@ public class ProcessTestCoverage {
 				Collection<SequenceFlow> sequenceFlows = modelInstance.getModelElementsByType(SequenceFlow.class);
 
 				String bpmnXml = getBpmnXml(processDefinition);
-				List<HistoricActivityInstance> activities = processEngine.getHistoryService()
-						.createHistoricActivityInstanceQuery().processDefinitionId(processDefinition.getId()).list();
-				Set<String> coveredActivityIds = callculateProcessCoverage(processDefinition.getKey(), activities);
+				List<String> activityIds;
+				
+				Set<String> coveredActivityIds = getTestCoverageTestRunState().findCoveredActivityIds(processDefinition.getId());
 				String reportName = processDefinition.getKey() + ".html";
 				BpmnJsReport.highlightActivities(bpmnXml, coveredActivityIds, reportName, targetDir);
 
 				Coverage coverage = CoverageBuilder.create("flowNodeAndSequenceFlowCoverage")
 						.forProcess(processDefinition) //
-						.withActualFlowNodes(coveredActivityIds).withExpectedFlowNodes(flowNodes) //
-						.withActualSequenceFlows(TestCoverageTestRunState.getCoveredSequenceFlows())
+						.withActualFlowNodes(getTestCoverageTestRunState().getCoveredFlowNodes()).withExpectedFlowNodes(flowNodes) //
+						.withActualSequenceFlows(getTestCoverageTestRunState().getCoveredSequenceFlows())
 						.withExpectedSequenceFlows(sequenceFlows).build();
 				processesCoverage.put(processDefinition.getKey(), coverage);
 				System.out.println(coverage);
@@ -100,8 +105,9 @@ public class ProcessTestCoverage {
 		}
 	}
 
+
 	protected static Set<String> callculateProcessCoverage(String processDefinitionKey,
-			List<HistoricActivityInstance> activities) {
+			List<String> activityIds) {
 		Set<String> coveredActivites;
 		if (!processCoverage.containsKey(processDefinitionKey)) {
 			coveredActivites = new HashSet<String>();
@@ -110,8 +116,8 @@ public class ProcessTestCoverage {
 			coveredActivites = processCoverage.get(processDefinitionKey);
 		}
 
-		for (HistoricActivityInstance activity : activities) {
-			coveredActivites.add(activity.getActivityId());
+		for (String activityId : activityIds) {
+			coveredActivites.add(activityId);
 		}
 
 		return coveredActivites;
@@ -145,11 +151,15 @@ public class ProcessTestCoverage {
 				.processInstanceId(processInstanceId).singleResult();
 	}
 
-	protected static List<HistoricActivityInstance> getAuditTrail(String processInstanceId,
+	protected static List<String> getAuditTrail(String processInstanceId,
 			ProcessEngine processEngine) {
 		List<HistoricActivityInstance> activities = processEngine.getHistoryService()
 				.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).list();
-		return activities;
+		List<String> activityIds = new ArrayList<String>();
+		for(HistoricActivityInstance activity : activities) {
+			activityIds.add(activity.getActivityId());
+		}
+		return activityIds;
 	}
 
 	protected static String getCaller() {

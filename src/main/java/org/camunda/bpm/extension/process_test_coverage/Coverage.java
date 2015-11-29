@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 
@@ -14,11 +15,11 @@ public class Coverage {
 
 	ProcessDefinition processDefinition;
 
-	Set<String> coveredActivityIds;
+	Set<CoveredElement> coveredActivities;
 
 	Collection<FlowNode> expectedFlowNodes;
 
-	Set<String> coveredSequenceFlowIds;
+	Set<CoveredElement> coveredSequenceFlowIds;
 
 	Collection<SequenceFlow> expectedSequenceFlows;
 
@@ -26,9 +27,9 @@ public class Coverage {
 	public String toString() {
 		return "Coverage [" + "description=" + description + ", process=" + processDefinition.getName() + ", " +
 				"coverage=" + getActualPercentage()+ " (" + getNumberOfAllActual() + "/" + getNumberOfAllExpected()+ ")" +
-				"flowNodes=(" + coveredActivityIds.size() + "/" + expectedFlowNodes.size() + ")" +
+				"flowNodes=(" + coveredActivities.size() + "/" + expectedFlowNodes.size() + ")" +
 			 "sequenceFlows=(" + coveredSequenceFlowIds.size() + "/" + expectedSequenceFlows.size()+ ")" +
-				", coveredActivityIds=" + coveredActivityIds + ", expectedFlowNodes=" + expectedFlowNodes + "]";
+				", coveredActivityIds=" + coveredActivities + ", expectedFlowNodes=" + expectedFlowNodes + "]";
 	}
 
 	public static double calculateMeanPercentage(Map<String, Coverage> processesFlowNodeCoverage) {
@@ -46,7 +47,7 @@ public class Coverage {
 	}
 
 	public int getNumberOfAllActual() {
-		return coveredActivityIds.size() + coveredSequenceFlowIds.size();
+		return coveredActivities.size() + coveredSequenceFlowIds.size();
 	}
 
 	public int getNumberOfAllExpected() {

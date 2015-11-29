@@ -19,6 +19,7 @@ public class ProcessTestMethodRuleCoverageTest {
 
 	private static final String PROCESS_DEFINITION_KEY = "process-test-coverage";
 
+	
 	@Rule
 	public TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create() //
 			.startWithFreshFlowTrace().reportCoverageAfter() //
@@ -27,7 +28,7 @@ public class ProcessTestMethodRuleCoverageTest {
 
 	@Test
 	@Deployment(resources = "process.bpmn")
-	public void testPathA() {
+	public void testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered() {
 		Map<String, Object> variables = new HashMap<String, Object>();
 		variables.put("path", "A");
 		ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY,
@@ -36,7 +37,7 @@ public class ProcessTestMethodRuleCoverageTest {
 
 	@Test
 	@Deployment(resources = "process.bpmn")
-	public void testPathB() {
+	public void testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered() {
 		Map<String, Object> variables = new HashMap<String, Object>();
 		variables.put("path", "B");
 		ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY,

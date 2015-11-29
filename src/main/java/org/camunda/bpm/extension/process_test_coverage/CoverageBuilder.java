@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 
@@ -20,8 +21,8 @@ public class CoverageBuilder {
 		return cb;
 	}
 
-	public CoverageBuilder withActualFlowNodes(Set<String> coveredActivityIds) {
-		coverage.coveredActivityIds = coveredActivityIds;
+	public CoverageBuilder withActualFlowNodes(Set<CoveredElement> coveredActivities) {
+		coverage.coveredActivities = coveredActivities;
 		return this;
 	}
 
@@ -35,7 +36,7 @@ public class CoverageBuilder {
 		return this;
 	}
 
-	public CoverageBuilder withActualSequenceFlows(Set<String> coveredTransitionIds) {
+	public CoverageBuilder withActualSequenceFlows(Set<CoveredElement> coveredTransitionIds) {
 		coverage.coveredSequenceFlowIds = coveredTransitionIds;
 		return this;
 	}

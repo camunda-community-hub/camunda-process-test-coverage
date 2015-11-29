@@ -20,8 +20,8 @@ public class BpmnJsReport {
   protected static final String PLACEHOLDER_ANNOTATIONS = "          //YOUR ANNOTATIONS GO HERE";
   protected static final String PLACEHOLDER_BPMN_XML = "YOUR BPMN XML CONTENT";
 
-  public static void highlightActivities(String bpmnXml, List<HistoricActivityInstance> activities, String reportName, String targetDir) throws IOException {
-    String javaScript = generateJavaScriptAnnotations(activities);
+  public static void highlightActivities(String bpmnXml, List<String> activityIds, String reportName, String targetDir) throws IOException {
+    String javaScript = generateJavaScriptAnnotations(activityIds);
     String html = generateHtml(javaScript, bpmnXml);
     writeToFile(targetDir, reportName, html);
   }
@@ -51,10 +51,10 @@ public class BpmnJsReport {
     return javaScript.toString();
   }
 
-  protected static String generateJavaScriptAnnotations(List<HistoricActivityInstance> activities) {
+  protected static String generateJavaScriptAnnotations(List<String> activities) {
 		StringBuilder javaScript = new StringBuilder();
-		for (HistoricActivityInstance activity : activities) {
-			javaScript.append("          canvas.addMarker('" + activity.getActivityId() + "', 'highlight');\n");
+		for (String activityId : activities) {
+			javaScript.append("          canvas.addMarker('" + activityId + "', 'highlight');\n");
 		}
 		return javaScript.toString();
 	}
