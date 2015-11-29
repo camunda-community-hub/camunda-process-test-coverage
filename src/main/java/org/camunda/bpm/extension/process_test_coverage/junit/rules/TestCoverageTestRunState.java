@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredActivity;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
+import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElements;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredSequenceFlow;
 
 public class TestCoverageTestRunState {
@@ -25,15 +26,15 @@ public class TestCoverageTestRunState {
 	}
 	
 	public Set<CoveredElement> getCoveredSequenceFlows() {
-		return findProcessInstances(null, CoveredSequenceFlow.class, currentFlowTrace);
+		return CoveredElements.findProcessInstances(null, CoveredSequenceFlow.class, currentFlowTrace);
 	}
 	
 	public Set<CoveredElement> getCoveredFlowNodes() {
-		return findProcessInstances(null, CoveredActivity.class, currentFlowTrace);
+		return CoveredElements.findProcessInstances(null, CoveredActivity.class, currentFlowTrace);
 	}
 	
-	public Set<String> findCoveredActivityIds(String id) {
-		return mapElementIds(findProcessInstances(null, CoveredActivity.class, currentFlowTrace));
+	public Set<String> findCoveredActivityIds() {
+		return mapElementIds(CoveredElements.findProcessInstances(null, CoveredActivity.class, currentFlowTrace));
 	}
 	
 	private static Set<String> mapElementIds(Set<CoveredElement> elements) {
@@ -50,19 +51,7 @@ public class TestCoverageTestRunState {
 	}
 	
 	
-	private static Set<CoveredElement> findProcessInstances(String processDefinitionId, Class<? extends CoveredElement> class1, Set<CoveredElement> elements) {
-		Set<CoveredElement> found = new HashSet<CoveredElement>();
-		for (CoveredElement el : elements) {
-			if (processDefinitionId != null && ! processDefinitionId.equals(el.getProcessDefinitionId())) {
-				continue;
-			}
-			if (class1 != null && ! class1.isInstance(el)) {
-				continue;
-			}
-			found.add(el);
-		}
-		return found;
-	}
+
 	
 	
 	
