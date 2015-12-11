@@ -22,11 +22,10 @@ public class ProcessTestClassRuleCoverageTest {
 	// Note, if you assert a coverage on the ClassRule, it means if you run a test without the others, it will probably fail
 	@ClassRule
 	public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.create()
-//			.startWithFreshFlowTrace()
 			.reportCoverageAfter().assertCoverageAtLeast(1).build();
 
 
-	@Rule // does the deployment ATM
+	@Rule // Method rule does the deployment ATM
 	public TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create()
 			.reportCoverageAfter().build();
 	
