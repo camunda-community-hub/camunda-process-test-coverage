@@ -60,60 +60,26 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 		testCoverageTestRunState =  TestCoverageTestRunState.INSTANCE(); // XXX inject??
 		if (resetFlowWhenStarting) {
 			testCoverageTestRunState.resetCurrentFlowTrace();
-//			deleteWholeHistory(processEngine);
 		}
-		// run derived functionality
-		super.starting(description); // initialised engine and process 
-		if (resetFlowWhenStarting) {
-			deleteWholeHistory(processEngine);
-		}
+		// initialize engine and process 
+		super.starting(description); 
 	}
-
-	private void deleteWholeHistory(ProcessEngine processEngine) {
-		Object query = processEngine.getHistoryService().createHistoricProcessInstanceQuery().orderByProcessDefinitionId().asc().count();
-		for (HistoricProcessInstance hpi : processEngine.getHistoryService().createHistoricProcessInstanceQuery().processDefinitionNameLike("%").list()) {
-		 processEngine.getHistoryService().deleteHistoricProcessInstance(hpi.getProcessDefinitionId());
-		}
-		//processDefinition.getId()
-		for (HistoricTaskInstance hpi : processEngine.getHistoryService().createHistoricTaskInstanceQuery()
-				.processDefinitionName("process-test-coverage").list()) {
-			 processEngine.getHistoryService().deleteHistoricProcessInstance(hpi.getProcessDefinitionId());
-			}
-		processEngine.getHistoryService().createHistoricProcessInstanceQuery().list();
-		ProcessDefinition processDefinition = processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey("process-test-coverage").singleResult();
-//		if (processDefinition == null){
-//			throw new RuntimeException("Process not found. Found " + processEngine.getRepositoryService().createProcessDefinitionQuery().list());
-//		}
-//		List<HistoricActivityInstance> activities = processEngine.getHistoryService()
-//		.createHistoricActivityInstanceQuery().processDefinitionId(processDefinition.getId()).list();
-//		List<HistoricActivityInstance> activities2 = processEngine.getHistoryService()
-//				.createHistoricActivityInstanceQuery().list();
-//		if (activities.size() != activities2.size()) {
-//			throw new RuntimeException(activities + "\n" + activities2);
-//		}
-	}
-
-	private static <T> Collection<T> nullToEmpty(Collection<T> nullable) {
-		if (nullable == null) {
-			return (Collection<T>) Collections.emptyList();
-		}
-		return nullable;
-	}
-
+	
 	@Override
 	public void finished(Description description) {
 
 	    // calculate coverage for all tests
 	    Map<String, Coverage> processesCoverage = ProcessTestCoverage.calculate(processEngine);
 
-		// calculate possible coverage
-		
+		// calculate possible coverage		
 		if (this.deploymentId != null) {
 			
 			if (this.reportCoverageWhenFinished) {
 				log.info(processesCoverage.toString());
 			} else {
-				log.log(Level.FINE, processesCoverage.toString());
+				if (log.isLoggable(Level.FINE)) {
+					log.log(Level.FINE, processesCoverage.toString());
+				}
 			}
 
 		}

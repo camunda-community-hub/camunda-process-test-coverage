@@ -8,6 +8,7 @@ import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import static org.hamcrest.Matchers.*;
@@ -21,7 +22,8 @@ public class ProcessTestClassRuleCoverageTest {
 	// Note, if you assert a coverage on the ClassRule, it means if you run a test without the others, it will probably fail
 	@ClassRule
 	public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.create()
-			.startWithFreshFlowTrace().reportCoverageAfter().assertCoverageAtLeast(1).build();
+//			.startWithFreshFlowTrace()
+			.reportCoverageAfter().assertCoverageAtLeast(1).build();
 
 
 	@Rule // does the deployment ATM
