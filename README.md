@@ -35,14 +35,17 @@ Have a look at this project's tests. E.g.
 
 ### Checking Coverage for the Examples
 You can use the junit tests of this project to get comfortable with the library
+
 1. clone the project
 2. mvn clean test
 3. Open the report html files which are created in the directory target/process-test-coverage/
 
 ### Checking Coverage for Your Own Processes
+The following steps show how to integrate the camunda-process-test-coverage into you own setup. Our tests should provide a good base for your usage. If you use a single junit class per process, the class rule usage (see [ProcessTestClassRuleCoverageTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/ProcessTestClassRuleCoverageTest.java) ) may be the perfect way to go.
+
 1. add library jar to your project classpath (e.g. via the maven dependency)
 2. add the [PathCoverageParseListenerPlugin](src/main/java/org/camunda/bpm/extension/process_test_coverage/PathCoverageParseListenerPlugin.java) as process engine plugin to your test camunda setup (see the [camunda.cfg.xml](src/test/resources/camunda.cfg.xml) we use)
-3. adapt your process unit test to generate and check the coverage. Our tests should provide a good base for your usage. If you use a single junit class to test a process, the class rule usage (see [ProcessTestClassRuleCoverageTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/ProcessTestClassRuleCoverageTest.java) may be the perfect way to go.
+3. adapt your process unit test to generate and check the coverage.
 4. run your unit tests
 
 ## Implementation
