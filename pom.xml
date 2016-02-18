@@ -7,7 +7,7 @@
   <version>0.2.4-SNAPSHOT</version>
 
   <name>Camunda Process Test Coverage</name>
-  <description>Helper library to visualize which parts of a BPMN process have been covered by a unit test</description>
+  <description>Helper library to visualize and assert which parts of a BPMN process have been covered by a unit test</description>
 
   <parent>
     <groupId>org.camunda</groupId>
@@ -44,17 +44,17 @@
       <scope>provided</scope>
     </dependency>
 
-	<dependency>
-		<groupId>org.apache.commons</groupId>
-		<artifactId>commons-io</artifactId>
-		<version>1.3.2</version>
-	</dependency>
-
-	<dependency>
-	  <groupId>commons-lang</groupId>
-	  <artifactId>commons-lang</artifactId>
-	  <version>2.6</version>
-	</dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>1.3.2</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
+    </dependency>
 
     <dependency>
       <groupId>org.hamcrest</groupId>

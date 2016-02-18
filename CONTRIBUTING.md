@@ -1,26 +1,43 @@
-# Contributing Guide
+# How to Contribute
 
-There are several ways in which you may contribute to this project.
+We love you to contribute to this project by filing bugs, helping others on the [issue tracker](https://github.com/camunda/camunda-process-test-coverage/issues), and by contributing features/bug fixes through pull requests.
 
-* [File issues](https://github.com/camunda/camunda-process-test-coverage/issues)
-* [Submit a pull requests](#submit-a-pull-request)
-
-Read more on [how to get the project up and running](#project-setup).
+Read more on [how to get the project up and running](#setting-up-the-project-locally).
 
 
-## Submit a Pull Request
+## Creating Issues
 
-If you would like to submit a pull request make sure to 
+Please use our [issue tracker](https://github.com/camunda/camunda-process-test-coverage/issues) for project communication.
+When using the issue tracker:
 
-- add test cases for the problem you are solving
-- stick to project coding conventions
+* Be descriptive when creating an issue (what, where, when and how does a problem pop up)?
+* Attach steps to reproduce (if applicable)
+* Attach code samples, configuration options or stack traces that may indicate a problem
+* Be helpful and respect others when commenting
+
+Create a pull request if you would like to have an in-depth discussion about some piece of code.
 
 
-## Project Setup
+## Setting Up the Project Locally
 
-_Perform the following steps to get a development setup up and running._
+The project is build using [Maven 3](https://maven.apache.org/) as build tool.  
+To build the project by yourself, goto your cmd line and enter ```mvn clean install``` on the root of the checked out project.  
 
-- step1
-- step2
-- ...
-- stepN
+1. git clone https://github.com/camunda/camunda-process-test-coverage.git
+2. cd camunda-process-test-coverage/
+3. mvn clean install
+
+## Creating Pull Requests
+
+We use pull requests for feature discussion and bug fixes. 
+If you are not yet familiar on how to create a pull request, [read this great guide](https://gun.io/blog/how-to-github-fork-branch-and-pull-request).
+
+Some things that make it easier for us to accept your pull requests:
+
+* Changed code is not reformatted
+* The code is tested. Add test cases for the problem you are solving.
+* The `mvn clean install` build passes including tests
+* The work is combined into a single commit
+
+We'd be glad to assist you if you do not get these things right in the first place.
+
