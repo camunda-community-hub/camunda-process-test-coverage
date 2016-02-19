@@ -43,10 +43,11 @@ You can use the junit tests of this project to get comfortable with the library
 ### Checking Coverage for Your Own Processes
 The following steps show how to integrate the camunda-process-test-coverage into you own setup. Our tests should provide a good base for your usage. If you use a single junit class per process, the class rule usage may be the perfect way to go.
 
-1. add library jar to your project classpath (e.g. via the maven dependency)
-2. add the [PathCoverageParseListenerPlugin](src/main/java/org/camunda/bpm/extension/process_test_coverage/PathCoverageParseListenerPlugin.java) as process engine plugin to your test camunda setup (see the [camunda.cfg.xml](src/test/resources/camunda.cfg.xml) we use)
-3. adapt your process unit test to generate and check the coverage.
-4. run your unit tests
+1.   add library jar to your project classpath (e.g. via the maven dependency)
+2.a) add the [TraceActivitiesHistoryEventHandler](src/main/java/org/camunda/bpm/extension/process_test_coverage/TraceActivitiesHistoryEventHandler.java) as history handler to your test camunda setup (see the [camunda.cfg.xml](src/test/resources/camunda.cfg.xml) we use)
+2.b) add the [PathCoverageParseListenerPlugin](src/main/java/org/camunda/bpm/extension/process_test_coverage/PathCoverageParseListenerPlugin.java) as process engine plugin to your test camunda setup (see the [camunda.cfg.xml](src/test/resources/camunda.cfg.xml) we use)
+3.   adapt your process unit test to generate and check the coverage.
+4.   run your unit tests
 
 ## Environment Restrictions
 * Built and tested against Camunda BPM version 7.2.0.
@@ -63,10 +64,11 @@ The following steps show how to integrate the camunda-process-test-coverage into
 - When the tests are run, for each passing token information about the process instance and the covered element is recorded as [CoveredElement](src/main/java/org/camunda/bpm/extension/process_test_coverage/trace/CoveredElement.java) in the trace of covered elements. Also the visual reports are updated with the covered element.
 - In the tests you specify which kind and percentage of coverage you want to check. The trace of covered elements gets filtered accordingly and is used to assert certain properties (e.g. percentage of flow nodes covered, percentage of sequence flows covered, or that certain elements have been covered). 
 - Builders are used to abstract away the construction of Coverages and junit Rules and provide a nice programming experience
+- The bpmns used in unit tests use both the old and new camunda namespaces for easy testing with different camunda versions (new namespaces starting with camunda 7.2.6, 7.3.3, 7.4.0)
 
 ## Resources
 * [Issue Tracker](https://github.com/camunda/camunda-process-test-coverage/issues)
-* [Roadmap](#Roadmap)
+* [Roadmap](#roadmap)
 * [Changelog](https://github.com/camunda/camunda-process-test-coverage/commits/master)
 * [Contributing](CONTRIBUTE.md)
 
@@ -103,7 +105,7 @@ Feel free to contact us via [Email](mailto:kontakt@wdw-elab.de)
 
 People responsible for this project
 
-[Irmin  (wdw-elab)](https://github.com/phax1)
+[Irmin Okic (wdw-elab)](https://github.com/zOrbas)
 
 [Axel Groß (wdw-elab)](https://github.com/phax1)
 
