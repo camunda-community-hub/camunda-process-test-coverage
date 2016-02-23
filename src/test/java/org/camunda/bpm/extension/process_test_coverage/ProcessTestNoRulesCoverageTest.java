@@ -1,7 +1,7 @@
 package org.camunda.bpm.extension.process_test_coverage;
-
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
@@ -14,6 +14,8 @@ import org.camunda.bpm.engine.test.ProcessEngineTestCase;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageMappings;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.MinimalCoverageMatcher;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageTestRunState;
+import org.camunda.bpm.extension.process_test_coverage.trace.CoveredActivity;
+import org.hamcrest.Matchers;
 
 /**
  * Test case starting an in-memory database-backed Process Engine.
@@ -50,13 +52,15 @@ public class ProcessTestNoRulesCoverageTest extends ProcessEngineTestCase {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
 
     // calculate coverage for this method, but also add to the overall coverage of the process
-//    ProcessTestCoverage.calculate(processInstance, processEngine);
     Map<String, Coverage> currentCoverage = ProcessTestCoverage.calculate(processEngine, null, true);
     System.err.println("testPathA-"+currentCoverage.get(PROCESS_DEFINITION_KEY));
 
-//    CoveredActivity activityA = new CoveredActivity(PROCESS_DEFINITION_KEY + ":2:19" /*FIXME*/, "ManualTask_3");
-//    CoveredActivity activityB = new CoveredActivity(PROCESS_DEFINITION_KEY + ":2:19" /*FIXME*/, "ManualTask_4");
-//    assertThat(currentCoverage.get(PROCESS_DEFINITION_KEY).coveredActivities, hasItem(activityA));
+    String processDefinitionId = processInstance.getProcessDefinitionId(); // changes with every deployment
+    CoveredActivity activityA = new CoveredActivity(processDefinitionId , "ManualTask_3");
+    CoveredActivity activityB = new CoveredActivity(processDefinitionId, "ManualTask_4");
+    assertThat(currentCoverage.get(PROCESS_DEFINITION_KEY).coveredActivities, Matchers.hasItem(activityA));
+    assertThat(currentCoverage.get(PROCESS_DEFINITION_KEY).coveredActivities, not(Matchers.hasItem(activityB)));
+        
     assertThat(currentCoverage.get(PROCESS_DEFINITION_KEY).getActualPercentage(), new MinimalCoverageMatcher(7.0/11.0));
     assertThat(currentCoverage.get(PROCESS_DEFINITION_KEY).getActualPercentage(), equalTo(7.0/11.0));
   }
@@ -78,10 +82,11 @@ public class ProcessTestNoRulesCoverageTest extends ProcessEngineTestCase {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
     
     // calculate coverage for this method, but also add to the overall coverage of the process
-    CoverageBuilder builder = CoverageBuilder.createFlowNodeCoverage().filterByDefinitionIdInsteadOfKey();
     Map<String, Coverage> currentCoverage = ProcessTestCoverage.calculate(processEngine, null, true );
-//    CoveredActivity activityB = new CoveredActivity(PROCESS_DEFINITION_KEY + ":2:19" /*FIXME*/, "ManualTask_4");
-//    assertThat(currentCoverage.get(PROCESS_DEFINITION_KEY).coveredActivities, hasItem(activityB));
+
+    String processDefinitionId = processInstance.getProcessDefinitionId(); // changes with every deployment
+    CoveredActivity activityB = new CoveredActivity(processDefinitionId, "ManualTask_4");
+    assertThat(currentCoverage.get(PROCESS_DEFINITION_KEY).coveredActivities, Matchers.hasItem(activityB));
     ArrayList<String> arrayList = new ArrayList<String>();
     arrayList.addAll(CoverageMappings.mapElementsToIds(currentCoverage.get(PROCESS_DEFINITION_KEY).coveredActivities));
     arrayList.addAll(CoverageMappings.mapElementsToIds(currentCoverage.get(PROCESS_DEFINITION_KEY).coveredSequenceFlowIds));

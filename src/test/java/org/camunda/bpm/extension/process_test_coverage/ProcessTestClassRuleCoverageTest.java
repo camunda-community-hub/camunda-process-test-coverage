@@ -21,7 +21,7 @@ public class ProcessTestClassRuleCoverageTest {
 
 	// Note, if you assert a coverage on the ClassRule, it means if you run a test without the others, it will probably fail
 	@ClassRule
-	public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.create()
+	public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.createClassRule()
 			.reportCoverageAfter().assertCoverageAtLeast(1).build();
 
 

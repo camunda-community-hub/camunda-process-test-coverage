@@ -16,6 +16,7 @@ public class TestCoverageProcessEngineRuleBuilder {
 		return create().startWithFreshFlowTrace().reportCoverageAfter();
 	}
 	
+	/** will delete/ignore flow trace information from previous runs */
 	public TestCoverageProcessEngineRuleBuilder startWithFreshFlowTrace() {
 		rule.resetFlowWhenStarting = true;
 		return this;
