@@ -105,7 +105,7 @@ Feel free to contact us via [Email](mailto:kontakt@wdw-elab.de)
 
 People responsible for this project
 
-[Irmin Okic (wdw-elab)](https://github.com/zOrbas)
+[Irmin Okic (wdw-elab)](https://github.com/z0rbas)
 
 [Axel Groß (wdw-elab)](https://github.com/phax1)
 
