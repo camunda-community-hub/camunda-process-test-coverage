@@ -24,14 +24,14 @@ public class BpmnBusinessRuleTaskCoverageTest {
     .reportCoverageAfter().assertCoverage(Matchers.equalTo(1.0)).build();
 
     @Rule // Method rule does the deployment ATM
-    public TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
+    public TestCoverageProcessEngineRule deployRule = TestCoverageProcessEngineRuleBuilder.create().build();
 
     @Test
     @Deployment(resources = "businessRuleTask.bpmn")
     public void testGo() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("decision", "go");
-        rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+        classRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class BpmnBusinessRuleTaskCoverageTest {
     public void testStay() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("decision", "stay");
-        rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+        classRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
     }
 
 }
