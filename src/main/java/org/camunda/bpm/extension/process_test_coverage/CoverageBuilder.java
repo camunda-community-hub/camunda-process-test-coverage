@@ -12,7 +12,7 @@ import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 
 public class CoverageBuilder {
 
-	Coverage coverage;
+	private Coverage coverage;
 	private boolean filterByDefinitionId = false;
 	private boolean collecting = true;
 	private TestCoverageTestRunState testCoverageTestRunState;
