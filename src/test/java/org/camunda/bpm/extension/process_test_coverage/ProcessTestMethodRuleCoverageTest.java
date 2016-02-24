@@ -18,11 +18,9 @@ import static org.hamcrest.Matchers.*;
 public class ProcessTestMethodRuleCoverageTest {
 
 	private static final String PROCESS_DEFINITION_KEY = "process-test-coverage";
-
 	
 	@Rule
 	public TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create() //
-			.startWithFreshFlowTrace() // makes sure that the methods are independent 
 			.reportCoverageAfter() 
 			.assertCoverageAtLeast(6.9 / 11.0) //
 			.assertCoverage(lessThan(7.1 / 11.0)).build();

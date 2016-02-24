@@ -6,7 +6,9 @@ import static org.junit.Assert.assertThat;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
@@ -16,15 +18,18 @@ import org.camunda.bpm.extension.process_test_coverage.junit.rules.MinimalCovera
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageTestRunState;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredActivity;
 import org.hamcrest.Matchers;
+import org.junit.Ignore;
 
 /**
  * Test case starting an in-memory database-backed Process Engine.
  */
 public class ProcessTestNoRulesCoverageTest extends ProcessEngineTestCase {
 
-  private static final String PROCESS_DEFINITION_KEY = "process-test-coverage";
+  private static final String PROCESS_DEFINITION_KEY = "process-test-coverage-clone";
+  private static Set<String> relevantDeploymentIds = new HashSet<String>();
   private static Map<String, Coverage> theLastCoverage;
 
+  
   public static junit.framework.Test suite() {
 	    return new junit.extensions.TestSetup(new junit.framework.TestSuite(ProcessTestNoRulesCoverageTest.class)) {
 
@@ -41,18 +46,19 @@ public class ProcessTestNoRulesCoverageTest extends ProcessEngineTestCase {
   
   @Override
   protected  void tearDown() throws Exception {
-    // remember coverage for all tests
-	theLastCoverage = ProcessTestCoverage.calculate(processEngine);
+    // remember coverage for all tests in the suite
+    relevantDeploymentIds.add(super.deploymentId);
+    theLastCoverage = ProcessTestCoverage.calculateForDeploymentIds(processEngine, relevantDeploymentIds);
   }
 
-  @Deployment(resources = "process.bpmn")
+  @Deployment(resources = "process-clone.bpmn")
   public void testPathA() {
     Map<String, Object> variables = new HashMap<String, Object>();
     variables.put("path", "A");
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
 
     // calculate coverage for this method, but also add to the overall coverage of the process
-    Map<String, Coverage> currentCoverage = ProcessTestCoverage.calculate(processEngine, null, true);
+    Map<String, Coverage> currentCoverage = ProcessTestCoverage.calculate(processEngine, processInstance);
     System.err.println("testPathA-"+currentCoverage.get(PROCESS_DEFINITION_KEY));
 
     String processDefinitionId = processInstance.getProcessDefinitionId(); // changes with every deployment
@@ -74,7 +80,7 @@ public class ProcessTestNoRulesCoverageTest extends ProcessEngineTestCase {
 		  "SequenceFlow_ManualBToEnd3",
 		  "EndEvent_3"
   };
-  @Deployment(resources = "process.bpmn")
+  @Deployment(resources = "process-clone.bpmn")
   public void testPathB() {
 	  System.out.println("RUNNING testPathB");
     Map<String, Object> variables = new HashMap<String, Object>();
@@ -82,7 +88,7 @@ public class ProcessTestNoRulesCoverageTest extends ProcessEngineTestCase {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
     
     // calculate coverage for this method, but also add to the overall coverage of the process
-    Map<String, Coverage> currentCoverage = ProcessTestCoverage.calculate(processEngine, null, true );
+    Map<String, Coverage> currentCoverage = ProcessTestCoverage.calculate(processEngine, processInstance);
 
     String processDefinitionId = processInstance.getProcessDefinitionId(); // changes with every deployment
     CoveredActivity activityB = new CoveredActivity(processDefinitionId, "ManualTask_4");
@@ -101,7 +107,7 @@ public class ProcessTestNoRulesCoverageTest extends ProcessEngineTestCase {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("transactionBoundaryTest");
     
     // calculate coverage for this method, but also add to the overall coverage of the process
-    Map<String, Coverage> currentCoverage = ProcessTestCoverage.calculate(processEngine);
+    Map<String, Coverage> currentCoverage = ProcessTestCoverage.calculate(processEngine, processInstance);
     assertThat(currentCoverage.get("transactionBoundaryTest").getActualPercentage(), equalTo(14.0/14.0));
   }
 

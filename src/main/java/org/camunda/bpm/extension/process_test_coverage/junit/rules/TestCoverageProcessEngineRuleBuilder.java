@@ -8,19 +8,47 @@ public class TestCoverageProcessEngineRuleBuilder {
 
 	TestCoverageProcessEngineRule rule = new TestCoverageProcessEngineRule();
 	
+	/** @return a builder with typical method @Rule configuration */
 	public static TestCoverageProcessEngineRuleBuilder create() {
-		return new TestCoverageProcessEngineRuleBuilder();
+        return createBase()
+                .startWithFreshFlowTrace() // makes sure that the methods are independent
+                .startWithFreshProcessEngine()
+                .runTestsSequentially();
+    }
+
+    public static ProcessDeploymentRule buildDeployRule() {
+        return createBase().runTestsSequentially().build();
+    }
+
+	/** @return a builder with typical method @ClassRule configuration */
+	public static TestCoverageProcessEngineRuleBuilder createClassRule() {
+		return createBase().reportCoverageAfter()
+		        .startWithFreshFlowTrace() // makes sure we dont see traces from other runs
+		        .startWithFreshProcessEngine()
+		        .runTestsSequentially();
 	}
 
-	public static TestCoverageProcessEngineRuleBuilder createClassRule() {
-		return create().startWithFreshFlowTrace().reportCoverageAfter();
+	/** @return a basic builder with nothing preconfigured */
+	public static TestCoverageProcessEngineRuleBuilder createBase() {
+	    return new TestCoverageProcessEngineRuleBuilder();
 	}
-	
+
 	/** will delete/ignore flow trace information from previous runs */
-	public TestCoverageProcessEngineRuleBuilder startWithFreshFlowTrace() {
-		rule.resetFlowWhenStarting = true;
-		return this;
-	}
+    public TestCoverageProcessEngineRuleBuilder startWithFreshFlowTrace() {
+        rule.resetFlowWhenStarting = true;
+        return this;
+    }
+    
+    /** will delete/ignore flow trace information from previous runs */
+    public TestCoverageProcessEngineRuleBuilder startWithFreshProcessEngine() {
+        rule.resetProcessEngineWhenStarting = true;
+        return this;
+    }
+    
+    public TestCoverageProcessEngineRuleBuilder runTestsSequentially() {
+        rule.runSequentially = true;
+        return this;
+    }
 
 	public TestCoverageProcessEngineRuleBuilder reportCoverageAfter() {
 		rule.reportCoverageWhenFinished = true;
@@ -29,7 +57,7 @@ public class TestCoverageProcessEngineRuleBuilder {
 
 	public TestCoverageProcessEngineRuleBuilder assertCoverageAtLeast(double percentage) {
 		if (0 > percentage || percentage > 1) {
-			throw new RuntimeException("BAD TEST CONFIGURATION: coverageAtLeast " + percentage);
+			throw new RuntimeException("BAD TEST CONFIGURATION: coverageAtLeast " + percentage + " (" + 100*percentage + "%) ");
 		}
 		rule.assertCoverageMatchers.add(new MinimalCoverageMatcher(percentage));
 		return this;
@@ -44,5 +72,4 @@ public class TestCoverageProcessEngineRuleBuilder {
 	public TestCoverageProcessEngineRule build() {
 		return rule;
 	}
-
 }

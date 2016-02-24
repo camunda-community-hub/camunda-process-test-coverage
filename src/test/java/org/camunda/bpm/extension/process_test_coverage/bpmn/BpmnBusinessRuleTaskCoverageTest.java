@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessDeploymentRule;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
 import org.hamcrest.Matchers;
@@ -24,7 +25,7 @@ public class BpmnBusinessRuleTaskCoverageTest {
     .reportCoverageAfter().assertCoverage(Matchers.equalTo(1.0)).build();
 
     @Rule // Method rule does the deployment ATM
-    public TestCoverageProcessEngineRule deployRule = TestCoverageProcessEngineRuleBuilder.create().build();
+    public ProcessDeploymentRule deployRule = TestCoverageProcessEngineRuleBuilder.buildDeployRule();
 
     @Test
     @Deployment(resources = "businessRuleTask.bpmn")

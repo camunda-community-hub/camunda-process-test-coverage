@@ -13,18 +13,26 @@ import org.camunda.bpm.extension.process_test_coverage.trace.CoveredSequenceFlow
 
 public class TestCoverageTestRunState {
 
+    public static final double COVERAGE_NOT_SET = -2.0;
+    
 	Logger log = Logger.getLogger(TestCoverageTestRunState.class.getCanonicalName());
 	
 	/** NonNull global variable holding a list of the flow trace elements of the test run.<br>
 	 * clear this (e.g. in @BeforeClass) if you want to */
 	Set<CoveredElement> currentFlowTrace = new HashSet<CoveredElement>();
+	Set<String> relevantDeploymentIds = new HashSet<String>();
 	
-	double highestSeenCoverage = -2.0;
+	public Set<String> getRelevantDeploymentIds() {
+        return relevantDeploymentIds;
+    }
+	
+	double highestSeenCoverage = COVERAGE_NOT_SET;
 	/** clears the current flow trace, e.g. in @BeforeClass */
 	public void resetCurrentFlowTrace(){
-		System.out.println("Clearing flow trace");
-		currentFlowTrace.clear();
-		highestSeenCoverage = -2.0;
+	    log.info("Resetting complete flow trace");
+		currentFlowTrace.clear(); // FIXME
+		relevantDeploymentIds.clear();
+		highestSeenCoverage = COVERAGE_NOT_SET;
 	}
 	public void notifyCoveredElement(/*@NotNull*/ CoveredElement coveredElement) {
 		log.info("notifyCoveredElement(" + coveredElement + ")");
@@ -50,16 +58,19 @@ public class TestCoverageTestRunState {
 		return CoverageMappings.mapElementsToIds(CoveredElements.findProcessInstances(null, CoveredActivity.class, currentFlowTrace));
 	}
 	
-	private static TestCoverageTestRunState theInstance = new TestCoverageTestRunState();
+	private static final ThreadLocal<TestCoverageTestRunState> threadLocalInstance =
+	         new ThreadLocal<TestCoverageTestRunState>() {
+	             @Override protected TestCoverageTestRunState initialValue() {
+	                 return new TestCoverageTestRunState();
+	         }
+	     }; 
+	private static final TestCoverageTestRunState theInstance = new TestCoverageTestRunState();
 	public static TestCoverageTestRunState INSTANCE() {
-		return theInstance;
+		return threadLocalInstance.get();
 	}
-	
-	
-
-	
-	
-	
-	
+    
+	public boolean isHighestSeenCoverageSet() {
+        return highestSeenCoverage != COVERAGE_NOT_SET;
+    }
 
 }
