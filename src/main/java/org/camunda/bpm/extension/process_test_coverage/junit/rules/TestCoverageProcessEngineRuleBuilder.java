@@ -6,6 +6,8 @@ import org.hamcrest.StringDescription;
 
 public class TestCoverageProcessEngineRuleBuilder {
 
+    public static final String DEFAULT_ASSERT_AT_LEAST_PROPERTY = "org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST";
+    
 	TestCoverageProcessEngineRule rule = new TestCoverageProcessEngineRule();
 	
 	/** @return a builder with typical method @Rule configuration */
@@ -16,6 +18,19 @@ public class TestCoverageProcessEngineRuleBuilder {
                 .runTestsSequentially();
     }
 
+    public TestCoverageProcessEngineRuleBuilder optionalAssertCoverageAtLeastProperty(
+            String assertAtLeastProperty) {
+        String assertAtLeast = System.getProperty(assertAtLeastProperty);
+        if (assertAtLeast != null) {
+            try{ 
+                rule.assertCoverageMatchers.add( new MinimalCoverageMatcher(Double.parseDouble(assertAtLeast)) );
+            }catch(NumberFormatException e) {
+                throw new RuntimeException("BAD TEST CONFIGURATION: optionalAssertCoverageAtLeastProperty( \"" + assertAtLeastProperty + "\" ) must be double");
+            }
+        }
+        return this;
+    }
+
     public static ProcessDeploymentRule buildDeployRule() {
         return createBase().runTestsSequentially().build();
     }
@@ -23,6 +38,7 @@ public class TestCoverageProcessEngineRuleBuilder {
 	/** @return a builder with typical method @ClassRule configuration */
 	public static TestCoverageProcessEngineRuleBuilder createClassRule() {
 		return createBase().reportCoverageAfter()
+                .optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY)
 		        .startWithFreshFlowTrace() // makes sure we dont see traces from other runs
 		        .startWithFreshProcessEngine()
 		        .runTestsSequentially();
