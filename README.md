@@ -22,8 +22,8 @@ Add this Maven Dependency to your project:
 ```
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
-  <artifactId>camunda-process-test-coverage</artifactId>
-  <version>0.2.4-SNAPSHOT</version>
+  <artifactId>camunda-bpm-process-test-coverage</artifactId>
+  <version>0.2.5-SNAPSHOT</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -44,8 +44,8 @@ You can use the junit tests of this project to get comfortable with the library
 The following steps show how to integrate the camunda-process-test-coverage into you own setup. Our tests should provide a good base for your usage. If you use a single junit class per process, the class rule usage may be the perfect way to go.
 
 1.   add library jar to your project classpath (e.g. via the maven dependency)
-2.a) add the [TraceActivitiesHistoryEventHandler](src/main/java/org/camunda/bpm/extension/process_test_coverage/TraceActivitiesHistoryEventHandler.java) as history handler to your test camunda setup (see the [camunda.cfg.xml](src/test/resources/camunda.cfg.xml) we use)
-2.b) add the [PathCoverageParseListenerPlugin](src/main/java/org/camunda/bpm/extension/process_test_coverage/PathCoverageParseListenerPlugin.java) as process engine plugin to your test camunda setup (see the [camunda.cfg.xml](src/test/resources/camunda.cfg.xml) we use)
+2.a) add the [TraceActivitiesHistoryEventHandler](src/main/java/org/camunda/bpm/extension/process_test_coverage/trace/TraceActivitiesHistoryEventHandler.java) as history handler to your test camunda setup (see the [camunda.cfg.xml](src/test/resources/camunda.cfg.xml) we use)
+2.b) add the [PathCoverageParseListenerPlugin](src/main/java/org/camunda/bpm/extension/process_test_coverage/trace/PathCoverageParseListenerPlugin.java) as process engine plugin to your test camunda setup (see the [camunda.cfg.xml](src/test/resources/camunda.cfg.xml) we use)
 3.   adapt your process unit test to generate and check the coverage.
 4.   run your unit tests
 
