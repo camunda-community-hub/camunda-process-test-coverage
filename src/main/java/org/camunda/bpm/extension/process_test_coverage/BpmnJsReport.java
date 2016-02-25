@@ -13,7 +13,6 @@ import java.util.zip.ZipInputStream;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
-import org.camunda.bpm.engine.history.HistoricActivityInstance;
 
 public class BpmnJsReport {
 
@@ -33,7 +32,7 @@ public class BpmnJsReport {
   }
 
   protected static String generateHtml(String javaScript, String bpmnXml) throws IOException {
-		String html = IOUtils.toString(ProcessTestCoverage.class.getClassLoader().getResourceAsStream("bpmn.js-report-template.html"));
+		String html = IOUtils.toString(ProcessTestCoverageCalculator.class.getClassLoader().getResourceAsStream("bpmn.js-report-template.html"));
 		return injectIntoHtmlTemplate(javaScript, bpmnXml, html);
 	}
 

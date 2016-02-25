@@ -2,27 +2,18 @@ package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.history.HistoricActivityInstance;
-import org.camunda.bpm.engine.history.HistoricProcessInstance;
-import org.camunda.bpm.engine.history.HistoricProcessInstanceQuery;
-import org.camunda.bpm.engine.history.HistoricTaskInstance;
-import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.Coverage;
-import org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverage;
+import org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageCalculator;
 import org.camunda.bpm.model.bpmn.instance.FlowElement;
 import org.hamcrest.Matcher;
 import org.junit.Assert;
-import org.junit.internal.runners.statements.InvokeMethod;
 import org.junit.runner.Description;
 
 public class TestCoverageProcessEngineRule extends ProcessEngineRule implements ProcessDeploymentRule {
@@ -93,9 +84,6 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule implements 
 		}
 		// initialize engine and process
 		initializeProcessEngine();
-//		if (resetProcessEngineWhenStarting && processEngine.getRepositoryService().createProcessDefinitionQuery().count() != 0 ) {
-//		    throw new RuntimeException("Bad engine state");
-//		}
 		super.starting(description);
 		if (deploymentId != null) {
 		    testCoverageTestRunState.relevantDeploymentIds.add(deploymentId);
@@ -106,7 +94,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule implements 
 	public void finished(Description description) {
 	    try { // before unlock
     	    // calculate coverage for all tests
-    	    Map<String, Coverage> processesCoverage = ProcessTestCoverage.calculateForDeploymentIds(processEngine, testCoverageTestRunState.getRelevantDeploymentIds());
+    	    Map<String, Coverage> processesCoverage = ProcessTestCoverageCalculator.calculateForDeploymentIds(processEngine, testCoverageTestRunState.getRelevantDeploymentIds());
     
     		// calculate possible coverage		
     		if (this.deploymentId != null) {
@@ -121,7 +109,6 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule implements 
     		
     		double actualCoverage = Double.NaN;
     		if (description.isSuite()){
-    		    log.info("finishing @ClassRule execution (isSuite() == true) ");
     		    if (! testCoverageTestRunState.isHighestSeenCoverageSet()) {
     		        testCoverageTestRunState.highestSeenCoverage = 0;
     		        log.warning("initializing highestSeenCoverage to " + testCoverageTestRunState.highestSeenCoverage);
@@ -133,23 +120,10 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule implements 
     			log.info("finishing @Class " + description.getMethodName() + " execution with coverage " + actualCoverage);
     		}
     		for(Matcher<Double> assertCoverageMatcher : assertCoverageMatchers){
-    		    try {
-    		        Assert.assertThat(actualCoverage, assertCoverageMatcher);
-    		    } catch (AssertionError err) {
-    		        log.log(Level.INFO, "Failed assertion in " + description.getDisplayName());
-    		        log.log(Level.INFO, "processCoverage: " + processesCoverage.toString());
-    		        
-    		        List<ProcessDefinition> processDefinitions = processEngine.getRepositoryService()
-    	                    .createProcessDefinitionQuery().list();
-    		        for (ProcessDefinition processDefinition : processDefinitions) {
-    		            log.log(Level.INFO, "ProcessDefinition: " + processDefinition);
-                    }
-    		        
-    		        throw err;
-  			    }
+   		        Assert.assertThat(actualCoverage, assertCoverageMatcher);
     		}
     		testCoverageTestRunState.highestSeenCoverage = Math.max(actualCoverage, testCoverageTestRunState.highestSeenCoverage);
-    		log.info("Now highestSeenCoverage is " + testCoverageTestRunState.highestSeenCoverage);
+
     		// run derived functionality
     		super.finished(description);
 	    } finally {
