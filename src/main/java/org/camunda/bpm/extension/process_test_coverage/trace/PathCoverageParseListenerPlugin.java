@@ -1,4 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage;
+package org.camunda.bpm.extension.process_test_coverage.trace;
 
 import java.util.ArrayList;
 import java.util.List;

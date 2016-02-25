@@ -2,7 +2,6 @@ package org.camunda.bpm.extension.process_test_coverage;
 
 import org.apache.commons.io.IOUtils;
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.history.HistoricProcessInstance;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageTestRunState;
@@ -16,9 +15,9 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.logging.Logger;
 
-public class ProcessTestCoverageCalculator {
+public class Coverages {
 
-    private static final Logger log = Logger.getLogger(ProcessTestCoverageCalculator.class.getCanonicalName());
+    private static final Logger log = Logger.getLogger(Coverages.class.getCanonicalName());
 
     public static final String targetDir = "target/process-test-coverage";
 
@@ -89,7 +88,7 @@ public class ProcessTestCoverageCalculator {
     }
 
     protected static String getBpmnXml(ProcessDefinition processDefinition) throws IOException {
-        InputStream inputStream = ProcessTestCoverageCalculator.class.getClassLoader().getResourceAsStream(
+        InputStream inputStream = Coverages.class.getClassLoader().getResourceAsStream(
                 processDefinition.getResourceName());
         if (inputStream == null) {
             inputStream = new FileInputStream(processDefinition.getResourceName());

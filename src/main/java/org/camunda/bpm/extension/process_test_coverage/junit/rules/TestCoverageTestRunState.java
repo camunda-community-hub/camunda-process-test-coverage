@@ -2,8 +2,10 @@ package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.camunda.bpm.extension.process_test_coverage.CoverageMappings;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredActivity;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElements;
@@ -45,7 +47,9 @@ public class TestCoverageTestRunState {
 	}
 	
 	public void notifyCoveredElement(/*@NotNull*/ CoveredElement coveredElement) {
-		log.info("notifyCoveredElement(" + coveredElement + ")");
+	    if (log.isLoggable(Level.FINE)) {
+	        log.info("notifyCoveredElement(" + coveredElement + ")");
+	    }
 		currentFlowTrace.add(coveredElement);
 	}
 	

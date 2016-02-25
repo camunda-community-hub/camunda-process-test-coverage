@@ -1,4 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage.junit.rules;
+package org.camunda.bpm.extension.process_test_coverage;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -32,7 +32,7 @@ public class BpmnJsReport {
   }
 
   protected static String generateHtml(String javaScript, String bpmnXml) throws IOException {
-		String html = IOUtils.toString(ProcessTestCoverageCalculator.class.getClassLoader().getResourceAsStream("bpmn.js-report-template.html"));
+		String html = IOUtils.toString(Coverages.class.getClassLoader().getResourceAsStream("bpmn.js-report-template.html"));
 		return injectIntoHtmlTemplate(javaScript, bpmnXml, html);
 	}
 

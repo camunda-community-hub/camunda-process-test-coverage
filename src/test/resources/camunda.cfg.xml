@@ -11,12 +11,12 @@
 			<property name="mailServerDefaultFrom" value="camunda@localhost" /> <property 
 			name="mailServerPort" value="25" /> -->
 		<property name="historyEventHandler">
-			<bean class="org.camunda.bpm.extension.process_test_coverage.TraceActivitiesHistoryEventHandler" />
+			<bean class="org.camunda.bpm.extension.process_test_coverage.trace.TraceActivitiesHistoryEventHandler" />
 		</property>
 		<property name="processEnginePlugins">
 			<list>
 				<bean
-					class="org.camunda.bpm.extension.process_test_coverage.PathCoverageParseListenerPlugin" />
+					class="org.camunda.bpm.extension.process_test_coverage.trace.PathCoverageParseListenerPlugin" />
 			</list>
 		</property>
 	</bean>

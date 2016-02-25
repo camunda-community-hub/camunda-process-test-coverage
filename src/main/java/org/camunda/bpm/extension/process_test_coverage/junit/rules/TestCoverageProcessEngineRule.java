@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.Coverage;
-import org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageCalculator;
+import org.camunda.bpm.extension.process_test_coverage.Coverages;
 import org.camunda.bpm.model.bpmn.instance.FlowElement;
 import org.hamcrest.Matcher;
 import org.junit.Assert;
@@ -94,7 +94,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule implements 
 	public void finished(Description description) {
 	    try { // before unlock
     	    // calculate coverage for all tests
-    	    Map<String, Coverage> processesCoverage = ProcessTestCoverageCalculator.calculateForDeploymentIds(processEngine, testCoverageTestRunState.getRelevantDeploymentIds());
+    	    Map<String, Coverage> processesCoverage = Coverages.calculateForDeploymentIds(processEngine, testCoverageTestRunState.getRelevantDeploymentIds());
     
     		// calculate possible coverage		
     		if (this.deploymentId != null) {
