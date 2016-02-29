@@ -9,7 +9,12 @@ Running your process unit tests with the library creates test coverage reports f
 
 * Entire test suites: The process coverage is visualized by marking those tasks and events with a green color which have been traversed by any of the test suite's test cases.
 
-It also supports coverage checks for sequence flows and flow nodes in the JUnit tests. 
+It also supports coverage ratio checks for sequence flows and flow nodes in the JUnit tests.
+```
+java.lang.AssertionError: 
+Expected: matches if the coverage ratio is at least <1.0>
+     got: <0.9516129032258065>
+```
 * Check coverage after running a single test case: supported via JUnit @Rule or manual calls  
 * Check coverage after running a test class: support via JUnit @ClassRule or manual calls
 * Other setups:  manual calls
@@ -60,8 +65,13 @@ The following steps show how to integrate the camunda-process-test-coverage into
 
 ## Known Limitations
 * Sequence flows are not visually marked. Coverage percentage of sequence flows can be asserted though.
+<<<<<<< HEAD
 * Reports for an individual test method can only contain one process
 * Test cases that deploy different versions of the same process (same process definition key) are not officially supported and may result in misleading reports. Make sure all your processes have unique process definition keys (in BPMN XML //process@id).
+=======
+* Test cases that deploy different versions of the same process (same process definition key) are not officially supported and may result in misleading reports. Make sure all your processes have unique process definition keys (in BPMN XML //process@id).
+* The listener visualization seems works in some browsers (i.e. chrome) at the moment
+>>>>>>> refs/heads/develop
 
 ## Resources
 * [Issue Tracker](https://github.com/camunda/camunda-process-test-coverage/issues)

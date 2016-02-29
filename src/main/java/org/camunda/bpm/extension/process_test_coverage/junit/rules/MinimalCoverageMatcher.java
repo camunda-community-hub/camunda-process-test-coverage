@@ -17,7 +17,7 @@ public class MinimalCoverageMatcher extends BaseMatcher<Double> {
 
 	@Override
 	public void describeTo(Description description) {
-		description.appendText("matches if the coverage is at least ").appendValue(minimalCoverage);
+		description.appendText("matches if the coverage ratio is at least ").appendValue(minimalCoverage);
 	}
 
 	@Override
