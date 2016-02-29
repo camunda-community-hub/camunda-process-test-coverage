@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Coverages {
@@ -79,7 +80,12 @@ public class Coverages {
                 }
                 Coverage coverage = builder2.build();
                 processesCoverage.put(processDefinition.getKey(), coverage);
-                log.info("Calculated coverage for " + processDefinition + " : " + coverage);
+                
+                if(log.isLoggable(Level.FINE)) {
+                    log.fine("Calculated coverage for " + processDefinition + " : " + coverage);
+                } else {
+                    log.info("Calculated coverage for " + processDefinition );
+                }
             }
             return processesCoverage;
         } catch (IOException e) {

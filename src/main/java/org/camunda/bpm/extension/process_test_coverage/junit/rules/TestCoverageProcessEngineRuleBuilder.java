@@ -6,6 +6,12 @@ import org.hamcrest.StringDescription;
 
 public class TestCoverageProcessEngineRuleBuilder {
 
+    /** 
+     * If you set this property to a ratio (e.g. "1.0" for full coverage), 
+     * the default @Rule and @ClassRule will fail the test run if the coverage is less.<br>
+     * Example parameter for running java:<br>
+     * <code>-Dorg.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST=1.0</code>
+     */
     public static final String DEFAULT_ASSERT_AT_LEAST_PROPERTY = "org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST";
     
 	TestCoverageProcessEngineRule rule = new TestCoverageProcessEngineRule();
@@ -14,18 +20,18 @@ public class TestCoverageProcessEngineRuleBuilder {
 	public static TestCoverageProcessEngineRuleBuilder create() {
         return createBase()
                 .startWithFreshFlowTrace() // makes sure that the methods are independent
+                .optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY)
                 .startWithFreshProcessEngine()
                 .runTestsSequentially();
     }
 
-    public TestCoverageProcessEngineRuleBuilder optionalAssertCoverageAtLeastProperty(
-            String assertAtLeastProperty) {
-        String assertAtLeast = System.getProperty(assertAtLeastProperty);
+    public TestCoverageProcessEngineRuleBuilder optionalAssertCoverageAtLeastProperty(String key) {
+        String assertAtLeast = System.getProperty(key);
         if (assertAtLeast != null) {
             try{ 
                 rule.assertCoverageMatchers.add( new MinimalCoverageMatcher(Double.parseDouble(assertAtLeast)) );
             }catch(NumberFormatException e) {
-                throw new RuntimeException("BAD TEST CONFIGURATION: optionalAssertCoverageAtLeastProperty( \"" + assertAtLeastProperty + "\" ) must be double");
+                throw new RuntimeException("BAD TEST CONFIGURATION: optionalAssertCoverageAtLeastProperty( \"" + key + "\" ) must be double");
             }
         }
         return this;
