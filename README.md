@@ -65,13 +65,8 @@ The following steps show how to integrate the camunda-process-test-coverage into
 
 ## Known Limitations
 * Sequence flows are not visually marked. Coverage percentage of sequence flows can be asserted though.
-<<<<<<< HEAD
-* Reports for an individual test method can only contain one process
 * Test cases that deploy different versions of the same process (same process definition key) are not officially supported and may result in misleading reports. Make sure all your processes have unique process definition keys (in BPMN XML //process@id).
-=======
-* Test cases that deploy different versions of the same process (same process definition key) are not officially supported and may result in misleading reports. Make sure all your processes have unique process definition keys (in BPMN XML //process@id).
-* The listener visualization seems works in some browsers (i.e. chrome) at the moment
->>>>>>> refs/heads/develop
+* The visualization of listeners does not work in some browsers at the moment (e.g. firefox on windows)
 
 ## Resources
 * [Issue Tracker](https://github.com/camunda/camunda-process-test-coverage/issues)
