@@ -53,14 +53,14 @@
   <script src="bower_components/jquery/dist/jquery.js"></script>
 
   <!-- bpmn-js viewer -->
-  <script src="bower_components/bpmn-js/dist/bpmn-viewer.js"></script>
+  <script src="bower_components/bpmn-js/dist/bpmn-navigated-viewer.js"></script>
 
   <!-- application -->
   <script>
-    (function(BpmnViewer, $) {
+    (function(NavigatedViewer, $) {
 
       // create viewer
-      var bpmnViewer = new BpmnViewer({
+      var bpmnViewer = new NavigatedViewer({
         container: '#canvas'
       });
 
