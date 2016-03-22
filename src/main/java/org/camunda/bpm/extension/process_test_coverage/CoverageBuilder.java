@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageTestRunState;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElements;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
@@ -15,7 +15,7 @@ public class CoverageBuilder {
 	private Coverage coverage;
 	private boolean filterByDefinitionId = false;
 	private boolean collecting = true;
-	private TestCoverageTestRunState testCoverageTestRunState;
+	private CoverageTestRunState testCoverageTestRunState;
 
 	public static CoverageBuilder createFlowNodeCoverage() {
 		return create("flowNodeCoverage");
@@ -45,9 +45,9 @@ public class CoverageBuilder {
 		return this;
 	}
 
-	public CoverageBuilder forProcess(ProcessDefinition processDefinition) {
+	public CoverageBuilder forProcess(String processDefinitionId) {
 		checkIsCollecting();
-		coverage.processDefinition = processDefinition;
+		coverage.processDefinitionId = processDefinitionId;
 		return this;
 	}
 
@@ -63,7 +63,7 @@ public class CoverageBuilder {
 		return this;
 	}
 	
-	public CoverageBuilder withActualFlowNodesAndSequenceFlows(TestCoverageTestRunState testCoverageTestRunState) {
+	public CoverageBuilder withActualFlowNodesAndSequenceFlows(CoverageTestRunState testCoverageTestRunState) {
 		checkIsCollecting();
 		this.testCoverageTestRunState = testCoverageTestRunState;
 		return this;
@@ -73,30 +73,30 @@ public class CoverageBuilder {
 		checkIsCollecting();
 		collecting  = false;
 		// lets filter the entries relevant to this coverage
-		if (testCoverageTestRunState != null) {
-			if (coverage.coveredActivities != null || coverage.coveredSequenceFlowIds != null) {
-				throw new RuntimeException("Bad builder setup");
-			}
-			if (filterByDefinitionId) {
-				coverage.coveredActivities = testCoverageTestRunState.getCoveredFlowNodes(coverage.processDefinition.getId());
-				coverage.coveredSequenceFlowIds = testCoverageTestRunState.getCoveredSequenceFlows(coverage.processDefinition.getId());
-			} else {
-				coverage.coveredActivities = testCoverageTestRunState.getCoveredFlowNodes();
-				coverage.coveredSequenceFlowIds = testCoverageTestRunState.getCoveredSequenceFlows();
-			}
-		}
-		if (coverage.processDefinition != null) {
-			if (filterByDefinitionId) {
-				coverage.description += "-filterByDefinitionId";
-				coverage.coveredActivities = CoveredElements.findProcessInstances(coverage.processDefinition.getId(), null, coverage.coveredActivities);
-				coverage.coveredSequenceFlowIds = CoveredElements.findProcessInstances(coverage.processDefinition.getId(), null, coverage.coveredSequenceFlowIds);
-			} else {
-				// we only care about the key, not the deployment in this case
-				coverage.description += "-filterByDefinitionKey";
-				coverage.coveredActivities = CoveredElements.findProcessInstances(coverage.processDefinition.getKey() + ":", null, coverage.coveredActivities);
-				coverage.coveredSequenceFlowIds = CoveredElements.findProcessInstances(coverage.processDefinition.getKey() + ":", null, coverage.coveredSequenceFlowIds);				
-			}
-		}
+//		if (testCoverageTestRunState != null) {
+//			if (coverage.coveredActivities != null || coverage.coveredSequenceFlowIds != null) {
+//				throw new RuntimeException("Bad builder setup");
+//			}
+//			if (filterByDefinitionId) {
+//				coverage.coveredActivities = testCoverageTestRunState.getCoveredFlowNodes(coverage.processDefinition.getId());
+//				coverage.coveredSequenceFlowIds = testCoverageTestRunState.getCoveredSequenceFlows(coverage.processDefinition.getId());
+//			} else {
+//				coverage.coveredActivities = testCoverageTestRunState.getCoveredFlowNodes();
+//				coverage.coveredSequenceFlowIds = testCoverageTestRunState.getCoveredSequenceFlows();
+//			}
+//		}
+//		if (coverage.processDefinition != null) {
+//			if (filterByDefinitionId) {
+//				coverage.description += "-filterByDefinitionId";
+//				coverage.coveredActivities = CoveredElements.findCoveredElementsOfType(coverage.processDefinition.getId(), null, coverage.coveredActivities);
+//				coverage.coveredSequenceFlowIds = CoveredElements.findCoveredElementsOfType(coverage.processDefinition.getId(), null, coverage.coveredSequenceFlowIds);
+//			} else {
+//				// we only care about the key, not the deployment in this case
+//				coverage.description += "-filterByDefinitionKey";
+//				coverage.coveredActivities = CoveredElements.findCoveredElementsOfType(coverage.processDefinition.getKey() + ":", null, coverage.coveredActivities);
+//				coverage.coveredSequenceFlowIds = CoveredElements.findCoveredElementsOfType(coverage.processDefinition.getKey() + ":", null, coverage.coveredSequenceFlowIds);				
+//			}
+//		}
 		return coverage;
 	}
 	private void checkIsCollecting() {

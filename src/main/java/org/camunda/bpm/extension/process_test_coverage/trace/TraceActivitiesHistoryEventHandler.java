@@ -7,7 +7,7 @@ import org.camunda.bpm.engine.impl.history.event.HistoricActivityInstanceEventEn
 import org.camunda.bpm.engine.impl.history.event.HistoryEvent;
 import org.camunda.bpm.engine.impl.history.handler.DbHistoryEventHandler;
 import org.camunda.bpm.engine.impl.history.handler.HistoryEventHandler;
-import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageTestRunState;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
 
 /**
  * Extends the {@link DbHistoryEventHandler} in order to notify the process test
@@ -17,18 +17,22 @@ public class TraceActivitiesHistoryEventHandler extends DbHistoryEventHandler im
 
     Logger log = Logger.getLogger(TraceActivitiesHistoryEventHandler.class.getCanonicalName());
 
-    TestCoverageTestRunState testCoverageTestRunState = TestCoverageTestRunState.INSTANCE();
+    CoverageTestRunState testCoverageTestRunState;
 
     @Override
     public void handleEvent(HistoryEvent historyEvent) {
         super.handleEvent(historyEvent);
+        
         if (historyEvent instanceof HistoricActivityInstanceEventEntity) {
+            
             // not interested in end-events of scopes
             HistoricActivityInstanceEventEntity activityEvent = (HistoricActivityInstanceEventEntity) historyEvent;
             if (activityEvent.getStartTime() != null) {
+                
                 CoveredElement activity = CoveredElementBuilder.createTrace(
                         activityEvent.getProcessDefinitionId()).withActivityId(activityEvent.getActivityId()).build();
                 testCoverageTestRunState.notifyCoveredElement(activity);
+                
             } else {
                 // Skipping end event
             }
@@ -42,6 +46,10 @@ public class TraceActivitiesHistoryEventHandler extends DbHistoryEventHandler im
         for (HistoryEvent historyEvent : historyEvents) {
             handleEvent(historyEvent);
         }
+    }
+    
+    public void setTestCoverageRunState(CoverageTestRunState testCoverageTestRunState){
+        this.testCoverageTestRunState = testCoverageTestRunState;
     }
 
 }

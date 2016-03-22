@@ -13,7 +13,7 @@ public class Coverage {
 
 	String description;
 
-	ProcessDefinition processDefinition;
+	String processDefinitionId;
 
 	Set<CoveredElement> coveredActivities;
 
@@ -25,7 +25,7 @@ public class Coverage {
 
 	@Override
 	public String toString() {
-		return "Coverage [" + "description=" + description + ", process=" + processDefinition.getName() + ", " +
+		return "Coverage [" + "description=" + description + ", processDefinitionId=" + processDefinitionId + ", " +
 				"coverage=" + getActualPercentage()+ " (" + getNumberOfAllActual() + "/" + getNumberOfAllExpected()+ ")" +
 				"flowNodes=(" + coveredActivities.size() + "/" + expectedFlowNodes.size() + ")" +
 			 "sequenceFlows=(" + coveredSequenceFlowIds.size() + "/" + expectedSequenceFlows.size()+ ")" +
@@ -44,6 +44,11 @@ public class Coverage {
 			sumOfExpected += coverage.getNumberOfAllExpected();
 		}
 		return ((double) sumOfActual) / ((double) sumOfExpected) / ((double) processesFlowNodeCoverage.size());
+	}
+	
+	// TODO only useful calculation here? does it need to be static? we already have the coverage ...
+	public double calculateMeanPercentage() {
+	    return ((double) getNumberOfAllActual()) / ((double) getNumberOfAllExpected());
 	}
 
 	public int getNumberOfAllActual() {

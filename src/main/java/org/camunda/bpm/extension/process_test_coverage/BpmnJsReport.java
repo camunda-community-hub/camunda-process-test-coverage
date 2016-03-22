@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.NumberFormat;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.zip.ZipEntry;
@@ -12,51 +14,56 @@ import java.util.zip.ZipInputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 public class BpmnJsReport {
 
+  private static final String REPORT_TEMPLATE = "bpmn.js-report-template.html";
+  
+  protected static final String PLACEHOLDER_COVERAGE = "//COVERAGE";
   protected static final String PLACEHOLDER_ANNOTATIONS = "          //YOUR ANNOTATIONS GO HERE";
   protected static final String PLACEHOLDER_BPMN_XML = "YOUR BPMN XML CONTENT";
 
-  public static void highlightActivities(String bpmnXml, List<String> activityIds, String reportName, String targetDir) throws IOException {
+  public static void highlightActivitiesWithCoverage(String bpmnXml, Collection<String> activityIds, 
+          String reportName, String targetDir,
+          double coverage) throws IOException {
+      
     String javaScript = generateJavaScriptAnnotations(activityIds);
-    String html = generateHtml(javaScript, bpmnXml);
+    String html = generateHtml(javaScript, bpmnXml, coverage);
     writeToFile(targetDir, reportName, html);
+    
   }
 
-  public static void highlightActivities(String bpmnXml, Set<String> coveredAcivityIds, String reportName, String targetDir) throws IOException {
-    String javaScript = generateJavaScriptAnnotations(coveredAcivityIds);
-    String html = generateHtml(javaScript, bpmnXml);
-    writeToFile(targetDir, reportName, html);
-  }
-
-  protected static String generateHtml(String javaScript, String bpmnXml) throws IOException {
-		String html = IOUtils.toString(Coverages.class.getClassLoader().getResourceAsStream("bpmn.js-report-template.html"));
-		return injectIntoHtmlTemplate(javaScript, bpmnXml, html);
+  protected static String generateHtml(String javaScript, String bpmnXml,
+          double coverage) throws IOException {
+		String html = IOUtils.toString(Coverages.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE));
+		return injectIntoHtmlTemplate(javaScript, bpmnXml, html, coverage);
 	}
 
-  protected static String injectIntoHtmlTemplate(String javaScript, String bpmnXml, String html) {
-		html = html.replace(PLACEHOLDER_BPMN_XML, StringEscapeUtils.escapeJavaScript(bpmnXml));
+  protected static String injectIntoHtmlTemplate(
+          String javaScript, String bpmnXml,
+          String html, double coverage) {
+		html = html.replace(PLACEHOLDER_BPMN_XML, StringEscapeUtils.escapeEcmaScript(bpmnXml));
 		html = html.replaceAll(PLACEHOLDER_ANNOTATIONS, javaScript + PLACEHOLDER_ANNOTATIONS);
+		html = html.replaceAll(PLACEHOLDER_COVERAGE, getCoveragePercent(coverage));
 		return html;
 	}
+  
+  private static String getCoveragePercent(double coverage) {
+      
+      NumberFormat percentFormat = NumberFormat.getPercentInstance();
+      percentFormat.setMaximumFractionDigits(1);
+      
+      return percentFormat.format(coverage);
+  }
 
-  protected static String generateJavaScriptAnnotations(Set<String> acivityIds) {
+  protected static String generateJavaScriptAnnotations(Collection<String> acivityIds) {
     StringBuilder javaScript = new StringBuilder();
     for (String activityId : acivityIds) {
       javaScript.append("          canvas.addMarker('" + activityId + "', 'highlight');\n");
     }
     return javaScript.toString();
   }
-
-  protected static String generateJavaScriptAnnotations(List<String> activities) {
-		StringBuilder javaScript = new StringBuilder();
-		for (String activityId : activities) {
-			javaScript.append("          canvas.addMarker('" + activityId + "', 'highlight');\n");
-		}
-		return javaScript.toString();
-	}
 
   protected static void writeToFile(String targetDir, String fileName,	String html) throws IOException {
 		prepareTargetDir(targetDir);
@@ -66,9 +73,15 @@ public class BpmnJsReport {
   protected static void prepareTargetDir(String targetDir) throws IOException {
     File targetDirectory = new File(targetDir);
     FileUtils.forceMkdir(targetDirectory);
-    if (!new File(targetDir + "/" + "bower_components").exists()) {
-      extractBpmnJs(targetDirectory);
+    extractBowerComponents(targetDirectory);
     }
+  
+  private static void extractBowerComponents(File targetDirectory) {
+      final File parentDirectory = targetDirectory.getParentFile();
+      
+      if (!new File(parentDirectory.getPath() + "/bower_components").exists()) {
+        extractBpmnJs(parentDirectory);
+      } 
   }
 
   protected static void extractBpmnJs(File targetDirectory) {

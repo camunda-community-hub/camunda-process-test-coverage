@@ -20,10 +20,8 @@ public class ProcessTestMethodRuleCoverageTest {
 	private static final String PROCESS_DEFINITION_KEY = "process-test-coverage";
 	
 	@Rule
-	public TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create() //
-			.reportCoverageAfter() 
-			.assertCoverageAtLeast(6.9 / 11.0) //
-			.assertCoverage(lessThan(7.1 / 11.0)).build();
+	public TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create()
+			.reportCoverageAfter().build();
 
 	@Test
 	@Deployment(resources = "process.bpmn")
@@ -32,6 +30,10 @@ public class ProcessTestMethodRuleCoverageTest {
 		variables.put("path", "A");
 		ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY,
 				variables);
+		
+		rule.assertTestCoverage("testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered", greaterThan(6.9 / 11.0));
+	    rule.assertTestCoverage("testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered", lessThan(7.1 / 11.0));
+
 	}
 
 	@Test
@@ -41,6 +43,9 @@ public class ProcessTestMethodRuleCoverageTest {
 		variables.put("path", "B");
 		ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY,
 				variables);
+		
+		rule.assertTestCoverage("testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered", greaterThan(6.9 / 11.0));
+        rule.assertTestCoverage("testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered", lessThan(7.1 / 11.0));
 	}
 
 }

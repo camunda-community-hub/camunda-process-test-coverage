@@ -1,14 +1,14 @@
 package org.camunda.bpm.extension.process_test_coverage;
 
-import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.*;
-import static org.hamcrest.Matchers.*;
+import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.ALL_ELEMENTS;
+import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.BPMN_PATH;
+import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.PATH_B_ELEMENTS;
+import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.PROCESS_DEFINITION_KEY;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
-import org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessDeploymentRule;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
 import org.junit.ClassRule;
@@ -26,14 +26,10 @@ public class ProcessTestClassRuleHalfCoverageTest {
     // Note, if you assert a coverage on the ClassRule, it means if you run a
     // test without the others, it will probably fail
     @ClassRule
+    @Rule
     public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.createClassRule()
-        .reportCoverageAfter()
-        .assertCoverageAtLeast(EXPECTED_COVERAGE)
-        .assertCoverage(lessThan(EXPECTED_COVERAGE + 0.0001)).build();
-
-    @Rule // Method rule does the deployment ATM
-    public ProcessDeploymentRule deployRule = TestCoverageProcessEngineRuleBuilder.buildDeployRule();
-
+        .reportCoverageAfter().assertGlobalCoverageAtLeast(EXPECTED_COVERAGE).build();
+    
     @Test
     @Deployment(resources = BPMN_PATH)
     public void testPathB() {

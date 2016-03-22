@@ -1,13 +1,15 @@
 package org.camunda.bpm.extension.process_test_coverage;
 
-import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.*;
-import static org.hamcrest.Matchers.*;
+import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.ALL_ELEMENTS;
+import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.BPMN_PATH;
+import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.PATH_B_ELEMENTS;
+import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.PROCESS_DEFINITION_KEY;
+import static org.hamcrest.Matchers.lessThan;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.camunda.bpm.engine.test.Deployment;
-import org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessDeploymentRule;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
 import org.junit.AfterClass;
@@ -39,12 +41,8 @@ public class ProcessTestClassRulePropertyTest {
     }
     
     @ClassRule
-    public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.createClassRule()
-        .assertCoverage(lessThan(EXPECTED_COVERAGE + 0.0001))
-        .build();
-
-    @Rule // Method rule does the deployment ATM
-    public ProcessDeploymentRule deployRule = TestCoverageProcessEngineRuleBuilder.buildDeployRule();
+    @Rule
+    public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.createClassRule().build();
 
     @Test
     @Deployment(resources = BPMN_PATH)
@@ -52,6 +50,8 @@ public class ProcessTestClassRulePropertyTest {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "B");
         classRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+        
+        classRule.assertTestCoverage("testPathB", lessThan(EXPECTED_COVERAGE + 0.0001));
     }
 
 
