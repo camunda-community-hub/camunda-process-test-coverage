@@ -60,23 +60,39 @@ public class Coverages {
             Collection<ProcessCoverage> processCoverages, double coverage) throws IOException {
         
         // Split the activities reading to their definitions
-        Map<String, Set<String>> processDefKeyToCoveredElements = new HashMap<String, Set<String>>();
+        Map<String, Set<String>> processDefKeyToCoveredFlowNodes = new HashMap<String, Set<String>>();
+        Map<String, Set<String>> processDefKeyToCoveredSequenceFlows = new HashMap<String, Set<String>>();
         for (ProcessCoverage processCoverage : processCoverages) {
             
             final String processDefinitionKey = processCoverage.getProcessDefinition().getKey();
             
-            Set<String> definitionCoveredElements = processDefKeyToCoveredElements.get(processDefinitionKey);
-            if (definitionCoveredElements == null) {
+            // Flow nodes
+            
+            Set<String> coveredFlowNodes = processDefKeyToCoveredFlowNodes.get(processDefinitionKey);
+            if (coveredFlowNodes == null) {
                 
-                definitionCoveredElements = new HashSet<String>();
-                processDefKeyToCoveredElements.put(processDefinitionKey, definitionCoveredElements);
+                coveredFlowNodes = new HashSet<String>();
+                processDefKeyToCoveredFlowNodes.put(processDefinitionKey, coveredFlowNodes);
             }
             
             for(CoveredElement coveredElement : processCoverage.getCoveredFlowNodes()) {
                 
-                definitionCoveredElements.add(coveredElement.getElementId());
+                coveredFlowNodes.add(coveredElement.getElementId());
             }
             
+            // Sequence flows
+            
+            Set<String> coveredSequenceFlows = processDefKeyToCoveredSequenceFlows.get(processDefinitionKey);
+            if (coveredSequenceFlows == null) {
+                
+                coveredSequenceFlows = new HashSet<String>();
+                processDefKeyToCoveredSequenceFlows.put(processDefinitionKey, coveredSequenceFlows);
+            }
+            
+            for(CoveredElement coveredElement : processCoverage.getCoveredSequenceFlows()) {
+                
+                coveredSequenceFlows.add(coveredElement.getElementId());
+            }
         }
         
         final Set<ProcessDefinition> processDefinitions = coverageTestRunState.getAnyDeployment().getProcessDefinitions();
@@ -84,11 +100,12 @@ public class Coverages {
             
             String bpmnXml = getBpmnXml(processDefinition);
             String reportName = getReportName(processDefinition, testName);
-            Set<String> coveredElement = processDefKeyToCoveredElements.get(processDefinition.getKey());
+            Set<String> coveredFlowNodes = processDefKeyToCoveredFlowNodes.get(processDefinition.getKey());
+            Set<String> coveredSequenceFlows = processDefKeyToCoveredSequenceFlows.get(processDefinition.getKey());
             
             final String reportDirectory = getReportDirectoryPath(className);
-            BpmnJsReport.highlightActivitiesWithCoverage(
-                    bpmnXml, coveredElement, reportName, reportDirectory, coverage);    
+            BpmnJsReport.highlightFlowNodesAndSequenceFlows(
+                    bpmnXml, coveredFlowNodes, coveredSequenceFlows, reportName, reportDirectory, coverage);    
         }
         
     }

@@ -23,13 +23,17 @@ public class BpmnJsReport {
   protected static final String PLACEHOLDER_COVERAGE = "//COVERAGE";
   protected static final String PLACEHOLDER_ANNOTATIONS = "          //YOUR ANNOTATIONS GO HERE";
   protected static final String PLACEHOLDER_BPMN_XML = "YOUR BPMN XML CONTENT";
+  
+  protected static final String SEQUENCEFLOW_ANNOTATION_PREFIX = "\\$( \"g[data-element-id*='";
+  protected static final String SEQUENCEFLOW_ANNOTATION_POSTFIX  = "']\" ).find('path').attr('stroke', '#00ff00');\n";
 
-  public static void highlightActivitiesWithCoverage(String bpmnXml, Collection<String> activityIds, 
-          String reportName, String targetDir,
+  public static void highlightFlowNodesAndSequenceFlows(String bpmnXml, Collection<String> activityIds, 
+          Collection<String> sequenceFlowIds, String reportName, String targetDir,
           double coverage) throws IOException {
       
-    String javaScript = generateJavaScriptAnnotations(activityIds);
-    String html = generateHtml(javaScript, bpmnXml, coverage);
+    String flowNodeAnnotations = generateJavaScriptFlowNodeAnnotations(activityIds);
+    final String sequenceFlowAnnotations = generateJavaScriptSequenceFlowAnnotations(sequenceFlowIds);
+    String html = generateHtml((flowNodeAnnotations + sequenceFlowAnnotations), bpmnXml, coverage);
     writeToFile(targetDir, reportName, html);
     
   }
@@ -57,13 +61,24 @@ public class BpmnJsReport {
       return percentFormat.format(coverage);
   }
 
-  protected static String generateJavaScriptAnnotations(Collection<String> acivityIds) {
+  protected static String generateJavaScriptFlowNodeAnnotations(Collection<String> acivityIds) {
     StringBuilder javaScript = new StringBuilder();
     for (String activityId : acivityIds) {
       javaScript.append("          canvas.addMarker('" + activityId + "', 'highlight');\n");
     }
     return javaScript.toString();
   }
+  
+  protected static String generateJavaScriptSequenceFlowAnnotations(Collection<String> sequenceFlowIds) {
+      StringBuilder javaScript = new StringBuilder();
+      for (String sequenceFlowId : sequenceFlowIds) {
+        javaScript.append("\t\t\t");
+        javaScript.append(SEQUENCEFLOW_ANNOTATION_PREFIX);
+        javaScript.append(sequenceFlowId);
+        javaScript.append(SEQUENCEFLOW_ANNOTATION_POSTFIX);
+      }
+      return javaScript.toString();
+    }
 
   protected static void writeToFile(String targetDir, String fileName,	String html) throws IOException {
 		prepareTargetDir(targetDir);
