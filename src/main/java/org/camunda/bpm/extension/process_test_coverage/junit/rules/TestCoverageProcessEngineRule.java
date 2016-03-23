@@ -1,33 +1,21 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.ProcessEngineConfiguration;
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.camunda.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.extension.process_test_coverage.ProcessCoverage;
 import org.camunda.bpm.extension.process_test_coverage.Coverages;
 import org.camunda.bpm.extension.process_test_coverage.trace.DeploymentCoverage;
-import org.camunda.bpm.extension.process_test_coverage.trace.PathCoverageExecutionListener;
 import org.camunda.bpm.extension.process_test_coverage.trace.PathCoverageParseListener;
 import org.camunda.bpm.extension.process_test_coverage.trace.TraceActivitiesHistoryEventHandler;
 import org.hamcrest.Matcher;
