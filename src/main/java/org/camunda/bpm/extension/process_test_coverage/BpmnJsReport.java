@@ -57,7 +57,9 @@ public class BpmnJsReport {
 		html = html.replaceAll(PLACEHOLDER_PROCESS_KEY, processDefinitionKey);
 		html = html.replaceAll(PLACEHOLDER_COVERAGE, getCoveragePercent(coverage));
         html = html.replaceAll(PLACEHOLDER_TESTCLASS, testClass);
-        html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "<div>TestMethod: " + testMethod + "</div>");
+        if (testMethod != null) {
+            html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "<div>TestMethod: " + testMethod + "</div>");            
+        }
 
 		return html;
 	}
