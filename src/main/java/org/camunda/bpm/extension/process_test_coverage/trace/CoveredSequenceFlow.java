@@ -2,13 +2,12 @@ package org.camunda.bpm.extension.process_test_coverage.trace;
 
 import java.util.Date;
 
-public class CoveredSequenceFlow implements CoveredElement {
+public class CoveredSequenceFlow extends CoveredElement {
 
 	private Date timestamp;
 	
 	// relevant parts
 	private String coveredTransitionId;
-	private String processDefinitionId;
 
 	public CoveredSequenceFlow(String processDefinitionId, String coveredTransitionId) {
 		this.timestamp = new Date();

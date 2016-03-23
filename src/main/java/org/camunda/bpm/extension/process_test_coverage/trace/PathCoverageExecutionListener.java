@@ -9,12 +9,12 @@ public class PathCoverageExecutionListener implements ExecutionListener {
     private CoverageTestRunState coverageTestRunState;
 
 	@Override
-	public void notify(DelegateExecution execution) throws Exception {
-		CoveredElement coveredElement = CoveredElementBuilder
-				.createTrace(execution.getProcessDefinitionId())
-				.withCurrentTransitionId(execution.getCurrentTransitionId()).build();
-		getCoverageTestRunState().notifyCoveredElement(coveredElement);
-	}
+    public void notify(DelegateExecution execution) throws Exception {
+    	CoveredElement coveredElement = CoveredElementBuilder
+    			.createTrace(execution.getProcessDefinitionId())
+    			.withCurrentTransitionId(execution.getCurrentTransitionId()).build();
+    	getCoverageTestRunState().notifyCoveredElement(coveredElement);
+    }
 
     public CoverageTestRunState getCoverageTestRunState() {
         return coverageTestRunState;

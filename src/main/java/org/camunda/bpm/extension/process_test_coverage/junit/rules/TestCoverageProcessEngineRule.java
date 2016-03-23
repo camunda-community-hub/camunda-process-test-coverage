@@ -16,6 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngineConfiguration;
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -23,8 +24,9 @@ import org.camunda.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.extension.process_test_coverage.Coverage;
+import org.camunda.bpm.extension.process_test_coverage.ProcessCoverage;
 import org.camunda.bpm.extension.process_test_coverage.Coverages;
+import org.camunda.bpm.extension.process_test_coverage.trace.DeploymentCoverage;
 import org.camunda.bpm.extension.process_test_coverage.trace.PathCoverageExecutionListener;
 import org.camunda.bpm.extension.process_test_coverage.trace.PathCoverageParseListener;
 import org.camunda.bpm.extension.process_test_coverage.trace.TraceActivitiesHistoryEventHandler;
@@ -101,18 +103,18 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 	    
 		super.starting(description);
 		
-		registerDeployments();
+		registerDeployments(description);
 	}
 
-    private void registerDeployments() {
+    private void registerDeployments(Description description) {
     
         if (deploymentId != null) {
 
-            final Set<ProcessDefinition> deployedProcessDefinitions = new TreeSet<ProcessDefinition>(getProcessDefinitionKeyComparator());
-            deployedProcessDefinitions.addAll(processEngine.getRepositoryService().createProcessDefinitionQuery().deploymentId(deploymentId).list());
+            final List<ProcessDefinition> deployedProcessDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().deploymentId(deploymentId).list();
             
-            // TODO do we need this
-            testCoverageTestRunState.getDeployments().put(deploymentId, deployedProcessDefinitions);
+            testCoverageTestRunState.addDeployment(processEngine, deploymentId, 
+                    deployedProcessDefinitions, description.getMethodName());
+            
         }
     }
     
@@ -143,17 +145,6 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         testCoverageTestRunState.setCurrentTestName(description.getMethodName());
 
     }
-    
-    private Comparator<ProcessDefinition> getProcessDefinitionKeyComparator() {
-        return new Comparator<ProcessDefinition>() {
-
-            @Override
-            public int compare(ProcessDefinition o1, ProcessDefinition o2) {
-               return o1.getKey().compareTo(o2.getKey());
-            }
-            
-        };
-    }
 	
 	@Override
     public void finished(Description description) {
@@ -165,30 +156,23 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             final Deployment deploymentAnnotation = description.getAnnotation(Deployment.class);
             if (deploymentAnnotation != null) {
 
-                final String testMethodName = description.getMethodName();
+                final String testName = description.getMethodName();
+                final DeploymentCoverage deploymentCoverage = testCoverageTestRunState.getDeploymentCoverage(testName);
+                
+                logCoverage(deploymentCoverage);
 
-                Coverage testCoverage;
-                testCoverage = Coverages.calculateTestMethodCoverage(processEngine,
-                        deploymentId,
-                        testCoverageTestRunState,
-                        testMethodName);
-
-
-                logCoverage(testCoverage);
-
-                double coveragePercentage = testCoverage.calculateMeanPercentage();
-                log.info(testMethodName + " process coverage is " + coveragePercentage);
+                double coveragePercentage = deploymentCoverage.getCoveragePercentage();
+                log.info(testName + " process coverage is " + coveragePercentage);
 
                 Coverages.createTestMethodReport(processEngine,
-                        deploymentId,
                         testCoverageTestRunState,
                         description.getClassName(),
-                        testMethodName,
+                        testName,
                         coveragePercentage);
                 
-                if (testMethodNameToCoverageMatchers.containsKey(testMethodName)) {
+                if (testMethodNameToCoverageMatchers.containsKey(testName)) {
 
-                    assertCoverage(coveragePercentage, testMethodNameToCoverageMatchers.get(testMethodName));
+                    assertCoverage(coveragePercentage, testMethodNameToCoverageMatchers.get(testName));
 
                 }
 
@@ -213,39 +197,19 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         // Calculate global coverage if requested and all individual tests done
         if (!description.isTest()){
             
-            final ProcessDefinition processDefinition = assertSingleProcessDefinitionDeployed();
-
+            testCoverageTestRunState.assertAllDeploymentsEqual();
             
             // Calculate coverage
             
-            final Coverage globaCoverage = Coverages.calculateGlobalTestCoverage(processEngine, processDefinition.getId(), testCoverageTestRunState);
-            final double coveragePercentage = globaCoverage.calculateMeanPercentage();
-            log.info("finishing @ClassRule execution with coverage " + coveragePercentage);
+            final double classCoveragePercentage = testCoverageTestRunState.getClassCoverage();
+            log.info("finishing @ClassRule execution with coverage " + classCoveragePercentage);
 
             // Create graphical report
-            Coverages.createGlobalReport(processEngine, testCoverageTestRunState, description.getClassName(), coveragePercentage);
+            Coverages.createClassReport(processEngine, testCoverageTestRunState, description.getClassName(), classCoveragePercentage);
             
-            assertCoverage(coveragePercentage, assertGlobalCoverageMatchers);
+            assertCoverage(classCoveragePercentage, assertGlobalCoverageMatchers);
                                    
         }
-	}
-	
-	private ProcessDefinition assertSingleProcessDefinitionDeployed() {
-	    
-	    Set<ProcessDefinition> processDefinitions = null;
-        for (Set<ProcessDefinition> deploymentProcessDefinitions : testCoverageTestRunState.getDeployments().values()) {
-            
-            if (processDefinitions == null) {
-                processDefinitions = deploymentProcessDefinitions;
-            }
-                
-            Assert.assertEquals("Class coverage can only be calculated if all test deploy the same process definition", processDefinitions, deploymentProcessDefinitions);
-            
-        }
-        
-        // TODO take into account multiple process definitions!
-        return processDefinitions.iterator().next();
-        
 	}
 	
 	private void assertCoverage(double coverage, Collection<Matcher<Double>> matchers) {
@@ -257,12 +221,13 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         
 	}
 
-    private void logCoverage(Coverage processesCoverage) {
+    private void logCoverage(DeploymentCoverage deploymentCoverage) {
         
         if (deploymentId != null) {
             
         	if (log.isLoggable(Level.FINE) || isReportCoverageWhenFinished()) {
-        		log.log(Level.ALL, processesCoverage.toString());
+        	    // TODO change deployment coverage toString
+        		log.log(Level.ALL, deploymentCoverage.toString());
         	}
         	
         }

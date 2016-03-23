@@ -1,18 +1,12 @@
 package org.camunda.bpm.extension.process_test_coverage.trace;
 
-public class CoveredActivity implements CoveredElement {
+public class CoveredActivity extends CoveredElement {
 
 	private final String activityId;
-	private final String processDefinitionId;
 
 	public CoveredActivity(String processDefinitionId, String activityId) {
 		this.activityId = activityId;
 		this.processDefinitionId = processDefinitionId;
-	}
-
-	@Override
-	public String getProcessDefinitionId() {
-		return processDefinitionId;
 	}
 
 	@Override

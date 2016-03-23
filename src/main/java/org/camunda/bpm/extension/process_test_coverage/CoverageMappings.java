@@ -11,7 +11,7 @@ import org.camunda.bpm.model.bpmn.instance.FlowNode;
 
 public class CoverageMappings {
 
-	public static Set<String> mapElementsToIds(/*@NotNull*/ Collection<CoveredElement> elements) {
+	public static Set<String> mapElementsToIds(/*@NotNull*/ Collection<? extends CoveredElement> elements) {
 		Set<String> ids = new HashSet<String>(elements.size());
 		for (CoveredElement element : elements) {
 			ids.add(element.getElementId());

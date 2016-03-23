@@ -1,6 +1,6 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
-import org.camunda.bpm.extension.process_test_coverage.Coverage;
+import org.camunda.bpm.extension.process_test_coverage.ProcessCoverage;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 
@@ -26,8 +26,8 @@ public class MinimalCoverageMatcher extends BaseMatcher<Double> {
 	}
 
 	private double actualPercentage(Object item) {
-		if (item instanceof Coverage) {
-			return ((Coverage) item).getActualPercentage();
+		if (item instanceof ProcessCoverage) {
+			return ((ProcessCoverage) item).getActualPercentage();
 		}
 		if (item instanceof Number) {
 			return (double) ((Number) item).doubleValue();
@@ -37,7 +37,7 @@ public class MinimalCoverageMatcher extends BaseMatcher<Double> {
 
 	@Override
 	public void describeMismatch(Object item, Description mismatchDescription) {
-		if (item instanceof Number || item instanceof Coverage) {
+		if (item instanceof Number || item instanceof ProcessCoverage) {
 			mismatchDescription.appendText("coverage of ").appendValue(actualPercentage(item));
 			mismatchDescription.appendText(" is too low)");
 			// TODO describe diff of actual and expected items
