@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.NumberFormat;
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -20,7 +18,10 @@ public class BpmnJsReport {
 
   private static final String REPORT_TEMPLATE = "bpmn.js-report-template.html";
   
+  protected static final String PLACEHOLDER_PROCESS_KEY = "//PROCESSKEY";
   protected static final String PLACEHOLDER_COVERAGE = "//COVERAGE";
+  protected static final String PLACEHOLDER_TESTCLASS = "//TESTCLASS";
+  protected static final String PLACEHOLDER_TESTMETHOD = "//TESTMETHOD";
   protected static final String PLACEHOLDER_ANNOTATIONS = "          //YOUR ANNOTATIONS GO HERE";
   protected static final String PLACEHOLDER_BPMN_XML = "YOUR BPMN XML CONTENT";
   
@@ -28,28 +29,36 @@ public class BpmnJsReport {
   protected static final String SEQUENCEFLOW_ANNOTATION_POSTFIX  = "']\" ).find('path').attr('stroke', '#00ff00');\n";
 
   public static void highlightFlowNodesAndSequenceFlows(String bpmnXml, Collection<String> activityIds, 
-          Collection<String> sequenceFlowIds, String reportName, String targetDir,
-          double coverage) throws IOException {
+          Collection<String> sequenceFlowIds, String reportName, String processDefinitionKey, 
+          double coverage, String testClass, String testMethod, String targetDir) throws IOException {
       
     String flowNodeAnnotations = generateJavaScriptFlowNodeAnnotations(activityIds);
     final String sequenceFlowAnnotations = generateJavaScriptSequenceFlowAnnotations(sequenceFlowIds);
-    String html = generateHtml((flowNodeAnnotations + sequenceFlowAnnotations), bpmnXml, coverage);
+    String html = generateHtml((flowNodeAnnotations + sequenceFlowAnnotations), 
+            bpmnXml, processDefinitionKey, coverage, testClass, testMethod);
     writeToFile(targetDir, reportName, html);
     
   }
 
   protected static String generateHtml(String javaScript, String bpmnXml,
-          double coverage) throws IOException {
+          String processDefinitionKey, double coverage, String testClass, String testMethod) throws IOException {
 		String html = IOUtils.toString(Coverages.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE));
-		return injectIntoHtmlTemplate(javaScript, bpmnXml, html, coverage);
+		return injectIntoHtmlTemplate(javaScript, bpmnXml, html, processDefinitionKey, coverage,
+		        testClass, testMethod);
 	}
 
   protected static String injectIntoHtmlTemplate(
           String javaScript, String bpmnXml,
-          String html, double coverage) {
+          String html, String processDefinitionKey,
+          double coverage, String testClass,
+          String testMethod) {
 		html = html.replace(PLACEHOLDER_BPMN_XML, StringEscapeUtils.escapeEcmaScript(bpmnXml));
 		html = html.replaceAll(PLACEHOLDER_ANNOTATIONS, javaScript + PLACEHOLDER_ANNOTATIONS);
+		html = html.replaceAll(PLACEHOLDER_PROCESS_KEY, processDefinitionKey);
 		html = html.replaceAll(PLACEHOLDER_COVERAGE, getCoveragePercent(coverage));
+        html = html.replaceAll(PLACEHOLDER_TESTCLASS, testClass);
+        html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "<div>TestMethod: " + testMethod + "</div>");
+
 		return html;
 	}
   
@@ -64,7 +73,8 @@ public class BpmnJsReport {
   protected static String generateJavaScriptFlowNodeAnnotations(Collection<String> acivityIds) {
     StringBuilder javaScript = new StringBuilder();
     for (String activityId : acivityIds) {
-      javaScript.append("          canvas.addMarker('" + activityId + "', 'highlight');\n");
+      javaScript.append("\t\t\t");
+      javaScript.append("canvas.addMarker('" + activityId + "', 'highlight');\n");
     }
     return javaScript.toString();
   }

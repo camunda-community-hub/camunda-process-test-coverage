@@ -39,13 +39,33 @@
     .highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
       fill: rgba(66, 180, 21, 0.7) !important; /* color elements as green */
     }
+    
+    #info-box {
+   	  margin-left: 20px;
+      margin-top: 15px;
+      table-layout: fixed;
+      border-collapse: collapse;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      font-family: sans;
+      line-height: 150%;
+      font-size: 80%;
+      z-index: 1000;
+    }
   </style>
 
   <title>Process Test Coverage Report</title>
 </head>
 <body>
 
-  <h3>Coverage: //COVERAGE</h3>
+  <div id="info-box">
+	<div>Process Definition Name: //PROCESSKEY</div>
+	<div>Coverage: //COVERAGE</div>
+	<div>Test Class: //TESTCLASS</div>
+	//TESTMETHOD
+  </div>
+  
   <!-- element to draw bpmn diagram in -->
   <div id="canvas"></div>
 
@@ -82,7 +102,7 @@
 
 
           // zoom to fit full viewport
-          canvas.zoom('fit-viewport');
+          canvas.zoom('fit-viewport', true);
 
       // visualizations          
       elementRegistry = bpmnViewer.get('elementRegistry');

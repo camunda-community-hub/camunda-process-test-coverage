@@ -105,7 +105,8 @@ public class Coverages {
             
             final String reportDirectory = getReportDirectoryPath(className);
             BpmnJsReport.highlightFlowNodesAndSequenceFlows(
-                    bpmnXml, coveredFlowNodes, coveredSequenceFlows, reportName, reportDirectory, coverage);    
+                    bpmnXml, coveredFlowNodes, coveredSequenceFlows, reportName, processDefinition.getKey(),
+                    coverage, className, testName, reportDirectory);    
         }
         
     }
