@@ -59,6 +59,8 @@ public class BpmnJsReport {
         html = html.replaceAll(PLACEHOLDER_TESTCLASS, testClass);
         if (testMethod != null) {
             html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "<div>TestMethod: " + testMethod + "</div>");            
+        } else {
+            html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "");
         }
 
 		return html;
