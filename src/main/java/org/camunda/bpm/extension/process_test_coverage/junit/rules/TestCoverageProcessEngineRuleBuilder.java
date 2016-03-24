@@ -22,31 +22,30 @@ public class TestCoverageProcessEngineRuleBuilder {
 	
 	/** @return a builder with typical method @Rule configuration */
 	public static TestCoverageProcessEngineRuleBuilder create() {
-        return createBase();
-//                .optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY);
+        return createBase()
+                .optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY);
     }
 
-//    public TestCoverageProcessEngineRuleBuilder optionalAssertCoverageAtLeastProperty(String key) {
-//        
-//        String assertAtLeast = System.getProperty(key);
-//        if (assertAtLeast != null) {
-//            try{ 
-//                
-//                final MinimalCoverageMatcher minimalCoverageMatcher = new MinimalCoverageMatcher(Double.parseDouble(assertAtLeast));
-//                rule.addIndividualAssertCoverageMatcher(minimalCoverageMatcher);
-//                
-//            }catch(NumberFormatException e) {
-//                throw new RuntimeException("BAD TEST CONFIGURATION: optionalAssertCoverageAtLeastProperty( \"" + key + "\" ) must be double");
-//            }
-//        }
-//        return this;
-//    }
+    public TestCoverageProcessEngineRuleBuilder optionalAssertCoverageAtLeastProperty(String key) {
+        
+        String assertAtLeast = System.getProperty(key);
+        if (assertAtLeast != null) {
+            try{ 
+                
+                final MinimalCoverageMatcher minimalCoverageMatcher = new MinimalCoverageMatcher(Double.parseDouble(assertAtLeast));
+                rule.addGlobalAssertCoverageMatcher(minimalCoverageMatcher);
+                
+            }catch(NumberFormatException e) {
+                throw new RuntimeException("BAD TEST CONFIGURATION: optionalAssertCoverageAtLeastProperty( \"" + key + "\" ) must be double");
+            }
+        }
+        return this;
+    }
 
 	/** @return a builder with typical method @ClassRule configuration */
 	public static TestCoverageProcessEngineRuleBuilder createClassRule() {
-		return createBase().reportCoverageAfter();
-//                .optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY)
- // makes sure we dont see traces from other runs;
+		return createBase().reportCoverageAfter()
+                .optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY);
 	}
 
 	/** @return a basic builder with nothing preconfigured */
@@ -79,22 +78,6 @@ public class TestCoverageProcessEngineRuleBuilder {
 		return this;
 		
 	}
-	
-//	public TestCoverageProcessEngineRuleBuilder assertIndividualCoverageAtLeast(double percentage) {
-//        
-//        if (0 > percentage || percentage > 1) {
-//            throw new RuntimeException("BAD TEST CONFIGURATION: coverageAtLeast " + percentage + " (" + 100*percentage + "%) ");
-//        }
-//        
-//        rule.addIndividualAssertCoverageMatcher(new MinimalCoverageMatcher(percentage));
-//        return this;
-//        
-//    }
-//
-//	public TestCoverageProcessEngineRuleBuilder assertIndividualCoverage(Matcher<Double> matcher) {
-//		rule.addIndividualAssertCoverageMatcher(Matchers.describedAs("coverage with %0", matcher, StringDescription.asString(matcher)));
-//		return this;
-//	}
 
 	public TestCoverageProcessEngineRule build() {
 		return rule;

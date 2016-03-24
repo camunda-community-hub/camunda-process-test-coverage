@@ -28,8 +28,11 @@ public class ProcessTestClassRulePropertyTest {
     static final double EXPECTED = PATH_B_ELEMENTS.length;
     static final double ALL = ALL_ELEMENTS.length;
     static final double EXPECTED_COVERAGE = EXPECTED / ALL;   
-
-    @BeforeClass
+    
+    static {
+        setSysProperty();
+    }
+    
     public static void setSysProperty() {
         System.setProperty(TestCoverageProcessEngineRuleBuilder.DEFAULT_ASSERT_AT_LEAST_PROPERTY,
                 "" + EXPECTED_COVERAGE);
@@ -42,7 +45,10 @@ public class ProcessTestClassRulePropertyTest {
     
     @ClassRule
     @Rule
-    public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.createClassRule().build();
+    public static TestCoverageProcessEngineRule classRule = 
+                    TestCoverageProcessEngineRuleBuilder.createClassRule()
+                    .optionalAssertCoverageAtLeastProperty(TestCoverageProcessEngineRuleBuilder.DEFAULT_ASSERT_AT_LEAST_PROPERTY)
+                    .build();
 
     @Test
     @Deployment(resources = BPMN_PATH)
