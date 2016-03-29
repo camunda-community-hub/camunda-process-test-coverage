@@ -23,7 +23,7 @@ public class ProcessTestClassRuleCoverageTest {
     @Rule
     @ClassRule
     public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder
-        .createClassRule().calculateGlobal().reportCoverageAfter().assertGlobalCoverageAtLeast(1.0).build();
+        .createClassRule().assertGlobalCoverageAtLeast(1.0).build();
 
     @Test
     @Deployment(resources = BPMN_PATH)

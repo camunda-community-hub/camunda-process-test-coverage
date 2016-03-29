@@ -19,16 +19,17 @@ import org.junit.Test;
  * Test case starting an in-memory database-backed Process Engine.
  */
 public class ProcessTestClassRuleHalfCoverageTest {
-    static final double EXPECTED = PATH_B_ELEMENTS.length;
-    static final double ALL = ALL_ELEMENTS.length;
-    static final double EXPECTED_COVERAGE =  EXPECTED / ALL;   
+    
+    private static final double EXPECTED = PATH_B_ELEMENTS.length;
+    private static final double ALL = ALL_ELEMENTS.length;
+    private static final double EXPECTED_COVERAGE =  EXPECTED / ALL;   
 
     // Note, if you assert a coverage on the ClassRule, it means if you run a
     // test without the others, it will probably fail
     @ClassRule
     @Rule
     public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.createClassRule()
-        .reportCoverageAfter().assertGlobalCoverageAtLeast(EXPECTED_COVERAGE).build();
+        .assertGlobalCoverageAtLeast(EXPECTED_COVERAGE).build();
     
     @Test
     @Deployment(resources = BPMN_PATH)

@@ -12,7 +12,7 @@ public class TestCoverageProcessEngineRuleBuilder {
 
     /** 
      * If you set this property to a ratio (e.g. "1.0" for full coverage), 
-     * the default @Rule and @ClassRule will fail the test run if the coverage is less.<br>
+     * the @ClassRule will fail the test run if the coverage is less.<br>
      * Example parameter for running java:<br>
      * <code>-Dorg.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST=1.0</code>
      */
@@ -52,16 +52,6 @@ public class TestCoverageProcessEngineRuleBuilder {
 	public static TestCoverageProcessEngineRuleBuilder createBase() {
 	    return new TestCoverageProcessEngineRuleBuilder();
 	}
-    
-    /**
-     * A global test coverage and report will be produced.
-     * 
-     * @return
-     */
-    public TestCoverageProcessEngineRuleBuilder calculateGlobal() {
-        rule.setCalculateGlobal(true);
-        return this;
-    }
 
 	public TestCoverageProcessEngineRuleBuilder reportCoverageAfter() {
 		rule.setReportCoverageWhenFinished(true);

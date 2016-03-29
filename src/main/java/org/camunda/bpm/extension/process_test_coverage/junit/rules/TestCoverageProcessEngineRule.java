@@ -214,19 +214,10 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         if (deploymentId != null) {
             
         	if (log.isLoggable(Level.FINE) || isReportCoverageWhenFinished()) {
-        	    // TODO change deployment coverage toString
         		log.log(Level.ALL, deploymentCoverage.toString());
         	}
         	
         }
-    }
-
-    public boolean isCalculateGlobal() {
-        return calculateGlobal;
-    }
-
-    public void setCalculateGlobal(boolean calculateGlobal) {
-        this.calculateGlobal = calculateGlobal;
     }
 
     public boolean isReportCoverageWhenFinished() {
