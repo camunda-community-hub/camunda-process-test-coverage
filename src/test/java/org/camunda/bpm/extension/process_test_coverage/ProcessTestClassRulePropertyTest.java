@@ -57,7 +57,7 @@ public class ProcessTestClassRulePropertyTest {
         variables.put("path", "B");
         classRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
         
-        classRule.assertTestCoverage("testPathB", lessThan(EXPECTED_COVERAGE + 0.0001));
+        classRule.addTestMethodCoverageAssertionMatcher("testPathB", lessThan(EXPECTED_COVERAGE + 0.0001));
     }
 
 

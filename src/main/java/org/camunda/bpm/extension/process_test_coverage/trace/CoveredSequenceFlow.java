@@ -1,23 +1,18 @@
 package org.camunda.bpm.extension.process_test_coverage.trace;
 
-import java.util.Date;
-
 public class CoveredSequenceFlow extends CoveredElement {
-
-	private Date timestamp;
 	
 	// relevant parts
 	private String coveredTransitionId;
 
-	public CoveredSequenceFlow(String processDefinitionId, String coveredTransitionId) {
-		this.timestamp = new Date();
+	public CoveredSequenceFlow(String processDefinitionKey, String coveredTransitionId) {
 		this.coveredTransitionId = coveredTransitionId;
-		this.processDefinitionId = processDefinitionId;
+		this.processDefinitionKey = processDefinitionKey;
 	}
 
 	@Override
-	public String getProcessDefinitionId() {
-		return processDefinitionId;
+	public String getProcessDefinitionKey() {
+		return processDefinitionKey;
 	}
 
 	@Override
@@ -27,8 +22,8 @@ public class CoveredSequenceFlow extends CoveredElement {
 
 	@Override
 	public String toString() {
-		return "CoveredSequenceFlow [coveredTransitionId=" + coveredTransitionId + ", processDefinitionId="
-				+ processDefinitionId + "]";
+		return "CoveredSequenceFlow [coveredTransitionId=" + coveredTransitionId + ", processDefinitionKey="
+				+ processDefinitionKey + "]";
 	}
 
 	@Override
@@ -36,7 +31,7 @@ public class CoveredSequenceFlow extends CoveredElement {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((coveredTransitionId == null) ? 0 : coveredTransitionId.hashCode());
-		result = prime * result + ((processDefinitionId == null) ? 0 : processDefinitionId.hashCode());
+		result = prime * result + ((processDefinitionKey == null) ? 0 : processDefinitionKey.hashCode());
 		return result;
 	}
 
@@ -54,10 +49,10 @@ public class CoveredSequenceFlow extends CoveredElement {
 				return false;
 		} else if (!coveredTransitionId.equals(other.coveredTransitionId))
 			return false;
-		if (processDefinitionId == null) {
-			if (other.processDefinitionId != null)
+		if (processDefinitionKey == null) {
+			if (other.processDefinitionKey != null)
 				return false;
-		} else if (!processDefinitionId.equals(other.processDefinitionId))
+		} else if (!processDefinitionKey.equals(other.processDefinitionKey))
 			return false;
 		return true;
 	}

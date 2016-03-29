@@ -30,7 +30,7 @@ public class CoverageBuilder {
 		return this;
 	}
 
-	public CoverageBuilder withExpectedFlowNodes(Set<FlowNode> flowNodes) {
+	public CoverageBuilder withDefinitionFlowNodes(Set<FlowNode> flowNodes) {
 		checkIsCollecting();
 		coverage.definitionFlowNodes = flowNodes;
 		return this;
@@ -39,7 +39,6 @@ public class CoverageBuilder {
 	public CoverageBuilder forProcess(ProcessDefinition processDefinition) {
 		checkIsCollecting();
 		coverage.processDefinition = processDefinition;
-		coverage.processDefinitionId = processDefinition.getId();
 		return this;
 	}
 
@@ -49,7 +48,7 @@ public class CoverageBuilder {
 		return this;
 	}
 	
-	public CoverageBuilder withExpectedSequenceFlows(Set<SequenceFlow> expectedSequenceFlows) {
+	public CoverageBuilder withDefinitionSequenceFlows(Set<SequenceFlow> expectedSequenceFlows) {
 		checkIsCollecting();
 		coverage.definitionSequenceFlows = expectedSequenceFlows;
 		return this;

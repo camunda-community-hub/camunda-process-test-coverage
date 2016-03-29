@@ -1,6 +1,6 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
-import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -14,17 +14,25 @@ import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.extension.process_test_coverage.Coverages;
-import org.camunda.bpm.extension.process_test_coverage.trace.DeploymentCoverage;
+import org.camunda.bpm.extension.process_test_coverage.CoverageReportUtil;
 import org.camunda.bpm.extension.process_test_coverage.trace.PathCoverageParseListener;
+import org.camunda.bpm.extension.process_test_coverage.trace.TestMethodCoverage;
 import org.camunda.bpm.extension.process_test_coverage.trace.TraceActivitiesHistoryEventHandler;
 import org.hamcrest.Matcher;
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.runner.Description;
 
 /**
- * Rule calculating the test coverage for a process definition. 
- * The coverage percentage is asserted and graphical coverage reports are generated, per class or per method.
+ * Rule handling the process test coverage for individual test methods and the whole class.
+ * Every coverage can be logged and asserted. Graphical reports can be generated for individual
+ * test method runs and for the class.
+ * 
+ * With the @Rule annotation the individual test method coverages are calculated, asserted and reported.
+ * With the @ClassRule annotation the individual test method coverages are summarized, asserted and reported.
+ * 
+ * This rule cannot be used as a @ClassRule without the @Rule annotation.
  *  
  * @author grossax
  * @author okicir
@@ -32,22 +40,40 @@ import org.junit.runner.Description;
  */
 public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
-	public static Logger log = Logger.getLogger(TestCoverageProcessEngineRule.class.getCanonicalName());
+	public static Logger logger = Logger.getLogger(TestCoverageProcessEngineRule.class.getCanonicalName());
 	
 	/**
 	 * The state of the current run (class and current method).
 	 */
-	private CoverageTestRunState testCoverageTestRunState;
-		
+	private CoverageTestRunState coverageTestRunState;
+	
+	/**
+	 * Controls run state initialization. {@see #initializeRunState(Description)}
+	 */
 	private boolean firstRun = true;
 	
-	// default access for builder
-	private boolean calculateGlobal = false;
+	/**
+	 * Log class and test method coverages?
+	 */
 	private boolean reportCoverageWhenFinished = false;
-	private Collection<Matcher<Double>> assertGlobalCoverageMatchers = new LinkedList<Matcher<Double>>();
+	
+	/**
+	 * Matchers to be asserted on the class coverage percentage.
+	 */
+	private Collection<Matcher<Double>> classCoverageAssertionMatchers = new LinkedList<Matcher<Double>>();
+	
+	/**
+	 * Matchers to be asserted on the individual test method coverages.
+	 */
 	private Map<String, Collection<Matcher<Double>>> testMethodNameToCoverageMatchers = new HashMap<String, Collection<Matcher<Double>>>();
 	
-	public void assertTestCoverage(final String testMethodName, final Matcher<Double> matcher) {
+	/**
+	 * Adds an assertion for a test method's coverage percentage.
+	 * 
+	 * @param testMethodName
+	 * @param matcher
+	 */
+	public void addTestMethodCoverageAssertionMatcher(String testMethodName, Matcher<Double> matcher) {
 	    
 	    // JDK7 ifAbsent
 	    Collection<Matcher<Double>> matchers = testMethodNameToCoverageMatchers.get(testMethodName);
@@ -60,142 +86,202 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 	    
 	}
 
-    public void addGlobalAssertCoverageMatcher(MinimalCoverageMatcher matcher) {
-        assertGlobalCoverageMatchers.add(matcher);        
-    }
-	
-	@Override
-	public org.junit.runners.model.Statement apply(org.junit.runners.model.Statement base, Description description) {
-	    return super.apply(base, description);
-	    
-	};
-	
-	@Override
-    protected void succeeded(Description description) {
-        super.succeeded(description);
-        log.info(description.getDisplayName() + " succeeded.");
-    }
-	
-    @Override
-    protected void failed(Throwable e, Description description) {
-        super.failed(e, description);
-        log.info(description.getDisplayName() + " failed.");
+	/**
+	 * Adds an assertion for the class coverage percentage.
+	 * 
+	 * @param matcher
+	 */
+    public void addClassCoverageAssertionMatcher(MinimalCoverageMatcher matcher) {
+        classCoverageAssertionMatchers.add(matcher);        
     }
 
 	@Override
 	public void starting(Description description) {
 	    
+	    validateRuleAnnotations(description);
+	    
 	    super.initializeProcessEngine();
 		
 	    initializeRunState(description);
+	    
+	    // Enable our coverage listeners
+	    configureProcessEngine();
 	    
 		super.starting(description);
 		
 		registerDeployments(description);
 	}
-
-    private void registerDeployments(Description description) {
-    
-        if (deploymentId != null) {
-
-            final List<ProcessDefinition> deployedProcessDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().deploymentId(deploymentId).list();
-            
-            testCoverageTestRunState.addDeployment(processEngine, deploymentId, 
-                    deployedProcessDefinitions, description.getMethodName());
-            
-        }
-    }
-    
-    
-    private void initializeRunState(final Description description) {
-                
-        // Initialize new state only on @ClasRule run
-        if (firstRun) {
-            
-            testCoverageTestRunState = new CoverageTestRunState();
-            
-            final ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-
-            final TraceActivitiesHistoryEventHandler historyEventHandler = (TraceActivitiesHistoryEventHandler) processEngineConfiguration.getHistoryEventHandler();
-            historyEventHandler.setTestCoverageRunState(testCoverageTestRunState);
-
-            final List<BpmnParseListener> bpmnParseListeners = processEngineConfiguration.getCustomPostBPMNParseListeners();
-            for (BpmnParseListener parseListener : bpmnParseListeners) {
-                if (parseListener instanceof PathCoverageParseListener) {
-                    final PathCoverageParseListener listener = (PathCoverageParseListener) parseListener;
-                    listener.setCoverageTestRunState(testCoverageTestRunState);
-                }
-            }
-            
-            firstRun = false;
-        }
-        
-        testCoverageTestRunState.setCurrentTestName(description.getMethodName());
-
-    }
-	
-	@Override
+  
+    @Override
     public void finished(Description description) {
 
-        // In case the class does not only contain bpmn tests
-        // TODO check if this is already taken care of by super
-        try {
+        handleTestMethodCoverage(description);
 
-            final Deployment deploymentAnnotation = description.getAnnotation(Deployment.class);
-            if (deploymentAnnotation != null) {
-
-                final String testName = description.getMethodName();
-                final DeploymentCoverage deploymentCoverage = testCoverageTestRunState.getDeploymentCoverage(testName);
-                
-                logCoverage(deploymentCoverage);
-
-                double coveragePercentage = deploymentCoverage.getCoveragePercentage();
-                log.info(testName + " process coverage is " + coveragePercentage);
-
-                Coverages.createTestMethodReport(processEngine,
-                        testCoverageTestRunState,
-                        description.getClassName(),
-                        testName,
-                        coveragePercentage);
-                
-                if (testMethodNameToCoverageMatchers.containsKey(testName)) {
-
-                    assertCoverage(coveragePercentage, testMethodNameToCoverageMatchers.get(testName));
-
-                }
-
-            }
-
-                handleGlobalCoverage(description);
-                
-            } catch (IOException e) {
-                
-                Assert.fail("Unable to load process definition resource!");
-                e.printStackTrace();
-                
-            }
+        handleClassCoverage(description);
 
         // run derived functionality
         super.finished(description);
 
     }
-	
-	private void handleGlobalCoverage(Description description) throws IOException {
-	            
-        // Calculate global coverage if requested and all individual tests done
-        if (!description.isTest()){
+    
+    /**
+     * Validates the annotation of the rule field in the test class.
+     * 
+     * @param description
+     */
+    private void validateRuleAnnotations(Description description) {
+        
+        // If the first run is a @ClassRule run, check if @Rule is annotated
+        if (firstRun && !description.isTest()) {
             
-            testCoverageTestRunState.assertAllDeploymentsEqual();
+            /* Get the fields of the test class and check if there is only one coverage rule
+                and if the coverage rule field is annotation with both @ClassRule and @Rule. */
             
-            // Calculate coverage
+            int numberOfCoverageRules = 0;
+            for (Field field : description.getTestClass().getFields()) {
+                
+                final Class<?> fieldType = field.getType();
+                if (getClass().isAssignableFrom(fieldType)) {
+                    
+                    ++numberOfCoverageRules;
+                    
+                    final boolean isClassRule = field.isAnnotationPresent(ClassRule.class);
+                    final boolean isRule = field.isAnnotationPresent(Rule.class);
+                    if (isClassRule && !isRule) {
+                        
+                        throw new RuntimeException(getClass().getCanonicalName() +
+                                " can only be used as a @ClassRule if it is also a @Rule!");
+                    }
+                }
+            }
             
-            final double classCoveragePercentage = testCoverageTestRunState.getClassCoverage();
-            log.info("finishing @ClassRule execution with coverage " + classCoveragePercentage);
+            // TODO if they really want to have multiple runs, let them?
+            if (numberOfCoverageRules > 1) {
+                throw new RuntimeException("Only one coverage rule can be used per test class!");
+            }
+        }
+    }
+
+	/**
+	 * Register the process deployments of the current test method with our run state.
+	 * 
+	 * @param description
+	 */
+    private void registerDeployments(Description description) {
+    
+        if (deploymentId != null) {
+
+            final List<ProcessDefinition> deployedProcessDefinitions = processEngine.getRepositoryService()
+                    .createProcessDefinitionQuery().deploymentId(deploymentId).list();
+            
+            coverageTestRunState.addTestMethodRun(processEngine, deploymentId, 
+                    deployedProcessDefinitions, description.getMethodName());
+            
+        }
+    }
+    
+    /**
+     * Initialize the coverage run state depending on the rule annotations and notify the state of the current test name.
+     * 
+     * @param description
+     */
+    private void initializeRunState(final Description description) {
+                
+        // Initialize new state once on @ClassRule run or on every individual @Rule run
+        if (firstRun) {
+            
+            coverageTestRunState = new CoverageTestRunState();
+            coverageTestRunState.setClassName(description.getClassName());
+            
+            firstRun = false;
+        }
+        
+        coverageTestRunState.setCurrentTestName(description.getMethodName());
+
+    }
+
+    /** 
+     * Configures the process engine listeners responsible for the coverage logging.
+     * 
+     */
+    private void configureProcessEngine() {
+        
+        final ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
+
+        // Configure activities listener
+        
+        final TraceActivitiesHistoryEventHandler historyEventHandler = (TraceActivitiesHistoryEventHandler) processEngineConfiguration.getHistoryEventHandler();
+        historyEventHandler.setTestCoverageRunState(coverageTestRunState);
+
+        // Configure sequence flow listener
+        
+        final List<BpmnParseListener> bpmnParseListeners = processEngineConfiguration.getCustomPostBPMNParseListeners();
+        for (BpmnParseListener parseListener : bpmnParseListeners) {
+            
+            if (parseListener instanceof PathCoverageParseListener) {
+                
+                final PathCoverageParseListener listener = (PathCoverageParseListener) parseListener;
+                listener.setCoverageTestRunState(coverageTestRunState);
+            }
+        }
+    }
+
+    /**
+     * Logs and asserts the test method coverage and creates a graphical report.
+     * 
+     * @param description
+     */
+    private void handleTestMethodCoverage(Description description) {
+        
+        // Do test method coverage only if deployments present
+        final Deployment deploymentAnnotation = description.getAnnotation(Deployment.class);
+        if (deploymentAnnotation != null) {
+
+            final String testName = description.getMethodName();
+            final TestMethodCoverage testCoverage = coverageTestRunState.getTestMethodCoverage(testName);
+
+            logCoverage(testCoverage);
+
+            double coveragePercentage = testCoverage.getCoveragePercentage();
+            logger.info(testName + " process coverage is " + coveragePercentage);
 
             // Create graphical report
-            Coverages.createClassReport(processEngine, testCoverageTestRunState, description.getClassName(), classCoveragePercentage);
+            CoverageReportUtil.createCurrentTestMethodReport(processEngine,
+                    coverageTestRunState,
+                    coveragePercentage);
+
+            if (testMethodNameToCoverageMatchers.containsKey(testName)) {
+
+                assertCoverage(coveragePercentage, testMethodNameToCoverageMatchers.get(testName));
+
+            }
+
+        }
+    }
+	
+    /**
+     * If the rule is a @ClassRule log and assert the coverage and create a graphical report.
+     * For the class coverage to work all the test method deployments have to be equal.
+     *  
+     * @param description
+     */
+	private void handleClassCoverage(Description description) {
+	            
+        // If the rule is a class rule get the class coverage
+        if (!description.isTest()){
             
-            assertCoverage(classCoveragePercentage, assertGlobalCoverageMatchers);
+            final TestClassCoverage classCoverage = coverageTestRunState.getClassCoverage();
+
+            // Make sure the class coverage deals with the same deployments for every test method
+            classCoverage.assertAllDeploymentsEqual();
+            
+            final double classCoveragePercentage = classCoverage.getCoveragePercentage();
+            logger.info("finishing @ClassRule execution with coverage " + classCoveragePercentage);
+
+            // Create graphical report
+            CoverageReportUtil.createClassReport(processEngine, coverageTestRunState, description.getClassName(), classCoveragePercentage);
+            
+            assertCoverage(classCoveragePercentage, classCoverageAssertionMatchers);
                                    
         }
 	}
@@ -209,12 +295,12 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         
 	}
 
-    private void logCoverage(DeploymentCoverage deploymentCoverage) {
+    private void logCoverage(TestMethodCoverage deploymentCoverage) {
         
         if (deploymentId != null) {
             
-        	if (log.isLoggable(Level.FINE) || isReportCoverageWhenFinished()) {
-        		log.log(Level.ALL, deploymentCoverage.toString());
+        	if (logger.isLoggable(Level.FINE) || isReportCoverageWhenFinished()) {
+        		logger.log(Level.ALL, deploymentCoverage.toString());
         	}
         	
         }
@@ -228,4 +314,22 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         this.reportCoverageWhenFinished = reportCoverageWhenFinished;
     }
 
+    @Override
+    public org.junit.runners.model.Statement apply(org.junit.runners.model.Statement base, Description description) {
+        return super.apply(base, description);
+        
+    };
+    
+    @Override
+    protected void succeeded(Description description) {
+        super.succeeded(description);
+        logger.info(description.getDisplayName() + " succeeded.");
+    }
+    
+    @Override
+    protected void failed(Throwable e, Description description) {
+        super.failed(e, description);
+        logger.info(description.getDisplayName() + " failed.");
+    }
+    
 }

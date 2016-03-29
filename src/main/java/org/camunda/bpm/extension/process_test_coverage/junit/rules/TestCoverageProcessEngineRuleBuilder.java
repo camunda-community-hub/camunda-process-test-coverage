@@ -33,7 +33,7 @@ public class TestCoverageProcessEngineRuleBuilder {
             try{ 
                 
                 final MinimalCoverageMatcher minimalCoverageMatcher = new MinimalCoverageMatcher(Double.parseDouble(assertAtLeast));
-                rule.addGlobalAssertCoverageMatcher(minimalCoverageMatcher);
+                rule.addClassCoverageAssertionMatcher(minimalCoverageMatcher);
                 
             }catch(NumberFormatException e) {
                 throw new RuntimeException("BAD TEST CONFIGURATION: optionalAssertCoverageAtLeastProperty( \"" + key + "\" ) must be double");
@@ -64,7 +64,7 @@ public class TestCoverageProcessEngineRuleBuilder {
 			throw new RuntimeException("BAD TEST CONFIGURATION: coverageAtLeast " + percentage + " (" + 100*percentage + "%) ");
 		}
 		
-		rule.addGlobalAssertCoverageMatcher(new MinimalCoverageMatcher(percentage));
+		rule.addClassCoverageAssertionMatcher(new MinimalCoverageMatcher(percentage));
 		return this;
 		
 	}

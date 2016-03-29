@@ -1,5 +1,6 @@
 package org.camunda.bpm.extension.process_test_coverage.trace;
 
+import org.camunda.bpm.engine.delegate.ExecutionListener;
 import org.camunda.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;
 import org.camunda.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.camunda.bpm.engine.impl.util.xml.Element;
@@ -22,8 +23,7 @@ public class PathCoverageParseListener extends AbstractBpmnParseListener {
         final PathCoverageExecutionListener pathCoverageExecutionListener = new PathCoverageExecutionListener();
         pathCoverageExecutionListener.setCoverageTestRunState(coverageTestRunState);
         
-        // XXX deprecated - anybody with a better way please step up
-		transition.addExecutionListener(pathCoverageExecutionListener);
+		transition.addListener(ExecutionListener.EVENTNAME_TAKE, pathCoverageExecutionListener);
 	};
 	
 	public void setCoverageTestRunState(CoverageTestRunState coverageTestRunState) {

@@ -1,25 +1,25 @@
 package org.camunda.bpm.extension.process_test_coverage.trace;
 
-import org.camunda.bpm.extension.process_test_coverage.trace.builderapi.CoveredElementWithProcessDefinitionId;
+import org.camunda.bpm.extension.process_test_coverage.trace.builderapi.CoveredElementWithProcessDefinitionKey;
 import org.camunda.bpm.extension.process_test_coverage.trace.builderapi.FinishedBuilder;
 
 /**
  * A builder for {@link CoveredElement} instances. A fluent API via interfaces is provided.
  */
-public class CoveredElementBuilder implements CoveredElementWithProcessDefinitionId, FinishedBuilder {
+public class CoveredElementBuilder implements CoveredElementWithProcessDefinitionKey, FinishedBuilder {
 
 	/** Entry point to building a {@link CoveredElement} */
-	public static CoveredElementWithProcessDefinitionId createTrace(String processDefinitionId) {
-		return new CoveredElementBuilder(processDefinitionId);
+	public static CoveredElementWithProcessDefinitionKey createTrace(String processDefinitionKey) {
+		return new CoveredElementBuilder(processDefinitionKey);
 	}
 
 	/* Implementation */
 	private String activityId;
 	private String currentTransitionId;
-	private String processDefinitionId;
+	private String processDefinitionKey;
 	
-	private CoveredElementBuilder(String processDefinitionId) {
-		this.processDefinitionId = processDefinitionId;
+	private CoveredElementBuilder(String processDefinitionKey) {
+		this.processDefinitionKey = processDefinitionKey;
 	}
 
 	public CoveredElementBuilder withCurrentTransitionId(String currentTransitionId) {
@@ -34,10 +34,10 @@ public class CoveredElementBuilder implements CoveredElementWithProcessDefinitio
 
 	public CoveredElement build() {
 		if (activityId != null ) {
-			return new CoveredActivity(processDefinitionId, activityId);
+			return new CoveredActivity(processDefinitionKey, activityId);
 		}
 		if (currentTransitionId != null ) {
-			return new CoveredSequenceFlow(processDefinitionId, currentTransitionId);
+			return new CoveredSequenceFlow(processDefinitionKey, currentTransitionId);
 		}
 		throw new IllegalStateException("Badly configured builder. That is impossible.");
 	}

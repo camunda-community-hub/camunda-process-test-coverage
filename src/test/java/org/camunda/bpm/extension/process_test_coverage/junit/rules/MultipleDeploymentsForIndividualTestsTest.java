@@ -29,8 +29,8 @@ public class MultipleDeploymentsForIndividualTestsTest {
         variables.put("superPath", "A");
         rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
         
-        rule.assertTestCoverage("testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered", greaterThan(6.9 / 11.0));
-        rule.assertTestCoverage("testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered", lessThan(9 / 11.0));
+        rule.addTestMethodCoverageAssertionMatcher("testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered", greaterThan(6.9 / 11.0));
+        rule.addTestMethodCoverageAssertionMatcher("testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered", lessThan(9 / 11.0));
 
     }
 
@@ -44,7 +44,7 @@ public class MultipleDeploymentsForIndividualTestsTest {
         
         rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
         
-        rule.assertTestCoverage("testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered", greaterThan(6.9 / 11.0));
-        rule.assertTestCoverage("testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered", lessThan(9 / 11.0));
+        rule.addTestMethodCoverageAssertionMatcher("testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered", greaterThan(6.9 / 11.0));
+        rule.addTestMethodCoverageAssertionMatcher("testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered", lessThan(9 / 11.0));
     }
 }

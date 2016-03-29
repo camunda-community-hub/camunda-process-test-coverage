@@ -25,42 +25,45 @@ public class BpmnJsReport {
   protected static final String PLACEHOLDER_ANNOTATIONS = "          //YOUR ANNOTATIONS GO HERE";
   protected static final String PLACEHOLDER_BPMN_XML = "YOUR BPMN XML CONTENT";
   
-  protected static final String SEQUENCEFLOW_ANNOTATION_PREFIX = "\\$( \"g[data-element-id*='";
+  protected static final String SEQUENCEFLOW_ANNOTATION_PREFIX = "\\$( \"g[data-element-id='";
   protected static final String SEQUENCEFLOW_ANNOTATION_POSTFIX  = "']\" ).find('path').attr('stroke', '#00ff00');\n";
 
   public static void highlightFlowNodesAndSequenceFlows(String bpmnXml, Collection<String> activityIds, 
           Collection<String> sequenceFlowIds, String reportName, String processDefinitionKey, 
-          double coverage, String testClass, String testMethod, String targetDir) throws IOException {
+          double coverage, String testClass, String testMethod, boolean classReport, String targetDir) throws IOException {
       
-    String flowNodeAnnotations = generateJavaScriptFlowNodeAnnotations(activityIds);
+    final String flowNodeAnnotations = generateJavaScriptFlowNodeAnnotations(activityIds);
     final String sequenceFlowAnnotations = generateJavaScriptSequenceFlowAnnotations(sequenceFlowIds);
-    String html = generateHtml((flowNodeAnnotations + sequenceFlowAnnotations), 
-            bpmnXml, processDefinitionKey, coverage, testClass, testMethod);
+    final String annotations = flowNodeAnnotations + sequenceFlowAnnotations;
+    
+    final String html = generateHtml(annotations, bpmnXml, processDefinitionKey, coverage, testClass, testMethod, classReport);
     writeToFile(targetDir, reportName, html);
     
   }
 
   protected static String generateHtml(String javaScript, String bpmnXml,
-          String processDefinitionKey, double coverage, String testClass, String testMethod) throws IOException {
-		String html = IOUtils.toString(Coverages.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE));
+          String processDefinitionKey, double coverage, String testClass, 
+          String testMethod, boolean classReport) throws IOException {
+      
+		String html = IOUtils.toString(CoverageReportUtil.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE));
 		return injectIntoHtmlTemplate(javaScript, bpmnXml, html, processDefinitionKey, coverage,
-		        testClass, testMethod);
+		        testClass, testMethod, classReport);
 	}
 
   protected static String injectIntoHtmlTemplate(
           String javaScript, String bpmnXml,
           String html, String processDefinitionKey,
           double coverage, String testClass,
-          String testMethod) {
+          String testMethod, boolean classReport) {
 		html = html.replace(PLACEHOLDER_BPMN_XML, StringEscapeUtils.escapeEcmaScript(bpmnXml));
 		html = html.replaceAll(PLACEHOLDER_ANNOTATIONS, javaScript + PLACEHOLDER_ANNOTATIONS);
 		html = html.replaceAll(PLACEHOLDER_PROCESS_KEY, processDefinitionKey);
 		html = html.replaceAll(PLACEHOLDER_COVERAGE, getCoveragePercent(coverage));
         html = html.replaceAll(PLACEHOLDER_TESTCLASS, testClass);
-        if (testMethod != null) {
-            html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "<div>TestMethod: " + testMethod + "</div>");            
-        } else {
+        if (classReport) {
             html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "");
+        } else {
+            html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "<div>TestMethod: " + testMethod + "</div>");            
         }
 
 		return html;

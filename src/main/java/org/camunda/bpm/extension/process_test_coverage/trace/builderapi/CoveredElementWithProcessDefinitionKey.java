@@ -6,7 +6,7 @@ import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElementBuild
  * Interface for restricting functionality to the current role of
  * {@link CoveredElementBuilder}
  */
-public interface CoveredElementWithProcessDefinitionId {
+public interface CoveredElementWithProcessDefinitionKey {
 	public FinishedBuilder withCurrentTransitionId(String currentTransitionId);
 	public FinishedBuilder withActivityId(String activityId);
 }

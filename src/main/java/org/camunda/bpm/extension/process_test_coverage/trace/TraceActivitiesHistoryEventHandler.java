@@ -30,8 +30,8 @@ public class TraceActivitiesHistoryEventHandler extends DbHistoryEventHandler im
             if (activityEvent.getStartTime() != null) {
                 
                 CoveredElement activity = CoveredElementBuilder.createTrace(
-                        activityEvent.getProcessDefinitionId()).withActivityId(activityEvent.getActivityId()).build();
-                testCoverageTestRunState.notifyCoveredElement(activity);
+                        activityEvent.getProcessDefinitionKey()).withActivityId(activityEvent.getActivityId()).build();
+                testCoverageTestRunState.addCoveredElement(activity);
                 
             } else {
                 // Skipping end event

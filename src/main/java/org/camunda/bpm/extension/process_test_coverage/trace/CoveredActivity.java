@@ -4,9 +4,9 @@ public class CoveredActivity extends CoveredElement {
 
 	private final String activityId;
 
-	public CoveredActivity(String processDefinitionId, String activityId) {
+	public CoveredActivity(String processDefinitionKey, String activityId) {
 		this.activityId = activityId;
-		this.processDefinitionId = processDefinitionId;
+		this.processDefinitionKey = processDefinitionKey;
 	}
 
 	@Override
@@ -16,7 +16,7 @@ public class CoveredActivity extends CoveredElement {
 
 	@Override
 	public String toString() {
-		return "CoveredActivity [activityId=" + activityId + ", processDefinitionId=" + processDefinitionId + "]";
+		return "CoveredActivity [activityId=" + activityId + ", processDefinitionKey=" + processDefinitionKey + "]";
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class CoveredActivity extends CoveredElement {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((activityId == null) ? 0 : activityId.hashCode());
-		result = prime * result + ((processDefinitionId == null) ? 0 : processDefinitionId.hashCode());
+		result = prime * result + ((processDefinitionKey == null) ? 0 : processDefinitionKey.hashCode());
 		return result;
 	}
 
@@ -42,10 +42,10 @@ public class CoveredActivity extends CoveredElement {
 				return false;
 		} else if (!activityId.equals(other.activityId))
 			return false;
-		if (processDefinitionId == null) {
-			if (other.processDefinitionId != null)
+		if (processDefinitionKey == null) {
+			if (other.processDefinitionKey != null)
 				return false;
-		} else if (!processDefinitionId.equals(other.processDefinitionId))
+		} else if (!processDefinitionKey.equals(other.processDefinitionKey))
 			return false;
 		return true;
 	}

@@ -27,7 +27,7 @@ public class MinimalCoverageMatcher extends BaseMatcher<Double> {
 
 	private double actualPercentage(Object item) {
 		if (item instanceof ProcessCoverage) {
-			return ((ProcessCoverage) item).getActualPercentage();
+			return ((ProcessCoverage) item).getCoveragePercentage();
 		}
 		if (item instanceof Number) {
 			return (double) ((Number) item).doubleValue();

@@ -2,15 +2,15 @@ package org.camunda.bpm.extension.process_test_coverage.trace;
 
 public abstract class CoveredElement {
     
-    protected String processDefinitionId;
+    protected String processDefinitionKey;
     
     public abstract String getElementId();
     
-    public String getProcessDefinitionId() {
-        return processDefinitionId;
+    public String getProcessDefinitionKey() {
+        return processDefinitionKey;
     }
-    public void setProcessDefinitionId(String processDefinitionId) {
-        this.processDefinitionId = processDefinitionId;
+    public void setProcessDefinitionKey(String processDefinitionKey) {
+        this.processDefinitionKey = processDefinitionKey;
     }
     
 }
