@@ -1,9 +1,4 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
-
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
-import org.hamcrest.StringDescription;
-
 /**
  * Fluent Builder for TestCoverageProcessEngineRule.
  *
