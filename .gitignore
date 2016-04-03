@@ -6,3 +6,5 @@ target/
 .classpath
 .project
 .settings/
+# GitHub Pages
+javadoc
