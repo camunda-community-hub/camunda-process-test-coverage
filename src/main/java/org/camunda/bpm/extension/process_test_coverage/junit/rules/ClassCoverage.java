@@ -1,6 +1,5 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -9,11 +8,10 @@ import java.util.TreeSet;
 
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.Coverage;
-import org.camunda.bpm.extension.process_test_coverage.ProcessCoverage;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredActivity;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredSequenceFlow;
-import org.camunda.bpm.extension.process_test_coverage.trace.TestMethodCoverage;
+import org.camunda.bpm.extension.process_test_coverage.trace.MethodCoverage;
 import org.camunda.bpm.extension.process_test_coverage.util.CoveredElementComparator;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
@@ -25,12 +23,12 @@ import org.junit.Assert;
  * @author okicir
  *
  */
-public class TestClassCoverage implements Coverage {
+public class ClassCoverage implements Coverage {
     
     /**
      * Map connecting the test method to the test method run coverage.
      */
-    private Map<String, TestMethodCoverage> testToDeploymentCoverage = new HashMap<String, TestMethodCoverage>();
+    private Map<String, MethodCoverage> testToDeploymentCoverage = new HashMap<String, MethodCoverage>();
 
     /**
      * Adds a covered element to the test method coverage.
@@ -48,7 +46,7 @@ public class TestClassCoverage implements Coverage {
      * @param testName The name of the test method.
      * @return
      */
-    public TestMethodCoverage getTestMethodCoverage(String testName) {
+    public MethodCoverage getTestMethodCoverage(String testName) {
         return testToDeploymentCoverage.get(testName);
     }
     
@@ -58,7 +56,7 @@ public class TestClassCoverage implements Coverage {
      * @param testName
      * @param testCoverage
      */
-    public void addTestMethodCoverage(String testName, TestMethodCoverage testCoverage) {
+    public void addTestMethodCoverage(String testName, MethodCoverage testCoverage) {
         testToDeploymentCoverage.put(testName, testCoverage);
     }
     
@@ -72,7 +70,7 @@ public class TestClassCoverage implements Coverage {
     public double getCoveragePercentage() {
         
         // All deployments must be the same, so we take the first one
-        final TestMethodCoverage anyDeployment = getAnyDeployment();
+        final MethodCoverage anyDeployment = getAnyMethodCoverage();
         
         final Set<FlowNode> definitionsFlowNodes = anyDeployment.getProcessDefinitionsFlowNodes();
         final Set<SequenceFlow> definitionsSeqenceFlows = anyDeployment.getProcessDefinitionsSequenceFlows();
@@ -86,23 +84,32 @@ public class TestClassCoverage implements Coverage {
         return coveredElementsCount / bpmnElementsCount;
     }
     
+    /**
+     * Retrieves the covered flow nodes.
+     * Flow nodes with the same element ID but different process definition keys are retained. {@see CoveredElementComparator}
+     * 
+     * @return A set of covered flow nodes.
+     */
     public Set<CoveredActivity> getCoveredFlowNodes() {
 
         final Set<CoveredActivity> coveredFlowNodes = new TreeSet<CoveredActivity>(CoveredElementComparator.instance());
 
-        for (TestMethodCoverage deploymentCoverage : testToDeploymentCoverage.values()) {
+        for (MethodCoverage deploymentCoverage : testToDeploymentCoverage.values()) {
 
             coveredFlowNodes.addAll(deploymentCoverage.getCoveredFlowNodes());
-
         }
 
         return coveredFlowNodes;
     }
     
+    /**
+     * Retrieves a set of covered flow node IDs for the given process definition key.
+     * 
+     */
     public Set<String> getCoveredFlowNodeIds(String processDefinitionKey) {
         
         final Set<String> coveredFlowNodeIds = new HashSet<String>();
-        for (TestMethodCoverage methodCoverage : testToDeploymentCoverage.values()) {
+        for (MethodCoverage methodCoverage : testToDeploymentCoverage.values()) {
 
             coveredFlowNodeIds.addAll(methodCoverage.getCoveredFlowNodeIds(processDefinitionKey));
         }
@@ -110,11 +117,17 @@ public class TestClassCoverage implements Coverage {
         return coveredFlowNodeIds;
     }
     
+    /**
+     * Retrieves the covered sequence flows.
+     * Sequence flows with the same element ID but different process definition keys are retained. {@see CoveredElementComparator}
+     * 
+     * @return A set of covered flow nodes.
+     */
     public Set<CoveredSequenceFlow> getCoveredSequenceFlows() {
 
         final Set<CoveredSequenceFlow> coveredSequenceFlows = new TreeSet<CoveredSequenceFlow>(CoveredElementComparator.instance());
 
-        for (TestMethodCoverage deploymentCoverage : testToDeploymentCoverage.values()) {
+        for (MethodCoverage deploymentCoverage : testToDeploymentCoverage.values()) {
 
             coveredSequenceFlows.addAll(deploymentCoverage.getCoveredSequenceFlows());
 
@@ -122,11 +135,15 @@ public class TestClassCoverage implements Coverage {
 
         return coveredSequenceFlows;
     }
-    
+
+    /**
+     * Retrieves a set of covered sequence flow IDs for the given process definition key.
+     * 
+     */
     public Set<String> getCoveredSequenceFlowIds(String processDefinitionKey) {
         
         final Set<String> coveredSequenceFlowIds = new HashSet<String>();
-        for (TestMethodCoverage methodCoverage : testToDeploymentCoverage.values()) {
+        for (MethodCoverage methodCoverage : testToDeploymentCoverage.values()) {
             
             coveredSequenceFlowIds.addAll(methodCoverage.getCoveredSequenceFlowIds(processDefinitionKey));
         }
@@ -134,43 +151,42 @@ public class TestClassCoverage implements Coverage {
         return coveredSequenceFlowIds;
     }
     
-    public Set<ProcessCoverage> getProcessCoverages() {
-        
-        final Set<ProcessCoverage> classCoverages = new HashSet<ProcessCoverage>();
-        for (TestMethodCoverage deploymentCoverage : testToDeploymentCoverage.values()) {
-            
-            final Collection<ProcessCoverage> processCoverages = deploymentCoverage.getProcessCoverages();
-            classCoverages.addAll(processCoverages);
-            
-        }
-        
-        return classCoverages;
-    }
-    
+    /**
+     * Retrieves the process definitions of the coverage test.
+     * Since there are multiple deployments (one for each test method) the first
+     * set of process definitions found is return.
+     */
     public Set<ProcessDefinition> getProcessDefinitions() {
-        return getAnyDeployment().getProcessDefinitions();
+        return getAnyMethodCoverage().getProcessDefinitions();
     }
     
-    private TestMethodCoverage getAnyDeployment() {
+    /**
+     * Retrieves the first method coverage found.
+     * 
+     * @return
+     */
+    private MethodCoverage getAnyMethodCoverage() {
         
         // All deployments must be the same, so we take the first one
-        final TestMethodCoverage anyDeployment = testToDeploymentCoverage.values().iterator().next();
+        final MethodCoverage anyDeployment = testToDeploymentCoverage.values().iterator().next();
         return anyDeployment;
-    }    
+    }
     
+    /**
+     * Asserts if all method deployments are equal. (BPMNs with the same business keys) 
+     */
     public void assertAllDeploymentsEqual() {
         
         Set<ProcessDefinition> processDefinitions = null;
-        for (TestMethodCoverage deploymentCoverage : testToDeploymentCoverage.values()) {
+        for (MethodCoverage methodCoverage : testToDeploymentCoverage.values()) {
             
-            Set<ProcessDefinition> deploymentProcessDefinitions = deploymentCoverage.getProcessDefinitions();
+            Set<ProcessDefinition> deploymentProcessDefinitions = methodCoverage.getProcessDefinitions();
             
             if (processDefinitions == null) {
                 processDefinitions = deploymentProcessDefinitions;
             }
                 
-            // TODO check resource names instead of set equality with some unknown comparator
-            Assert.assertEquals("Class coverage can only be calculated if all test deploy the same process definition", 
+            Assert.assertEquals("Class coverage can only be calculated if all tests deploy the same BPMN resources.", 
                     processDefinitions, deploymentProcessDefinitions);
             
         }

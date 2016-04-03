@@ -1,20 +1,15 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.extension.process_test_coverage.CoverageBuilder;
+import org.camunda.bpm.extension.process_test_coverage.ProcessCoverageBuilder;
 import org.camunda.bpm.extension.process_test_coverage.ProcessCoverage;
 import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
-import org.camunda.bpm.extension.process_test_coverage.trace.TestMethodCoverage;
-import org.camunda.bpm.model.bpmn.BpmnModelInstance;
-import org.camunda.bpm.model.bpmn.instance.FlowNode;
-import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
+import org.camunda.bpm.extension.process_test_coverage.trace.MethodCoverage;
 
 /**
  * State tracking the current class and method coverage run.
@@ -29,7 +24,7 @@ public class CoverageTestRunState {
 	/**
 	 * The actual class coverage object.
 	 */
-    private TestClassCoverage classCoverage = new TestClassCoverage();
+    private ClassCoverage classCoverage = new ClassCoverage();
     
     /**
      * The test class name.
@@ -67,22 +62,14 @@ public class CoverageTestRunState {
 	public void addTestMethodRun(ProcessEngine processEngine, String deploymentId, 
 	        List<ProcessDefinition> processDefinitions, String testName) {
 	    
-	    final TestMethodCoverage testCoverage = new TestMethodCoverage(deploymentId);
+	    final MethodCoverage testCoverage = new MethodCoverage(deploymentId);
 	    for (ProcessDefinition processDefinition : processDefinitions) {
-	        
-	        final String processDefinitionId = processDefinition.getId();
-	        
-	        // Get the BPMN model elements
-	        
-	        BpmnModelInstance modelInstance = processEngine.getRepositoryService().getBpmnModelInstance(processDefinitionId);
-	        Set<FlowNode> flowNodes = new HashSet<FlowNode>(modelInstance.getModelElementsByType(FlowNode.class));
-	        Set<SequenceFlow> sequenceFlows = new HashSet<SequenceFlow>(modelInstance.getModelElementsByType(SequenceFlow.class));
 	        
 	        // Construct the pristine coverage object
 	        
 	        // TODO decide on the builders fate 
-	        final ProcessCoverage processCoverage = CoverageBuilder.createFlowNodeCoverage().forProcess(processDefinition)
-	            .withDefinitionFlowNodes(flowNodes).withDefinitionSequenceFlows(sequenceFlows).build();
+	        final ProcessCoverage processCoverage = ProcessCoverageBuilder.createFlowNodeAndSequenceFlowCoverage(processEngine)
+	                .forProcess(processDefinition).build();
 	        
 	        testCoverage.addProcessCoverage(processCoverage);
 	    }
@@ -96,7 +83,7 @@ public class CoverageTestRunState {
 	 * @param testName
 	 * @return
 	 */
-	public TestMethodCoverage getTestMethodCoverage(String testName) {
+	public MethodCoverage getTestMethodCoverage(String testName) {
 	    return classCoverage.getTestMethodCoverage(testName);
 	}
 	
@@ -105,7 +92,7 @@ public class CoverageTestRunState {
 	 * 
 	 * @return
 	 */
-	public TestMethodCoverage getCurrentTestMethodCoverage() {
+	public MethodCoverage getCurrentTestMethodCoverage() {
         return classCoverage.getTestMethodCoverage(currentTestName);
     }
 	
@@ -114,7 +101,7 @@ public class CoverageTestRunState {
 	 * 
 	 * @return
 	 */
-	public TestClassCoverage getClassCoverage() {
+	public ClassCoverage getClassCoverage() {
 	    return classCoverage;
 	}
 	

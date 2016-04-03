@@ -15,9 +15,9 @@ import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.CoverageReportUtil;
+import org.camunda.bpm.extension.process_test_coverage.trace.FlowNodeHistoryEventHandler;
+import org.camunda.bpm.extension.process_test_coverage.trace.MethodCoverage;
 import org.camunda.bpm.extension.process_test_coverage.trace.PathCoverageParseListener;
-import org.camunda.bpm.extension.process_test_coverage.trace.TestMethodCoverage;
-import org.camunda.bpm.extension.process_test_coverage.trace.TraceActivitiesHistoryEventHandler;
 import org.hamcrest.Matcher;
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -207,15 +207,16 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     private void configureProcessEngine() {
         
         final ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
-
+    
         // Configure activities listener
         
-        final TraceActivitiesHistoryEventHandler historyEventHandler = (TraceActivitiesHistoryEventHandler) processEngineConfiguration.getHistoryEventHandler();
-        historyEventHandler.setTestCoverageRunState(coverageTestRunState);
-
+        final FlowNodeHistoryEventHandler historyEventHandler = new FlowNodeHistoryEventHandler(coverageTestRunState);
+        processEngineConfiguration.setHistoryEventHandler(historyEventHandler);
+    
         // Configure sequence flow listener
         
         final List<BpmnParseListener> bpmnParseListeners = processEngineConfiguration.getCustomPostBPMNParseListeners();
+        
         for (BpmnParseListener parseListener : bpmnParseListeners) {
             
             if (parseListener instanceof PathCoverageParseListener) {
@@ -238,7 +239,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         if (deploymentAnnotation != null) {
 
             final String testName = description.getMethodName();
-            final TestMethodCoverage testCoverage = coverageTestRunState.getTestMethodCoverage(testName);
+            final MethodCoverage testCoverage = coverageTestRunState.getTestMethodCoverage(testName);
 
             logCoverage(testCoverage);
 
@@ -246,9 +247,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             logger.info(testName + " process coverage is " + coveragePercentage);
 
             // Create graphical report
-            CoverageReportUtil.createCurrentTestMethodReport(processEngine,
-                    coverageTestRunState,
-                    coveragePercentage);
+            CoverageReportUtil.createCurrentTestMethodReport(processEngine, coverageTestRunState);
 
             if (testMethodNameToCoverageMatchers.containsKey(testName)) {
 
@@ -270,7 +269,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         // If the rule is a class rule get the class coverage
         if (!description.isTest()){
             
-            final TestClassCoverage classCoverage = coverageTestRunState.getClassCoverage();
+            final ClassCoverage classCoverage = coverageTestRunState.getClassCoverage();
 
             // Make sure the class coverage deals with the same deployments for every test method
             classCoverage.assertAllDeploymentsEqual();
@@ -279,7 +278,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             logger.info("finishing @ClassRule execution with coverage " + classCoveragePercentage);
 
             // Create graphical report
-            CoverageReportUtil.createClassReport(processEngine, coverageTestRunState, description.getClassName(), classCoveragePercentage);
+            CoverageReportUtil.createClassReport(processEngine, coverageTestRunState);
             
             assertCoverage(classCoveragePercentage, classCoverageAssertionMatchers);
                                    
@@ -295,7 +294,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         
 	}
 
-    private void logCoverage(TestMethodCoverage deploymentCoverage) {
+    private void logCoverage(MethodCoverage deploymentCoverage) {
         
         if (deploymentId != null) {
             

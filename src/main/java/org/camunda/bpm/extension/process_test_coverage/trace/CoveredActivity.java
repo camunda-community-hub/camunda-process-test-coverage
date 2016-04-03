@@ -1,7 +1,17 @@
 package org.camunda.bpm.extension.process_test_coverage.trace;
 
+/**
+ * An activity covered by a test.
+ * 
+ * @author grossax
+ * @author okicir
+ *
+ */
 public class CoveredActivity extends CoveredElement {
 
+    /**
+     * Element ID of the activity.
+     */
 	private final String activityId;
 
 	public CoveredActivity(String processDefinitionKey, String activityId) {

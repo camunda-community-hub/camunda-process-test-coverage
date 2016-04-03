@@ -1,9 +1,22 @@
 package org.camunda.bpm.extension.process_test_coverage.trace;
 
+/**
+ * An element covered by a test.
+ * 
+ * @author okicir
+ *
+ */
 public abstract class CoveredElement {
     
+    /**
+     * The key of the elements process definition.
+     */
     protected String processDefinitionKey;
     
+    /**
+     * Retrieves the element's ID.
+     * @return
+     */
     public abstract String getElementId();
     
     public String getProcessDefinitionKey() {

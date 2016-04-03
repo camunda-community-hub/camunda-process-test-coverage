@@ -13,36 +13,55 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
 
+/**
+ * Utility for generating graphical class and method coverage reports.
+ * 
+ * @author z0rbas
+ *
+ */
 public class CoverageReportUtil {
 
     private static final Logger logger = Logger.getLogger(CoverageReportUtil.class.getCanonicalName());
 
+    /**
+     * Root directory for all coverage reports.
+     */
     public static final String TARGET_DIR_ROOT = "target/process-test-coverage";
     
     /**
-     * Generates a covered report for the whole test class.
-     * This method requires that all tests have been executed the same resources deployed.
+     * Generates a coverage report for the whole test class.
+     * This method requires that all tests have been executed with the same resources deployed.
      * 
      * @param processEngine
      * @param coverageTestRunState
-     * @param className
-     * @throws IOException 
      */
     public static void createClassReport(ProcessEngine processEngine,
-            CoverageTestRunState coverageTestRunState, String className,
-            double coverage) {
+            CoverageTestRunState coverageTestRunState) {
         
         createReport(coverageTestRunState, true);
         
     }
 
+    /**
+     * Generates graphical test coverage reports for the current test method run.
+     * 
+     * @param processEngine
+     * @param coverageTestRunState
+     */
     public static void createCurrentTestMethodReport(ProcessEngine processEngine,
-            CoverageTestRunState coverageTestRunState, double coverage) {
+            CoverageTestRunState coverageTestRunState) {
         
         createReport(coverageTestRunState, false);
         
     }
 
+    /**
+     * Generates a coverage report.
+     * 
+     * @param coverageTestRunState
+     * @param classReport If false the current test method coverage reports are generated.
+     * When false an aggregated class coverage report is generated.
+     */
     private static void createReport(CoverageTestRunState coverageTestRunState, boolean classReport) {
                
         // Get the appropriate coverage
@@ -88,10 +107,25 @@ public class CoverageReportUtil {
         
     }
     
+    /**
+     * Retrieves directory path for all coverage reports of a test class.
+     *  
+     * @param className
+     * @return
+     */
     private static String getReportDirectoryPath(final String className) {
         return TARGET_DIR_ROOT + '/' + className;
     }
 
+    /**
+     * Retrieves the coverage report file name for the given process definition.
+     * The report name prefix is set for individual test method runs and left blank
+     * for aggregated (class) process coverages.
+     * 
+     * @param processDefinition
+     * @param reportNamePrefix
+     * @return
+     */
     private static String getReportName(ProcessDefinition processDefinition, 
             final String reportNamePrefix) {
         
@@ -110,6 +144,13 @@ public class CoverageReportUtil {
         
     }
 
+    /**
+     * Retrieves a process definitions BPMN XML.
+     * 
+     * @param processDefinition
+     * @return
+     * @throws IOException Thrown if the BPMN resource is not found.
+     */
     protected static String getBpmnXml(ProcessDefinition processDefinition) throws IOException {
         
         InputStream inputStream = CoverageReportUtil.class.getClassLoader().getResourceAsStream(

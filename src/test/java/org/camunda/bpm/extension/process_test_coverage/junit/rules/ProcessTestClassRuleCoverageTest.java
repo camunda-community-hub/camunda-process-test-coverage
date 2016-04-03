@@ -1,7 +1,7 @@
-package org.camunda.bpm.extension.process_test_coverage;
+package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
-import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.BPMN_PATH;
-import static org.camunda.bpm.extension.process_test_coverage.ProcessTestCoverageProcessConstants.PROCESS_DEFINITION_KEY;
+import static org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessTestCoverageProcessConstants.BPMN_PATH;
+import static org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessTestCoverageProcessConstants.PROCESS_DEFINITION_KEY;
 
 import java.util.HashMap;
 import java.util.Map;

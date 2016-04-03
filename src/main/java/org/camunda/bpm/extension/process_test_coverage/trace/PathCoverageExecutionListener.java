@@ -2,32 +2,38 @@ package org.camunda.bpm.extension.process_test_coverage.trace;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.ExecutionListener;
-import org.camunda.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
 
+/**
+ * Listener taking note of covered sequence flows.
+ * 
+ * @author grossax
+ * @author z0rbas
+ *
+ */
 public class PathCoverageExecutionListener implements ExecutionListener {
     
+    /**
+     * The state of the currently running coverage test.
+     */
     private CoverageTestRunState coverageTestRunState;
+    
+    public PathCoverageExecutionListener(CoverageTestRunState coverageTestRunState) {
+        this.coverageTestRunState = coverageTestRunState;
+    }
 
 	@Override
     public void notify(DelegateExecution execution) throws Exception {
 	    
+	    // Get the process definition in order to obtain the key
 	    final ProcessDefinition processDefinition = execution.getProcessEngineServices().getRepositoryService()
 	            .createProcessDefinitionQuery().processDefinitionId(execution.getProcessDefinitionId()).singleResult();
 	    
-    	CoveredElement coveredElement = CoveredElementBuilder
-    			.createTrace(processDefinition.getKey())
-    			.withCurrentTransitionId(execution.getCurrentTransitionId()).build();
-    	getCoverageTestRunState().addCoveredElement(coveredElement);
-    }
+	    final CoveredSequenceFlow coveredSequenceFlow = 
+	            new CoveredSequenceFlow(processDefinition.getKey(), execution.getCurrentTransitionId());
 
-    public CoverageTestRunState getCoverageTestRunState() {
-        return coverageTestRunState;
-    }
-
-    public void setCoverageTestRunState(CoverageTestRunState coverageTestRunState) {
-        this.coverageTestRunState = coverageTestRunState;
+    	coverageTestRunState.addCoveredElement(coveredSequenceFlow);
     }
 
 }

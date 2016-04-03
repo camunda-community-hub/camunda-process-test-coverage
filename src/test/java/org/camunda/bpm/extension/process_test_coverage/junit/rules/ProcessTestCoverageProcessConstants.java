@@ -1,4 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage;
+package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
 public class ProcessTestCoverageProcessConstants {
 

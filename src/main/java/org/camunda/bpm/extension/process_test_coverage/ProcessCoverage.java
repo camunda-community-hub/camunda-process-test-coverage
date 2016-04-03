@@ -13,6 +13,12 @@ import org.camunda.bpm.extension.process_test_coverage.trace.CoveredSequenceFlow
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 
+/**
+ * Coverage of a process definition.
+ * 
+ * @author z0rbas
+ *
+ */
 public class ProcessCoverage {
     
     private final static String TOSTRING_TEMPLATE = "Coverage [description='{0}', processDefinitionId='{1}', " +
@@ -29,7 +35,6 @@ public class ProcessCoverage {
 	
 	Set<FlowNode> definitionFlowNodes = new HashSet<FlowNode>();
 
-	// TODO use another collection to take into account multiple flow passes
 	Set<CoveredSequenceFlow> coveredSequenceFlows = new HashSet<CoveredSequenceFlow>();
 
 	Set<SequenceFlow> definitionSequenceFlows = new HashSet<SequenceFlow>();
@@ -61,18 +66,37 @@ public class ProcessCoverage {
 	            coveredSequenceFlows.size(), definitionSequenceFlows.size()); // Sequence flows
 	}
 	
+	/**
+	 * Retrieves the coverage percentage for all elements.
+	 * 
+	 * @return
+	 */
 	public double getCoveragePercentage() {
 	    return ((double) getNumberOfAllCovered()) / ((double) getNumberOfAllDefined());
 	}
 
+	/**
+	 * Retrieves the number of covered flow node and sequence flow elements.
+	 * 
+	 * @return
+	 */
 	public int getNumberOfAllCovered() {
 		return coveredFlowNodes.size() + coveredSequenceFlows.size();
 	}
-
+    
+	/**
+     * Retrieves the number of flow node and sequence flow elements for the process definition.
+     * 
+     * @return
+     */
 	public int getNumberOfAllDefined() {
 		return definitionFlowNodes.size() + definitionSequenceFlows.size();
 	}
 
+	/**
+	 * Retrieves the process definitions flow nodes.
+	 * @return
+	 */
     public Set<FlowNode> getDefinitionFlowNodes() {
         return definitionFlowNodes;
     }

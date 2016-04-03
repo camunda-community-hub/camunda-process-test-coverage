@@ -11,20 +11,23 @@ import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestR
  */
 public class PathCoverageParseListener extends AbstractBpmnParseListener {
 	
+    /**
+     * The state of the coverage test run.
+     */
     private CoverageTestRunState coverageTestRunState;
     
-	public CoverageTestRunState getCoverageTestRunState() {
-        return coverageTestRunState;
+    public PathCoverageParseListener() {}
+    
+	public PathCoverageParseListener(CoverageTestRunState coverageTestRunState) {
+        this.coverageTestRunState = coverageTestRunState;
     }
 
     @Override
 	public void parseSequenceFlow(Element sequenceFlowElement, ScopeImpl scopeElement, org.camunda.bpm.engine.impl.pvm.process.TransitionImpl transition) {
         
-        final PathCoverageExecutionListener pathCoverageExecutionListener = new PathCoverageExecutionListener();
-        pathCoverageExecutionListener.setCoverageTestRunState(coverageTestRunState);
-        
-		transition.addListener(ExecutionListener.EVENTNAME_TAKE, pathCoverageExecutionListener);
-	};
+        final PathCoverageExecutionListener pathCoverageExecutionListener = new PathCoverageExecutionListener(coverageTestRunState);
+        transition.addListener(ExecutionListener.EVENTNAME_TAKE, pathCoverageExecutionListener);
+	}
 	
 	public void setCoverageTestRunState(CoverageTestRunState coverageTestRunState) {
 	    this.coverageTestRunState = coverageTestRunState;

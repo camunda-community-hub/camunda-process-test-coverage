@@ -11,6 +11,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+/**
+ * 
+ * @author dev
+ *
+ */
 public class MultipleDeploymentsForIndividualTestsTest {
 
     private static final String PROCESS_DEFINITION_KEY = "super-process-test-coverage";
@@ -22,21 +27,21 @@ public class MultipleDeploymentsForIndividualTestsTest {
 
     @Test
     @Deployment(resources = { "superProcess.bpmn", "process.bpmn" })
-    public void testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered() {
+    public void testPathAAndSuperPathA() {
         
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "A");
         variables.put("superPath", "A");
         rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
         
-        rule.addTestMethodCoverageAssertionMatcher("testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered", greaterThan(6.9 / 11.0));
-        rule.addTestMethodCoverageAssertionMatcher("testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered", lessThan(9 / 11.0));
+        rule.addTestMethodCoverageAssertionMatcher("testPathAAndSuperPathA", greaterThan(6.9 / 11.0));
+        rule.addTestMethodCoverageAssertionMatcher("testPathAAndSuperPathA", lessThan(9 / 11.0));
 
     }
 
     @Test
     @Deployment(resources = { "superProcess.bpmn", "process.bpmn" })
-    public void testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered() {
+    public void testPathBAndSuperPathB() {
         
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "B");
@@ -44,7 +49,7 @@ public class MultipleDeploymentsForIndividualTestsTest {
         
         rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
         
-        rule.addTestMethodCoverageAssertionMatcher("testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered", greaterThan(6.9 / 11.0));
-        rule.addTestMethodCoverageAssertionMatcher("testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered", lessThan(9 / 11.0));
+        rule.addTestMethodCoverageAssertionMatcher("testPathBAndSuperPathB", greaterThan(6.9 / 11.0));
+        rule.addTestMethodCoverageAssertionMatcher("testPathBAndSuperPathB", lessThan(9 / 11.0));
     }
 }
