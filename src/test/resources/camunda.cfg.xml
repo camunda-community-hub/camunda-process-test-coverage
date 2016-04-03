@@ -12,15 +12,15 @@
 	<!-- Alternatively use a StandaloneInMemProcessEngineConfiguratio and register the listeners per configuration. -->
 	<!-- 
 	    <bean id="processEngineConfiguration"
-        class="org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+        	class="org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
         <property name="historyEventHandler">
-            <bean class="org.camunda.bpm.extension.process_test_coverage.trace.TraceActivitiesHistoryEventHandler" />
+            <bean class="org.camunda.bpm.extension.process_test_coverage.listeners.FlowNodeHistoryEventHandler" />
         </property>
-        <property name="processEnginePlugins">
-            <list>
-                <bean class="org.camunda.bpm.extension.process_test_coverage.trace.PathCoverageParseListenerPlugin" />
-            </list>
-        </property>
+        <property name="customPostBPMNParseListeners">
+      		<list>
+        		<bean class="org.camunda.bpm.extension.process_test_coverage.listeners.PathCoverageParseListener" />
+      		</list>
+    	</property>
     </bean>
     -->
     
