@@ -17,9 +17,8 @@ public class FlowNodeHistoryEventHandler extends DbHistoryEventHandler implement
      * The state of the currently running coverage test.
      */
     private CoverageTestRunState coverageTestRunState;
-    
-    public FlowNodeHistoryEventHandler(CoverageTestRunState coverageTestRunState) {
-        this.coverageTestRunState = coverageTestRunState;
+
+    public FlowNodeHistoryEventHandler() {
     }
 
     @Override
@@ -27,12 +26,13 @@ public class FlowNodeHistoryEventHandler extends DbHistoryEventHandler implement
         super.handleEvent(historyEvent);
 
         // TODO collect jobs for highlighting (e.g. boundary timer event)
-        
+
         // We are only interested in activity start events
-        if (historyEvent instanceof HistoricActivityInstanceEventEntity &&isInitialEvent(historyEvent.getEventType())) {
-            
+        if (historyEvent instanceof HistoricActivityInstanceEventEntity
+                && isInitialEvent(historyEvent.getEventType())) {
+
             HistoricActivityInstanceEventEntity activityEvent = (HistoricActivityInstanceEventEntity) historyEvent;
-            
+
             final CoveredActivity coveredActivity = new CoveredActivity(historyEvent.getProcessDefinitionKey(),
                     activityEvent.getActivityId());
 
@@ -41,4 +41,7 @@ public class FlowNodeHistoryEventHandler extends DbHistoryEventHandler implement
 
     }
 
+    public void setCoverageTestRunState(CoverageTestRunState coverageTestRunState) {
+        this.coverageTestRunState = coverageTestRunState;
+    }
 }
