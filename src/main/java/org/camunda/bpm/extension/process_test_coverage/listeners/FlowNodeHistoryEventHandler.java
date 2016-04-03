@@ -1,10 +1,11 @@
-package org.camunda.bpm.extension.process_test_coverage.trace;
+package org.camunda.bpm.extension.process_test_coverage.listeners;
 
 import org.camunda.bpm.engine.impl.history.event.HistoricActivityInstanceEventEntity;
 import org.camunda.bpm.engine.impl.history.event.HistoryEvent;
 import org.camunda.bpm.engine.impl.history.handler.DbHistoryEventHandler;
 import org.camunda.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
+import org.camunda.bpm.extension.process_test_coverage.model.CoveredActivity;
 
 /**
  * Extends the {@link DbHistoryEventHandler} in order to notify the process test

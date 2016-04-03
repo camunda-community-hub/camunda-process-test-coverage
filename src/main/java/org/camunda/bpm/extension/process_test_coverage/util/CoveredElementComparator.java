@@ -2,7 +2,7 @@ package org.camunda.bpm.extension.process_test_coverage.util;
 
 import java.util.Comparator;
 
-import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
+import org.camunda.bpm.extension.process_test_coverage.model.CoveredElement;
 
 /**
  * Compared covered elements by their process definition keys and element IDs.

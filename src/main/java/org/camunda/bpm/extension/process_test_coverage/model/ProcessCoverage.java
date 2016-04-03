@@ -1,4 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage;
+package org.camunda.bpm.extension.process_test_coverage.model;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
@@ -7,9 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.extension.process_test_coverage.trace.CoveredActivity;
-import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
-import org.camunda.bpm.extension.process_test_coverage.trace.CoveredSequenceFlow;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 

@@ -1,4 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage.trace;
+package org.camunda.bpm.extension.process_test_coverage.model;
 
 /**
  * An element covered by a test.

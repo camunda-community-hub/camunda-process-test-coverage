@@ -12,8 +12,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
+ * Multiple deployments per test method test.
  * 
- * @author dev
+ * @author z0rbas
  *
  */
 public class MultipleDeploymentsForIndividualTestsTest {

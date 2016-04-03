@@ -6,10 +6,11 @@ import java.util.logging.Logger;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.extension.process_test_coverage.ProcessCoverageBuilder;
-import org.camunda.bpm.extension.process_test_coverage.ProcessCoverage;
-import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
-import org.camunda.bpm.extension.process_test_coverage.trace.MethodCoverage;
+import org.camunda.bpm.extension.process_test_coverage.model.ClassCoverage;
+import org.camunda.bpm.extension.process_test_coverage.model.CoveredElement;
+import org.camunda.bpm.extension.process_test_coverage.model.MethodCoverage;
+import org.camunda.bpm.extension.process_test_coverage.model.ProcessCoverage;
+import org.camunda.bpm.extension.process_test_coverage.model.ProcessCoverageBuilder;
 
 /**
  * State tracking the current class and method coverage run.

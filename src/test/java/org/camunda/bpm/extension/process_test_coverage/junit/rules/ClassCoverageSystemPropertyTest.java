@@ -1,9 +1,9 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessTestCoverageProcessConstants.ALL_ELEMENTS;
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessTestCoverageProcessConstants.BPMN_PATH;
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessTestCoverageProcessConstants.PATH_B_ELEMENTS;
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessTestCoverageProcessConstants.PROCESS_DEFINITION_KEY;
+import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.ALL_ELEMENTS;
+import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.BPMN_PATH;
+import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.PATH_B_ELEMENTS;
+import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.PROCESS_DEFINITION_KEY;
 import static org.hamcrest.Matchers.lessThan;
 
 import java.util.HashMap;
@@ -21,9 +21,9 @@ import org.junit.Test;
 /**
  * Test case starting an in-memory database-backed Process Engine.<br>
  * In your tests don't set the property using <code>System.setProperty</code>
- * - use your runtime environment to do that.  
+ * - use your runtime environment to do that.
  */
-public class ProcessTestClassRulePropertyTest {
+public class ClassCoverageSystemPropertyTest {
     
     static final double EXPECTED = PATH_B_ELEMENTS.length;
     static final double ALL = ALL_ELEMENTS.length;

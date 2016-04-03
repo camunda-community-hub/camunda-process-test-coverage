@@ -1,7 +1,9 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessTestCoverageProcessConstants.BPMN_PATH;
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessTestCoverageProcessConstants.PROCESS_DEFINITION_KEY;
+import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.ALL_ELEMENTS;
+import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.BPMN_PATH;
+import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.PATH_B_ELEMENTS;
+import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.PROCESS_DEFINITION_KEY;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,26 +18,30 @@ import org.junit.Test;
 /**
  * Test case starting an in-memory database-backed Process Engine.
  */
-public class ProcessTestClassRuleCoverageTest {
+public class ClassHalfCoverageTest {
+    
+    private static final double EXPECTED = PATH_B_ELEMENTS.length;
+    private static final double ALL = ALL_ELEMENTS.length;
+    private static final double EXPECTED_COVERAGE =  EXPECTED / ALL;   
 
     // Note, if you assert a coverage on the ClassRule, it means if you run a
     // test without the others, it will probably fail
-    @Rule
     @ClassRule
-    public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder
-        .createClassRule().assertGlobalCoverageAtLeast(1.0).build();
-
+    @Rule
+    public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.createClassRule()
+        .assertGlobalCoverageAtLeast(EXPECTED_COVERAGE).build();
+    
     @Test
     @Deployment(resources = BPMN_PATH)
-    public void testPathA() {
+    public void testPathB() {
         Map<String, Object> variables = new HashMap<String, Object>();
-        variables.put("path", "A");
+        variables.put("path", "B");
         classRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
     }
 
     @Test
     @Deployment(resources = BPMN_PATH)
-    public void testPathB() {
+    public void testPathBAgain() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "B");
         classRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);

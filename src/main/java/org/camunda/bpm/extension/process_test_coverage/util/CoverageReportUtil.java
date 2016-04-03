@@ -1,4 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage;
+package org.camunda.bpm.extension.process_test_coverage.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
+import org.camunda.bpm.extension.process_test_coverage.model.Coverage;
 
 /**
  * Utility for generating graphical class and method coverage reports.

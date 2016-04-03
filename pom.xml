@@ -104,9 +104,9 @@
 			<url>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions</url>
 		</repository>
 		<snapshotRepository>
-			<id>camunda-nexus</id>
+			<id>phactum-nexus</id>
 			<name>camunda bpm community extensions snapshots</name>
-			<url>https://app.camunda.com/nexus/content/repositories/camunda-bpm-community-extensions-snapshots</url>
+			<url>https://public.phactum.at/nexus/content/repositories/snapshots/</url>
 			<!-- for maven 2 compatibility -->
 			<uniqueVersion>true</uniqueVersion>
 		</snapshotRepository>

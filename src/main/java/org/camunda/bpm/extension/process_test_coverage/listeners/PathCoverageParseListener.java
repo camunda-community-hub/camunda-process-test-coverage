@@ -1,4 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage.trace;
+package org.camunda.bpm.extension.process_test_coverage.listeners;
 
 import org.camunda.bpm.engine.delegate.ExecutionListener;
 import org.camunda.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener;

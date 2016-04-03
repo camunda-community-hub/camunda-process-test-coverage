@@ -16,7 +16,7 @@ import org.junit.Test;
 /**
  * Test case starting an in-memory database-backed Process Engine.
  */
-public class ProcessTestMethodRuleCoverageTest {
+public class MethodCoverageTest {
 
 	private static final String PROCESS_DEFINITION_KEY = "process-test-coverage";
 	

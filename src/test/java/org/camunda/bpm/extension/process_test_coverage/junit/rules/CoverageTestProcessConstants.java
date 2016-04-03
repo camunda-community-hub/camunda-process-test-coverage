@@ -1,6 +1,6 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
-public class ProcessTestCoverageProcessConstants {
+public class CoverageTestProcessConstants {
 
     public static final String PROCESS_DEFINITION_KEY = "process-test-coverage";
     

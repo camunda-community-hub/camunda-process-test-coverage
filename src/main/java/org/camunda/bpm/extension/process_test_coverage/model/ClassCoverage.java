@@ -1,4 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage.junit.rules;
+package org.camunda.bpm.extension.process_test_coverage.model;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,11 +7,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.extension.process_test_coverage.Coverage;
-import org.camunda.bpm.extension.process_test_coverage.trace.CoveredActivity;
-import org.camunda.bpm.extension.process_test_coverage.trace.CoveredElement;
-import org.camunda.bpm.extension.process_test_coverage.trace.CoveredSequenceFlow;
-import org.camunda.bpm.extension.process_test_coverage.trace.MethodCoverage;
 import org.camunda.bpm.extension.process_test_coverage.util.CoveredElementComparator;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;

@@ -1,6 +1,6 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
-import org.camunda.bpm.extension.process_test_coverage.ProcessCoverage;
+import org.camunda.bpm.extension.process_test_coverage.model.ProcessCoverage;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 

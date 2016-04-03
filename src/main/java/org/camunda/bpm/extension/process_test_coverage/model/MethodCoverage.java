@@ -1,4 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage.trace;
+package org.camunda.bpm.extension.process_test_coverage.model;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -9,8 +9,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.extension.process_test_coverage.Coverage;
-import org.camunda.bpm.extension.process_test_coverage.ProcessCoverage;
 import org.camunda.bpm.extension.process_test_coverage.util.CoveredElementComparator;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;

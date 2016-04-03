@@ -1,9 +1,10 @@
-package org.camunda.bpm.extension.process_test_coverage.trace;
+package org.camunda.bpm.extension.process_test_coverage.listeners;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.ExecutionListener;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
+import org.camunda.bpm.extension.process_test_coverage.model.CoveredSequenceFlow;
 
 /**
  * Listener taking note of covered sequence flows.
