@@ -17,6 +17,7 @@ import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.listeners.FlowNodeHistoryEventHandler;
 import org.camunda.bpm.extension.process_test_coverage.listeners.PathCoverageParseListener;
 import org.camunda.bpm.extension.process_test_coverage.model.ClassCoverage;
+import org.camunda.bpm.extension.process_test_coverage.model.Coverage;
 import org.camunda.bpm.extension.process_test_coverage.model.MethodCoverage;
 import org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil;
 import org.hamcrest.Matcher;
@@ -58,7 +59,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     /**
      * Log class and test method coverages?
      */
-    private boolean reportCoverageWhenFinished = false;
+    private boolean detailedCoverageLogging = false;
 
     /**
      * Matchers to be asserted on the class coverage percentage.
@@ -252,10 +253,12 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             final String testName = description.getMethodName();
             final MethodCoverage testCoverage = coverageTestRunState.getTestMethodCoverage(testName);
 
-            logCoverage(testCoverage);
-
             double coveragePercentage = testCoverage.getCoveragePercentage();
-            logger.info(testName + " process coverage is " + coveragePercentage);
+
+            // Log coverage percentage
+            logger.info(testName + " test method coverage is " + coveragePercentage);
+
+            logCoverageDetail(testCoverage);
 
             // Create graphical report
             CoverageReportUtil.createCurrentTestMethodReport(processEngine, coverageTestRunState);
@@ -288,7 +291,12 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             classCoverage.assertAllDeploymentsEqual();
 
             final double classCoveragePercentage = classCoverage.getCoveragePercentage();
-            logger.info("finishing @ClassRule execution with coverage " + classCoveragePercentage);
+
+            // Log coverage percentage
+            logger.info(
+                    coverageTestRunState.getTestClassName() + " test class coverage is: " + classCoveragePercentage);
+
+            logCoverageDetail(classCoverage);
 
             // Create graphical report
             CoverageReportUtil.createClassReport(processEngine, coverageTestRunState);
@@ -307,23 +315,25 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
     }
 
-    private void logCoverage(MethodCoverage deploymentCoverage) {
+    /**
+     * Logs the string representation of the passed coverage object.
+     * 
+     * @param coverage
+     */
+    private void logCoverageDetail(Coverage coverage) {
 
-        if (deploymentId != null) {
-
-            if (logger.isLoggable(Level.FINE) || isReportCoverageWhenFinished()) {
-                logger.log(Level.ALL, deploymentCoverage.toString());
-            }
-
+        if (logger.isLoggable(Level.FINE) || isDetailedCoverageLogging()) {
+            logger.log(Level.INFO, coverage.toString());
         }
+
     }
 
-    public boolean isReportCoverageWhenFinished() {
-        return reportCoverageWhenFinished;
+    public boolean isDetailedCoverageLogging() {
+        return detailedCoverageLogging;
     }
 
-    public void setReportCoverageWhenFinished(boolean reportCoverageWhenFinished) {
-        this.reportCoverageWhenFinished = reportCoverageWhenFinished;
+    public void setDetailedCoverageLogging(boolean detailedCoverageLogging) {
+        this.detailedCoverageLogging = detailedCoverageLogging;
     }
 
     @Override

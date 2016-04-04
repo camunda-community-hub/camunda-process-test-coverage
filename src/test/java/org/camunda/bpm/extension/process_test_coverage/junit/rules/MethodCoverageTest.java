@@ -21,7 +21,7 @@ public class MethodCoverageTest {
 	
 	@Rule
 	public TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create()
-			.reportCoverageAfter().build();
+			.withDetailedCoverageLogging().build();
 
 	@Test
 	@Deployment(resources = "process.bpmn")

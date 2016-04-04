@@ -22,15 +22,15 @@ public class ClassCoverageTest {
     // test without the others, it will probably fail
     @Rule
     @ClassRule
-    public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder
-        .createClassRule().assertGlobalCoverageAtLeast(1.0).build();
+    public static TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create()
+    				.assertClassCoverageAtLeast(1.0).build();
 
     @Test
     @Deployment(resources = BPMN_PATH)
     public void testPathA() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "A");
-        classRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+        rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class ClassCoverageTest {
     public void testPathB() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "B");
-        classRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+        rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
     }
 
 }

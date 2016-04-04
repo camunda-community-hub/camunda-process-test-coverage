@@ -19,19 +19,19 @@ import org.junit.Test;
 
 /**
  * Test case starting an in-memory database-backed Process Engine.<br>
- * In your tests don't set the property using <code>System.setProperty</code>
- * - use your runtime environment to do that.
+ * In your tests don't set the property using <code>System.setProperty</code> -
+ * use your runtime environment to do that.
  */
 public class ClassCoverageSystemPropertyTest {
-    
+
     static final double EXPECTED = PATH_B_ELEMENTS.length;
     static final double ALL = ALL_ELEMENTS.length;
-    static final double EXPECTED_COVERAGE = EXPECTED / ALL;   
-    
+    static final double EXPECTED_COVERAGE = EXPECTED / ALL;
+
     static {
         setSysProperty();
     }
-    
+
     public static void setSysProperty() {
         System.setProperty(TestCoverageProcessEngineRuleBuilder.DEFAULT_ASSERT_AT_LEAST_PROPERTY,
                 "" + EXPECTED_COVERAGE);
@@ -41,13 +41,13 @@ public class ClassCoverageSystemPropertyTest {
     public static void delSysProperty() {
         System.clearProperty(TestCoverageProcessEngineRuleBuilder.DEFAULT_ASSERT_AT_LEAST_PROPERTY);
     }
-    
+
     @ClassRule
     @Rule
     public static TestCoverageProcessEngineRule classRule = 
-                    TestCoverageProcessEngineRuleBuilder.createClassRule()
-                    .optionalAssertCoverageAtLeastProperty(TestCoverageProcessEngineRuleBuilder.DEFAULT_ASSERT_AT_LEAST_PROPERTY)
-                    .build();
+            TestCoverageProcessEngineRuleBuilder.create()
+            	.optionalAssertCoverageAtLeastProperty(TestCoverageProcessEngineRuleBuilder.DEFAULT_ASSERT_AT_LEAST_PROPERTY)
+            	.build();
 
     @Test
     @Deployment(resources = BPMN_PATH)
@@ -55,9 +55,8 @@ public class ClassCoverageSystemPropertyTest {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "B");
         classRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
-        
+
         classRule.addTestMethodCoverageAssertionMatcher("testPathB", lessThan(EXPECTED_COVERAGE + 0.0001));
     }
-
 
 }

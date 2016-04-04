@@ -20,8 +20,7 @@ public class BpmnBusinessRuleTaskCoverageTest {
 
     @ClassRule
     @Rule
-    public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.createClassRule() //
-    .reportCoverageAfter().build();
+    public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.create().build();
 
     @Test
     @Deployment(resources = "businessRuleTask.bpmn")

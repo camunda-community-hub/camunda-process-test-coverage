@@ -7,14 +7,17 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-/** Also deploys businessRuleTask.bpmn, but doesn't cover anything and expecting zero coverage. This is for checking side-effects by the other test class. */
+/**
+ * Also deploys businessRuleTask.bpmn, but doesn't cover anything and expecting
+ * zero coverage. This is for checking side-effects by the other test class.
+ */
 public class BpmnBusinessRuleTaskNotCoveredTest {
 
     @ClassRule
     @Rule
-    public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.createClassRule() //
-    .reportCoverageAfter().build();
-     
+    public static TestCoverageProcessEngineRule classRule = TestCoverageProcessEngineRuleBuilder.create()
+            .withDetailedCoverageLogging().build();
+
     @Test
     @Deployment(resources = "businessRuleTask.bpmn")
     /**

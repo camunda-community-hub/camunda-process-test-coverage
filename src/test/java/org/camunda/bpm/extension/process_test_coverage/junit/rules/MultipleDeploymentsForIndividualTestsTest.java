@@ -23,8 +23,7 @@ public class MultipleDeploymentsForIndividualTestsTest {
     
     @Rule
     @ClassRule
-    public static TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.createClassRule()
-            .build();
+    public static TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
 
     @Test
     @Deployment(resources = { "superProcess.bpmn", "process.bpmn" })
