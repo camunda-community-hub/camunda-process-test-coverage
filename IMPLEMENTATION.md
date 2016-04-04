@@ -16,7 +16,7 @@ Refer to the UML to get a fast perspective on the coverage rule internals.
 - The test is executed.
  - During the execution the listeners are adding the covered elements to the coverage state. In turn the coverage state is aggregating the class coverage.
  - The class coverage is a tree. It is aggregated from individual test method coverages. The test method coverages are aggregations of individual process coverages of the deployed process definitions. The process coverages are aggregations of covered elements. By adding a covered element to the class coverage it takes its rightful place in the structure according to the data stored in it and the method by which it has been deployed.
-- After the test execution the rules "finished" method is executed.
+- After the test execution the rule's "finished" method is executed.
  - The test method coverage is retrieved from the state, logged and asserted with against assertions added for the given method (rule.addTestMethodCoverageAssertionMatcher(testName, matcher)). A graphical coverage report is generated for all deployed process definitions.
  - If the rule is a @ClassRule the last run of "finished" logs and asserts the class coverage which is again retrieved from the state. A graphical coverage report is generated for all deployed process definitions.
  - The super class process engine rule handles deployment cleanup. In case of a @ClassRule run process engine cleanup is done.

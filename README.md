@@ -63,6 +63,7 @@ The following steps show how to integrate the camunda-process-test-coverage into
 * Tested against Camunda BPM version 7.4.0 and Java 1.8  
 * Expected to work in Camunda BPM 7.x versions starting from 7.2.6 (7.2.x, 7.3.x, 7.4.x, 7.5.x).
 
+## [Implementation](IMPLEMENTATION.md)
 ## Resources
 * [JavaDoc](https://camunda.github.io/camunda-process-test-coverage/javadoc)
 * [Issue Tracker](https://github.com/camunda/camunda-process-test-coverage/issues)
