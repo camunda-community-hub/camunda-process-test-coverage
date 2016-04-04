@@ -10,5 +10,6 @@
 
 ## Resources
 * Use the source, Luke.
+* [JavaDoc](https://camunda.github.io/camunda-process-test-coverage/javadoc)
 * [Contributing](CONTRIBUTING.md)
 * [Readme](README.md)

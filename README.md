@@ -3,7 +3,7 @@
 ## Introduction
 This library supports visualizing and asserting the process test coverage of a BPMN process.
 
-![Screenshot](screenshot.gif)
+![Screenshot](screenshot.png)
 
 Running your process unit tests with the library creates test coverage reports for:
 
@@ -54,17 +54,14 @@ The following steps show how to integrate the camunda-process-test-coverage into
   * use the [ProcessCoverageInMemProcessEngineConfiguration](src/test/resources/camunda.cfg.xml)
   * or add the [FlowNodeHistoryEventHandler](src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/FlowNodeHistoryEventHandler.java) & [PathCoverageParseListener](src/main/java/org/camunda/bpm/extension/process_test_coverage/trace/TraceActivitiesHistoryEventHandler.java) to your process engine configuration
 3.   adapt your process unit test to generate and check the coverage. 
-4.   set the Java system property (org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST) on your build system to assure all process tests adhere to a coverage minimum.
+4.   optionally set the Java system property (org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST) on your build system to assure all process tests adhere to a coverage minimum.
 5.   run your unit tests
 
 ## Environment Restrictions
-* Built against Camunda BPM version 7.3.0 and Java 1.6
+* Built against Camunda BPM version 7.4.0 and Java 1.6
 * Tested against Camunda BPM version 7.3.0 and Java 1.6 
 * Tested against Camunda BPM version 7.4.0 and Java 1.8  
 * Expected to work in Camunda BPM 7.x versions starting from 7.2.6 (7.2.x, 7.3.x, 7.4.x, 7.5.x).
-
-## Known Limitations
-* The visualization of listeners does not work in some browsers at the moment (e.g. firefox on windows)
 
 ## Resources
 * [JavaDoc](https://camunda.github.io/camunda-process-test-coverage/javadoc)
