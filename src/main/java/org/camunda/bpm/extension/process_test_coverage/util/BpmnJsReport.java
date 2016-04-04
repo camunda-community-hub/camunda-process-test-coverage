@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.Collection;
 import java.util.zip.ZipEntry;
@@ -20,17 +21,45 @@ import org.apache.commons.lang3.StringEscapeUtils;
  */
 public class BpmnJsReport {
 
+	/**
+	 * Template used for all coverage reports.
+	 */
   private static final String REPORT_TEMPLATE = "bpmn.js-report-template.html";
   
+  /**
+   * Placeholder to be replaced with the process key.
+   */
   protected static final String PLACEHOLDER_PROCESS_KEY = "//PROCESSKEY";
+  
+  /**
+   * Placeholder to be replaced with the process coverage percentage.
+   */
   protected static final String PLACEHOLDER_COVERAGE = "//COVERAGE";
+  
+  /**
+   * Placeholder to be replaced with the test class full qualified name.
+   */
   protected static final String PLACEHOLDER_TESTCLASS = "//TESTCLASS";
+  
+  /**
+   * Placeholder to be replaced with the test method name.
+   */
   protected static final String PLACEHOLDER_TESTMETHOD = "//TESTMETHOD";
+  
+  /**
+   * Placeholder to be replaced with the addMarker annotation for all flow nodes. (canvas.addMarker())
+   */
   protected static final String PLACEHOLDER_ANNOTATIONS = "          //YOUR ANNOTATIONS GO HERE";
+  
+  /**
+   * Placeholder to be replaces with the BPMN content.
+   */
   protected static final String PLACEHOLDER_BPMN_XML = "YOUR BPMN XML CONTENT";
   
-  protected static final String SEQUENCEFLOW_ANNOTATION_PREFIX = "\\$( \"g[data-element-id='";
-  protected static final String SEQUENCEFLOW_ANNOTATION_POSTFIX  = "']\" ).find('path').attr('stroke', '#00ff00');\n";
+  /**
+   * JQuery command used for sequence flow SVG arrows coverage coloring.
+   */
+  protected static final String JQUERY_SEQUENCEFLOW_MARKING_COMMAND = "\\$( \"g[data-element-id='{0}']\" ).find('path').attr('stroke', '#00ff00');\n";
 
   public static void highlightFlowNodesAndSequenceFlows(String bpmnXml, Collection<String> activityIds, 
           Collection<String> sequenceFlowIds, String reportName, String processDefinitionKey, 
@@ -91,13 +120,14 @@ public class BpmnJsReport {
   }
   
   protected static String generateJavaScriptSequenceFlowAnnotations(Collection<String> sequenceFlowIds) {
+	  
       StringBuilder javaScript = new StringBuilder();
       for (String sequenceFlowId : sequenceFlowIds) {
+    	  
         javaScript.append("\t\t\t");
-        javaScript.append(SEQUENCEFLOW_ANNOTATION_PREFIX);
-        javaScript.append(sequenceFlowId);
-        javaScript.append(SEQUENCEFLOW_ANNOTATION_POSTFIX);
+        javaScript.append(MessageFormat.format(JQUERY_SEQUENCEFLOW_MARKING_COMMAND, sequenceFlowId));
       }
+      
       return javaScript.toString();
     }
 

@@ -4,7 +4,7 @@ package org.camunda.bpm.extension.process_test_coverage.model;
  * An activity covered by a test.
  * 
  * @author grossax
- * @author okicir
+ * @author z0rbas
  *
  */
 public class CoveredActivity extends CoveredElement {

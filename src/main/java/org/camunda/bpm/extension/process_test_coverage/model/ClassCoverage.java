@@ -15,7 +15,7 @@ import org.junit.Assert;
 /**
  * Test class coverage model. The class coverage is an aggregation of all test method coverages.
  * 
- * @author okicir
+ * @author z0rbas
  *
  */
 public class ClassCoverage implements Coverage {
@@ -23,7 +23,7 @@ public class ClassCoverage implements Coverage {
     /**
      * Map connecting the test method to the test method run coverage.
      */
-    private Map<String, MethodCoverage> testToDeploymentCoverage = new HashMap<String, MethodCoverage>();
+    private Map<String, MethodCoverage> testNameToMethodCoverage = new HashMap<String, MethodCoverage>();
 
     /**
      * Adds a covered element to the test method coverage.
@@ -32,7 +32,7 @@ public class ClassCoverage implements Coverage {
      * @param coveredElement
      */
     public void addCoveredElement(String testName, CoveredElement coveredElement) {
-        testToDeploymentCoverage.get(testName).addCoveredElement(coveredElement);
+        testNameToMethodCoverage.get(testName).addCoveredElement(coveredElement);
     }
     
     /**
@@ -42,7 +42,7 @@ public class ClassCoverage implements Coverage {
      * @return
      */
     public MethodCoverage getTestMethodCoverage(String testName) {
-        return testToDeploymentCoverage.get(testName);
+        return testNameToMethodCoverage.get(testName);
     }
     
     /**
@@ -52,7 +52,7 @@ public class ClassCoverage implements Coverage {
      * @param testCoverage
      */
     public void addTestMethodCoverage(String testName, MethodCoverage testCoverage) {
-        testToDeploymentCoverage.put(testName, testCoverage);
+        testNameToMethodCoverage.put(testName, testCoverage);
     }
     
     /**
@@ -89,7 +89,7 @@ public class ClassCoverage implements Coverage {
 
         final Set<CoveredActivity> coveredFlowNodes = new TreeSet<CoveredActivity>(CoveredElementComparator.instance());
 
-        for (MethodCoverage deploymentCoverage : testToDeploymentCoverage.values()) {
+        for (MethodCoverage deploymentCoverage : testNameToMethodCoverage.values()) {
 
             coveredFlowNodes.addAll(deploymentCoverage.getCoveredFlowNodes());
         }
@@ -104,7 +104,7 @@ public class ClassCoverage implements Coverage {
     public Set<String> getCoveredFlowNodeIds(String processDefinitionKey) {
         
         final Set<String> coveredFlowNodeIds = new HashSet<String>();
-        for (MethodCoverage methodCoverage : testToDeploymentCoverage.values()) {
+        for (MethodCoverage methodCoverage : testNameToMethodCoverage.values()) {
 
             coveredFlowNodeIds.addAll(methodCoverage.getCoveredFlowNodeIds(processDefinitionKey));
         }
@@ -122,7 +122,7 @@ public class ClassCoverage implements Coverage {
 
         final Set<CoveredSequenceFlow> coveredSequenceFlows = new TreeSet<CoveredSequenceFlow>(CoveredElementComparator.instance());
 
-        for (MethodCoverage deploymentCoverage : testToDeploymentCoverage.values()) {
+        for (MethodCoverage deploymentCoverage : testNameToMethodCoverage.values()) {
 
             coveredSequenceFlows.addAll(deploymentCoverage.getCoveredSequenceFlows());
 
@@ -138,7 +138,7 @@ public class ClassCoverage implements Coverage {
     public Set<String> getCoveredSequenceFlowIds(String processDefinitionKey) {
         
         final Set<String> coveredSequenceFlowIds = new HashSet<String>();
-        for (MethodCoverage methodCoverage : testToDeploymentCoverage.values()) {
+        for (MethodCoverage methodCoverage : testNameToMethodCoverage.values()) {
             
             coveredSequenceFlowIds.addAll(methodCoverage.getCoveredSequenceFlowIds(processDefinitionKey));
         }
@@ -163,7 +163,7 @@ public class ClassCoverage implements Coverage {
     private MethodCoverage getAnyMethodCoverage() {
         
         // All deployments must be the same, so we take the first one
-        final MethodCoverage anyDeployment = testToDeploymentCoverage.values().iterator().next();
+        final MethodCoverage anyDeployment = testNameToMethodCoverage.values().iterator().next();
         return anyDeployment;
     }
     
@@ -173,7 +173,7 @@ public class ClassCoverage implements Coverage {
     public void assertAllDeploymentsEqual() {
         
         Set<ProcessDefinition> processDefinitions = null;
-        for (MethodCoverage methodCoverage : testToDeploymentCoverage.values()) {
+        for (MethodCoverage methodCoverage : testNameToMethodCoverage.values()) {
             
             Set<ProcessDefinition> deploymentProcessDefinitions = methodCoverage.getProcessDefinitions();
             

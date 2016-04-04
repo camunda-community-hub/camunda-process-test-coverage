@@ -19,7 +19,7 @@ import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
  * A test method annotated with @Deployment does an independent deployment of the listed
  * resources, hence this coverage is equivalent to a deployment coverage.
  * 
- * @author okicir
+ * @author z0rbas
  *
  */
 public class MethodCoverage implements Coverage {
@@ -123,14 +123,6 @@ public class MethodCoverage implements Coverage {
         
         return (double) numberOfCoveredElemenets / (double) numberOfDefinedElements;
         
-    }
-
-    /**
-     * Retrieves the deployment ID of the methods deployment.
-     * @return
-     */
-    public String getDeploymentId() {
-        return deploymentId;
     }
     
     /**

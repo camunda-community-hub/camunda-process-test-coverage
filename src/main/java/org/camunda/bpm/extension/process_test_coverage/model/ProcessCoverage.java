@@ -104,25 +104,6 @@ public class ProcessCoverage {
     }
 
     /**
-     * Retrieves the number of covered flow node and sequence flow elements.
-     * 
-     * @return
-     */
-    public int getNumberOfAllCovered() {
-        return coveredFlowNodes.size() + coveredSequenceFlows.size();
-    }
-
-    /**
-     * Retrieves the number of flow node and sequence flow elements for the
-     * process definition.
-     * 
-     * @return
-     */
-    public int getNumberOfAllDefined() {
-        return definitionFlowNodes.size() + definitionSequenceFlows.size();
-    }
-
-    /**
      * Retrieves the process definitions flow nodes.
      * 
      * @return
@@ -131,16 +112,8 @@ public class ProcessCoverage {
         return definitionFlowNodes;
     }
 
-    public void setDefinitionFlowNodes(Set<FlowNode> definitionFlowNodes) {
-        this.definitionFlowNodes = definitionFlowNodes;
-    }
-
     public Set<SequenceFlow> getDefinitionSequenceFlows() {
         return definitionSequenceFlows;
-    }
-
-    public void setDefinitionSequenceFlows(Set<SequenceFlow> definitionSequenceFlows) {
-        this.definitionSequenceFlows = definitionSequenceFlows;
     }
 
     public Set<CoveredActivity> getCoveredFlowNodes() {
@@ -158,10 +131,6 @@ public class ProcessCoverage {
         return coveredFlowNodeIds;
     }
 
-    public void setCoveredFlowNodes(Set<CoveredActivity> coveredFlowNodes) {
-        this.coveredFlowNodes = coveredFlowNodes;
-    }
-
     public Set<CoveredSequenceFlow> getCoveredSequenceFlows() {
         return coveredSequenceFlows;
     }
@@ -177,16 +146,8 @@ public class ProcessCoverage {
         return sequenceFlowIds;
     }
 
-    public void setCoveredSequenceFlows(Set<CoveredSequenceFlow> coveredSequenceFlows) {
-        this.coveredSequenceFlows = coveredSequenceFlows;
-    }
-
     public ProcessDefinition getProcessDefinition() {
         return processDefinition;
-    }
-
-    public void setProcessDefinition(ProcessDefinition processDefinition) {
-        this.processDefinition = processDefinition;
     }
 
     public String getProcessDefinitionId() {
@@ -210,4 +171,24 @@ public class ProcessCoverage {
                 coveredSequenceFlows.size(),
                 definitionSequenceFlows.size()); // Sequence flows
     }
+    
+    /**
+     * Retrieves the number of covered flow node and sequence flow elements.
+     * 
+     * @return
+     */
+    private int getNumberOfAllCovered() {
+        return coveredFlowNodes.size() + coveredSequenceFlows.size();
+    }
+
+    /**
+     * Retrieves the number of flow node and sequence flow elements for the
+     * process definition.
+     * 
+     * @return
+     */
+    private int getNumberOfAllDefined() {
+        return definitionFlowNodes.size() + definitionSequenceFlows.size();
+    }
+
 }

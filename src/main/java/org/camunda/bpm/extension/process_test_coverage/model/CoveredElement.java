@@ -3,7 +3,7 @@ package org.camunda.bpm.extension.process_test_coverage.model;
 /**
  * An element covered by a test.
  * 
- * @author okicir
+ * @author z0rbas
  *
  */
 public abstract class CoveredElement {

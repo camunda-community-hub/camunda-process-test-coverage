@@ -38,12 +38,12 @@ import org.junit.runner.Description;
  * This rule cannot be used as a @ClassRule without the @Rule annotation.
  * 
  * @author grossax
- * @author okicir
+ * @author z0rbas
  *
  */
 public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
-    public static Logger logger = Logger.getLogger(TestCoverageProcessEngineRule.class.getCanonicalName());
+    private static Logger logger = Logger.getLogger(TestCoverageProcessEngineRule.class.getCanonicalName());
 
     /**
      * The state of the current run (class and current method).
@@ -108,12 +108,9 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
         initializeRunState(description);
 
-        // Enable our coverage listeners
-        configureProcessEngine();
-
         super.starting(description);
 
-        registerDeployments(description);
+        initializeMethodCoverage(description);
     }
 
     @Override
@@ -170,19 +167,19 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     }
 
     /**
-     * Register the process deployments of the current test method with our run
-     * state.
+     * Initialize the current test method coverage.
      * 
      * @param description
      */
-    private void registerDeployments(Description description) {
+    private void initializeMethodCoverage(Description description) {
 
+    	// Not a @ClassRule run and deployments present
         if (deploymentId != null) {
 
-            final List<ProcessDefinition> deployedProcessDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().deploymentId(
-                    deploymentId).list();
+            final List<ProcessDefinition> deployedProcessDefinitions = processEngine.getRepositoryService()
+            		.createProcessDefinitionQuery().deploymentId(deploymentId).list();
 
-            coverageTestRunState.addTestMethodRun(processEngine,
+            coverageTestRunState.initializeTestMethodCoverage(processEngine,
                     deploymentId,
                     deployedProcessDefinitions,
                     description.getMethodName());
@@ -205,6 +202,8 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             coverageTestRunState = new CoverageTestRunState();
             coverageTestRunState.setTestClassName(description.getClassName());
 
+            initializeListenerRunState();
+            
             firstRun = false;
         }
 
@@ -213,10 +212,10 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     }
 
     /**
-     * Configures the process engine listeners responsible for the coverage
+     * Sets the test run state for the coverage listeners.
      * logging. {@see ProcessCoverageInMemProcessEngineConfiguration}
      */
-    private void configureProcessEngine() {
+    private void initializeListenerRunState() {
 
         final ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
 

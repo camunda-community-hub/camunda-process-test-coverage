@@ -15,7 +15,7 @@ import org.camunda.bpm.extension.process_test_coverage.model.ProcessCoverage;
  * State tracking the current class and method coverage run.
  * 
  * @author grossax
- * @author okicir
+ * @author z0rbas
  */
 public class CoverageTestRunState {
 
@@ -63,7 +63,7 @@ public class CoverageTestRunState {
      * @param testName
      *            The name of the test method.
      */
-    public void addTestMethodRun(ProcessEngine processEngine, String deploymentId,
+    public void initializeTestMethodCoverage(ProcessEngine processEngine, String deploymentId,
             List<ProcessDefinition> processDefinitions, String testName) {
 
         final MethodCoverage testCoverage = new MethodCoverage(deploymentId);

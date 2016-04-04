@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.9" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <class id="1" language="java" name="org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/CoverageTestRunState.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1363" y="303"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" 
+    name="org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessCoverageInMemProcessEngineConfiguration" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/ProcessCoverageInMemProcessEngineConfiguration.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1347" y="-183"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="false" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" 
+    name="org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/TestCoverageProcessEngineRule.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="844" y="309"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="false" static="true"/>      
+      <operations public="true" package="true" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" 
+    name="org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/TestCoverageProcessEngineRuleBuilder.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="844" y="-136"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="org.camunda.bpm.extension.process_test_coverage.model.ClassCoverage" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/model/ClassCoverage.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1357" y="615"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="true" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="org.camunda.bpm.extension.process_test_coverage.model.MethodCoverage" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/model/MethodCoverage.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1357" y="913"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="true" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="org.camunda.bpm.extension.process_test_coverage.model.ProcessCoverage" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/model/ProcessCoverage.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1356" y="1240"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="true" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="org.camunda.bpm.extension.process_test_coverage.model.CoveredActivity" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/model/CoveredActivity.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="910" y="1349"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="org.camunda.bpm.extension.process_test_coverage.model.CoveredSequenceFlow" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/model/CoveredSequenceFlow.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="910" y="1104"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="org.camunda.bpm.extension.process_test_coverage.model.CoveredElement" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/model/CoveredElement.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="909" y="1231"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/util/CoverageReportUtil.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="839" y="622"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="true" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" 
+    name="org.camunda.bpm.extension.process_test_coverage.listeners.FlowNodeHistoryEventHandler" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/FlowNodeHistoryEventHandler.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1043" y="27"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" 
+    name="org.camunda.bpm.extension.process_test_coverage.listeners.PathCoverageParseListener" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/PathCoverageParseListener.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1629" y="26"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" 
+    name="org.camunda.bpm.extension.process_test_coverage.listeners.PathCoverageExecutionListener" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/PathCoverageExecutionListener.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1349" y="26"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" name="org.camunda.bpm.extension.process_test_coverage.util.BpmnJsReport" 
+    project="camunda-bpm-process-test-coverage" 
+    file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/util/BpmnJsReport.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="837" y="796"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <dependency id="16">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <generalization id="17">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="18">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="19" name="classCoverage"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="21">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="22" name="rule"/>      
+      <multiplicity id="23" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="24">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="25" name="coveredFlowNodes">        
+        <position height="17" width="100" x="1047" y="1318"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="27">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <association id="28">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="29" name="coverageTestRunState"/>      
+      <multiplicity id="30" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="31">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <association id="32">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="33" name="coverageTestRunState">        
+        <position height="17" width="117" x="1231" y="129"/>      
+      </attribute>      
+      <multiplicity id="34" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="35">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <association id="36">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="37" name="testNameToMethodCoverage"/>      
+      <multiplicity id="38" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="39">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <association id="40">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="41" name="processDefinitionKeyToProcessCoverage"/>      
+      <multiplicity id="42" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="43">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <generalization id="44">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <association id="45">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="46" name="coverageTestRunState"/>      
+      <multiplicity id="47" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="48">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <association id="49">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="50" name="coverageTestRunState"/>      
+      <multiplicity id="51" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="52">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="53" name="coveredSequenceFlows">        
+        <position height="17" width="122" x="1032" y="1125"/>      
+      </attribute>      
+      <multiplicity id="54" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="true"/>    
+    <operations public="false" package="false" protected="false" private="false" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
