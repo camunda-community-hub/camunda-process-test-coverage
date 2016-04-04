@@ -9,7 +9,7 @@
 
 	</bean>
 
-	<!-- Alternatively use a StandaloneInMemProcessEngineConfiguratio and register the listeners per configuration. -->
+	<!-- Alternatively use a StandaloneInMemProcessEngineConfiguration and register the listeners per configuration. -->
 	<!-- 
 	    <bean id="processEngineConfiguration"
         	class="org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">

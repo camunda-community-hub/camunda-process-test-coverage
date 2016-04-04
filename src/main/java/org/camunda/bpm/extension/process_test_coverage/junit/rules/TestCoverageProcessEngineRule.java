@@ -202,12 +202,12 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         if (firstRun) {
 
             coverageTestRunState = new CoverageTestRunState();
-            coverageTestRunState.setClassName(description.getClassName());
+            coverageTestRunState.setTestClassName(description.getClassName());
 
             firstRun = false;
         }
 
-        coverageTestRunState.setCurrentTestName(description.getMethodName());
+        coverageTestRunState.setCurrentTestMethodName(description.getMethodName());
 
     }
 

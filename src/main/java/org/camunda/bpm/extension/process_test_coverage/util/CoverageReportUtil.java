@@ -80,8 +80,8 @@ public class CoverageReportUtil {
             try {
                 
                 // Assemble data
-                final String testClass = coverageTestRunState.getClassName();
-                final String testName = coverageTestRunState.getCurrentTestName();
+                final String testClass = coverageTestRunState.getTestClassName();
+                final String testName = coverageTestRunState.getCurrentTestMethodName();
                 final Set<String> coveredFlowNodeIds = coverage.getCoveredFlowNodeIds(processDefinition.getKey());
                 final Set<String> coveredSequenceFlowIds = coverage.getCoveredSequenceFlowIds(processDefinition.getKey());
                 final String reportName = classReport ?
