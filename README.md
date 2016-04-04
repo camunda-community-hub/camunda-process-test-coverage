@@ -85,7 +85,7 @@ Our To Do list gives a rough idea what we expect to tackle next.
 - Visualize technical attributes in a nice way
 
 **Done**
-- 0.2.7 sequence flow coverage reporting added
+- 0.2.7 single test method reporting; sequence flow coverage reporting;
 - 0.2.6 "Jenkins integration" - add minimal coverage system property for build integration
 - 0.2.5 fixed different multi-deployment cases
 - JUnit @Rule, JUnit @ClassRule
