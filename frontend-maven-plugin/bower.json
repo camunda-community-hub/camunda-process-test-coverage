@@ -1,0 +1,9 @@
+{
+  "name": "camunda-bpm-process-test-coverage",
+  "version": "0.2.7",
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "bpmn-js": "0.14.1"
+  },
+  "private": true
+}

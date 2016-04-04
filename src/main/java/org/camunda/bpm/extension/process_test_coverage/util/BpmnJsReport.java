@@ -59,7 +59,7 @@ public class BpmnJsReport {
   /**
    * JQuery command used for sequence flow SVG arrows coverage coloring.
    */
-  protected static final String JQUERY_SEQUENCEFLOW_MARKING_COMMAND = "\\$( \"g[data-element-id='{0}']\" ).find('path').attr('stroke', '#00ff00');\n";
+  protected static final String JQUERY_SEQUENCEFLOW_MARKING_COMMAND = "\\$( \"g[data-element-id=''{0}'']\" ).find(''path'').attr(''stroke'', ''#00ff00'');\n";
 
   public static void highlightFlowNodesAndSequenceFlows(String bpmnXml, Collection<String> activityIds, 
           Collection<String> sequenceFlowIds, String reportName, String processDefinitionKey, 
@@ -132,48 +132,7 @@ public class BpmnJsReport {
     }
 
   protected static void writeToFile(String targetDir, String fileName,	String html) throws IOException {
-		prepareTargetDir(targetDir);
 		FileUtils.writeStringToFile(new File(targetDir + "/" + fileName), html);
 	}
-
-  protected static void prepareTargetDir(String targetDir) throws IOException {
-    File targetDirectory = new File(targetDir);
-    FileUtils.forceMkdir(targetDirectory);
-    extractBowerComponents(targetDirectory);
-    }
-  
-  private static void extractBowerComponents(File targetDirectory) {
-      final File parentDirectory = targetDirectory.getParentFile();
-      
-      if (!new File(parentDirectory.getPath() + "/bower_components").exists()) {
-        extractBpmnJs(parentDirectory);
-      } 
-  }
-
-  protected static void extractBpmnJs(File targetDirectory) {
-    InputStream bpmnJsSeed = BpmnJsReport.class.getClassLoader().getResourceAsStream("bpmn-js-seed-master.zip");
-    ZipInputStream zin = new ZipInputStream(bpmnJsSeed);
-    try {
-      ZipEntry entry = null;
-      while ((entry = zin.getNextEntry()) != null) {
-        String entryName = entry.getName().replace("bpmn-js-seed-master" + "/", "");
-        if (entryName.startsWith("bower_components")) {
-          File entryDestination = new File(targetDirectory,  entryName);
-          if (entry.isDirectory())
-              entryDestination.mkdirs();
-          else {
-              entryDestination.getParentFile().mkdirs();
-              OutputStream out = new FileOutputStream(entryDestination);
-              IOUtils.copy(zin, out);
-              out.close();
-          }
-        }
-      }
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    } finally {
-      IOUtils.closeQuietly(zin);
-    }
-  }
 
 }

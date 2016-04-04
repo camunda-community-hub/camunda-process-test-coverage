@@ -1,0 +1,7 @@
+{
+  "name": "camunda-bpm-process-test-coverage",
+  "version": "0.2.7",
+  "dependencies": {
+    "bower": "~1.7.2"
+  }
+}
