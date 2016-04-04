@@ -20,9 +20,9 @@ import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
  */
 public class ProcessCoverage {
 
-    private final static String TOSTRING_TEMPLATE = "ProcessCoverage [processDefinitionId='{0}', " +
+    private final static String TOSTRING_TEMPLATE = "ProcessCoverage [processDefinitionId=''{0}'', " +
             "coverage={1} ({2}/{3}), flowNodes=({4}/{5}), sequenceFlows=({6}/{7}), " +
-            "coveredActivityIds={8}, expectedFlowNodes={9}]";
+            "coveredActivityIds={8}, definitionFlowNodes={9}]";
 
     private static final Logger logger = Logger.getLogger(ProcessCoverage.class.getCanonicalName());
 
@@ -130,6 +130,17 @@ public class ProcessCoverage {
 
         return coveredFlowNodeIds;
     }
+    
+    private Set<String> getDefinitionSequenceFlowIds() {
+    	
+    	final Set<String> definitionFlowNodeIds = new HashSet<String>();
+        for (FlowNode activity : definitionFlowNodes) {
+
+            definitionFlowNodeIds.add(activity.getId());
+        }
+
+        return definitionFlowNodeIds;
+    }
 
     public Set<CoveredSequenceFlow> getCoveredSequenceFlows() {
         return coveredSequenceFlows;
@@ -166,10 +177,12 @@ public class ProcessCoverage {
                 getCoveragePercentage(),
                 getNumberOfAllCovered(),
                 getNumberOfAllDefined(), // All
-                coveredFlowNodes.size(),
-                definitionFlowNodes.size(), // Flow nodes
-                coveredSequenceFlows.size(),
-                definitionSequenceFlows.size()); // Sequence flows
+                coveredFlowNodes.size(), // Flow nodes
+                definitionFlowNodes.size(),
+                coveredSequenceFlows.size(), // Sequence flows
+                definitionSequenceFlows.size(),
+                getCoveredFlowNodeIds(), // IDs
+                getDefinitionSequenceFlowIds());
     }
     
     /**
