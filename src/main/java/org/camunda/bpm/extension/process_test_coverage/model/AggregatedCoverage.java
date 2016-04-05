@@ -4,7 +4,13 @@ import java.util.Set;
 
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 
-public interface Coverage {
+/**
+ * A coverage that may have multiple deployed process definitions.
+ * 
+ * @author z0rbas
+ *
+ */
+public interface AggregatedCoverage {
     
     /**
      * Retrieves covered flow node IDs for the given process definition key.

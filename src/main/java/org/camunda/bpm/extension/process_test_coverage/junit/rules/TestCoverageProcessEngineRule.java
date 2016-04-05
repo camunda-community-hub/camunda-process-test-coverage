@@ -17,7 +17,7 @@ import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.listeners.FlowNodeHistoryEventHandler;
 import org.camunda.bpm.extension.process_test_coverage.listeners.PathCoverageParseListener;
 import org.camunda.bpm.extension.process_test_coverage.model.ClassCoverage;
-import org.camunda.bpm.extension.process_test_coverage.model.Coverage;
+import org.camunda.bpm.extension.process_test_coverage.model.AggregatedCoverage;
 import org.camunda.bpm.extension.process_test_coverage.model.MethodCoverage;
 import org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil;
 import org.hamcrest.Matcher;
@@ -319,7 +319,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      * 
      * @param coverage
      */
-    private void logCoverageDetail(Coverage coverage) {
+    private void logCoverageDetail(AggregatedCoverage coverage) {
 
         if (logger.isLoggable(Level.FINE) || isDetailedCoverageLogging()) {
             logger.log(Level.INFO, coverage.toString());

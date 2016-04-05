@@ -18,7 +18,7 @@ import org.junit.Assert;
  * @author z0rbas
  *
  */
-public class ClassCoverage implements Coverage {
+public class ClassCoverage implements AggregatedCoverage {
     
     /**
      * Map connecting the test method to the test method run coverage.

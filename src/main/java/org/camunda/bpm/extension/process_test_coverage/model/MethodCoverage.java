@@ -22,7 +22,7 @@ import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
  * @author z0rbas
  *
  */
-public class MethodCoverage implements Coverage {
+public class MethodCoverage implements AggregatedCoverage {
     
     /**
      * The ID of the deployment done for the method.

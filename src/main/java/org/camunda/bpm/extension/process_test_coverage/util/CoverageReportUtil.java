@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
-import org.camunda.bpm.extension.process_test_coverage.model.Coverage;
+import org.camunda.bpm.extension.process_test_coverage.model.AggregatedCoverage;
 
 /**
  * Utility for generating graphical class and method coverage reports.
@@ -66,7 +66,7 @@ public class CoverageReportUtil {
     private static void createReport(CoverageTestRunState coverageTestRunState, boolean classReport) {
                
         // Get the appropriate coverage
-        Coverage coverage;
+        AggregatedCoverage coverage;
         if (classReport) {
             coverage = coverageTestRunState.getClassCoverage();
         } else {
@@ -93,7 +93,7 @@ public class CoverageReportUtil {
                 
                 // Generate report
                 
-                BpmnJsReport.highlightFlowNodesAndSequenceFlows(
+                BpmnJsReport.generateReportWithHighlightedFlowNodesAndSequenceFlows(
                         bpmnXml, coveredFlowNodeIds, coveredSequenceFlowIds, reportName, 
                         processDefinition.getKey(), coverage.getCoveragePercentage(), testClass, testName, classReport, 
                         reportDirectory);
