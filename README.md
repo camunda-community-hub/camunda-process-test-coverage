@@ -58,6 +58,7 @@ The following steps show how to integrate the camunda-process-test-coverage into
 5.   run your unit tests
 
 ## Environment Restrictions
+* Internet connectivity is required for obtaining the bpmn-js and jquery bower components.
 * Built against Camunda BPM version 7.4.0 and Java 1.6
 * Tested against Camunda BPM version 7.3.0 and Java 1.6 
 * Tested against Camunda BPM version 7.4.0 and Java 1.8  
@@ -70,7 +71,6 @@ The following steps show how to integrate the camunda-process-test-coverage into
 * [Roadmap](#roadmap)
 * [Changelog](https://github.com/camunda/camunda-process-test-coverage/commits/master)
 * [Contributing](CONTRIBUTING.md)
-* [Implementation Notes](IMPLEMENTATION.md)
 
 ## Roadmap
 
