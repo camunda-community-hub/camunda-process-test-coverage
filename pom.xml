@@ -83,8 +83,6 @@
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
-				<!-- NB! Set <version> to the latest released version of frontend-maven-plugin, 
-					like in README.md -->
 				<version>0.0.29</version>
 				<configuration>
 					<nodeVersion>v5.3.0</nodeVersion>
@@ -106,7 +104,6 @@
 						<goals>
 							<goal>npm</goal>
 						</goals>
-						<!-- Optional configuration which provides for running any npm command -->
 						<configuration>
                             <arguments>install</arguments>
                         </configuration>
@@ -137,8 +134,7 @@
 		<tag>HEAD</tag>
 	</scm>
 
-	<!-- repositories used for distribution of releases and snapshots, DO NOT 
-		CHANGE -->
+	<!-- repositories used for distribution of releases and snapshots, DO NOT CHANGE -->
 	<distributionManagement>
 		<repository>
 			<id>camunda-nexus</id>
