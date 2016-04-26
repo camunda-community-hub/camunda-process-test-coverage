@@ -1,12 +1,16 @@
 package org.camunda.bpm.extension.process_test_coverage.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngine;
@@ -28,43 +32,49 @@ public class CoverageReportUtil {
      * Root directory for all coverage reports.
      */
     public static final String TARGET_DIR_ROOT = "target/process-test-coverage";
-    
+    public static final String BOWER_DIR = TARGET_DIR_ROOT + "/bower_components";
+
     /**
-     * Generates a coverage report for the whole test class.
-     * This method requires that all tests have been executed with the same resources deployed.
+     * Generates a coverage report for the whole test class. This method
+     * requires that all tests have been executed with the same resources
+     * deployed.
      * 
      * @param processEngine
      * @param coverageTestRunState
      */
-    public static void createClassReport(ProcessEngine processEngine,
-            CoverageTestRunState coverageTestRunState) {
-        
+    public static void createClassReport(ProcessEngine processEngine, CoverageTestRunState coverageTestRunState) {
+
         createReport(coverageTestRunState, true);
-        
+
     }
 
     /**
-     * Generates graphical test coverage reports for the current test method run.
+     * Generates graphical test coverage reports for the current test method
+     * run.
      * 
      * @param processEngine
      * @param coverageTestRunState
      */
     public static void createCurrentTestMethodReport(ProcessEngine processEngine,
             CoverageTestRunState coverageTestRunState) {
-        
+
         createReport(coverageTestRunState, false);
-        
+
     }
 
     /**
      * Generates a coverage report.
      * 
      * @param coverageTestRunState
-     * @param classReport If false the current test method coverage reports are generated.
-     * When false an aggregated class coverage report is generated.
+     * @param classReport
+     *            If false the current test method coverage reports are
+     *            generated. When false an aggregated class coverage report is
+     *            generated.
      */
     private static void createReport(CoverageTestRunState coverageTestRunState, boolean classReport) {
-               
+
+        installBowerComponents();
+
         // Get the appropriate coverage
         AggregatedCoverage coverage;
         if (classReport) {
@@ -72,45 +82,68 @@ public class CoverageReportUtil {
         } else {
             coverage = coverageTestRunState.getCurrentTestMethodCoverage();
         }
-        
+
         // Generate a report for every process definition
         final Set<ProcessDefinition> processDefinitions = coverage.getProcessDefinitions();
         for (ProcessDefinition processDefinition : processDefinitions) {
-            
+
             try {
-                
+
                 // Assemble data
                 final String testClass = coverageTestRunState.getTestClassName();
                 final String testName = coverageTestRunState.getCurrentTestMethodName();
                 final Set<String> coveredFlowNodeIds = coverage.getCoveredFlowNodeIds(processDefinition.getKey());
-                final Set<String> coveredSequenceFlowIds = coverage.getCoveredSequenceFlowIds(processDefinition.getKey());
-                final String reportName = classReport ?
-                        getReportName(processDefinition, null) : 
-                        getReportName(processDefinition, testName);
-                
+                final Set<String> coveredSequenceFlowIds = coverage.getCoveredSequenceFlowIds(
+                        processDefinition.getKey());
+                final String reportName = classReport ? getReportName(processDefinition, null)
+                        : getReportName(processDefinition, testName);
+
                 final String reportDirectory = getReportDirectoryPath(testClass);
                 final String bpmnXml = getBpmnXml(processDefinition);
-                
+
                 // Generate report
-                
-                BpmnJsReport.generateReportWithHighlightedFlowNodesAndSequenceFlows(
-                        bpmnXml, coveredFlowNodeIds, coveredSequenceFlowIds, reportName, 
-                        processDefinition.getKey(), coverage.getCoveragePercentage(), testClass, testName, classReport, 
+
+                BpmnJsReport.generateReportWithHighlightedFlowNodesAndSequenceFlows(bpmnXml,
+                        coveredFlowNodeIds,
+                        coveredSequenceFlowIds,
+                        reportName,
+                        processDefinition.getKey(),
+                        coverage.getCoveragePercentage(),
+                        testClass,
+                        testName,
+                        classReport,
                         reportDirectory);
-                
+
             } catch (IOException ex) {
-                
+
                 logger.log(Level.SEVERE, "Unable to load process definition!", ex);
                 throw new RuntimeException();
-                
+
             }
         }
-        
+
     }
-    
+
+    private static void installBowerComponents() {
+
+        final File bowerComponents = new File(BOWER_DIR);
+        if (!bowerComponents.exists()) {
+            try {
+
+                final File bowerSrc = new File(CoverageReportUtil.class.getResource("/bower_components").toURI());
+                FileUtils.copyDirectory(bowerSrc, bowerComponents);
+
+            } catch (Exception e) {
+
+                logger.log(Level.SEVERE, "Unable to copy bower_components!", e);
+            }
+        }
+
+    }
+
     /**
      * Retrieves directory path for all coverage reports of a test class.
-     *  
+     * 
      * @param className
      * @return
      */
@@ -120,29 +153,27 @@ public class CoverageReportUtil {
 
     /**
      * Retrieves the coverage report file name for the given process definition.
-     * The report name prefix is set for individual test method runs and left blank
-     * for aggregated (class) process coverages.
+     * The report name prefix is set for individual test method runs and left
+     * blank for aggregated (class) process coverages.
      * 
      * @param processDefinition
      * @param reportNamePrefix
      * @return
      */
-    private static String getReportName(ProcessDefinition processDefinition, 
-            final String reportNamePrefix) {
-        
-        
+    private static String getReportName(ProcessDefinition processDefinition, final String reportNamePrefix) {
+
         final StringBuilder builder = new StringBuilder();
-        
+
         if (StringUtils.isNotBlank(reportNamePrefix)) {
             builder.append(reportNamePrefix);
             builder.append('_');
         }
-        
+
         builder.append(processDefinition.getKey());
         builder.append(".html");
-        
+
         return builder.toString();
-        
+
     }
 
     /**
@@ -150,16 +181,17 @@ public class CoverageReportUtil {
      * 
      * @param processDefinition
      * @return
-     * @throws IOException Thrown if the BPMN resource is not found.
+     * @throws IOException
+     *             Thrown if the BPMN resource is not found.
      */
     protected static String getBpmnXml(ProcessDefinition processDefinition) throws IOException {
-        
+
         InputStream inputStream = CoverageReportUtil.class.getClassLoader().getResourceAsStream(
                 processDefinition.getResourceName());
         if (inputStream == null) {
             inputStream = new FileInputStream(processDefinition.getResourceName());
         }
-        
+
         return IOUtils.toString(inputStream);
     }
 

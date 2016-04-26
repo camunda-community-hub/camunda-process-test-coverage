@@ -47,7 +47,7 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
+			<version>2.5</version>
 		</dependency>
 
 		<dependency>
@@ -88,7 +88,7 @@
 					<nodeVersion>v5.3.0</nodeVersion>
 					<npmVersion>3.3.12</npmVersion>
 					<workingDirectory>frontend-maven-plugin</workingDirectory>
-					<installDirectory>target/process-test-coverage</installDirectory>
+					<installDirectory>frontend-maven-plugin</installDirectory>
 				</configuration>
 				<executions>
 
@@ -105,8 +105,8 @@
 							<goal>npm</goal>
 						</goals>
 						<configuration>
-                            <arguments>install</arguments>
-                        </configuration>
+							<arguments>install</arguments>
+						</configuration>
 					</execution>
 
 					<execution>
@@ -116,6 +116,27 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>frontend-maven-plugin/node</directory>
+						</fileset>
+						<fileset>
+							<directory>frontend-maven-plugin/node_modules</directory>
+						</fileset>
+						<fileset>
+							<directory>frontend-maven-plugin/etc</directory>
+						</fileset>
+						<fileset>
+							<directory>src/main/resources/bower_components</directory>
+						</fileset>
+					</filesets>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -134,7 +155,8 @@
 		<tag>HEAD</tag>
 	</scm>
 
-	<!-- repositories used for distribution of releases and snapshots, DO NOT CHANGE -->
+	<!-- repositories used for distribution of releases and snapshots, DO NOT 
+		CHANGE -->
 	<distributionManagement>
 		<repository>
 			<id>camunda-nexus</id>
