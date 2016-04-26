@@ -4,9 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
+import java.util.Enumeration;
 import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +15,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.impl.persistence.entity.ResourceManager;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
 import org.camunda.bpm.extension.process_test_coverage.model.AggregatedCoverage;
@@ -31,8 +33,9 @@ public class CoverageReportUtil {
     /**
      * Root directory for all coverage reports.
      */
-    public static final String TARGET_DIR_ROOT = "target/process-test-coverage";
-    public static final String BOWER_DIR = TARGET_DIR_ROOT + "/bower_components";
+    public static final String TARGET_DIR_ROOT = "target/process-test-coverage/";
+    public static final String BOWER_DIR_NAME = "bower_components";
+    public static final String BOWER_DIR_PATH = TARGET_DIR_ROOT + BOWER_DIR_NAME;
 
     /**
      * Generates a coverage report for the whole test class. This method
@@ -126,19 +129,59 @@ public class CoverageReportUtil {
 
     private static void installBowerComponents() {
 
-        final File bowerComponents = new File(BOWER_DIR);
-        if (!bowerComponents.exists()) {
-            try {
+        final File bowerComponents = new File(BOWER_DIR_PATH);
+        // No need to install
+        if (bowerComponents.exists()) {
 
-                final File bowerSrc = new File(CoverageReportUtil.class.getResource("/bower_components").toURI());
-                FileUtils.copyDirectory(bowerSrc, bowerComponents);
-
-            } catch (Exception e) {
-
-                logger.log(Level.SEVERE, "Unable to copy bower_components!", e);
-            }
+            return;
         }
 
+        final File resourcesRoot = new File(
+                CoverageReportUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+
+        try {
+
+            // Tests executed by maven use JAR resources
+            if (resourcesRoot.isFile()) {
+
+                final JarFile coverageJar = new JarFile(resourcesRoot);
+                final Enumeration<JarEntry> entries = coverageJar.entries();
+
+                while (entries.hasMoreElements()) {
+
+                    final String resourcePath = entries.nextElement().getName();
+                    if (resourcePath.startsWith(BOWER_DIR_NAME)) {
+
+                        final File resource = new File(TARGET_DIR_ROOT + resourcePath);
+
+                        final InputStream source = CoverageReportUtil.class.getResourceAsStream("/" + resourcePath);
+                        if (resourcePath.endsWith("/")) {
+
+                            resource.mkdirs();
+
+                        } else {
+
+                            resource.getParentFile().mkdirs();
+                            FileUtils.copyInputStreamToFile(source, resource);
+                        }
+
+                    }
+                }
+                coverageJar.close();
+            }
+
+            // Tests executed in the IDE use directories
+            else {
+
+                final File bowerSrc = new File(CoverageReportUtil.class.getResource("/" + BOWER_DIR_NAME).toURI());
+                FileUtils.copyDirectory(bowerSrc, bowerComponents);
+
+            }
+
+        } catch (Exception e) {
+
+            logger.log(Level.SEVERE, "Unable to copy bower_components!", e);
+        }
     }
 
     /**
