@@ -120,8 +120,10 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
         handleClassCoverage(description);
 
-        // run derived functionality
-        super.finished(description);
+        // run derived finalization only of not used as a class rule
+        if (identityService != null) {
+            super.finished(description);
+        }
 
     }
 
@@ -153,8 +155,8 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
                     final boolean isRule = field.isAnnotationPresent(Rule.class);
                     if (isClassRule && !isRule) {
 
-                        throw new RuntimeException(getClass().getCanonicalName() +
-                                " can only be used as a @ClassRule if it is also a @Rule!");
+                        throw new RuntimeException(getClass().getCanonicalName()
+                                + " can only be used as a @ClassRule if it is also a @Rule!");
                     }
                 }
             }
@@ -173,11 +175,11 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      */
     private void initializeMethodCoverage(Description description) {
 
-    	// Not a @ClassRule run and deployments present
+        // Not a @ClassRule run and deployments present
         if (deploymentId != null) {
 
-            final List<ProcessDefinition> deployedProcessDefinitions = processEngine.getRepositoryService()
-            		.createProcessDefinitionQuery().deploymentId(deploymentId).list();
+            final List<ProcessDefinition> deployedProcessDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().deploymentId(
+                    deploymentId).list();
 
             coverageTestRunState.initializeTestMethodCoverage(processEngine,
                     deploymentId,
@@ -203,7 +205,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             coverageTestRunState.setTestClassName(description.getClassName());
 
             initializeListenerRunState();
-            
+
             firstRun = false;
         }
 
@@ -212,8 +214,8 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     }
 
     /**
-     * Sets the test run state for the coverage listeners.
-     * logging. {@see ProcessCoverageInMemProcessEngineConfiguration}
+     * Sets the test run state for the coverage listeners. logging.
+     * {@see ProcessCoverageInMemProcessEngineConfiguration}
      */
     private void initializeListenerRunState() {
 

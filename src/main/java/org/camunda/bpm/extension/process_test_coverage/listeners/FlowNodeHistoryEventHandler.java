@@ -28,8 +28,7 @@ public class FlowNodeHistoryEventHandler extends DbHistoryEventHandler implement
         // TODO collect jobs for highlighting (e.g. boundary timer event)
 
         // We are only interested in activity start events
-        if (historyEvent instanceof HistoricActivityInstanceEventEntity
-                && isInitialEvent(historyEvent.getEventType())) {
+        if (historyEvent instanceof HistoricActivityInstanceEventEntity && isInitialEvent(historyEvent)) {
 
             HistoricActivityInstanceEventEntity activityEvent = (HistoricActivityInstanceEventEntity) historyEvent;
 
