@@ -248,8 +248,11 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     private void handleTestMethodCoverage(Description description) {
 
         // Do test method coverage only if deployments present
-        final Deployment deploymentAnnotation = description.getAnnotation(Deployment.class);
-        if (deploymentAnnotation != null) {
+        final Deployment methodDeploymentAnnotation = description.getAnnotation(Deployment.class);
+        final Deployment classDeploymentAnnotation = description.getTestClass().getAnnotation(Deployment.class);
+        final boolean testMethodHasDeployment = methodDeploymentAnnotation != null || classDeploymentAnnotation != null;
+
+        if (testMethodHasDeployment) {
 
             final String testName = description.getMethodName();
             final MethodCoverage testCoverage = coverageTestRunState.getTestMethodCoverage(testName);
