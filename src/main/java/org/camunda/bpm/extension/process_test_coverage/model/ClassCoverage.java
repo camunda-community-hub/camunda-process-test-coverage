@@ -70,7 +70,7 @@ public class ClassCoverage implements AggregatedCoverage {
         final Set<FlowNode> definitionsFlowNodes = anyDeployment.getProcessDefinitionsFlowNodes();
         final Set<SequenceFlow> definitionsSeqenceFlows = anyDeployment.getProcessDefinitionsSequenceFlows();
         
-        final Set<CoveredActivity> coveredFlowNodes = getCoveredFlowNodes();
+        final Set<CoveredFlowNode> coveredFlowNodes = getCoveredFlowNodes();
         final Set<CoveredSequenceFlow> coveredSequenceFlows = getCoveredSequenceFlows();
         
         final double bpmnElementsCount = definitionsFlowNodes.size() + definitionsSeqenceFlows.size();
@@ -85,9 +85,9 @@ public class ClassCoverage implements AggregatedCoverage {
      * 
      * @return A set of covered flow nodes.
      */
-    public Set<CoveredActivity> getCoveredFlowNodes() {
+    public Set<CoveredFlowNode> getCoveredFlowNodes() {
 
-        final Set<CoveredActivity> coveredFlowNodes = new TreeSet<CoveredActivity>(CoveredElementComparator.instance());
+        final Set<CoveredFlowNode> coveredFlowNodes = new TreeSet<CoveredFlowNode>(CoveredElementComparator.instance());
 
         for (MethodCoverage deploymentCoverage : testNameToMethodCoverage.values()) {
 

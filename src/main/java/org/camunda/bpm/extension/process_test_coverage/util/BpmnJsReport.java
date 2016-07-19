@@ -60,7 +60,7 @@ public class BpmnJsReport {
    * Generates a html coverage report for a process definition from the passed parameters.
    * 
    * @param bpmnXml The BPMN XML of the report process definition. 
-   * @param activityIds Flow nodes to be highlighted.
+   * @param flowNodeIds Flow nodes to be highlighted.
    * @param sequenceFlowIds Sequence flows to be highlighted.
    * @param reportName The file name of the report.
    * @param processDefinitionKey The key of the report process definition.
@@ -73,11 +73,11 @@ public class BpmnJsReport {
    * 
    * @throws IOException Thrown if an error occurs on report template read or report write.
    */
-  public static void generateReportWithHighlightedFlowNodesAndSequenceFlows(String bpmnXml, Collection<String> activityIds, 
+  public static void generateReportWithHighlightedFlowNodesAndSequenceFlows(String bpmnXml, Collection<String> flowNodeIds, 
           Collection<String> sequenceFlowIds, String reportName, String processDefinitionKey, 
           double coverage, String testClass, String testMethod, boolean classReport, String targetDir) throws IOException {
       
-    final String flowNodeMarkers = generateJavaScriptFlowNodeAnnotations(activityIds);
+    final String flowNodeMarkers = generateJavaScriptFlowNodeAnnotations(flowNodeIds);
     final String sequenceFlowMarkers = generateJavaScriptSequenceFlowAnnotations(sequenceFlowIds);
     final String markers = flowNodeMarkers + sequenceFlowMarkers;
     
@@ -162,14 +162,14 @@ public class BpmnJsReport {
   /**
    * Generate the add marker javascript for the passed flow node IDs.
    * 
-   * @param acivityIds
+   * @param flowNodeIds
    * @return
    */
-  protected static String generateJavaScriptFlowNodeAnnotations(Collection<String> acivityIds) {
+  protected static String generateJavaScriptFlowNodeAnnotations(Collection<String> flowNodeIds) {
     StringBuilder javaScript = new StringBuilder();
-    for (String activityId : acivityIds) {
+    for (String flowNodeId : flowNodeIds) {
       javaScript.append("\t\t\t");
-      javaScript.append("canvas.addMarker('" + activityId + "', 'highlight');\n");
+      javaScript.append("canvas.addMarker('" + flowNodeId + "', 'highlight');\n");
     }
     return javaScript.toString();
   }

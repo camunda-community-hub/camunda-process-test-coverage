@@ -7,7 +7,7 @@ import org.camunda.bpm.engine.impl.history.event.HistoryEvent;
 import org.camunda.bpm.engine.impl.history.handler.DbHistoryEventHandler;
 import org.camunda.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
-import org.camunda.bpm.extension.process_test_coverage.model.CoveredActivity;
+import org.camunda.bpm.extension.process_test_coverage.model.CoveredFlowNode;
 
 /**
  * Extends the {@link DbHistoryEventHandler} in order to notify the process test
@@ -41,7 +41,7 @@ public class FlowNodeHistoryEventHandler extends DbHistoryEventHandler implement
 
             HistoricActivityInstanceEventEntity activityEvent = (HistoricActivityInstanceEventEntity) historyEvent;
 
-            final CoveredActivity coveredActivity = new CoveredActivity(historyEvent.getProcessDefinitionKey(),
+            final CoveredFlowNode coveredActivity = new CoveredFlowNode(historyEvent.getProcessDefinitionKey(),
                     activityEvent.getActivityId());
 
             coverageTestRunState.addCoveredElement(coveredActivity);

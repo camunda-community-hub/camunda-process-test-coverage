@@ -20,9 +20,9 @@ import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
  */
 public class ProcessCoverage {
 
-    private final static String TOSTRING_TEMPLATE = "ProcessCoverage [processDefinitionId=''{0}'', " +
-            "coverage={1} ({2}/{3}), flowNodes=({4}/{5}), sequenceFlows=({6}/{7}), " +
-            "coveredActivityIds={8}, definitionFlowNodes={9}]";
+    private final static String TOSTRING_TEMPLATE = "ProcessCoverage [processDefinitionId=''{0}'', "
+            + "coverage={1} ({2}/{3}), flowNodes=({4}/{5}), sequenceFlows=({6}/{7}), "
+            + "coveredFlowNodeIds={8}, definitionFlowNodes={9}]";
 
     private static final Logger logger = Logger.getLogger(ProcessCoverage.class.getCanonicalName());
 
@@ -34,7 +34,7 @@ public class ProcessCoverage {
     /**
      * Covered flow nodes.
      */
-    private Set<CoveredActivity> coveredFlowNodes = new HashSet<CoveredActivity>();
+    private Set<CoveredFlowNode> coveredFlowNodes = new HashSet<CoveredFlowNode>();
 
     /**
      * Flow nodes of the process definition.
@@ -78,9 +78,9 @@ public class ProcessCoverage {
      */
     public void addCoveredElement(CoveredElement element) {
 
-        if (element instanceof CoveredActivity) {
+        if (element instanceof CoveredFlowNode) {
 
-            coveredFlowNodes.add((CoveredActivity) element);
+            coveredFlowNodes.add((CoveredFlowNode) element);
 
         } else if (element instanceof CoveredSequenceFlow) {
 
@@ -116,24 +116,24 @@ public class ProcessCoverage {
         return definitionSequenceFlows;
     }
 
-    public Set<CoveredActivity> getCoveredFlowNodes() {
+    public Set<CoveredFlowNode> getCoveredFlowNodes() {
         return coveredFlowNodes;
     }
 
     public Set<String> getCoveredFlowNodeIds() {
 
         final Set<String> coveredFlowNodeIds = new HashSet<String>();
-        for (CoveredActivity activity : coveredFlowNodes) {
+        for (CoveredFlowNode activity : coveredFlowNodes) {
 
             coveredFlowNodeIds.add(activity.getElementId());
         }
 
         return coveredFlowNodeIds;
     }
-    
+
     private Set<String> getDefinitionSequenceFlowIds() {
-    	
-    	final Set<String> definitionFlowNodeIds = new HashSet<String>();
+
+        final Set<String> definitionFlowNodeIds = new HashSet<String>();
         for (FlowNode activity : definitionFlowNodes) {
 
             definitionFlowNodeIds.add(activity.getId());
@@ -184,7 +184,7 @@ public class ProcessCoverage {
                 getCoveredFlowNodeIds(), // IDs
                 getDefinitionSequenceFlowIds());
     }
-    
+
     /**
      * Retrieves the number of covered flow node and sequence flow elements.
      * 

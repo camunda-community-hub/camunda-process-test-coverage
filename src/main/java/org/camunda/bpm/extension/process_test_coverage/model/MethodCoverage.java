@@ -81,7 +81,7 @@ public class MethodCoverage implements AggregatedCoverage {
             
             // Flow nodes
             
-            final Set<CoveredActivity> coveredFlowNodes = processCoverage.getCoveredFlowNodes();
+            final Set<CoveredFlowNode> coveredFlowNodes = processCoverage.getCoveredFlowNodes();
             deploymentCoveredFlowNodes.addAll(coveredFlowNodes);
             
             final Collection<FlowNode> definitionFlowNodes = processCoverage.getDefinitionFlowNodes();
@@ -163,12 +163,12 @@ public class MethodCoverage implements AggregatedCoverage {
      * Retrieves a set of covered flow nodes of the process definitions deployed by this test method.
      * @return
      */
-    public Set<CoveredActivity> getCoveredFlowNodes() {
+    public Set<CoveredFlowNode> getCoveredFlowNodes() {
         
-        final Set<CoveredActivity> flowNodes = new TreeSet<CoveredActivity>(CoveredElementComparator.instance());
+        final Set<CoveredFlowNode> flowNodes = new TreeSet<CoveredFlowNode>(CoveredElementComparator.instance());
         for (ProcessCoverage processCoverage : processDefinitionKeyToProcessCoverage.values()) {
             
-            final Set<CoveredActivity> definitionFlowNodes = processCoverage.getCoveredFlowNodes();
+            final Set<CoveredFlowNode> definitionFlowNodes = processCoverage.getCoveredFlowNodes();
             flowNodes.addAll(definitionFlowNodes);
             
         }
