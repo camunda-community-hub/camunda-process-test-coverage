@@ -44,11 +44,25 @@ public class CoverageTestRunState {
     public void addCoveredElement(/* @NotNull */ CoveredElement coveredElement) {
 
         if (log.isLoggable(Level.FINE)) {
-            log.info("notifyCoveredElement(" + coveredElement + ")");
+            log.info("addCoveredElement(" + coveredElement + ")");
         }
 
         classCoverage.addCoveredElement(currentTestMethodName, coveredElement);
 
+    }
+
+    /**
+     * Mark a covered element execution as ended.
+     * 
+     * @param coveredElement
+     */
+    public void endCoveredElement(CoveredElement coveredElement) {
+
+        if (log.isLoggable(Level.FINE)) {
+            log.info("endCoveredElement(" + coveredElement + ")");
+        }
+
+        classCoverage.endCoveredElement(currentTestMethodName, coveredElement);
     }
 
     /**

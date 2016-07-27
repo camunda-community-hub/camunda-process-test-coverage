@@ -10,8 +10,8 @@ import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestR
 import org.camunda.bpm.extension.process_test_coverage.model.CoveredFlowNode;
 import org.camunda.bpm.extension.process_test_coverage.model.CoveredSequenceFlow;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
-import org.camunda.bpm.model.bpmn.instance.Event;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
+import org.camunda.bpm.model.bpmn.instance.IntermediateThrowEvent;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.camunda.bpm.model.xml.instance.ModelElementInstance;
 
@@ -98,9 +98,12 @@ public class PathCoverageExecutionListener implements ExecutionListener {
 
     private void addEventToCoverage(ProcessDefinition processDefinition, FlowNode node) {
 
-        if (node instanceof Event) {
+        if (node instanceof IntermediateThrowEvent) {
 
             final CoveredFlowNode coveredElement = new CoveredFlowNode(processDefinition.getKey(), node.getId());
+            // We consider entered throw elements as also ended
+            coveredElement.setEnded(true);
+
             coverageTestRunState.addCoveredElement(coveredElement);
         }
     }

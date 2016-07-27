@@ -14,6 +14,13 @@ public class CoveredFlowNode extends CoveredElement {
      */
     private final String flowNodeId;
 
+    /**
+     * A flow node object is created in the coverage once it has started
+     * execution. This flag is set to true once the flow node has finished (end
+     * event).
+     */
+    private boolean ended = false;
+
     public CoveredFlowNode(String processDefinitionKey, String flowNodeId) {
         this.flowNodeId = flowNodeId;
         this.processDefinitionKey = processDefinitionKey;
@@ -22,6 +29,14 @@ public class CoveredFlowNode extends CoveredElement {
     @Override
     public String getElementId() {
         return flowNodeId;
+    }
+
+    public boolean hasEnded() {
+        return ended;
+    }
+
+    public void setEnded(boolean ended) {
+        this.ended = ended;
     }
 
     @Override

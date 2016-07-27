@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.1.1">
+  <bpmn:process id="BoundaryEventTest" name="BoundaryEventTest" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1qzf0ac</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="EndEvent_0he1o0p" />
+    <bpmn:sequenceFlow id="SequenceFlow_1qzf0ac" sourceRef="StartEvent_1" targetRef="ServiceTask_07my959" />
+    <bpmn:boundaryEvent id="BoundaryEvent_09etxqr" attachedToRef="ServiceTask_07my959">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="org.camunda.bpm.extension.process_test_coverage.listeners.IntermediateEventExecutionListener" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:compensateEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_11bgke7" sourceRef="ServiceTask_07my959" targetRef="EndEvent_0d6cyfb" />
+    <bpmn:task id="Task_SwitchingToAuxiliaryPower" name="Switching to Auxiliary Power" isForCompensation="true" />
+    <bpmn:serviceTask id="ServiceTask_07my959" name="Main Power" camunda:expression="${true}">
+      <bpmn:incoming>SequenceFlow_1qzf0ac</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_11bgke7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_0d6cyfb">
+      <bpmn:incoming>SequenceFlow_11bgke7</bpmn:incoming>
+      <bpmn:compensateEventDefinition activityRef="ServiceTask_07my959" />
+    </bpmn:endEvent>
+    <bpmn:association id="Association_AttemptingToCompensate" associationDirection="One" sourceRef="BoundaryEvent_09etxqr" targetRef="Task_SwitchingToAuxiliaryPower" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="BoundaryEventTest">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="98" y="290" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="71" y="326" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0he1o0p_di" bpmnElement="EndEvent_0he1o0p">
+        <dc:Bounds x="418" y="446" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="391" y="482" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1qzf0ac_di" bpmnElement="SequenceFlow_1qzf0ac">
+        <di:waypoint xsi:type="dc:Point" x="134" y="308" />
+        <di:waypoint xsi:type="dc:Point" x="210" y="308" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="127" y="283" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BoundaryEvent_09etxqr_di" bpmnElement="BoundaryEvent_09etxqr">
+        <dc:Bounds x="292" y="330" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="265" y="366" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_11bgke7_di" bpmnElement="SequenceFlow_11bgke7">
+        <di:waypoint xsi:type="dc:Point" x="310" y="308" />
+        <di:waypoint xsi:type="dc:Point" x="418" y="308" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="319" y="283" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_0s06eqh_di" bpmnElement="Task_SwitchingToAuxiliaryPower">
+        <dc:Bounds x="260" y="424" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0oezsg7_di" bpmnElement="Association_AttemptingToCompensate">
+        <di:waypoint xsi:type="dc:Point" x="310" y="366" />
+        <di:waypoint xsi:type="dc:Point" x="310" y="424" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_07my959_di" bpmnElement="ServiceTask_07my959">
+        <dc:Bounds x="210" y="268" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0d6cyfb_di" bpmnElement="EndEvent_0d6cyfb">
+        <dc:Bounds x="418" y="290" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="391" y="326" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

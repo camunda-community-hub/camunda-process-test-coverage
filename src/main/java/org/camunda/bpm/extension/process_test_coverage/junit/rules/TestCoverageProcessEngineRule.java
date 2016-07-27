@@ -11,13 +11,16 @@ import java.util.logging.Logger;
 
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.camunda.bpm.engine.impl.event.CompensationEventHandler;
+import org.camunda.bpm.engine.impl.event.EventHandler;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.extension.process_test_coverage.listeners.CompensationEventCoverageHandler;
 import org.camunda.bpm.extension.process_test_coverage.listeners.FlowNodeHistoryEventHandler;
 import org.camunda.bpm.extension.process_test_coverage.listeners.PathCoverageParseListener;
-import org.camunda.bpm.extension.process_test_coverage.model.ClassCoverage;
 import org.camunda.bpm.extension.process_test_coverage.model.AggregatedCoverage;
+import org.camunda.bpm.extension.process_test_coverage.model.ClassCoverage;
 import org.camunda.bpm.extension.process_test_coverage.model.MethodCoverage;
 import org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil;
 import org.hamcrest.Matcher;
@@ -238,6 +241,21 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
                 listener.setCoverageTestRunState(coverageTestRunState);
             }
         }
+
+        // Compensation event handler
+
+        final EventHandler compensationEventHandler = processEngineConfiguration.getEventHandler(
+                CompensationEventHandler.EVENT_HANDLER_TYPE);
+        if (compensationEventHandler != null && compensationEventHandler instanceof CompensationEventCoverageHandler) {
+
+            final CompensationEventCoverageHandler compensationEventCoverageHandler = (CompensationEventCoverageHandler) compensationEventHandler;
+            compensationEventCoverageHandler.setCoverageTestRunState(coverageTestRunState);
+
+        } else {
+            logger.warning("CompensationEventCoverageHandler not registered with process engine configuration!"
+                    + " Compensation boundary events coverage will not be registered.");
+        }
+
     }
 
     /**

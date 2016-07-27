@@ -16,9 +16,6 @@ public class PathCoverageParseListener extends AbstractBpmnParseListener {
      */
     private CoverageTestRunState coverageTestRunState;
 
-    public PathCoverageParseListener() {
-    }
-
     @Override
     public void parseSequenceFlow(Element sequenceFlowElement, ScopeImpl scopeElement,
             org.camunda.bpm.engine.impl.pvm.process.TransitionImpl transition) {
@@ -26,6 +23,20 @@ public class PathCoverageParseListener extends AbstractBpmnParseListener {
         final PathCoverageExecutionListener pathCoverageExecutionListener = new PathCoverageExecutionListener(
                 coverageTestRunState);
         transition.addListener(ExecutionListener.EVENTNAME_TAKE, pathCoverageExecutionListener);
+
+    }
+
+    @Override
+    public void parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scope,
+            org.camunda.bpm.engine.impl.pvm.process.ActivityImpl activity) {
+
+        final IntermediateEventExecutionListener startListener = new IntermediateEventExecutionListener(
+                coverageTestRunState);
+        activity.addListener(ExecutionListener.EVENTNAME_START, startListener);
+
+        final IntermediateEventExecutionListener endListener = new IntermediateEventExecutionListener(
+                coverageTestRunState);
+        activity.addListener(ExecutionListener.EVENTNAME_END, endListener);
     }
 
     public void setCoverageTestRunState(CoverageTestRunState coverageTestRunState) {

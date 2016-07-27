@@ -5,12 +5,15 @@ import java.util.List;
 
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
+import org.camunda.bpm.engine.impl.event.EventHandler;
+import org.camunda.bpm.extension.process_test_coverage.listeners.CompensationEventCoverageHandler;
 import org.camunda.bpm.extension.process_test_coverage.listeners.FlowNodeHistoryEventHandler;
 import org.camunda.bpm.extension.process_test_coverage.listeners.PathCoverageParseListener;
 
 /**
- * Standalone in memory process engine configuration additionaly configuring
- * flow node and sequence flow listeners for process coverage testing.
+ * Standalone in memory process engine configuration additionally configuring
+ * flow node, sequence flow and compensation listeners for process coverage
+ * testing.
  * 
  * @author z0rbas
  *
@@ -24,6 +27,8 @@ public class ProcessCoverageInMemProcessEngineConfiguration extends StandaloneIn
 
         initializePathCoverageParseListener();
 
+        initializeCompensationEventHandler();
+        
         super.init();
     }
 
@@ -42,6 +47,16 @@ public class ProcessCoverageInMemProcessEngineConfiguration extends StandaloneIn
 
         final FlowNodeHistoryEventHandler historyEventHandler = new FlowNodeHistoryEventHandler();
         setHistoryEventHandler(historyEventHandler);
+
+    }
+
+    private void initializeCompensationEventHandler() {
+
+        if (getCustomEventHandlers() == null) {
+            setCustomEventHandlers(new LinkedList<EventHandler>());
+        }
+
+        customEventHandlers.add(new CompensationEventCoverageHandler());
 
     }
 

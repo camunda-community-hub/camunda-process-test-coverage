@@ -22,16 +22,18 @@ public class LinkEventCoverageTest {
     @Deployment(resources = BPMN_PATH)
     public void testPathA() {
 
-        System.out.println("Deployments: " + rule.getRepositoryService().getDeploymentResourceNames("1") + " "
-                + rule.getRepositoryService().createProcessDefinitionQuery().list());
-        rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
+        Map<String, Object> variables = new HashMap<String, Object>();
+        variables.put("path", "A");
+        rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
     }
 
-    // public void testPathB() {
-    // Map<String, Object> variables = new HashMap<String, Object>();
-    // variables.put("path", "B");
-    // rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY,
-    // variables);
-    // }
+    @Test
+    @Deployment(resources = BPMN_PATH)
+    public void testPathB() {
+
+        Map<String, Object> variables = new HashMap<String, Object>();
+        variables.put("path", "B");
+        rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+    }
 
 }

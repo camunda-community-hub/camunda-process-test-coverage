@@ -15,10 +15,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.impl.persistence.entity.ResourceManager;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
 import org.camunda.bpm.extension.process_test_coverage.model.AggregatedCoverage;
+import org.camunda.bpm.extension.process_test_coverage.model.CoveredFlowNode;
 
 /**
  * Utility for generating graphical class and method coverage reports.
@@ -95,7 +95,7 @@ public class CoverageReportUtil {
                 // Assemble data
                 final String testClass = coverageTestRunState.getTestClassName();
                 final String testName = coverageTestRunState.getCurrentTestMethodName();
-                final Set<String> coveredFlowNodeIds = coverage.getCoveredFlowNodeIds(processDefinition.getKey());
+                final Set<CoveredFlowNode> coveredFlowNodes = coverage.getCoveredFlowNodes(processDefinition.getKey());
                 final Set<String> coveredSequenceFlowIds = coverage.getCoveredSequenceFlowIds(
                         processDefinition.getKey());
                 final String reportName = classReport ? getReportName(processDefinition, null)
@@ -107,7 +107,7 @@ public class CoverageReportUtil {
                 // Generate report
 
                 BpmnJsReport.generateReportWithHighlightedFlowNodesAndSequenceFlows(bpmnXml,
-                        coveredFlowNodeIds,
+                        coveredFlowNodes,
                         coveredSequenceFlowIds,
                         reportName,
                         processDefinition.getKey(),

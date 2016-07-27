@@ -95,6 +95,39 @@ public class ProcessCoverage {
     }
 
     /**
+     * Mark a covered element execution as ended.
+     * 
+     * @param element
+     *            A search object. Only the original object in the
+     *            coveredFlowNodes Set will be modified.
+     */
+    public void endCoveredElement(CoveredElement element) {
+
+        // Only flow nodes can be ended
+        if (element instanceof CoveredFlowNode) {
+
+            CoveredFlowNode endedFlowNode = (CoveredFlowNode) element;
+
+            /*
+             * A dev's gotta do what a dev's gotta do ...
+             * 
+             * Replace the element with the ended element to avoid searching
+             * with an iterator. (It is important we preserve the Set type.)
+             */
+            coveredFlowNodes.remove(endedFlowNode);
+
+            endedFlowNode.setEnded(true);
+            coveredFlowNodes.add(endedFlowNode);
+
+        } else {
+            logger.log(Level.SEVERE,
+                    "Attempted ending unsupported element to process coverage. Process definition ID: {0} Element ID: {1}",
+                    new Object[] { element.getProcessDefinitionKey(), element.getElementId() });
+        }
+
+    }
+
+    /**
      * Retrieves the coverage percentage for all elements.
      * 
      * @return
