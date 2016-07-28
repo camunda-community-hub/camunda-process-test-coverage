@@ -35,9 +35,9 @@ Add this Maven Dependency to your project:
 ```
 
 Have a look at this project's tests. E.g.
-- Class rule usage: [ProcessTestClassRuleCoverageTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/ClassCoverageTest.java):
-- Method rule usage: [ProcessTestMethodRuleCoverageTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/MethodCoverageTest.java):
-- Test checking property usage: [ProcessTestClassRulePropertyTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/ClassCoveragePropertyTest.java):
+- Class rule usage: [ClassCoverageTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/ClassCoverageTest.java):
+- Method rule usage: [MethodCoverageTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/MethodCoverageTest.java):
+- Test checking property usage: [ClassCoverageSystemPropertyTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/ClassCoverageSystemPropertyTest.java):
 
 ### Checking Coverage for the Examples
 You can use the JUnit tests of this project to get comfortable with the library
@@ -50,9 +50,9 @@ You can use the JUnit tests of this project to get comfortable with the library
 The following steps show how to integrate the camunda-process-test-coverage into you own setup. Our tests should provide a good base for your usage. If you use a single JUnit class per process, the class rule usage may be the perfect way to go.
 
 1.   add library jar to your project classpath (e.g. via the maven dependency)
-2.   adjust yout test camunda setup [camunda.cfg.xml](src/test/resources/camunda.cfg.xml)
+2.   adjust your test camunda setup [camunda.cfg.xml](src/test/resources/camunda.cfg.xml)
   * use the [ProcessCoverageInMemProcessEngineConfiguration](src/test/resources/camunda.cfg.xml)
-  * or add the [FlowNodeHistoryEventHandler](src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/FlowNodeHistoryEventHandler.java) & [PathCoverageParseListener](src/main/java/org/camunda/bpm/extension/process_test_coverage/trace/TraceActivitiesHistoryEventHandler.java) to your process engine configuration
+  * or add the [FlowNodeHistoryEventHandler](src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/FlowNodeHistoryEventHandler.java), [PathCoverageParseListener](src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/PathCoverageParseListener.java) and [CompensationEventCoverageHandler](src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/CompensationEventCoverageHandler.java) to your process engine configuration
 3.   adapt your process unit test to generate and check the coverage. 
 4.   optionally set the Java system property (org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST) on your build system to assure all process tests adhere to a coverage minimum.
 5.   run your unit tests
@@ -107,7 +107,7 @@ Feel free to contact us via [Email](mailto:kontakt@wdw-elab.de)
 
 ## Maintainer
 
-People responsible for this project
+People responsible for this project:
 
 [Irmin Okic (wdw-elab)](https://github.com/z0rbas)
 

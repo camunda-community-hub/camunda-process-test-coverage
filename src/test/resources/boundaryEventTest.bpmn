@@ -4,12 +4,8 @@
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_1qzf0ac</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:endEvent id="EndEvent_0he1o0p" />
     <bpmn:sequenceFlow id="SequenceFlow_1qzf0ac" sourceRef="StartEvent_1" targetRef="ServiceTask_07my959" />
     <bpmn:boundaryEvent id="BoundaryEvent_09etxqr" attachedToRef="ServiceTask_07my959">
-      <bpmn:extensionElements>
-        <camunda:executionListener class="org.camunda.bpm.extension.process_test_coverage.listeners.IntermediateEventExecutionListener" event="start" />
-      </bpmn:extensionElements>
       <bpmn:compensateEventDefinition />
     </bpmn:boundaryEvent>
     <bpmn:sequenceFlow id="SequenceFlow_11bgke7" sourceRef="ServiceTask_07my959" targetRef="EndEvent_0d6cyfb" />
@@ -30,12 +26,6 @@
         <dc:Bounds x="98" y="290" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="71" y="326" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0he1o0p_di" bpmnElement="EndEvent_0he1o0p">
-        <dc:Bounds x="418" y="446" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="391" y="482" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1qzf0ac_di" bpmnElement="SequenceFlow_1qzf0ac">

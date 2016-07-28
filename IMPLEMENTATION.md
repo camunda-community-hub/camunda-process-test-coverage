@@ -6,8 +6,9 @@ Refer to the UML to get a fast perspective on the coverage rule internals.
 	
 	
 - The post BPMN parse listener and execution listener are registered with the process engine configuration.
-- Via the post bpmn parse listener we register execution listeners on sequence flows so coverage on these can be recorded.
+- Via the post bpmn parse listener we register execution listeners on sequence flows so coverage on these can be recorded. There is also a workaround in place for registering throwing link events using execution listeners. (Ticket: https://app.camunda.com/jira/browse/CAM-6467)
 - Via the history handler/listener we trace execution of flow elements so coverage on these can be recorded.
+- The CompenstaionEventCoverageHandler registers compensation boundary events.
 - Before every test method execution the "starting" method of the rule is executed.
  - The process engine state is initialized.
  - The test run state is initialized if it is the first run for the rule. (The rule is initialized once if a @ClassRule, otherwise a rule including the state is initialized for each test method.) The state is also assigned to the listeners to be able to keep track of covered elements.
@@ -24,7 +25,7 @@ Refer to the UML to get a fast perspective on the coverage rule internals.
 ### Notes
 
 - The bpmns used in the rule unit tests use both the old and new camunda namespaces for easy testing with different camunda versions (new namespaces starting with camunda 7.2.6, 7.3.3, 7.4.0)
-- As example use case, in wdw-elab, we set the global minimal coverage property defined in [TestCoverageProcessEngineRuleBuilder.DEFAULT_ASSERT_AT_LEAST_PROPERTY](src/main/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/TestCoverageProcessEngineRuleBuilder.java) as  a build parameter in our jenkins builds to specify the necessary coverage per project.
+- As example use case, in wdw-elab, we set the global minimal coverage property defined in [TestCoverageProcessEngineRuleBuilder.DEFAULT_ASSERT_AT_LEAST_PROPERTY](src/main/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/TestCoverageProcessEngineRuleBuilder.java) as a build parameter in our jenkins builds to specify the necessary coverage per project.
 
 ## UML
 
