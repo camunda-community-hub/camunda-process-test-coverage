@@ -17,6 +17,10 @@
     <description>Library tests are here in order to allow compiling
         against Camunda BPM release and testing against different versions.</description>
 
+    <properties>
+        <camunda.version>RELEASE</camunda.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${groupId}</groupId>
