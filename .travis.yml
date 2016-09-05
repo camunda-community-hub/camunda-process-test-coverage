@@ -1,0 +1,12 @@
+sudo: false
+language: java
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk6
+env:
+  - CAMUNDA=LATEST
+  - CAMUNDA=RELEASE
+  - CAMUNDA=7.5.0
+install: true
+script: mvn -Dcamunda.version=$CAMUNDA
