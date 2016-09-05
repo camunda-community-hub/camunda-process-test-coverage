@@ -1,15 +1,16 @@
-package org.camunda.bpm.extension.process_test_coverage.junit.rules;
+package process_test_coverage.junit.rules;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.lessThan;
+import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.camunda.bpm.engine.test.Deployment;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
+import static org.hamcrest.Matchers.*;
 
 /**
  * Multiple deployments per test method test.

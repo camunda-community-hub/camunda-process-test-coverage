@@ -1,10 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage.junit.rules;
-
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.BPMN_PATH;
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.PROCESS_DEFINITION_KEY;
-
-import java.util.HashMap;
-import java.util.Map;
+package process_test_coverage.junit.rules;
 
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
@@ -12,6 +6,9 @@ import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageP
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Test case starting an in-memory database-backed Process Engine.
@@ -26,19 +23,19 @@ public class ClassCoverageTest {
     				.assertClassCoverageAtLeast(1.0).build();
 
     @Test
-    @Deployment(resources = BPMN_PATH)
+    @Deployment(resources = CoverageTestProcessConstants.BPMN_PATH)
     public void testPathA() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "A");
-        rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+        rule.getRuntimeService().startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY, variables);
     }
 
     @Test
-    @Deployment(resources = BPMN_PATH)
+    @Deployment(resources = CoverageTestProcessConstants.BPMN_PATH)
     public void testPathB() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "B");
-        rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+        rule.getRuntimeService().startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY, variables);
     }
 
 }

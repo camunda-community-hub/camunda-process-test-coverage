@@ -1,7 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage.bpmn;
-
-import java.util.HashMap;
-import java.util.Map;
+package process_test_coverage.bpmn;
 
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
@@ -9,6 +6,9 @@ import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageP
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BpmnBusinessRuleTaskCoverageTest {
     /**

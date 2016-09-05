@@ -1,16 +1,15 @@
-package org.camunda.bpm.extension.process_test_coverage.junit.rules;
-
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.lessThan;
-
-import java.util.HashMap;
-import java.util.Map;
+package process_test_coverage.junit.rules;
 
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.Matchers.*;
 
 /**
  * Test case starting an in-memory database-backed Process Engine.

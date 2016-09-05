@@ -1,13 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage.junit.rules;
-
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.ALL_ELEMENTS;
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.BPMN_PATH;
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.PATH_B_ELEMENTS;
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.PROCESS_DEFINITION_KEY;
-import static org.hamcrest.Matchers.lessThan;
-
-import java.util.HashMap;
-import java.util.Map;
+package process_test_coverage.junit.rules;
 
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
@@ -17,6 +8,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.hamcrest.Matchers.*;
+
 /**
  * Test case starting an in-memory database-backed Process Engine.<br>
  * In your tests don't set the property using <code>System.setProperty</code> -
@@ -24,8 +20,8 @@ import org.junit.Test;
  */
 public class ClassCoverageSystemPropertyTest {
 
-    static final double EXPECTED = PATH_B_ELEMENTS.length;
-    static final double ALL = ALL_ELEMENTS.length;
+    static final double EXPECTED = CoverageTestProcessConstants.PATH_B_ELEMENTS.length;
+    static final double ALL = CoverageTestProcessConstants.ALL_ELEMENTS.length;
     static final double EXPECTED_COVERAGE = EXPECTED / ALL;
 
     static {
@@ -50,11 +46,11 @@ public class ClassCoverageSystemPropertyTest {
             	.build();
 
     @Test
-    @Deployment(resources = BPMN_PATH)
+    @Deployment(resources = CoverageTestProcessConstants.BPMN_PATH)
     public void testPathB() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "B");
-        classRule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
+        classRule.getRuntimeService().startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY, variables);
 
         classRule.addTestMethodCoverageAssertionMatcher("testPathB", lessThan(EXPECTED_COVERAGE + 0.0001));
     }

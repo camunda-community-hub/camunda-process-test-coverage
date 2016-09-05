@@ -1,18 +1,18 @@
-package org.camunda.bpm.extension.process_test_coverage.junit.rules;
-
-import static org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestProcessConstants.PROCESS_DEFINITION_KEY;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.HashMap;
-import java.util.Map;
+package process_test_coverage.junit.rules;
 
 import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
 import org.junit.Rule;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.Assert.*;
 
 /**
  * This test should register a still uncompleted/running flow node as such. The
@@ -35,7 +35,7 @@ public class RunningFlowNodeCoverageTest {
     @Test(expected = ProcessEngineException.class)
     public void shouldCoverGatewayAsStillRunningWithException() {
 
-        rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
+        rule.getRuntimeService().startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY);
 
     }
 
@@ -45,7 +45,7 @@ public class RunningFlowNodeCoverageTest {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "B");
         final ProcessInstance processInstance = rule.getRuntimeService().startProcessInstanceByKey(
-                PROCESS_DEFINITION_KEY, variables);
+                CoverageTestProcessConstants.PROCESS_DEFINITION_KEY, variables);
 
         assertFalse("The process instance should still be running!", processInstance.isEnded());
 

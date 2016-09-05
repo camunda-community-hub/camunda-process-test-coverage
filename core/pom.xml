@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
+        <groupId>org.camunda.bpm.extension</groupId>
+        <version>0.2.8-SNAPSHOT</version>
+    </parent>
+
+    <name>Camunda BPM Process Test Coverage</name>
+    <description>Helper library to visualize and assert which parts of a BPMN process have been covered by a unit test.</description>
+
+    <artifactId>camunda-bpm-process-test-coverage</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine</artifactId>
+            <version>RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <source>${maven.compiler.target}</source>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>0.0.29</version>
+                <configuration>
+                    <nodeVersion>v5.3.0</nodeVersion>
+                    <npmVersion>3.3.12</npmVersion>
+                    <workingDirectory>frontend-maven-plugin</workingDirectory>
+                    <installDirectory>frontend-maven-plugin</installDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>bower install</id>
+                        <goals>
+                            <goal>bower</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>frontend-maven-plugin/node</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>frontend-maven-plugin/node_modules</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>frontend-maven-plugin/etc</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>src/main/resources/bower_components</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

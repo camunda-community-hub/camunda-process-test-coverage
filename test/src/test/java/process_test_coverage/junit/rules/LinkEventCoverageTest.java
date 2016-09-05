@@ -1,11 +1,13 @@
-package org.camunda.bpm.extension.process_test_coverage.junit.rules;
+package process_test_coverage.junit.rules;
+
+import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
+import org.junit.Rule;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import org.camunda.bpm.engine.test.Deployment;
-import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * Test case starting an in-memory database-backed Process Engine.
