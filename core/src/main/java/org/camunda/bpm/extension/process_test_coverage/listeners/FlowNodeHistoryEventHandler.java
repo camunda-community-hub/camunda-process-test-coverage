@@ -1,14 +1,15 @@
 package org.camunda.bpm.extension.process_test_coverage.listeners;
 
-import java.util.EnumSet;
-import java.util.logging.Logger;
-
 import org.camunda.bpm.engine.impl.history.event.HistoricActivityInstanceEventEntity;
 import org.camunda.bpm.engine.impl.history.event.HistoryEvent;
 import org.camunda.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.camunda.bpm.engine.impl.history.handler.DbHistoryEventHandler;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
 import org.camunda.bpm.extension.process_test_coverage.model.CoveredFlowNode;
+import org.camunda.bpm.extension.process_test_coverage.util.Api;
+
+import java.util.EnumSet;
+import java.util.logging.Logger;
 
 /**
  * Extends the {@link DbHistoryEventHandler} in order to notify the process test
@@ -58,29 +59,37 @@ public class FlowNodeHistoryEventHandler extends DbHistoryEventHandler {
 
     }
 
+    protected boolean isInitialEvent(HistoryEvent historyEvent) {
+        String isInitialEvent = "isInitialEvent";
+        return Api.feature(DbHistoryEventHandler.class, isInitialEvent, HistoryEvent.class).isSupported() ? super.isInitialEvent(historyEvent):
+            (Boolean) Api.feature(DbHistoryEventHandler.class, isInitialEvent, String.class).invoke(this, historyEvent.getEventType());
+    }
+
     /**
      * Aimed to be the opposite of
-     * {@link DbHistoryEventHandler#isInitialEvent()}.
+     * {@link DbHistoryEventHandler#isInitialEvent(HistoryEvent event)}
+     * for the purpose of the process test coverage - which just deals with
+     * history events of type HistoricActivityInstanceEventEntity.
      * 
-     * Future versions of Camunda will probably introduce additional events
-     * requiring this method to be updated.
+     * Future versions of Camunda will eventually introduce additional events
+     * requiring this method to be updated. Be careful to deal with backwards
+     * compatibility issues when doing that.
      * 
      * @param historyEvent
      * @return
      */
     private boolean isEndEvent(HistoryEvent historyEvent) {
 
-        EnumSet<HistoryEventTypes> endEventTypes = EnumSet.of(HistoryEventTypes.ACTIVITY_INSTANCE_END,
-                HistoryEventTypes.PROCESS_INSTANCE_END,
-                HistoryEventTypes.TASK_INSTANCE_COMPLETE,
-                HistoryEventTypes.INCIDENT_RESOLVE,
-                HistoryEventTypes.CASE_INSTANCE_CLOSE,
-                HistoryEventTypes.BATCH_END);
+        EnumSet<HistoryEventTypes> endEventTypes = EnumSet.of(
+            HistoryEventTypes.ACTIVITY_INSTANCE_END,
+            HistoryEventTypes.PROCESS_INSTANCE_END,
+            HistoryEventTypes.TASK_INSTANCE_COMPLETE
+        );
 
         // They should have handled compare/equals in the enum itself
         for (HistoryEventTypes endEventType : endEventTypes) {
 
-            if (historyEvent.isEventOfType(endEventType)) {
+            if (historyEvent.getEventType().equals(endEventType.getEventName())) {
 
                 return true;
             }
@@ -92,4 +101,5 @@ public class FlowNodeHistoryEventHandler extends DbHistoryEventHandler {
     public void setCoverageTestRunState(CoverageTestRunState coverageTestRunState) {
         this.coverageTestRunState = coverageTestRunState;
     }
+
 }
