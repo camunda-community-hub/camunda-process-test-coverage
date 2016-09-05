@@ -1,5 +1,7 @@
 package org.camunda.bpm.extension.process_test_coverage.util;
 
+import org.camunda.bpm.engine.impl.bpmn.helper.BpmnProperties;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -15,6 +17,17 @@ import java.util.logging.Logger;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
 public class Api {
+
+  public static class Camunda {
+
+    /**
+     * @since Camunda BPM 7.5.0
+     */
+    public static boolean supportsCompensationEventCoverage() {
+      return Api.feature(BpmnProperties.class, "COMPENSATION_BOUNDARY_EVENT").isSupported();
+    }
+
+  }
 
   private static final Logger log = Logger.getLogger(Api.class.getCanonicalName());
 
