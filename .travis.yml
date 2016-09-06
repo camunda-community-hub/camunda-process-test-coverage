@@ -9,5 +9,6 @@ env:
   - CAMUNDA=RELEASE
   - CAMUNDA=7.5.0
   - CAMUNDA=7.4.0
+  - CAMUNDA=7.3.0
 install: true
 script: mvn -Dcamunda.version=$CAMUNDA
