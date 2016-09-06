@@ -22,7 +22,6 @@ import static org.junit.Assert.*;
  * @author z0rbas
  *
  */
-@Deployment(resources = { RunningFlowNodeCoverageTest.BPMN_PATH })
 public class RunningFlowNodeCoverageTest {
 
     public static final String BPMN_PATH = "processStillRunning.bpmn";
@@ -33,6 +32,7 @@ public class RunningFlowNodeCoverageTest {
     // TODO implement incident coverage handling and refactor this test to a
     // separate class
     @Test(expected = ProcessEngineException.class)
+    @Deployment(resources = { RunningFlowNodeCoverageTest.BPMN_PATH })
     public void shouldCoverGatewayAsStillRunningWithException() {
 
         rule.getRuntimeService().startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY);
@@ -40,6 +40,7 @@ public class RunningFlowNodeCoverageTest {
     }
 
     @Test
+    @Deployment(resources = { RunningFlowNodeCoverageTest.BPMN_PATH })
     public void shouldCoverManualTaskAsStillRunning() {
 
         Map<String, Object> variables = new HashMap<String, Object>();

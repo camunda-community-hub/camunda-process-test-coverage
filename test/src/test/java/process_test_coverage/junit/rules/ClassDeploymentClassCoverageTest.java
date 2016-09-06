@@ -17,7 +17,6 @@ import static org.hamcrest.Matchers.*;
  * the test is class coverage calculation with the @Deployment annotated at
  * class level.
  */
-@Deployment(resources = "process.bpmn")
 public class ClassDeploymentClassCoverageTest {
 
     private static final String PROCESS_DEFINITION_KEY = "process-test-coverage";
@@ -27,6 +26,7 @@ public class ClassDeploymentClassCoverageTest {
     public static TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().withDetailedCoverageLogging().build();
 
     @Test
+    @Deployment(resources = "process.bpmn")
     public void testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered() {
 
         Map<String, Object> variables = new HashMap<String, Object>();
@@ -41,6 +41,7 @@ public class ClassDeploymentClassCoverageTest {
     }
 
     @Test
+    @Deployment(resources = "process.bpmn")
     public void testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "B");
