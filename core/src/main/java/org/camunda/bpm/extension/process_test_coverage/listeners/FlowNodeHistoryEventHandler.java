@@ -40,8 +40,12 @@ public class FlowNodeHistoryEventHandler extends DbHistoryEventHandler {
 
             HistoricActivityInstanceEventEntity activityEvent = (HistoricActivityInstanceEventEntity) historyEvent;
 
-            final CoveredFlowNode coveredActivity = new CoveredFlowNode(historyEvent.getProcessDefinitionKey(),
-                    activityEvent.getActivityId());
+            // Compatibility with Camunda BPM 7.2
+            String processDefinitionKey = historyEvent.getProcessDefinitionId()
+                .substring(0, historyEvent.getProcessDefinitionId().indexOf(":"));
+
+            final CoveredFlowNode coveredActivity =
+                new CoveredFlowNode(processDefinitionKey, activityEvent.getActivityId());
 
             // Cover event start
             if (isInitialEvent(historyEvent)) {
