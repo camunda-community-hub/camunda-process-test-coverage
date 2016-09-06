@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:activiti="http://activiti.org/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.2.2">
   <bpmn:process id="super-process-test-coverage" name="super-process-test-coverage" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
       <bpmn:outgoing>SequenceFlow_0myldbf</bpmn:outgoing>
@@ -7,7 +7,8 @@
     <bpmn:sequenceFlow id="SequenceFlow_0myldbf" sourceRef="StartEvent_1" targetRef="CallActivity_Subprocess" />
     <bpmn:callActivity id="CallActivity_Subprocess" name="Test Subprocess" calledElement="process-test-coverage">
       <bpmn:extensionElements>
-        <camunda:in variables="all" />
+        <activiti:in source="path" target="path" />
+        <activiti:in source="superPath" target="superPath" />
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0myldbf</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1kub8vf</bpmn:outgoing>
