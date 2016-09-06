@@ -57,4 +57,41 @@
         </pluginManagement>
     </build>
 
+    <profiles>
+        <!-- Profiles just here to ease testing in IDEs -->
+        <profile>
+            <id>camunda-bpm-engine-RELEASE</id>
+            <properties>
+                <camunda.version>RELEASE</camunda.version>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-LATEST</id>
+            <properties>
+                <camunda.version>LATEST</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.5.0</id>
+            <properties>
+                <camunda.version>7.5.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.4.0</id>
+            <properties>
+                <camunda.version>7.4.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.3.0</id>
+            <properties>
+                <camunda.version>7.3.0</camunda.version>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>
