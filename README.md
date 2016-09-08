@@ -2,10 +2,9 @@
 
 <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img align="right" src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg"/></a><a href="https://travis-ci.org/camunda/camunda-process-test-coverage"><img align="right" src="https://api.travis-ci.org/camunda/camunda-process-test-coverage.svg"/></a>
 
-## Introduction
-This library supports visualizing and asserting the process test coverage of a BPMN process.
+This community extension to Camunda BPM allows you to **visualise** test process **pathes** and to automatically **assert** your expected process model **coverage** ratio. Running your typical JUnit process test creates *.html files in your build `./target` folder as this one:
 
-![Screenshot](screenshot.png)
+![Insurance Application](/doc/img/insurance-application.png)
 
 Running your process unit tests with the library creates test coverage reports for:
 
