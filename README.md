@@ -1,113 +1,69 @@
-# Camunda Process Test Coverage <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img align="right" src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg"/></a><a href="https://travis-ci.org/camunda/camunda-process-test-coverage"><img align="right" src="https://api.travis-ci.org/camunda/camunda-process-test-coverage.svg"/></a>
+#&nbsp;<img src="/doc/img/camunda.png" width="23" height="23">&nbsp;Camunda&nbsp;BPM&nbsp;Process&nbsp;Test&nbsp;Coverage</img&nbsp;>&nbsp;<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg"/></a>&nbsp;<a href="https://travis-ci.org/camunda/camunda-process-test-coverage"><img src="https://api.travis-ci.org/camunda/camunda-process-test-coverage.svg"/></a> 
 
-## Introduction
-This library supports visualizing and asserting the process test coverage of a BPMN process.
+This Camunda BPM community extension **visualises** test process **pathes** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
-![Screenshot](screenshot.png)
+![Insurance Application](/doc/img/insurance-application.png)
 
-Running your process unit tests with the library creates test coverage reports for:
+## Highlights
 
-* Entire test suites: The process coverage is visualized by marking those tasks and events and transitions with a green color which have been traversed by any of the test suite's test cases.
+* **Visually verify** the pathes covered by individual tests **methods** and whole test **classes**
+* Visually check gateway **expressions** and transaction borders (**savepoints**) used by your process
+* Calculate and **verify** the nodes (_and_ sequence flow) **coverage** ratio reached by tests methods and classes
 
-It also supports coverage ratio checks for sequence flows and flow nodes in the JUnit tests.
-```
-java.lang.AssertionError: 
-Expected: matches if the coverage ratio is at least <1.0>
-     got: <0.9516129032258065>
-```
-* Check coverage after running a single test case: supported via JUnit @Rule 
-* Check coverage after running a test class: support via JUnit @ClassRule and @Rule
+## Just use it
 
-Using system properties you can set expected coverage at build time of your project.
+* Integrates with all versions of Camunda BPM starting with 7.2.0 and upwards 
+* Works with all relevant Java versions: 1.6, 1.7 and 1.8 - using JUnit 4.12
+* Is continuously checked against latest Camunda BPM releases - see the full [**travis-ci**](https://travis-ci.org/camunda/camunda-process-test-coverage) matrix for details
 
+## Get started with *3 simple steps*
 
-## Getting Started
+<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" align="right"></img></a>**1.** Add a **Maven test dependency** to your project
 
-Add this Maven Dependency to your project:
-
-```
+```xml
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage</artifactId>
-  <version>0.2.7-SNAPSHOT</version>
+  <version>0.2.8</version>
   <scope>test</scope>
 </dependency>
 ```
 
-Have a look at this project's tests. E.g.
-- Class rule usage: [ClassCoverageTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/ClassCoverageTest.java):
-- Method rule usage: [MethodCoverageTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/MethodCoverageTest.java):
-- Test checking property usage: [ClassCoverageSystemPropertyTest](src/test/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/ClassCoverageSystemPropertyTest.java):
+**2.** Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml`
 
-### Checking Coverage for the Examples
-You can use the JUnit tests of this project to get comfortable with the library
+```xml
+<bean id="processEngineConfiguration"
+   class="org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessCoverageInMemProcessEngineConfiguration">
+   ...
+</bean>
+```
 
-1. clone the project
-2. mvn clean test
-3. Open the report html files which are created in the directory target/process-test-coverage/
+**3.** Use the **TestCoverageProcessEngineRule** as your process engine JUnit rule
 
-### Checking Coverage for Your Own Processes
-The following steps show how to integrate the camunda-process-test-coverage into you own setup. Our tests should provide a good base for your usage. If you use a single JUnit class per process, the class rule usage may be the perfect way to go.
+```java
+@Rule
+@ClassRule
+public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
+```
 
-1.   add library jar to your project classpath (e.g. via the maven dependency)
-2.   adjust your test camunda setup [camunda.cfg.xml](src/test/resources/camunda.cfg.xml)
-  * use the [ProcessCoverageInMemProcessEngineConfiguration](src/test/resources/camunda.cfg.xml)
-  * or add the [FlowNodeHistoryEventHandler](src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/FlowNodeHistoryEventHandler.java), [PathCoverageParseListener](src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/PathCoverageParseListener.java) and [CompensationEventCoverageHandler](src/main/java/org/camunda/bpm/extension/process_test_coverage/listeners/CompensationEventCoverageHandler.java) to your process engine configuration
-3.   adapt your process unit test to generate and check the coverage. 
-4.   optionally set the Java system property (org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST) on your build system to assure all process tests adhere to a coverage minimum.
-5.   run your unit tests
+Running your JUnit tests now leaves **html** files for inidividual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
 
-## Environment Restrictions
-* Internet connectivity is required for obtaining the bpmn-js and jquery bower components.
-* Built against Camunda BPM version 7.5.0 and Java 1.6
-* Tested against Camunda BPM version 7.3.0 and Java 1.6 
-* Tested against Camunda BPM version 7.4.0 and Java 1.8  
-* Tested against Camunda BPM version 7.5.0 and Java 1.8  
-* Expected to work in Camunda BPM 7.x versions starting from 7.2.6 (7.2.x, 7.3.x, 7.4.x, 7.5.x).
-
-## [Implementation](IMPLEMENTATION.md)
-## Resources
+## Further resources
 * [JavaDoc](https://camunda.github.io/camunda-process-test-coverage/javadoc)
-* [Issue Tracker](https://github.com/camunda/camunda-process-test-coverage/issues)
+* [Issues](https://github.com/camunda/camunda-process-test-coverage/issues)
 * [Roadmap](#roadmap)
 * [Changelog](https://github.com/camunda/camunda-process-test-coverage/commits/master)
 * [Contributing](CONTRIBUTING.md)
 
-## Roadmap
+## Maintenance
 
-Our To Do list gives a rough idea what we expect to tackle next.
-
-**To Do**
-- 0.2.9 Text reports of traces
-- 0.3.x Remove the history handler, use the plug-in to place listeners on flow nodes
-- 0.4.x Text reports of traces as alternate way to check coverage
-- Visualize technical attributes in a nice way
-
-**Done**
-- 0.2.7 single test method reporting; sequence flow coverage reporting;
-- 0.2.6 "Jenkins integration" - add minimal coverage system property for build integration
-- 0.2.5 fixed different multi-deployment cases
-- JUnit @Rule, JUnit @ClassRule
-- Calculate Flow Node Coverage in percent
-- Calculate Path Coverage in percent
-- Visualize test coverage using [bpmn.io](http://bpmn.io)
-- Visualize transaction boundaries
-- Visualize technical attributes
-
-## Contributors
-The Software Development Team of [WDW eLab GmbH](http://www.wdw-elab.de) is responsible for the Design and Implementation of this project.
+The software development team of [WDW eLab GmbH](http://www.wdw-elab.de) is responsible for the design and implementation of this project.
 
 ![Screenshot](elab_logo.png)
 
-WDW eLab GmbH is an innovative IT company and has great experience with complex business support processes in a complex IT environment. One of our specialties are customer support processes in telecommunication. 
+WDW eLab GmbH is an innovative IT company and has great experience with complex business support processes in complex IT environments. One of our specialties are customer support processes in telecommunications. We are proud to be an official Camunda BPM partner! Feel free to contact us via [Email](mailto:kontakt@wdw-elab.de)!
 
-We are proud to be an official camunda partner!
-
-Feel free to contact us via [Email](mailto:kontakt@wdw-elab.de)
-
-## Maintainer
-
-People responsible for this project:
+## Contributors
 
 [Irmin Okic (wdw-elab)](https://github.com/z0rbas)
 
@@ -115,8 +71,7 @@ People responsible for this project:
 
 [Falko Menge (Camunda)](https://github.com/falko)
 
+[Martin Schimak (plexiti)](https://github.com/martinschimak)
+
 ## License
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](LICENSE) file.
-
-
-
