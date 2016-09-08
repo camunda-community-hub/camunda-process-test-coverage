@@ -29,7 +29,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 </dependency>
 ```
 
-**2.** Use the [ProcessCoverageInMemProcessEngineConfiguration](/test/src/test/resources/camunda.cfg.xml), e.g. in your `camunda.cfg.xml`
+**2.** Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml`
 
 ```
 <bean id="processEngineConfiguration"
@@ -38,7 +38,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 </bean>
 ```
 
-**3.** Use the [TestCoverageProcessEngineRule](/test/src/test/java/process_test_coverage/junit/rules/ClassCoverageTest.java as your process engine JUnit rule.
+**3.** Use the **TestCoverageProcessEngineRule** as your process engine JUnit rule.
 
 ```java
 @Rule
