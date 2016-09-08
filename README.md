@@ -1,6 +1,6 @@
 #&nbsp;<img src="/doc/img/camunda.png" width="23" height="23">&nbsp;Camunda&nbsp;BPM&nbsp;Process&nbsp;Test&nbsp;Coverage</img&nbsp;>&nbsp;<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg"/></a>&nbsp;<a href="https://travis-ci.org/camunda/camunda-process-test-coverage"><img src="https://api.travis-ci.org/camunda/camunda-process-test-coverage.svg"/></a> 
 
-This Camunda BPM community extension **visualises** test process **pathes** and **checks** your process model **coverage** ratio. Running  typical JUnit tests creates *.html files in your build output. Open one of them and check what your test did:
+This Camunda BPM community extension **visualises** test process **pathes** and **checks** your process model **coverage** ratio. Running  your typical JUnit tests now leaves *.html files in your build output. Open one in your browser and check what your test did:
 
 ![Insurance Application](/doc/img/insurance-application.png)
 
