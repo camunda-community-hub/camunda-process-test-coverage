@@ -46,7 +46,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
 ```
 
-Running your JUnit tests now leaves **html** files for inidividual test methods as well as whole test classes in your project modules `target/process-test-coverage` folder. Just open one and check yourself!
+Running your JUnit tests now leaves **html** files for inidividual test methods as well as whole test classes in your project modules `target/process-test-coverage` folder. Just open one, check yourself - and have more fun with your process tests! :smile:
 
 ## Further resources
 * [JavaDoc](https://camunda.github.io/camunda-process-test-coverage/javadoc)
