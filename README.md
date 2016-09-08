@@ -1,6 +1,4 @@
-# <img src="/doc/img/camunda.png" width="23" height="23"></img> Camunda BPM Process **Test Coverage** 
-
-<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img align="right" src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg"/></a><a href="https://travis-ci.org/camunda/camunda-process-test-coverage"><img align="right" src="https://api.travis-ci.org/camunda/camunda-process-test-coverage.svg"/></a>
+# <img src="/doc/img/camunda.png" width="23" height="23" align="left"> Camunda BPM Process **Test Coverage**</img><a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img align="right" src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg"/></a><a href="https://travis-ci.org/camunda/camunda-process-test-coverage"><img align="right" src="https://api.travis-ci.org/camunda/camunda-process-test-coverage.svg"/></a> 
 
 This community extension to Camunda BPM allows you to **visualise** test process **pathes** and to automatically **assert** your expected process model **coverage** ratio. Running your typical JUnit process test creates *.html files in your build `./target` folder as this one:
 
