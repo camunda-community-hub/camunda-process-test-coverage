@@ -18,7 +18,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 
 ## Get started with *3 simple steps*
 
-<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" align="right"></img></a>**1.** Add a maven test dependency to your project
+<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" align="right"></img></a>**1.** Add a **Maven test dependency** to your project
 
 ```xml
 <dependency>
