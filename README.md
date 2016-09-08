@@ -14,11 +14,11 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 
 * Integrates with all versions of Camunda BPM starting with 7.2.0 and upwards 
 * Works with all relevant Java versions: 1.6, 1.7 and 1.8 - using JUnit 4.12
-* Is continuously checked against latest Camunda BPM releases. See the full [**travis-ci**](https://travis-ci.org/camunda/camunda-process-test-coverage) matrix for the details.
+* Is continuously checked against latest Camunda BPM releases - see the full [**travis-ci**](https://travis-ci.org/camunda/camunda-process-test-coverage) matrix for details
 
 ## Get started with *3 simple steps*
 
-<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" align="right"></img></a>**1.** Add a maven test dependency to your project:
+<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" align="right"></img></a>**1.** Add a maven test dependency to your project
 
 ```
 <dependency>
@@ -38,7 +38,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 </bean>
 ```
 
-**3.** Use the **TestCoverageProcessEngineRule** as your process engine JUnit rule.
+**3.** Use the **TestCoverageProcessEngineRule** as your process engine JUnit rule
 
 ```java
 @Rule
