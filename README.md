@@ -32,7 +32,8 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 **2.** Use the [ProcessCoverageInMemProcessEngineConfiguration](/test/src/test/resources/camunda.cfg.xml), e.g. in your `camunda.cfg.xml`
 
 ```
-<bean id="processEngineConfiguration" class="org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessCoverageInMemProcessEngineConfiguration">
+<bean id="processEngineConfiguration"
+   class="org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessCoverageInMemProcessEngineConfiguration">
    ...
 </bean>
 ```
