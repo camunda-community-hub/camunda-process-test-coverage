@@ -1,4 +1,4 @@
-# <img src="/doc/img/camunda.png" align="right" width="50" height="50"></img> Camunda Process Test Coverage<br><br> 
+# <img src="/doc/img/camunda.png" align="right" width="50" height="50"></img><br> Camunda Process Test Coverage
 
 <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img align="right" src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg"/></a><a href="https://travis-ci.org/camunda/camunda-process-test-coverage"><img align="right" src="https://api.travis-ci.org/camunda/camunda-process-test-coverage.svg"/></a>
 
