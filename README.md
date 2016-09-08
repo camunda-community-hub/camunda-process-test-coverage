@@ -20,7 +20,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 
 <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" align="right"></img></a>**1.** Add a maven test dependency to your project
 
-```
+```xml
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage</artifactId>
@@ -31,7 +31,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 
 **2.** Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml`
 
-```
+```xml
 <bean id="processEngineConfiguration"
    class="org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessCoverageInMemProcessEngineConfiguration">
    ...
