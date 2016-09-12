@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.camunda.bpm.extension</groupId>
 	<artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.2.8-SNAPSHOT</version>
+	<version>0.2.8</version>
 
 	<name>Camunda BPM Process Test Coverage - Parent</name>
 	<description>Helper library to visualize and assert which parts of a BPMN process have been covered by a unit test.</description>
@@ -100,7 +99,7 @@
 		<connection>scm:git:git@github.com:camunda/camunda-process-test-coverage.git</connection>
 		<url>scm:git:git@github.com:camunda/camunda-process-test-coverage.git</url>
 		<developerConnection>scm:git:git@github.com:camunda/camunda-process-test-coverage.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>0.2.8</tag>
 	</scm>
 
 	<!-- repositories used for distribution of releases and snapshots, DO NOT 
