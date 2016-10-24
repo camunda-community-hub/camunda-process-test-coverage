@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.engine.impl.event.CompensationEventHandler;
@@ -74,6 +75,14 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      */
     private Map<String, Collection<Matcher<Double>>> testMethodNameToCoverageMatchers = new HashMap<String, Collection<Matcher<Double>>>();
 
+    TestCoverageProcessEngineRule() {
+        super();
+    }
+
+    TestCoverageProcessEngineRule(ProcessEngine processEngine) {
+        super(processEngine);
+    }
+
     /**
      * Adds an assertion for a test method's coverage percentage.
      * 
@@ -107,7 +116,9 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
         validateRuleAnnotations(description);
 
-        super.initializeProcessEngine();
+        if (processEngine == null) {
+            super.initializeProcessEngine();
+        }
 
         initializeRunState(description);
 

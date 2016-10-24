@@ -1,5 +1,7 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
+import org.camunda.bpm.engine.ProcessEngine;
+
 /**
  * Fluent Builder for TestCoverageProcessEngineRule.
  *
@@ -14,16 +16,34 @@ public class TestCoverageProcessEngineRuleBuilder {
      */
     public static final String DEFAULT_ASSERT_AT_LEAST_PROPERTY = "org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST";
 
-    private TestCoverageProcessEngineRule rule = new TestCoverageProcessEngineRule();
+    private final TestCoverageProcessEngineRule rule;
+
+    private TestCoverageProcessEngineRuleBuilder() {
+        this.rule = new TestCoverageProcessEngineRule();
+    }
+
+    private TestCoverageProcessEngineRuleBuilder(ProcessEngine processEngine) {
+        this.rule = new TestCoverageProcessEngineRule(processEngine);
+    }
 
     /**
      * Creates a TestCoverageProcessEngineRuleBuilder with the default class
      * coverage assertion property activated.
-     * 
+     *
      * @return
      */
     public static TestCoverageProcessEngineRuleBuilder create() {
         return createBase().optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY);
+    }
+
+    /**
+     * Creates a TestCoverageProcessEngineRuleBuilder with the default class
+     * coverage assertion property activated.
+     *
+     * @return
+     */
+    public static TestCoverageProcessEngineRuleBuilder create(ProcessEngine processEngine) {
+        return createBase(processEngine).optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY);
     }
 
     /**
@@ -54,6 +74,11 @@ public class TestCoverageProcessEngineRuleBuilder {
     /** @return a basic builder with nothing preconfigured */
     public static TestCoverageProcessEngineRuleBuilder createBase() {
         return new TestCoverageProcessEngineRuleBuilder();
+    }
+
+    /** @return a basic builder with nothing preconfigured */
+    public static TestCoverageProcessEngineRuleBuilder createBase(ProcessEngine processEngine) {
+        return new TestCoverageProcessEngineRuleBuilder(processEngine);
     }
 
     /**
