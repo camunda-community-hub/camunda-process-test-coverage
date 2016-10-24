@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SpringProcessWithCoverageEngineConfiguration extends SpringProcessEngineConfiguration {
 
-	protected void init() {
+	public void init() {
 		this.initializeFlowNodeHandler();
 		this.initializePathCoverageParseListener();
 		this.initializeCompensationEventHandler();
