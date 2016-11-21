@@ -1,17 +1,7 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
-import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.camunda.bpm.engine.impl.event.CompensationEventHandler;
 import org.camunda.bpm.engine.impl.event.EventHandler;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.test.Deployment;
@@ -28,6 +18,15 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.Description;
+
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Rule handling the process test coverage for individual test methods and the
@@ -244,8 +243,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
         // Compensation event handler
 
-        final EventHandler compensationEventHandler = processEngineConfiguration.getEventHandler(
-                CompensationEventHandler.EVENT_HANDLER_TYPE);
+        final EventHandler compensationEventHandler = processEngineConfiguration.getEventHandler("compensate");
         if (compensationEventHandler != null && compensationEventHandler instanceof CompensationEventCoverageHandler) {
 
             final CompensationEventCoverageHandler compensationEventCoverageHandler = (CompensationEventCoverageHandler) compensationEventHandler;
