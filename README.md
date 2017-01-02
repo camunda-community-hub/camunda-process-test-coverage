@@ -1,4 +1,4 @@
-#&nbsp;<img src="/doc/img/camunda.png" width="23" height="23">&nbsp;Camunda&nbsp;BPM&nbsp;Process&nbsp;Test&nbsp;Coverage</img&nbsp;>&nbsp;<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg"/></a>&nbsp;<a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://api.travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg"/></a> 
+#&nbsp;<img src="/doc/img/camunda.png" width="23" height="23">&nbsp;Camunda&nbsp;BPM&nbsp;Process&nbsp;Test&nbsp;Coverage</img&nbsp;>&nbsp;<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg"/></a> 
 
 This Camunda BPM community extension **visualises** test process **pathes** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
@@ -13,7 +13,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 ## <a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://api.travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg" align="right"/></a>Just use it
 
 * Integrates with all versions of Camunda BPM starting with 7.2.0 and upwards 
-* Works with all relevant Java versions: 1.6, 1.7 and 1.8 - using JUnit 4.12
+* Works with all relevant Java versions: 1.6, 1.7 and 1.8 - using **JUnit 4.12** (4.11 does not work)
 * Is continuously checked against latest Camunda BPM releases - see the full [**travis-ci**](https://travis-ci.org/camunda/camunda-bpm-process-test-coverage) matrix for details
 
 ## Get started with *3 simple steps*
