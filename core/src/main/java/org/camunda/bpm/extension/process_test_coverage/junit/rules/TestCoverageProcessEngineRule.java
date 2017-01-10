@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.camunda.bpm.engine.impl.event.CompensationEventHandler;
 import org.camunda.bpm.engine.impl.event.EventHandler;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.test.Deployment;
@@ -255,8 +254,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
         // Compensation event handler
 
-        final EventHandler compensationEventHandler = processEngineConfiguration.getEventHandler(
-                CompensationEventHandler.EVENT_HANDLER_TYPE);
+        final EventHandler compensationEventHandler = processEngineConfiguration.getEventHandler("compensate");
         if (compensationEventHandler != null && compensationEventHandler instanceof CompensationEventCoverageHandler) {
 
             final CompensationEventCoverageHandler compensationEventCoverageHandler = (CompensationEventCoverageHandler) compensationEventHandler;
