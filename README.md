@@ -48,6 +48,10 @@ public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.crea
 
 Running your JUnit tests now leaves **html** files for inidividual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
 
+## New! Get Started with Spring Testing (version 0.2.9 upwards)
+
+See a unit test example wired for Spring Testing here: https://github.com/camunda/camunda-bpm-process-test-coverage/blob/master/test/src/test/java/process_test_coverage/spring/SpringProcessWithCoverageTest.java
+
 ## Further resources
 * [JavaDoc](https://camunda.github.io/camunda-process-test-coverage/javadoc)
 * [Issues](https://github.com/camunda/camunda-process-test-coverage/issues)

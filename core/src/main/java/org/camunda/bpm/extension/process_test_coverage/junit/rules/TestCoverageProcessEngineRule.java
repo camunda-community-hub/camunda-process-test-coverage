@@ -1,5 +1,15 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.engine.impl.event.EventHandler;
@@ -18,15 +28,6 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.Description;
-
-import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Rule handling the process test coverage for individual test methods and the
@@ -73,6 +74,14 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      */
     private Map<String, Collection<Matcher<Double>>> testMethodNameToCoverageMatchers = new HashMap<String, Collection<Matcher<Double>>>();
 
+    TestCoverageProcessEngineRule() {
+        super();
+    }
+
+    TestCoverageProcessEngineRule(ProcessEngine processEngine) {
+        super(processEngine);
+    }
+
     /**
      * Adds an assertion for a test method's coverage percentage.
      * 
@@ -106,7 +115,9 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
         validateRuleAnnotations(description);
 
-        super.initializeProcessEngine();
+        if (processEngine == null) {
+            super.initializeProcessEngine();
+        }
 
         initializeRunState(description);
 

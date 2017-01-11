@@ -18,7 +18,17 @@
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine</artifactId>
-            <version>RELEASE</version>
+            <version>RELEASE</version> <!-- We intentionally always compile against RELEASE, but
+                                            test against many versions *provided* by user projects.
+                                            Therefore the tests are in a separate module. -->
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine-spring</artifactId>
+            <version>RELEASE</version> <!-- We intentionally always compile against RELEASE, but
+                                            test against many versions *provided* by user projects.
+                                            Therefore the tests are in a separate module. -->
             <scope>provided</scope>
         </dependency>
     </dependencies>
