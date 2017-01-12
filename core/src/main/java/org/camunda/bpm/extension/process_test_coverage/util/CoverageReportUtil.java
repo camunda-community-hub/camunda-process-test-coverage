@@ -130,16 +130,14 @@ public class CoverageReportUtil {
     private static void installBowerComponents() {
 
         final File bowerComponents = new File(BOWER_DIR_PATH);
-        // No need to install
         if (bowerComponents.exists()) {
-
+            // No need to install
             return;
         }
 
-        final File resourcesRoot = new File(
-                CoverageReportUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-
         try {
+
+            final File resourcesRoot = ClassLocationURL.fileFor(CoverageReportUtil.class);
 
             // Tests executed by maven use JAR resources
             if (resourcesRoot.isFile()) {
