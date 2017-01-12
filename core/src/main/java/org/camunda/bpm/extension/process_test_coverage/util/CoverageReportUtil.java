@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 import java.util.Set;
 import java.util.jar.JarEntry;
@@ -128,6 +130,8 @@ public class CoverageReportUtil {
     }
 
     private static void installBowerComponents() {
+      
+      logger.log(Level.FINE, "Install Bower Components");
 
         final File bowerComponents = new File(BOWER_DIR_PATH);
         // No need to install
@@ -136,13 +140,19 @@ public class CoverageReportUtil {
             return;
         }
 
-        final File resourcesRoot = new File(
-                CoverageReportUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        String path = CoverageReportUtil.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 
         try {
 
+            String decodedPath = URLDecoder.decode(path, "UTF-8");
+            logger.log(Level.FINE, "path to bower container: " + decodedPath);
+            final File resourcesRoot = new File(
+                decodedPath);
+
             // Tests executed by maven use JAR resources
             if (resourcesRoot.isFile()) {
+              
+                logger.log(Level.FINE, "resourcesRoot is File");
 
                 final JarFile coverageJar = new JarFile(resourcesRoot);
                 final Enumeration<JarEntry> entries = coverageJar.entries();
@@ -173,7 +183,9 @@ public class CoverageReportUtil {
             // Tests executed in the IDE use directories
             else {
 
-                final File bowerSrc = new File(CoverageReportUtil.class.getResource("/" + BOWER_DIR_NAME).toURI());
+                URI fileResource = CoverageReportUtil.class.getResource("/" + BOWER_DIR_NAME).toURI();
+                logger.log(Level.FINE, "bower container: " + fileResource); 
+                final File bowerSrc = new File(fileResource);
                 FileUtils.copyDirectory(bowerSrc, bowerComponents);
 
             }
