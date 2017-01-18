@@ -1,4 +1,4 @@
-package process_test_coverage.junit.rules;
+package org.camunda.bpm.extension.process_test_coverage.rules;
 
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;

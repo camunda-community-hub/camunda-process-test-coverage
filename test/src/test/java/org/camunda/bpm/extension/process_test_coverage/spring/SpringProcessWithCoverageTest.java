@@ -1,4 +1,4 @@
-package process_test_coverage.spring;
+package org.camunda.bpm.extension.process_test_coverage.spring;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
