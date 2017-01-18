@@ -50,7 +50,7 @@ Running your JUnit tests now leaves **html** files for inidividual test methods 
 
 ## New! Get Started with Spring Testing (version 0.2.9 upwards)
 
-See a unit test example wired for Spring Testing here: https://github.com/camunda/camunda-bpm-process-test-coverage/blob/master/test/src/test/java/org/camunda/bpm/extension/process_test_coverage/spring/SpringProcessWithCoverageTest.java
+See a unit test example wired for Spring Testing [here](https://github.com/camunda/camunda-bpm-process-test-coverage/blob/master/test/src/test/java/org/camunda/bpm/extension/process_test_coverage/spring/SpringProcessWithCoverageTest.java).
 
 ## Further resources
 * [JavaDoc](https://camunda.github.io/camunda-process-test-coverage/javadoc)
