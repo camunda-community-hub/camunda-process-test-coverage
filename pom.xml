@@ -5,7 +5,7 @@
 	<groupId>org.camunda.bpm.extension</groupId>
 	<artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.2.9</version>
+	<version>0.3.0-SNAPSHOT</version>
 
 	<name>Camunda BPM Process Test Coverage - Parent</name>
 	<description>Helper library to visualize and assert which parts of a BPMN process have been covered by a unit test.</description>
@@ -116,7 +116,7 @@
 		<connection>scm:git:git@github.com:camunda/camunda-process-test-coverage.git</connection>
 		<url>scm:git:git@github.com:camunda/camunda-process-test-coverage.git</url>
 		<developerConnection>scm:git:git@github.com:camunda/camunda-process-test-coverage.git</developerConnection>
-		<tag>0.2.9</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<!-- repositories used for distribution of releases and snapshots, DO NOT 
