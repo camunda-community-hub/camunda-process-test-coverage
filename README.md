@@ -24,7 +24,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage</artifactId>
-  <version>0.2.8</version>
+  <version>0.2.9</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -48,7 +48,7 @@ public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.crea
 
 Running your JUnit tests now leaves **html** files for inidividual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
 
-## New! Get Started with Spring Testing (version 0.2.9 upwards)
+## New! Get Started with Spring Testing
 
 See a unit test example wired for Spring Testing [here](https://github.com/camunda/camunda-bpm-process-test-coverage/blob/master/test/src/test/java/org/camunda/bpm/extension/process_test_coverage/spring/SpringProcessWithCoverageTest.java).
 
