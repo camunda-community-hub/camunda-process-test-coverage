@@ -40,6 +40,9 @@ public class FlowNodeHistoryEventHandler extends DbHistoryEventHandler {
 
             HistoricActivityInstanceEventEntity activityEvent = (HistoricActivityInstanceEventEntity) historyEvent;
 
+            if (activityEvent.getActivityType().equals("multiInstanceBody"))
+                return;
+
             // Compatibility with Camunda BPM 7.2
             String processDefinitionKey = historyEvent.getProcessDefinitionId()
                 .substring(0, historyEvent.getProcessDefinitionId().indexOf(":"));
