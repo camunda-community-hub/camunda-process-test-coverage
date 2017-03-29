@@ -10,7 +10,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 * Visually check gateway **expressions** and transaction borders (**savepoints**) used by your process
 * Calculate and **verify** the nodes (_and_ sequence flow) **coverage** ratio reached by tests methods and classes
 
-## <a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://api.travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg" align="right"/></a>Just use it
+## <a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg?branch=master" align="right"/></a>Just use it
 
 * Integrates with all versions of Camunda BPM starting with 7.2.0 and upwards 
 * Works with all relevant Java versions: 1.6, 1.7 and 1.8 - using **JUnit 4.12** (4.11 does not work)
