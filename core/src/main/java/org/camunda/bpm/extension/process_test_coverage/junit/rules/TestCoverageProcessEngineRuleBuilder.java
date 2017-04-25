@@ -2,6 +2,8 @@ package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
 import org.camunda.bpm.engine.ProcessEngine;
 
+import java.util.Arrays;
+
 /**
  * Fluent Builder for TestCoverageProcessEngineRule.
  *
@@ -107,6 +109,11 @@ public class TestCoverageProcessEngineRuleBuilder {
         rule.addClassCoverageAssertionMatcher(new MinimalCoverageMatcher(percentage));
         return this;
 
+    }
+
+    public TestCoverageProcessEngineRuleBuilder excludeProcessDefinitionKeys(String... processDefinitionKeys) {
+        rule.setExcludedProcessDefinitionKeys(Arrays.asList(processDefinitionKeys));
+        return this;
     }
 
     /**

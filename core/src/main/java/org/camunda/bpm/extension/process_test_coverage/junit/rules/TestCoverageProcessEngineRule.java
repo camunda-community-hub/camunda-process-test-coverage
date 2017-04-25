@@ -1,8 +1,10 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,7 @@ import org.camunda.bpm.extension.process_test_coverage.listeners.FlowNodeHistory
 import org.camunda.bpm.extension.process_test_coverage.listeners.PathCoverageParseListener;
 import org.camunda.bpm.extension.process_test_coverage.model.AggregatedCoverage;
 import org.camunda.bpm.extension.process_test_coverage.model.ClassCoverage;
+import org.camunda.bpm.extension.process_test_coverage.model.CoveredElement;
 import org.camunda.bpm.extension.process_test_coverage.model.MethodCoverage;
 import org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil;
 import org.hamcrest.Matcher;
@@ -74,6 +77,11 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      */
     private Map<String, Collection<Matcher<Double>>> testMethodNameToCoverageMatchers = new HashMap<String, Collection<Matcher<Double>>>();
 
+    /**
+     * A list of process definition keys excluded from the test run.
+     */
+    private List<String> excludedProcessDefinitionKeys;
+
     TestCoverageProcessEngineRule() {
         super();
     }
@@ -108,6 +116,10 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      */
     public void addClassCoverageAssertionMatcher(MinimalCoverageMatcher matcher) {
         classCoverageAssertionMatchers.add(matcher);
+    }
+
+    public void setExcludedProcessDefinitionKeys(List<String> excludedProcessDefinitionKeys) {
+        this.excludedProcessDefinitionKeys = excludedProcessDefinitionKeys;
     }
 
     @Override
@@ -192,11 +204,18 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         if (deploymentId != null) {
 
             final List<ProcessDefinition> deployedProcessDefinitions = processEngine.getRepositoryService().createProcessDefinitionQuery().deploymentId(
-                    deploymentId).list();
+                deploymentId).list();
+
+            final List<ProcessDefinition> relevantProcessDefinitions = new ArrayList<ProcessDefinition>();
+            for (ProcessDefinition definition: deployedProcessDefinitions) {
+                if (!isExcluded(definition)) {
+                    relevantProcessDefinitions.add(definition);
+                }
+            }
 
             coverageTestRunState.initializeTestMethodCoverage(processEngine,
                     deploymentId,
-                    deployedProcessDefinitions,
+                    relevantProcessDefinitions,
                     description.getMethodName());
 
         }
@@ -216,6 +235,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
             coverageTestRunState = new CoverageTestRunState();
             coverageTestRunState.setTestClassName(description.getClassName());
+            coverageTestRunState.setExcludedProcessDefinitionKeys(excludedProcessDefinitionKeys);
 
             initializeListenerRunState();
 
@@ -357,6 +377,13 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             logger.log(Level.INFO, coverage.toString());
         }
 
+    }
+
+    private boolean isExcluded(ProcessDefinition processDefinition) {
+        if (excludedProcessDefinitionKeys != null) {
+            return excludedProcessDefinitionKeys.contains(processDefinition.getKey());
+        }
+        return false;
     }
 
     public boolean isDetailedCoverageLogging() {

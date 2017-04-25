@@ -37,17 +37,24 @@ public class CoverageTestRunState {
     private String currentTestMethodName;
 
     /**
+     * A list of process definition keys excluded from the test run.
+     */
+    private List<String> excludedProcessDefinitionKeys;
+
+    /**
      * Adds the covered element to the current test run coverage.
      * 
      * @param coveredElement
      */
     public void addCoveredElement(/* @NotNull */ CoveredElement coveredElement) {
 
-        if (log.isLoggable(Level.FINE)) {
-            log.info("addCoveredElement(" + coveredElement + ")");
-        }
+        if (!isExcluded(coveredElement)) {
+            if (log.isLoggable(Level.FINE)) {
+                log.info("addCoveredElement(" + coveredElement + ")");
+            }
 
-        classCoverage.addCoveredElement(currentTestMethodName, coveredElement);
+            classCoverage.addCoveredElement(currentTestMethodName, coveredElement);
+        }
 
     }
 
@@ -58,11 +65,14 @@ public class CoverageTestRunState {
      */
     public void endCoveredElement(CoveredElement coveredElement) {
 
-        if (log.isLoggable(Level.FINE)) {
-            log.info("endCoveredElement(" + coveredElement + ")");
+        if (!isExcluded(coveredElement)) {
+            if (log.isLoggable(Level.FINE)) {
+                log.info("endCoveredElement(" + coveredElement + ")");
+            }
+
+            classCoverage.endCoveredElement(currentTestMethodName, coveredElement);
         }
 
-        classCoverage.endCoveredElement(currentTestMethodName, coveredElement);
     }
 
     /**
@@ -146,6 +156,17 @@ public class CoverageTestRunState {
 
     public void setTestClassName(String className) {
         this.testClassName = className;
+    }
+
+    public void setExcludedProcessDefinitionKeys(List<String> excludedProcessDefinitionKeys) {
+        this.excludedProcessDefinitionKeys = excludedProcessDefinitionKeys;
+    }
+
+    private boolean isExcluded(CoveredElement coveredElement) {
+        if (excludedProcessDefinitionKeys != null) {
+            return excludedProcessDefinitionKeys.contains(coveredElement.getProcessDefinitionKey());
+        }
+        return false;
     }
 
 }
