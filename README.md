@@ -12,7 +12,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 
 ## <a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg?branch=master" align="right"/></a>Just use it
 
-* Integrates with all versions of Camunda BPM starting with 7.2.0 and upwards 
+* Integrates with all versions of Camunda BPM starting with 7.3.0 and upwards 
 * Works with all relevant Java versions: 1.6, 1.7 and 1.8 - using **JUnit 4.12** (4.11 does not work)
 * Is continuously checked against latest Camunda BPM releases - see the full [**travis-ci**](https://travis-ci.org/camunda/camunda-bpm-process-test-coverage) matrix for details
 
@@ -24,7 +24,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage</artifactId>
-  <version>0.2.9</version>
+  <version>0.3.0</version>
   <scope>test</scope>
 </dependency>
 ```
