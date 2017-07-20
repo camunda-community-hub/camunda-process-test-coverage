@@ -6,6 +6,7 @@ jdk:
   - openjdk6
 env:
   - CAMUNDA=LATEST
+  - CAMUNDA=7.7.0
   - CAMUNDA=7.6.0
   - CAMUNDA=7.5.0
   - CAMUNDA=7.4.0
