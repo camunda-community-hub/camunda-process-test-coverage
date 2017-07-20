@@ -3,6 +3,7 @@ package org.camunda.bpm.extension.process_test_coverage.model;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,6 +12,7 @@ import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
+import org.camunda.bpm.model.xml.instance.ModelElementInstance;
 
 /**
  * Coverage of a process definition.
@@ -66,8 +68,45 @@ public class ProcessCoverage {
         final BpmnModelInstance modelInstance = processEngine.getRepositoryService().getBpmnModelInstance(
                 getProcessDefinitionId());
 
-        definitionFlowNodes = new HashSet<FlowNode>(modelInstance.getModelElementsByType(FlowNode.class));
-        definitionSequenceFlows = new HashSet<SequenceFlow>(modelInstance.getModelElementsByType(SequenceFlow.class));
+        definitionFlowNodes = getExecutableFlowNodes(modelInstance.getModelElementsByType(FlowNode.class));
+        definitionSequenceFlows = getExecutableSequenceNodes(modelInstance.getModelElementsByType(SequenceFlow.class));
+
+    }
+
+    private Set<FlowNode> getExecutableFlowNodes(final Collection<FlowNode> flowNodes) {
+
+        final HashSet<FlowNode> result = new HashSet<FlowNode>();
+        for (final FlowNode node : flowNodes) {
+            if (isExecutable(node)) {
+                result.add(node);
+            }
+        }
+        return result;
+
+    }
+
+    private boolean isExecutable(final ModelElementInstance node) {
+
+        if (node == null) {
+            return false;
+        }
+
+        if (node instanceof org.camunda.bpm.model.bpmn.instance.Process) {
+            return ((org.camunda.bpm.model.bpmn.instance.Process) node).isExecutable();
+        }
+
+        return isExecutable(node.getParentElement());
+    }
+
+    private Set<SequenceFlow> getExecutableSequenceNodes(final Collection<SequenceFlow> sequenceFlows) {
+
+        final HashSet<SequenceFlow> result = new HashSet<SequenceFlow>();
+        for (final SequenceFlow sequenceFlow : sequenceFlows) {
+            if (definitionFlowNodes.contains(sequenceFlow.getSource())) {
+                result.add(sequenceFlow);
+            }
+        }
+        return result;
 
     }
 
