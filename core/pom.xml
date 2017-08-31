@@ -6,7 +6,7 @@
     <parent>
         <artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
         <groupId>org.camunda.bpm.extension</groupId>
-        <version>0.3.1</version>
+        <version>0.3.2-SNAPSHOT</version>
     </parent>
 
     <name>Camunda BPM Process Test Coverage</name>
