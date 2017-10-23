@@ -35,12 +35,17 @@ public class CompensationEventCoverageHandler extends CompensationEventHandler {
             // Get compensation boundary event ID
             final ActivityImpl sourceEvent = (ActivityImpl) activity.getProperty(
                 BpmnProperties.COMPENSATION_BOUNDARY_EVENT.getName());
-            final String sourceEventId = sourceEvent.getActivityId();
 
-            // Register covered element
-            final CoveredFlowNode compensationBoundaryEvent = new CoveredFlowNode(processDefinitionKey, sourceEventId);
-            compensationBoundaryEvent.setEnded(true);
-            coverageTestRunState.addCoveredElement(compensationBoundaryEvent);
+            if (sourceEvent != null) {
+
+                final String sourceEventId = sourceEvent.getActivityId();
+
+                // Register covered element
+                final CoveredFlowNode compensationBoundaryEvent = new CoveredFlowNode(processDefinitionKey, sourceEventId);
+                compensationBoundaryEvent.setEnded(true);
+                coverageTestRunState.addCoveredElement(compensationBoundaryEvent);
+
+            }
 
         }
 
