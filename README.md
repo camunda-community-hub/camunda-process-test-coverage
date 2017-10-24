@@ -24,7 +24,7 @@ This Camunda BPM community extension **visualises** test process **pathes** and 
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage</artifactId>
-  <version>0.3.1</version>
+  <version>0.3.2</version>
   <scope>test</scope>
 </dependency>
 ```
