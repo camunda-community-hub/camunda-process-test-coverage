@@ -1,7 +1,5 @@
 package org.camunda.bpm.extension.process_test_coverage.rules;
 
-import org.apache.ibatis.logging.LogFactory;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
@@ -20,16 +18,21 @@ public class CompensationExampleTest {
 
     private static final String PROCESS_DEFINITION_KEY = "compensation-test";
 
-    static {
-        LogFactory.useSlf4jLogging(); // MyBatis
-    }
-
     @Test
     @Deployment(resources = "CompensationExample.bpmn")
     public void testHappyPath() {
 
-        ProcessInstance processInstance = rule.getProcessEngine().getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
-        rule.getRuntimeService().setVariable(processInstance.getId(), "testVar", true);
+        rule.getProcessEngine().getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
+        rule.getTaskService().complete(rule.getTaskService().createTaskQuery().singleResult().getId());
+
+    }
+
+    @Test
+    @Deployment(resources = "CompensationExample.bpmn")
+    public void testCompensation() {
+
+        rule.getProcessEngine().getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
+        rule.getRuntimeService().correlateMessage("compensate");
 
     }
 

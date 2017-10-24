@@ -1,7 +1,5 @@
 package org.camunda.bpm.extension.process_test_coverage.util;
 
-import org.camunda.bpm.engine.impl.bpmn.helper.BpmnProperties;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -24,7 +22,7 @@ public class Api {
      * @since Camunda BPM 7.5.0
      */
     public static boolean supportsCompensationEventCoverage() {
-      return Api.feature(BpmnProperties.class, "COMPENSATION_BOUNDARY_EVENT").isSupported();
+      return Api.feature("org.camunda.bpm.engine.impl.bpmn.helper.BpmnProperties", "COMPENSATION_BOUNDARY_EVENT").isSupported();
     }
 
   }
