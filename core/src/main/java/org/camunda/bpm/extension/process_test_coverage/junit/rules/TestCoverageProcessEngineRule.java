@@ -294,32 +294,34 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      */
     private void handleTestMethodCoverage(Description description) {
 
-        // Do test method coverage only if deployments present
-        final Deployment methodDeploymentAnnotation = description.getAnnotation(Deployment.class);
-        final Deployment classDeploymentAnnotation = description.getTestClass().getAnnotation(Deployment.class);
-        final boolean testMethodHasDeployment = methodDeploymentAnnotation != null || classDeploymentAnnotation != null;
+        if (description.isTest()) {
+            
+            // Do test method coverage only if deployments present
+            final Deployment methodDeploymentAnnotation = description.getAnnotation(Deployment.class);
+            final Deployment classDeploymentAnnotation = description.getTestClass().getAnnotation(Deployment.class);
+            final boolean testMethodHasDeployment = methodDeploymentAnnotation != null || classDeploymentAnnotation != null;
 
-        if (testMethodHasDeployment) {
+            if (testMethodHasDeployment) {
 
-            final String testName = description.getMethodName();
-            final MethodCoverage testCoverage = coverageTestRunState.getTestMethodCoverage(testName);
+                final String testName = description.getMethodName();
+                final MethodCoverage testCoverage = coverageTestRunState.getTestMethodCoverage(testName);
 
-            double coveragePercentage = testCoverage.getCoveragePercentage();
+                double coveragePercentage = testCoverage.getCoveragePercentage();
 
-            // Log coverage percentage
-            logger.info(testName + " test method coverage is " + coveragePercentage);
+                // Log coverage percentage
+                logger.info(testName + " test method coverage is " + coveragePercentage);
 
-            logCoverageDetail(testCoverage);
+                logCoverageDetail(testCoverage);
 
-            // Create graphical report
-            CoverageReportUtil.createCurrentTestMethodReport(processEngine, coverageTestRunState);
+                // Create graphical report
+                CoverageReportUtil.createCurrentTestMethodReport(processEngine, coverageTestRunState);
 
-            if (testMethodNameToCoverageMatchers.containsKey(testName)) {
+                if (testMethodNameToCoverageMatchers.containsKey(testName)) {
 
-                assertCoverage(coveragePercentage, testMethodNameToCoverageMatchers.get(testName));
+                    assertCoverage(coveragePercentage, testMethodNameToCoverageMatchers.get(testName));
 
+                }
             }
-
         }
     }
 
