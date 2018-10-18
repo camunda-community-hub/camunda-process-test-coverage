@@ -41,7 +41,7 @@
                 <version>3.5.1</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
-                    <source>${maven.compiler.target}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
             <plugin>
