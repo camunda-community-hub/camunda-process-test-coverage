@@ -26,7 +26,8 @@
 		<!-- We intentionally always compile against latest Camunda release,
 		but test against many versions *provided* by user projects.
 		Therefore the tests are in a separate module. -->
-		<camunda.version>7.13.0</camunda.version>
+    <camunda.version>7.13.0</camunda.version>
+    <camunda.compile.version>7.13.0</camunda.compile.version>
 		<spring.version>3.1.2.RELEASE</spring.version>
 	</properties>
 
