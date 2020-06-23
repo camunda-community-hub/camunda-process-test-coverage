@@ -1,5 +1,7 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,8 +52,21 @@ public class ProcessCoverageConfigurator {
 
     private static void initializeFlowNodeHandlerSpringBoot(ProcessEngineConfigurationImpl configuration) {
         final FlowNodeHistoryEventHandler historyEventHandler = new FlowNodeHistoryEventHandler();
-        configuration.setCustomHistoryEventHandlers(Arrays.asList((HistoryEventHandler)historyEventHandler));
-        configuration.setEnableDefaultDbHistoryEventHandler(false);
+        try {
+          Method setCustomHistoryEventHandlers = ProcessEngineConfigurationImpl.class
+              .getDeclaredMethod("setCustomHistoryEventHandlers", List.class);
+          if (setCustomHistoryEventHandlers != null) {
+            setCustomHistoryEventHandlers.invoke(configuration, Arrays.asList((HistoryEventHandler) historyEventHandler));
+            Method setEnableDefaultDbHistoryEventHandler = ProcessEngineConfigurationImpl.class
+                .getDeclaredMethod("setEnableDefaultDbHistoryEventHandler", boolean.class);
+            if (setEnableDefaultDbHistoryEventHandler != null) {
+              setEnableDefaultDbHistoryEventHandler.invoke(configuration, false);
+            }
+          }
+        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+          // expected for Camunda < 7.13.0
+          initializeFlowNodeHandler(configuration);
+        }
     }
 
     private static void initializeCompensationEventHandler(ProcessEngineConfigurationImpl configuration) {
