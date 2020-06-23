@@ -1,14 +1,16 @@
 package org.camunda.bpm.extension.process_test_coverage.junit.rules;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.engine.impl.event.EventHandler;
+import org.camunda.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.camunda.bpm.extension.process_test_coverage.listeners.CompensationEventCoverageHandler;
 import org.camunda.bpm.extension.process_test_coverage.listeners.FlowNodeHistoryEventHandler;
 import org.camunda.bpm.extension.process_test_coverage.listeners.PathCoverageParseListener;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Helper methods to configure the process coverage extensions on a given ProcessEngineConfigurationImpl
@@ -20,6 +22,12 @@ public class ProcessCoverageConfigurator {
 
     public static void initializeProcessCoverageExtensions(ProcessEngineConfigurationImpl configuration) {
         initializeFlowNodeHandler(configuration);
+        initializePathCoverageParseListener(configuration);
+        initializeCompensationEventHandler(configuration);
+    }
+
+    public static void initializeProcessCoverageExtensionsSpringBoot(ProcessEngineConfigurationImpl configuration) {
+        initializeFlowNodeHandlerSpringBoot(configuration);
         initializePathCoverageParseListener(configuration);
         initializeCompensationEventHandler(configuration);
     }
@@ -38,6 +46,12 @@ public class ProcessCoverageConfigurator {
         final FlowNodeHistoryEventHandler historyEventHandler = new FlowNodeHistoryEventHandler();
         configuration.setHistoryEventHandler(historyEventHandler);
 
+    }
+
+    private static void initializeFlowNodeHandlerSpringBoot(ProcessEngineConfigurationImpl configuration) {
+        final FlowNodeHistoryEventHandler historyEventHandler = new FlowNodeHistoryEventHandler();
+        configuration.setCustomHistoryEventHandlers(Arrays.asList((HistoryEventHandler)historyEventHandler));
+        configuration.setEnableDefaultDbHistoryEventHandler(false);
     }
 
     private static void initializeCompensationEventHandler(ProcessEngineConfigurationImpl configuration) {
