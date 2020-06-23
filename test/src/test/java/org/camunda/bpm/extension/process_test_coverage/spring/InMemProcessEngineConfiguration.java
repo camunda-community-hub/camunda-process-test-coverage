@@ -51,13 +51,13 @@ public class InMemProcessEngineConfiguration {
 
     SpringProcessWithCoverageEngineConfiguration config = new SpringProcessWithCoverageEngineConfiguration();
 
+    config.setApplicationContext(applicationContext);
     config.setExpressionManager(expressionManager());
     config.setTransactionManager(transactionManager());
     config.setDataSource(dataSource());
     config.setDatabaseSchemaUpdate("true");
     config.setHistory(ProcessEngineConfiguration.HISTORY_FULL);
     config.setJobExecutorActivate(false);
-
     config.init();
     return config;
 
