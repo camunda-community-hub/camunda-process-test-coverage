@@ -18,12 +18,16 @@
 	<parent>
 		<groupId>org.camunda</groupId>
 		<artifactId>camunda-release-parent</artifactId>
-		<version>2.5</version>
+		<version>3.7</version>
 		<relativePath />
 	</parent>
 
 	<properties>
-		<camunda.version>7.7.0</camunda.version>
+		<!-- We intentionally always compile against latest Camunda release,
+		but test against many versions *provided* by user projects.
+		Therefore the tests are in a separate module. -->
+		<camunda.version>7.13.0</camunda.version>
+		<spring.version>3.1.2.RELEASE</spring.version>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<maven.compiler.target>1.6</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -79,7 +83,7 @@
 			<!-- Needed to test SpringProcessWithCoverageTest -->
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.1.2.RELEASE</version>
+			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 

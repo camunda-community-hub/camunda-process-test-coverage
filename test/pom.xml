@@ -15,10 +15,6 @@
     <description>Library tests are here in order to allow compiling
         against Camunda BPM release and testing against different versions.</description>
 
-    <properties>
-        <camunda.version>7.6.0</camunda.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>${groupId}</groupId>
@@ -41,7 +37,31 @@
         <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-beans</artifactId>
-          <version>3.1.2.RELEASE</version>
+          <version>${spring.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>${spring.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-jdbc</artifactId>
+          <version>${spring.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-tx</artifactId>
+          <version>${spring.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-orm</artifactId>
+          <version>${spring.version}</version>
           <scope>test</scope>
         </dependency>
     </dependencies>
@@ -76,13 +96,49 @@
             </properties>
         </profile>
         <profile>
-            <id>camunda-bpm-engine-7.7.0</id>
+            <id>camunda-bpm-engine-7.13.0</id>
             <properties>
-                <camunda.version>7.7.0</camunda.version>
+                <camunda.version>7.13.0</camunda.version>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.12.0</id>
+            <properties>
+                <camunda.version>7.12.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.11.0</id>
+            <properties>
+                <camunda.version>7.11.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.10.0</id>
+            <properties>
+                <camunda.version>7.10.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.9.0</id>
+            <properties>
+                <camunda.version>7.9.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.8.0</id>
+            <properties>
+                <camunda.version>7.8.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.7.0</id>
+            <properties>
+                <camunda.version>7.7.0</camunda.version>
+            </properties>
         </profile>
         <profile>
             <id>camunda-bpm-engine-7.6.0</id>

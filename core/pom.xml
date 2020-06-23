@@ -15,21 +15,25 @@
     <artifactId>camunda-bpm-process-test-coverage</artifactId>
 
     <dependencies>
+        <!-- We intentionally always compile against latest Camunda release,
+        but test against many versions *provided* by user projects.
+        Therefore the tests are in a separate module. -->
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine</artifactId>
-            <version>7.6.0</version> <!-- We intentionally always compile against latest release, but
-                                            test against many versions *provided* by user projects.
-                                            Therefore the tests are in a separate module. -->
+            <version>7.6.0</version><!-- needed for CompensationEventCoverageHandler -->
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine-spring</artifactId>
-            <version>7.6.0</version> <!-- We intentionally always compile against latest release, but
-                                            test against many versions *provided* by user projects.
-                                            Therefore the tests are in a separate module. -->
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-context</artifactId>
+          <version>${spring.version}</version>
+          <scope>provided</scope>
         </dependency>
     </dependencies>
 
