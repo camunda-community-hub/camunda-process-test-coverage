@@ -21,7 +21,6 @@
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine</artifactId>
-            <version>7.6.0</version><!-- needed for CompensationEventCoverageHandler -->
             <scope>provided</scope>
         </dependency>
         <dependency>
