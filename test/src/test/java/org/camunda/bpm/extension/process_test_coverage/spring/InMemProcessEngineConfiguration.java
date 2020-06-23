@@ -1,10 +1,15 @@
 package org.camunda.bpm.extension.process_test_coverage.spring;
 
+import java.lang.reflect.Method;
+
+import javax.sql.DataSource;
+
 import org.camunda.bpm.engine.ProcessEngineConfiguration;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.engine.impl.el.ExpressionManager;
 import org.camunda.bpm.engine.spring.ProcessEngineFactoryBean;
 import org.camunda.bpm.engine.spring.SpringExpressionManager;
+import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +17,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
-
-import javax.sql.DataSource;
-import java.io.IOException;
 
 /**
  * Adapted from: https://github.com/camunda/camunda-bpm-platform/blob/master/engine-spring/src/test/java/org/camunda/bpm/engine/spring/test/configuration/InMemProcessEngineConfiguration.java
@@ -47,11 +49,19 @@ public class InMemProcessEngineConfiguration {
   }
 
   @Bean
-  public ProcessEngineConfigurationImpl processEngineConfiguration() throws IOException {
+  public ProcessEngineConfigurationImpl processEngineConfiguration() throws Exception {
 
     SpringProcessWithCoverageEngineConfiguration config = new SpringProcessWithCoverageEngineConfiguration();
 
-    config.setApplicationContext(applicationContext);
+    
+    try {
+      Method setApplicationContext = SpringProcessEngineConfiguration.class.getDeclaredMethod("setApplicationContext", ApplicationContext.class);
+      if (setApplicationContext != null) {
+        setApplicationContext.invoke(config, applicationContext);
+      }
+    } catch (NoSuchMethodException e) {
+      // expected for Camunda < 7.8.0
+    }
     config.setExpressionManager(expressionManager());
     config.setTransactionManager(transactionManager());
     config.setDataSource(dataSource());
@@ -71,7 +81,7 @@ public class InMemProcessEngineConfiguration {
   }
 
   @Bean
-  public ProcessEngineFactoryBean processEngine() throws IOException {
+  public ProcessEngineFactoryBean processEngine() throws Exception {
 
     ProcessEngineFactoryBean factoryBean = new ProcessEngineFactoryBean();
     factoryBean.setProcessEngineConfiguration(processEngineConfiguration());
