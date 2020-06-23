@@ -1,12 +1,17 @@
-dist: precise
+dist: bionic
 sudo: false
 language: java
 jdk:
-  - oraclejdk8
-  - oraclejdk7
-  - openjdk6
+  - openjdk8
+  - openjdk11
 env:
   - CAMUNDA=LATEST
+  - CAMUNDA=7.13.0
+  - CAMUNDA=7.12.0
+  - CAMUNDA=7.11.0
+  - CAMUNDA=7.10.0
+  - CAMUNDA=7.9.0
+  - CAMUNDA=7.8.0
   - CAMUNDA=7.7.0
   - CAMUNDA=7.6.0
   - CAMUNDA=7.5.0
