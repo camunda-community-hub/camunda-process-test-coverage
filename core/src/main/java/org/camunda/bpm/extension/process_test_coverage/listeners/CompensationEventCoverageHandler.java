@@ -76,7 +76,8 @@ public class CompensationEventCoverageHandler extends CompensationEventHandler {
         try {
           MethodHandle handleEvent = MethodHandles.lookup()
               .findSpecial(CompensationEventHandler.class, "handleEvent",
-                  MethodType.methodType(EventSubscriptionEntity.class, Object.class, CommandContext.class), CompensationEventCoverageHandler.class);
+                  MethodType.methodType(void.class, EventSubscriptionEntity.class, Object.class, CommandContext.class),
+                  CompensationEventCoverageHandler.class);
           handleEvent.invoke(this, eventSubscription, payload, commandContext);
         } catch (Throwable e) {
           throw new RuntimeException(e);
