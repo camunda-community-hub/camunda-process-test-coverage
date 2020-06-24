@@ -24,6 +24,7 @@ import org.camunda.bpm.extension.process_test_coverage.util.Api;
 public class CompensationEventCoverageHandler extends CompensationEventHandler {
 
     private CoverageTestRunState coverageTestRunState;
+    private MethodHandle handleEvent;
 
     /**
      * @since 7.10.0
@@ -74,10 +75,12 @@ public class CompensationEventCoverageHandler extends CompensationEventHandler {
 
         // invoke super.handleEvent() in a backwards compatible way
         try {
-          MethodHandle handleEvent = MethodHandles.lookup()
-              .findSpecial(CompensationEventHandler.class, "handleEvent",
-                  MethodType.methodType(void.class, EventSubscriptionEntity.class, Object.class, CommandContext.class),
-                  CompensationEventCoverageHandler.class);
+          if (handleEvent == null) {
+            handleEvent = MethodHandles.lookup()
+                .findSpecial(CompensationEventHandler.class, "handleEvent",
+                    MethodType.methodType(void.class, EventSubscriptionEntity.class, Object.class, CommandContext.class),
+                    CompensationEventCoverageHandler.class);
+          }
           handleEvent.invoke(this, eventSubscription, payload, commandContext);
         } catch (Throwable e) {
           throw new RuntimeException(e);
