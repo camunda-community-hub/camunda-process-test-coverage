@@ -1,4 +1,6 @@
-# <img src="/doc/img/camunda.png" width="23" height="23" />&nbsp;Camunda&nbsp;BPM&nbsp;Process&nbsp;Test&nbsp;Coverage&nbsp;<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" /></a> 
+<a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg?branch=master"/></a> <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" /></a>
+
+# <img src="/doc/img/camunda.png" width="23" height="23" />&nbsp;Camunda&nbsp;BPM&nbsp;Process&nbsp;Test&nbsp;Coverage&nbsp; 
 
 This Camunda BPM community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
@@ -10,11 +12,11 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 * Visually check gateway **expressions** and transaction borders (**savepoints**) used by your process
 * Calculate and **verify** the nodes (_and_ sequence flow) **coverage** ratio reached by tests methods and classes
 
-## <a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg?branch=master" align="right"/></a>Just use it
+## Just use it
 
 * Integrates with all versions of Camunda BPM starting with 7.3.0 and upwards 
-* Works with all relevant Java versions: 1.6, 1.7 and 1.8 - using **JUnit 4.12** (4.11 does not work)
-* Is continuously checked against latest Camunda BPM releases - see the full [**travis-ci**](https://travis-ci.org/camunda/camunda-bpm-process-test-coverage) matrix for details
+* Works with all relevant Java versions: 1.7, 1.8 and 1.11 - using **JUnit 4.12** (4.11 does not work)
+* Is continuously checked against latest Camunda BPM releases - see the full [**travis-ci**](https://travis-ci.org/camunda/camunda-bpm-process-test-coverage) matrix for details: <a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg?branch=master" /></a>
 
 ## Get started with *3 simple steps*
 
