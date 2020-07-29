@@ -85,6 +85,8 @@ public class MultipleDeploymentsForClassTest {
     public static RuleChain chain = RuleChain.outerRule(checkReportRule).around(rule);
 
     @Test
+    //duplicating Deployment annotation for backward compatibility with camunda-bpm-engine-7.3.0
+    @Deployment(resources = {"superProcess-single-branch.bpmn", "process.bpmn"})
     public void runTestForSinglePath() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "A");
