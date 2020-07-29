@@ -37,6 +37,14 @@ public interface AggregatedCoverage {
     Set<String> getCoveredSequenceFlowIds(String processDefinitionKey);
 
     /**
+     * Retrieves covered sequence flow IDs for the given process definition key.
+     *
+     * @param processDefinitionKey
+     * @return
+     */
+    Set<CoveredSequenceFlow> getCoveredSequenceFlows(String processDefinitionKey);
+
+    /**
      * Retrieves the process definitions of the coverage.
      * 
      * @return
@@ -50,4 +58,11 @@ public interface AggregatedCoverage {
      */
     double getCoveragePercentage();
 
+    /**
+     * Retrieves the coverage percentage for the given process definition key.
+     *
+     * @param processDefinitionKey
+     * @return
+     */
+    double getCoveragePercentage(String processDefinitionKey);
 }

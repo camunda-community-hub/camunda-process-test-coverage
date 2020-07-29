@@ -111,7 +111,7 @@ public class CoverageReportUtil {
                         coveredSequenceFlowIds,
                         reportName,
                         processDefinition.getKey(),
-                        coverage.getCoveragePercentage(),
+                        coverage.getCoveragePercentage(processDefinition.getKey()),
                         testClass,
                         testName,
                         classReport,
