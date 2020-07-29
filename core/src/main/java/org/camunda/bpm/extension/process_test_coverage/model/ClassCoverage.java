@@ -90,6 +90,31 @@ public class ClassCoverage implements AggregatedCoverage {
     }
 
     /**
+     * Retrieves the class coverage percentage for the given process definition key.
+     * All covered test methods' elements are aggregated and checked against the
+     * process definition elements.
+     *
+     * @param processDefinitionKey
+     * @return The coverage percentage.
+     */
+    @Override
+    public double getCoveragePercentage(String processDefinitionKey) {
+        // All deployments must be the same, so we take the first one
+        final MethodCoverage anyDeployment = getAnyMethodCoverage();
+
+        final Set<FlowNode> definitionsFlowNodes = anyDeployment.getProcessDefinitionsFlowNodes(processDefinitionKey);
+        final Set<SequenceFlow> definitionsSeqenceFlows = anyDeployment.getProcessDefinitionsSequenceFlows(processDefinitionKey);
+
+        final Set<CoveredFlowNode> coveredFlowNodes = getCoveredFlowNodes(processDefinitionKey);
+        final Set<CoveredSequenceFlow> coveredSequenceFlows = getCoveredSequenceFlows(processDefinitionKey);
+
+        final double bpmnElementsCount = definitionsFlowNodes.size() + definitionsSeqenceFlows.size();
+        final double coveredElementsCount = coveredFlowNodes.size() + coveredSequenceFlows.size();
+
+        return coveredElementsCount / bpmnElementsCount;
+    }
+
+    /**
      * Retrieves the covered flow nodes.
      * Flow nodes with the same element ID but different process definition keys are retained. {@see CoveredElementComparator}
      * 
@@ -168,6 +193,22 @@ public class ClassCoverage implements AggregatedCoverage {
         }
 
         return coveredSequenceFlowIds;
+    }
+
+    /**
+     * Retrieves a set of covered sequence flows for the given process
+     * definition key.
+     * @param processDefinitionKey
+     */
+    public Set<CoveredSequenceFlow> getCoveredSequenceFlows(String processDefinitionKey) {
+
+        final Set<CoveredSequenceFlow> coveredSequenceFlows = new TreeSet<CoveredSequenceFlow>(CoveredElementComparator.instance());
+        for (MethodCoverage methodCoverage : testNameToMethodCoverage.values()) {
+
+            coveredSequenceFlows.addAll(methodCoverage.getCoveredSequenceFlows(processDefinitionKey));
+        }
+
+        return coveredSequenceFlows;
     }
 
     /**
