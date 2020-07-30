@@ -61,6 +61,16 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     private boolean detailedCoverageLogging = false;
 
     /**
+     * Is method coverage handling needed?
+     */
+    private boolean handleTestMethodCoverage = true;
+
+    /**
+     *  Is class coverage handling needed?
+     */
+    private boolean handleClassCoverage = true;
+
+    /**
      *  coverageTestRunStateFactory. Can be changed for aggregated/suite coverage check
      */
     private CoverageTestRunStateFactory coverageTestRunStateFactory = new DefaultCoverageTestRunStateFactory();
@@ -139,9 +149,13 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     @Override
     public void finished(Description description) {
 
-        handleTestMethodCoverage(description);
+        if (handleTestMethodCoverage) {
+            handleTestMethodCoverage(description);
+        }
 
-        handleClassCoverage(description);
+        if (handleClassCoverage) {
+            handleClassCoverage(description);
+        }
 
         // run derived finalization only of not used as a class rule
         if (identityService != null) {
@@ -388,6 +402,14 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
     public void setDetailedCoverageLogging(boolean detailedCoverageLogging) {
         this.detailedCoverageLogging = detailedCoverageLogging;
+    }
+
+    public void setHandleTestMethodCoverage(boolean handleTestMethodCoverage) {
+        this.handleTestMethodCoverage = handleTestMethodCoverage;
+    }
+
+    public void setHandleClassCoverage(boolean handleClassCoverage) {
+        this.handleClassCoverage = handleClassCoverage;
     }
 
     public void setCoverageTestRunStateFactory(CoverageTestRunStateFactory coverageTestRunStateFactory) {
