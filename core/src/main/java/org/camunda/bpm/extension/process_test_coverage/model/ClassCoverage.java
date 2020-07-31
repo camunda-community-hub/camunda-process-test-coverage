@@ -1,16 +1,12 @@
 package org.camunda.bpm.extension.process_test_coverage.model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.util.CoveredElementComparator;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.junit.Assert;
+
+import java.util.*;
 
 /**
  * Test class coverage model. The class coverage is an aggregation of all test method coverages.
@@ -225,7 +221,7 @@ public class ClassCoverage implements AggregatedCoverage {
      * 
      * @return
      */
-    private MethodCoverage getAnyMethodCoverage() {
+    protected MethodCoverage getAnyMethodCoverage() {
 
         // All deployments must be the same, so we take the first one
         final MethodCoverage anyDeployment = testNameToMethodCoverage.values().iterator().next();

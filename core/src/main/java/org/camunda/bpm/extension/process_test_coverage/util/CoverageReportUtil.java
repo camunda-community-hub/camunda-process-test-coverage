@@ -1,5 +1,14 @@
 package org.camunda.bpm.extension.process_test_coverage.util;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
+import org.camunda.bpm.extension.process_test_coverage.model.AggregatedCoverage;
+import org.camunda.bpm.extension.process_test_coverage.model.CoveredFlowNode;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,15 +19,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
-import org.camunda.bpm.extension.process_test_coverage.model.AggregatedCoverage;
-import org.camunda.bpm.extension.process_test_coverage.model.CoveredFlowNode;
 
 /**
  * Utility for generating graphical class and method coverage reports.
@@ -35,7 +35,6 @@ public class CoverageReportUtil {
      */
     public static final String TARGET_DIR_ROOT = "target/process-test-coverage/";
     public static final String BOWER_DIR_NAME = "bower_components";
-    public static final String BOWER_DIR_PATH = TARGET_DIR_ROOT + BOWER_DIR_NAME;
 
     /**
      * Generates a coverage report for the whole test class. This method
@@ -47,7 +46,10 @@ public class CoverageReportUtil {
      */
     public static void createClassReport(ProcessEngine processEngine, CoverageTestRunState coverageTestRunState) {
 
-        createReport(coverageTestRunState, true);
+        AggregatedCoverage coverage = coverageTestRunState.getClassCoverage();
+        final String reportDirectory = getReportDirectoryPath(coverageTestRunState.getTestClassName());
+
+        createReport(coverage, reportDirectory, coverageTestRunState.getTestClassName(), null);
 
     }
 
@@ -61,30 +63,36 @@ public class CoverageReportUtil {
     public static void createCurrentTestMethodReport(ProcessEngine processEngine,
             CoverageTestRunState coverageTestRunState) {
 
-        createReport(coverageTestRunState, false);
+        AggregatedCoverage coverage = coverageTestRunState.getCurrentTestMethodCoverage();
+        final String reportDirectory = getReportDirectoryPath(coverageTestRunState.getTestClassName());
+
+        createReport(coverage, reportDirectory, coverageTestRunState.getTestClassName(), coverageTestRunState.getCurrentTestMethodName());
 
     }
 
     /**
      * Generates a coverage report.
-     * 
-     * @param coverageTestRunState
-     * @param classReport
-     *            If false the current test method coverage reports are
-     *            generated. When false an aggregated class coverage report is
-     *            generated.
+     *
+     * @param coverage
+     * @param reportDirectory The directory where the report will be stored.
+     *
      */
-    private static void createReport(CoverageTestRunState coverageTestRunState, boolean classReport) {
+    public static void createReport(AggregatedCoverage coverage, String reportDirectory) {
+        createReport(coverage, reportDirectory, null, null);
+    }
 
-        installBowerComponents();
+    /**
+     * Generates a coverage report.
+     * 
+     * @param coverage
+     * @param reportDirectory The directory where the report will be stored.
+     * @param testClass Optional test class name for info box
+     * @param testName Optional test method name for info box. Also used as reportName prefix
+     *
+     */
+    private static void createReport(AggregatedCoverage coverage, String reportDirectory, String testClass, String testName) {
 
-        // Get the appropriate coverage
-        AggregatedCoverage coverage;
-        if (classReport) {
-            coverage = coverageTestRunState.getClassCoverage();
-        } else {
-            coverage = coverageTestRunState.getCurrentTestMethodCoverage();
-        }
+        installBowerComponents(reportDirectory);
 
         // Generate a report for every process definition
         final Set<ProcessDefinition> processDefinitions = coverage.getProcessDefinitions();
@@ -93,15 +101,11 @@ public class CoverageReportUtil {
             try {
 
                 // Assemble data
-                final String testClass = coverageTestRunState.getTestClassName();
-                final String testName = coverageTestRunState.getCurrentTestMethodName();
                 final Set<CoveredFlowNode> coveredFlowNodes = coverage.getCoveredFlowNodes(processDefinition.getKey());
                 final Set<String> coveredSequenceFlowIds = coverage.getCoveredSequenceFlowIds(
                         processDefinition.getKey());
-                final String reportName = classReport ? getReportName(processDefinition, null)
-                        : getReportName(processDefinition, testName);
+                final String reportName = getReportName(processDefinition, testName);
 
-                final String reportDirectory = getReportDirectoryPath(testClass);
                 final String bpmnXml = getBpmnXml(processDefinition);
 
                 // Generate report
@@ -109,13 +113,11 @@ public class CoverageReportUtil {
                 BpmnJsReport.generateReportWithHighlightedFlowNodesAndSequenceFlows(bpmnXml,
                         coveredFlowNodes,
                         coveredSequenceFlowIds,
-                        reportName,
+                        reportDirectory + '/' + reportName,
                         processDefinition.getKey(),
                         coverage.getCoveragePercentage(processDefinition.getKey()),
                         testClass,
-                        testName,
-                        classReport,
-                        reportDirectory);
+                        testName);
 
             } catch (IOException ex) {
 
@@ -127,9 +129,10 @@ public class CoverageReportUtil {
 
     }
 
-    private static void installBowerComponents() {
+    private static void installBowerComponents(String reportDirectory) {
 
-        final File bowerComponents = new File(BOWER_DIR_PATH);
+        final File parent = new File(reportDirectory).getParentFile();
+        final File bowerComponents = new File(parent, BOWER_DIR_NAME);
         if (bowerComponents.exists()) {
             // No need to install
             return;
@@ -150,7 +153,7 @@ public class CoverageReportUtil {
                     final String resourcePath = entries.nextElement().getName();
                     if (resourcePath.startsWith(BOWER_DIR_NAME)) {
 
-                        final File resource = new File(TARGET_DIR_ROOT + resourcePath);
+                        final File resource = new File(parent, resourcePath);
 
                         final InputStream source = CoverageReportUtil.class.getResourceAsStream("/" + resourcePath);
                         if (resourcePath.endsWith("/")) {
@@ -189,7 +192,7 @@ public class CoverageReportUtil {
      * @return
      */
     private static String getReportDirectoryPath(final String className) {
-        return TARGET_DIR_ROOT + '/' + className;
+        return TARGET_DIR_ROOT + className;
     }
 
     /**
