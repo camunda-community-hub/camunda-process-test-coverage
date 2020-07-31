@@ -94,6 +94,16 @@ public class TestCoverageProcessEngineRuleBuilder {
     }
 
     /**
+     * Configures CoverageTestRunStateFactory used to create CoverageTestRunState. Useful for sharing state between several test-classes
+     * @param coverageTestRunStateFactory
+     * @return
+     */
+    public TestCoverageProcessEngineRuleBuilder setCoverageTestRunStateFactory(CoverageTestRunStateFactory coverageTestRunStateFactory) {
+        rule.setCoverageTestRunStateFactory(coverageTestRunStateFactory);
+        return this;
+    }
+
+    /**
      * Asserts if the class coverage is greater than the passed percentage.
      * 
      * @param percentage
