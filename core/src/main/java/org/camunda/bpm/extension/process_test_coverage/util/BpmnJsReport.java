@@ -139,14 +139,14 @@ public class BpmnJsReport {
         if (testClass == null) {
             html = html.replaceAll(PLACEHOLDER_TESTCLASS, "");
         } else {
-            html = html.replaceAll(PLACEHOLDER_TESTCLASS, "<div>Test Class: " + testClass + "</div>");
+            html = html.replaceAll(PLACEHOLDER_TESTCLASS, "<div>Test Class: " + testClass.replace('$', '.') + "</div>");
         }
 
         // Class reports don't have the method field in the info-box
         if (testMethod == null) {
             html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "");
         } else {
-            html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "<div>TestMethod: " + testMethod + "</div>");
+            html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "<div>TestMethod: " + testMethod.replace('$', '.') + "</div>");
         }
 
       return html;
