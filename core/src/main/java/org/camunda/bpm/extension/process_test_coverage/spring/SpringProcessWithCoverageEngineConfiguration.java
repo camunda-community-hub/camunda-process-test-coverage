@@ -12,7 +12,8 @@ import org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessCovera
  */
 public class SpringProcessWithCoverageEngineConfiguration extends SpringProcessEngineConfiguration {
 
-	public void init() {
+	@Override
+	protected void init() {
 		ProcessCoverageConfigurator.initializeProcessCoverageExtensions(this);
 		super.init();
 	}
