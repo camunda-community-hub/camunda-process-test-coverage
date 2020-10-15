@@ -29,14 +29,13 @@ public class RunningFlowNodeCoverageTest {
     @Rule
     public TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
 
-    // TODO implement incident coverage handling and refactor this test to a
-    // separate class
+    // TODO implement incident coverage handling and refactor this test to a separate class
     @Test(expected = ProcessEngineException.class)
     @Deployment(resources = { RunningFlowNodeCoverageTest.BPMN_PATH })
     public void shouldCoverGatewayAsStillRunningWithException() {
-
-        rule.getRuntimeService().startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY);
-
+        Map<String, Object> variables = new HashMap<String, Object>();
+        variables.put("path", "UNEXPECTED");
+        rule.getRuntimeService().startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY, variables);
     }
 
     @Test
