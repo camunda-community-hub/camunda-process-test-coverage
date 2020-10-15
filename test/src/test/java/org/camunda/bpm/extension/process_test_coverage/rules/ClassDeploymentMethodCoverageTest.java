@@ -13,9 +13,10 @@ import static org.hamcrest.Matchers.*;
 
 /**
  * Test case starting an in-memory database-backed Process Engine. The aim of
- * the test is coverage calculation with the @Deployment annotated at class
+ * the test is coverage calculation with the @Deployment annotated at method
  * level.
  */
+@Deployment(resources = "process.bpmn")
 public class ClassDeploymentMethodCoverageTest {
 
     private static final String PROCESS_DEFINITION_KEY = "process-test-coverage";
@@ -24,7 +25,6 @@ public class ClassDeploymentMethodCoverageTest {
     public TestCoverageProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().withDetailedCoverageLogging().build();
 
     @Test
-    @Deployment(resources = "process.bpmn")
     public void testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered() {
 
         Map<String, Object> variables = new HashMap<String, Object>();
@@ -39,7 +39,6 @@ public class ClassDeploymentMethodCoverageTest {
     }
 
     @Test
-    @Deployment(resources = "process.bpmn")
     public void testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered() {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("path", "B");
