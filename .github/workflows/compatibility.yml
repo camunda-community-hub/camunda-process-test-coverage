@@ -32,18 +32,23 @@ jobs:
           - '7.9.0'
         include:
           - os: 'ubuntu-latest'
-            jdk:
-            - '8'
-            - '11'
-            - '12'
-            - '13'
-            camunda-version:
-            - '7.8.0'
-            - '7.7.0'
-            - '7.6.0'
-            - '7.5.0'
-            - '7.4.0'
-            - '7.3.0'
+            jdk: '8'
+            camunda-version: '7.8.0'
+          - os: 'ubuntu-latest'
+            jdk: '8'
+            camunda-version: '7.7.0'
+          - os: 'ubuntu-latest'
+            jdk: '8'
+            camunda-version: '7.6.0'
+          - os: 'ubuntu-latest'
+            jdk: '8'
+            camunda-version: '7.5.0'
+          - os: 'ubuntu-latest'
+            jdk: '8'
+            camunda-version: '7.4.0'
+          - os: 'ubuntu-latest'
+            jdk: '8'
+            camunda-version: '7.3.0'
 
     runs-on: ${{ matrix.os }}
     steps:
