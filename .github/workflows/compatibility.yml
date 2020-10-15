@@ -12,6 +12,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os:
+        - 'ubuntu-latest'
+        - 'windows-latest'
+        - 'macos-latest'
         jdk:
         - '8'
         - '11'
@@ -30,7 +34,7 @@ jobs:
         - '7.5.0'
         - '7.4.0'
         - '7.3.0'
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
