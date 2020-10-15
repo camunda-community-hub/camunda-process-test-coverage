@@ -36,11 +36,11 @@ jobs:
 #          - '7.3.0'
         include:
           - os: 'windows-latest'
-            maven-runner: './mvn'
-          - os: 'ubuntu-latest'
             maven-runner: './mvnw'
-          - os: 'macos-latest'
-            maven-runner: './mvnw'
+#          - os: 'ubuntu-latest'
+#            maven-runner: './mvnw'
+#          - os: 'macos-latest'
+#            maven-runner: './mvnw'
 
     runs-on: ${{ matrix.os }}
     steps:
