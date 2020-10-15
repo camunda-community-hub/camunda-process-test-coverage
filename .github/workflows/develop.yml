@@ -1,0 +1,34 @@
+name: Development build
+
+on:
+  push:
+    branches:
+      - '*'
+      - '**/*'
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Cache .m2
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
+
+      - name: Prepare Maven Wrapper
+        run: chmod +x ./mvnw
+
+      - name: Build with Maven
+        run: ./mvnw clean verify -U -B -T4
