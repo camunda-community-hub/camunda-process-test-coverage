@@ -5,11 +5,13 @@ import org.camunda.bpm.extension.process_test_coverage.junit.rules.AggregatedCov
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.AggregatedCoverageTestRunStateFactory;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
+import org.camunda.bpm.extension.process_test_coverage.rules.category.Api74;
 import org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil;
 import org.junit.AfterClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
@@ -23,6 +25,7 @@ public class TestMethodDetectionTest {
     private static final String AGGREGATED_REPORT_PATH = CoverageReportUtil.TARGET_DIR_ROOT + "/aggregated_report_test_method_detect/coverage";
 
     @Deployment(resources = CoverageTestProcessConstants.BPMN_PATH)
+    @Category(Api74.class)
     public static class DeploymentAnnotatedTestClass {
         @Rule
         @ClassRule
