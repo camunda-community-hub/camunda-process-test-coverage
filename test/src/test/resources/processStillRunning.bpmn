@@ -20,7 +20,9 @@
     <bpmn2:sequenceFlow id="SequenceFlow_Exclusive3ToManualA" name="" sourceRef="ExclusiveGateway_3" targetRef="ManualTask_3">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${path == 'A'}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_Exclusive3ToManualB" name="" sourceRef="ExclusiveGateway_3" targetRef="UserTask_B" />
+    <bpmn2:sequenceFlow id="SequenceFlow_Exclusive3ToManualB" name="" sourceRef="ExclusiveGateway_3" targetRef="UserTask_B">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${path == 'B'}]]></bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
     <bpmn2:endEvent id="EndEvent_2">
       <bpmn2:incoming>SequenceFlow_ManualAToEnd2</bpmn2:incoming>
     </bpmn2:endEvent>
