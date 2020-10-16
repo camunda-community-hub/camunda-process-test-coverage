@@ -55,15 +55,15 @@ Running your JUnit tests now leaves **html** files for inidividual test methods 
 See a unit test example wired for Spring Testing [here](https://github.com/camunda/camunda-bpm-process-test-coverage/blob/master/test/src/test/java/org/camunda/bpm/extension/process_test_coverage/spring/SpringProcessWithCoverageTest.java).
 
 ## Further resources
-* [JavaDoc](https://camunda.github.io/camunda-process-test-coverage/javadoc)
-* [Issues](https://github.com/camunda/camunda-process-test-coverage/issues)
+* [JavaDoc](https://camunda.github.io/camunda-bpm-process-test-coverage/javadoc)
+* [Issues](https://github.com/camunda/camunda-bpm-process-test-coverage/issues)
 * [Roadmap](#roadmap)
-* [Changelog](https://github.com/camunda/camunda-process-test-coverage/commits/master)
+* [Changelog](https://github.com/camunda/camunda-bpm-process-test-coverage/commits/master)
 * [Contributing](CONTRIBUTING.md)
 
-## Maintenance
+## Maintainers
 
-The software development team of [WDW eLab GmbH](http://www.wdw-elab.de) is responsible for the design and implementation of this project.
+The software development team of [WDW eLab GmbH](http://www.wdw-elab.de) has contributed initial design and implementation of this project.
 
 ![Screenshot](elab_logo.png)
 
