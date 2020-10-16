@@ -26,8 +26,8 @@
 		<!-- We intentionally always compile against latest Camunda release,
 		but test against many versions *provided* by user projects.
 		Therefore the tests are in a separate module. -->
-    <camunda.version>7.13.0</camunda.version>
-    <camunda.compile.version>7.13.0</camunda.compile.version>
+    <camunda.version>7.14.0</camunda.version>
+    <camunda.compile.version>7.14.0</camunda.compile.version>
 		<spring.version>3.1.2.RELEASE</spring.version>
 	</properties>
 
@@ -66,14 +66,14 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<version>4.13.1</version>
 		</dependency>
 
 		<dependency>
 			<!-- Needed for InMemoryH2Test -->
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>1.3.168</version>
+			<version>1.4.200</version>
 			<scope>test</scope>
 		</dependency>
 
