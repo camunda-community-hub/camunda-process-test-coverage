@@ -4,6 +4,7 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.engine.impl.event.EventHandler;
+import org.camunda.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.listeners.CompensationEventCoverageHandler;
@@ -12,6 +13,7 @@ import org.camunda.bpm.extension.process_test_coverage.listeners.PathCoveragePar
 import org.camunda.bpm.extension.process_test_coverage.model.AggregatedCoverage;
 import org.camunda.bpm.extension.process_test_coverage.model.ClassCoverage;
 import org.camunda.bpm.extension.process_test_coverage.model.MethodCoverage;
+import org.camunda.bpm.extension.process_test_coverage.util.Api;
 import org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil;
 import org.hamcrest.Matcher;
 import org.junit.Assert;
@@ -263,9 +265,17 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         final ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
 
         // Configure activities listener
-
-        final FlowNodeHistoryEventHandler historyEventHandler = (FlowNodeHistoryEventHandler) processEngineConfiguration.getHistoryEventHandler();
-        historyEventHandler.setCoverageTestRunState(coverageTestRunState);
+        if (Api.Camunda.supportsCustomHistoryEventHandlers()) {
+            final List<HistoryEventHandler> historyEventHandlers = processEngineConfiguration.getCustomHistoryEventHandlers();
+            for (HistoryEventHandler historyEventHandler : historyEventHandlers) {
+                if (historyEventHandler instanceof FlowNodeHistoryEventHandler) {
+                    ((FlowNodeHistoryEventHandler) historyEventHandler).setCoverageTestRunState(coverageTestRunState);
+                }
+            }
+        } else {
+            final FlowNodeHistoryEventHandler historyEventHandler = (FlowNodeHistoryEventHandler) processEngineConfiguration.getHistoryEventHandler();
+            historyEventHandler.setCoverageTestRunState(coverageTestRunState);
+        }
 
         // Configure sequence flow listener
 

@@ -1,10 +1,14 @@
 package org.camunda.bpm.extension.process_test_coverage.util;
 
+import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -21,8 +25,19 @@ public class Api {
     /**
      * @since Camunda BPM 7.5.0
      */
+    public static Api FEATURE_COMPENSATION_BOUNDARY_EVENT = Api.feature("org.camunda.bpm.engine.impl.bpmn.helper.BpmnProperties", "COMPENSATION_BOUNDARY_EVENT");
+    /**
+     * @since  Camunda BPM 7.13
+     */
+    public static Api FEATURE_CUSTOM_HISTORY_EVENT_HANDLERS = Api.feature("org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl", "setCustomHistoryEventHandlers", List.class);
+    public static Api FEATURE_ENABLE_DEFAULT_DB_HISTORY_EVENT_HANDLERS = Api.feature("org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl", "setEnableDefaultDbHistoryEventHandler", boolean.class);
+
     public static boolean supportsCompensationEventCoverage() {
-      return Api.feature("org.camunda.bpm.engine.impl.bpmn.helper.BpmnProperties", "COMPENSATION_BOUNDARY_EVENT").isSupported();
+      return FEATURE_COMPENSATION_BOUNDARY_EVENT.isSupported();
+    }
+
+    public static boolean supportsCustomHistoryEventHandlers() {
+      return FEATURE_CUSTOM_HISTORY_EVENT_HANDLERS.isSupported();
     }
 
   }
