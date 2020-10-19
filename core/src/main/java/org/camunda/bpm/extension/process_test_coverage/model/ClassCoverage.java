@@ -1,16 +1,12 @@
 package org.camunda.bpm.extension.process_test_coverage.model;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.util.CoveredElementComparator;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.junit.Assert;
+
+import java.util.*;
 
 /**
  * Test class coverage model. The class coverage is an aggregation of all test method coverages.
@@ -82,6 +78,31 @@ public class ClassCoverage implements AggregatedCoverage {
 
         final Set<CoveredFlowNode> coveredFlowNodes = getCoveredFlowNodes();
         final Set<CoveredSequenceFlow> coveredSequenceFlows = getCoveredSequenceFlows();
+
+        final double bpmnElementsCount = definitionsFlowNodes.size() + definitionsSeqenceFlows.size();
+        final double coveredElementsCount = coveredFlowNodes.size() + coveredSequenceFlows.size();
+
+        return coveredElementsCount / bpmnElementsCount;
+    }
+
+    /**
+     * Retrieves the class coverage percentage for the given process definition key.
+     * All covered test methods' elements are aggregated and checked against the
+     * process definition elements.
+     *
+     * @param processDefinitionKey
+     * @return The coverage percentage.
+     */
+    @Override
+    public double getCoveragePercentage(String processDefinitionKey) {
+        // All deployments must be the same, so we take the first one
+        final MethodCoverage anyDeployment = getAnyMethodCoverage();
+
+        final Set<FlowNode> definitionsFlowNodes = anyDeployment.getProcessDefinitionsFlowNodes(processDefinitionKey);
+        final Set<SequenceFlow> definitionsSeqenceFlows = anyDeployment.getProcessDefinitionsSequenceFlows(processDefinitionKey);
+
+        final Set<CoveredFlowNode> coveredFlowNodes = getCoveredFlowNodes(processDefinitionKey);
+        final Set<CoveredSequenceFlow> coveredSequenceFlows = getCoveredSequenceFlows(processDefinitionKey);
 
         final double bpmnElementsCount = definitionsFlowNodes.size() + definitionsSeqenceFlows.size();
         final double coveredElementsCount = coveredFlowNodes.size() + coveredSequenceFlows.size();
@@ -171,6 +192,22 @@ public class ClassCoverage implements AggregatedCoverage {
     }
 
     /**
+     * Retrieves a set of covered sequence flows for the given process
+     * definition key.
+     * @param processDefinitionKey
+     */
+    public Set<CoveredSequenceFlow> getCoveredSequenceFlows(String processDefinitionKey) {
+
+        final Set<CoveredSequenceFlow> coveredSequenceFlows = new TreeSet<CoveredSequenceFlow>(CoveredElementComparator.instance());
+        for (MethodCoverage methodCoverage : testNameToMethodCoverage.values()) {
+
+            coveredSequenceFlows.addAll(methodCoverage.getCoveredSequenceFlows(processDefinitionKey));
+        }
+
+        return coveredSequenceFlows;
+    }
+
+    /**
      * Retrieves the process definitions of the coverage test.
      * Since there are multiple deployments (one for each test method) the first
      * set of process definitions found is return.
@@ -184,7 +221,7 @@ public class ClassCoverage implements AggregatedCoverage {
      * 
      * @return
      */
-    private MethodCoverage getAnyMethodCoverage() {
+    protected MethodCoverage getAnyMethodCoverage() {
 
         // All deployments must be the same, so we take the first one
         final MethodCoverage anyDeployment = testNameToMethodCoverage.values().iterator().next();

@@ -1,15 +1,15 @@
 package org.camunda.bpm.extension.process_test_coverage.util;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.camunda.bpm.extension.process_test_coverage.model.CoveredFlowNode;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.util.Collection;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.camunda.bpm.extension.process_test_coverage.model.CoveredFlowNode;
 
 /**
  * Util generating graphical process test coverage reports.
@@ -65,21 +65,16 @@ public class BpmnJsReport {
    * @param bpmnXml The BPMN XML of the report process definition. 
    * @param flowNodes Flow nodes to be highlighted.
    * @param sequenceFlowIds Sequence flows to be highlighted.
-   * @param reportName The file name of the report.
+   * @param reportPath The file path of the report.
    * @param processDefinitionKey The key of the report process definition.
    * @param coverage The coverage percentage.
    * @param testClass The name of the test class.
    * @param testMethod The name of the test method if applicable.
-   * @param classReport When true a class report will be generated, otherwise a method report.
-   * The difference is mainly in the info-box method name field not appearing.
-   * @param targetDir The directory where the report will be stored.
-     * 
    * @throws IOException Thrown if an error occurs on report template read or report write.
      */
     public static void generateReportWithHighlightedFlowNodesAndSequenceFlows(String bpmnXml,
-            Collection<CoveredFlowNode> flowNodes, Collection<String> sequenceFlowIds, String reportName,
-            String processDefinitionKey, double coverage, String testClass, String testMethod, boolean classReport,
-            String targetDir) throws IOException {
+            Collection<CoveredFlowNode> flowNodes, Collection<String> sequenceFlowIds, String reportPath,
+            String processDefinitionKey, double coverage, String testClass, String testMethod) throws IOException {
 
         final String flowNodeMarkers = generateJavaScriptFlowNodeAnnotations(flowNodes);
         final String sequenceFlowMarkers = generateJavaScriptSequenceFlowAnnotations(sequenceFlowIds);
@@ -90,9 +85,8 @@ public class BpmnJsReport {
                 processDefinitionKey,
                 coverage,
                 testClass,
-                testMethod,
-                classReport);
-        writeToFile(targetDir, reportName, html);
+                testMethod);
+        writeToFile(reportPath, html);
 
     }
 
@@ -105,18 +99,16 @@ public class BpmnJsReport {
    * @param coverage The coverage percentage.
    * @param testClass The name of the test class.
    * @param testMethod The name of the test method if applicable.
-   * @param classReport When true a class report will be generated, otherwise a method report.
-   * The difference is mainly in the info-box method name field not appearing.
-     * @return
+   * @return
    * @throws IOException Thrown if an error occurs on report template read.
      */
   protected static String generateHtml(String javaScript, String bpmnXml,
           String processDefinitionKey, double coverage, String testClass, 
-          String testMethod, boolean classReport) throws IOException {
+          String testMethod) throws IOException {
 
         String html = IOUtils.toString(CoverageReportUtil.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE));
 		return injectIntoHtmlTemplate(javaScript, bpmnXml, html, processDefinitionKey, coverage,
-		        testClass, testMethod, classReport);
+		        testClass, testMethod);
     }
 
     /**
@@ -129,30 +121,35 @@ public class BpmnJsReport {
    * @param coverage The coverage percentage.
    * @param testClass The name of the test class.
    * @param testMethod The name of the test method if applicable.
-   * @param classReport When true a class report will be generated, otherwise a method report.
-     * 
+     *
      * @return Complete html report.
      */
   protected static String injectIntoHtmlTemplate(
           String javaScript, String bpmnXml,
           String html, String processDefinitionKey,
           double coverage, String testClass,
-          String testMethod, boolean classReport) {
+          String testMethod) {
 
         html = html.replace(PLACEHOLDER_BPMN_XML, StringEscapeUtils.escapeEcmaScript(bpmnXml));
         html = html.replaceAll(PLACEHOLDER_ANNOTATIONS, javaScript + PLACEHOLDER_ANNOTATIONS);
         html = html.replaceAll(PLACEHOLDER_PROCESS_KEY, processDefinitionKey);
         html = html.replaceAll(PLACEHOLDER_COVERAGE, getCoveragePercent(coverage));
-        html = html.replaceAll(PLACEHOLDER_TESTCLASS, testClass);
 
-        // Class reports don't have the method field in the info-box
-        if (classReport) {
-            html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "");
+        // Suite reports don't have the class field in the info-box
+        if (testClass == null) {
+            html = html.replaceAll(PLACEHOLDER_TESTCLASS, "");
         } else {
-            html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "<div>TestMethod: " + testMethod + "</div>");
+            html = html.replaceAll(PLACEHOLDER_TESTCLASS, "<div>Test Class: " + testClass.replace('$', '.') + "</div>");
         }
 
-        return html;
+        // Class reports don't have the method field in the info-box
+        if (testMethod == null) {
+            html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "");
+        } else {
+            html = html.replaceAll(PLACEHOLDER_TESTMETHOD, "<div>TestMethod: " + testMethod.replace('$', '.') + "</div>");
+        }
+
+      return html;
     }
 
     /**
@@ -216,13 +213,12 @@ public class BpmnJsReport {
     /**
      * Write the html report.
      * 
-     * @param targetDir
-     * @param fileName
+     * @param filePath
      * @param html
      * @throws IOException
      */
-    protected static void writeToFile(String targetDir, String fileName, String html) throws IOException {
-        FileUtils.writeStringToFile(new File(targetDir + "/" + fileName), html);
+    protected static void writeToFile(String filePath, String html) throws IOException {
+        FileUtils.writeStringToFile(new File(filePath), html);
     }
 
 }

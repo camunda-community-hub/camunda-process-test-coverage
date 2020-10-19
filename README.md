@@ -1,4 +1,6 @@
-# <img src="/doc/img/camunda.png" width="23" height="23" />&nbsp;Camunda&nbsp;BPM&nbsp;Process&nbsp;Test&nbsp;Coverage&nbsp;<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" /></a> 
+<a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg?branch=master"/></a> <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" /></a>
+
+# <img src="/doc/img/camunda.png" width="23" height="23" />&nbsp;Camunda&nbsp;BPM&nbsp;Process&nbsp;Test&nbsp;Coverage&nbsp; 
 
 This Camunda BPM community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
@@ -10,11 +12,11 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 * Visually check gateway **expressions** and transaction borders (**savepoints**) used by your process
 * Calculate and **verify** the nodes (_and_ sequence flow) **coverage** ratio reached by tests methods and classes
 
-## <a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg?branch=master" align="right"/></a>Just use it
+## Just use it
 
 * Integrates with all versions of Camunda BPM starting with 7.3.0 and upwards 
-* Works with all relevant Java versions: 1.6, 1.7 and 1.8 - using **JUnit 4.12** (4.11 does not work)
-* Is continuously checked against latest Camunda BPM releases - see the full [**travis-ci**](https://travis-ci.org/camunda/camunda-bpm-process-test-coverage) matrix for details
+* Works with all relevant Java versions: 1.8 and 1.11 - using **JUnit 4.13.1** (4.11 does not work)
+* Is continuously checked against latest Camunda BPM releases - see the full [**travis-ci**](https://travis-ci.org/camunda/camunda-bpm-process-test-coverage) matrix for details: <a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg?branch=master" /></a>
 
 ## Get started with *3 simple steps*
 
@@ -53,21 +55,23 @@ Running your JUnit tests now leaves **html** files for inidividual test methods 
 See a unit test example wired for Spring Testing [here](https://github.com/camunda/camunda-bpm-process-test-coverage/blob/master/test/src/test/java/org/camunda/bpm/extension/process_test_coverage/spring/SpringProcessWithCoverageTest.java).
 
 ## Further resources
-* [JavaDoc](https://camunda.github.io/camunda-process-test-coverage/javadoc)
-* [Issues](https://github.com/camunda/camunda-process-test-coverage/issues)
+* [JavaDoc](https://camunda.github.io/camunda-bpm-process-test-coverage/javadoc)
+* [Issues](https://github.com/camunda/camunda-bpm-process-test-coverage/issues)
 * [Roadmap](#roadmap)
-* [Changelog](https://github.com/camunda/camunda-process-test-coverage/commits/master)
+* [Changelog](https://github.com/camunda/camunda-bpm-process-test-coverage/commits/master)
 * [Contributing](CONTRIBUTING.md)
 
-## Maintenance
+## Maintainers
 
-The software development team of [WDW eLab GmbH](http://www.wdw-elab.de) is responsible for the design and implementation of this project.
+The software development team of [WDW eLab GmbH](http://www.wdw-elab.de) has contributed initial design and implementation of this project.
 
 ![Screenshot](elab_logo.png)
 
 WDW eLab GmbH is an innovative IT company and has great experience with complex business support processes in complex IT environments. One of our specialties are customer support processes in telecommunications. We are proud to be an official Camunda BPM partner! Feel free to contact us via [Email](mailto:kontakt@wdw-elab.de)!
 
 ## Contributors
+
+[Simon Zambrovski (holisticon)](https://github.com/zambrovski)
 
 [Irmin Okic (wdw-elab)](https://github.com/z0rbas)
 
