@@ -265,18 +265,18 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         final ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();
 
         // Configure activities listener
+        HistoryEventHandler historyEventHandler = processEngineConfiguration.getHistoryEventHandler();
+        if (historyEventHandler instanceof FlowNodeHistoryEventHandler) {
+            ((FlowNodeHistoryEventHandler) historyEventHandler).setCoverageTestRunState(coverageTestRunState);
+        }
         if (Api.Camunda.supportsCustomHistoryEventHandlers()) {
             final List<HistoryEventHandler> historyEventHandlers = processEngineConfiguration.getCustomHistoryEventHandlers();
-            for (HistoryEventHandler historyEventHandler : historyEventHandlers) {
-                if (historyEventHandler instanceof FlowNodeHistoryEventHandler) {
-                    ((FlowNodeHistoryEventHandler) historyEventHandler).setCoverageTestRunState(coverageTestRunState);
+            for (HistoryEventHandler customHistoryEventHandler : historyEventHandlers) {
+                if (customHistoryEventHandler instanceof FlowNodeHistoryEventHandler) {
+                    ((FlowNodeHistoryEventHandler) customHistoryEventHandler).setCoverageTestRunState(coverageTestRunState);
                 }
             }
-        } else {
-            final FlowNodeHistoryEventHandler historyEventHandler = (FlowNodeHistoryEventHandler) processEngineConfiguration.getHistoryEventHandler();
-            historyEventHandler.setCoverageTestRunState(coverageTestRunState);
         }
-
         // Configure sequence flow listener
 
         final List<BpmnParseListener> bpmnParseListeners = processEngineConfiguration.getCustomPostBPMNParseListeners();
