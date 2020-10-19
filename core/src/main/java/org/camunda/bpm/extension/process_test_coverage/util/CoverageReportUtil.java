@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
 import java.util.Set;
 import java.util.jar.JarEntry;
@@ -33,7 +34,7 @@ public class CoverageReportUtil {
     /**
      * Root directory for all coverage reports.
      */
-    public static final String TARGET_DIR_ROOT = "target/process-test-coverage/";
+    public static String TARGET_DIR_ROOT = System.getProperty("camunda-bpm-process-test-coverage.target-dir-root", "target/process-test-coverage/");
     public static final String BOWER_DIR_NAME = "bower_components";
 
     /**
@@ -41,10 +42,9 @@ public class CoverageReportUtil {
      * requires that all tests have been executed with the same resources
      * deployed.
      * 
-     * @param processEngine
-     * @param coverageTestRunState
+     * @param coverageTestRunState coverage run state to get the coverage data from.
      */
-    public static void createClassReport(ProcessEngine processEngine, CoverageTestRunState coverageTestRunState) {
+    public static void createClassReport(CoverageTestRunState coverageTestRunState) {
 
         AggregatedCoverage coverage = coverageTestRunState.getClassCoverage();
         final String reportDirectory = getReportDirectoryPath(coverageTestRunState.getTestClassName());
@@ -56,12 +56,10 @@ public class CoverageReportUtil {
     /**
      * Generates graphical test coverage reports for the current test method
      * run.
-     * 
-     * @param processEngine
-     * @param coverageTestRunState
+     *
+     * @param coverageTestRunState coverage run state to get the coverage data from.
      */
-    public static void createCurrentTestMethodReport(ProcessEngine processEngine,
-            CoverageTestRunState coverageTestRunState) {
+    public static void createCurrentTestMethodReport(CoverageTestRunState coverageTestRunState) {
 
         AggregatedCoverage coverage = coverageTestRunState.getCurrentTestMethodCoverage();
         final String reportDirectory = getReportDirectoryPath(coverageTestRunState.getTestClassName());
@@ -73,7 +71,7 @@ public class CoverageReportUtil {
     /**
      * Generates a coverage report.
      *
-     * @param coverage
+     * @param coverage coverage run state to get the coverage data from
      * @param reportDirectory The directory where the report will be stored.
      *
      */
@@ -84,7 +82,7 @@ public class CoverageReportUtil {
     /**
      * Generates a coverage report.
      * 
-     * @param coverage
+     * @param coverage coverage run state to get the coverage data from
      * @param reportDirectory The directory where the report will be stored.
      * @param testClass Optional test class name for info box
      * @param testName Optional test method name for info box. Also used as reportName prefix
@@ -188,8 +186,8 @@ public class CoverageReportUtil {
     /**
      * Retrieves directory path for all coverage reports of a test class.
      * 
-     * @param className
-     * @return
+     * @param className class name of the class to generate report for.
+     * @return path for the report.
      */
     private static String getReportDirectoryPath(final String className) {
         return TARGET_DIR_ROOT + className;
@@ -200,9 +198,9 @@ public class CoverageReportUtil {
      * The report name prefix is set for individual test method runs and left
      * blank for aggregated (class) process coverages.
      * 
-     * @param processDefinition
-     * @param reportNamePrefix
-     * @return
+     * @param processDefinition process definition to generate report for.
+     * @param reportNamePrefix prefix of the report filename.
+     * @return full path to report file.
      */
     private static String getReportName(ProcessDefinition processDefinition, final String reportNamePrefix) {
 
@@ -223,8 +221,8 @@ public class CoverageReportUtil {
     /**
      * Retrieves a process definitions BPMN XML.
      * 
-     * @param processDefinition
-     * @return
+     * @param processDefinition process definition to generate report for.
+     * @return XML pf process definition as string.
      * @throws IOException
      *             Thrown if the BPMN resource is not found.
      */
@@ -236,7 +234,14 @@ public class CoverageReportUtil {
             inputStream = new FileInputStream(processDefinition.getResourceName());
         }
 
-        return IOUtils.toString(inputStream);
+        return IOUtils.toString(inputStream, Charset.defaultCharset());
     }
 
+    /**
+     * Changes report directory.
+     * @param reportDirectory report directory.
+     */
+    public static void setReportDirectory(String reportDirectory) {
+        TARGET_DIR_ROOT = reportDirectory;
+    }
 }
