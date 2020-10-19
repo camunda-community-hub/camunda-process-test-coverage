@@ -1,6 +1,7 @@
 package org.camunda.bpm.extension.process_test_coverage.model;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -59,8 +60,10 @@ public class MethodCoverage implements AggregatedCoverage {
 
         final String processDefinitionKey = element.getProcessDefinitionKey();
         final ProcessCoverage processCoverage = processDefinitionKeyToProcessCoverage.get(processDefinitionKey);
+        if (processCoverage != null) {
+            processCoverage.addCoveredElement(element);
+        }
 
-        processCoverage.addCoveredElement(element);
     }
 
     /**
@@ -72,8 +75,9 @@ public class MethodCoverage implements AggregatedCoverage {
 
         final String processDefinitionKey = element.getProcessDefinitionKey();
         final ProcessCoverage processCoverage = processDefinitionKeyToProcessCoverage.get(processDefinitionKey);
-
-        processCoverage.endCoveredElement(element);
+        if (processCoverage != null) {
+            processCoverage.endCoveredElement(element);
+        }
     }
 
     /**
@@ -263,14 +267,22 @@ public class MethodCoverage implements AggregatedCoverage {
     public Set<String> getCoveredFlowNodeIds(String processDefinitionKey) {
 
         final ProcessCoverage processCoverage = processDefinitionKeyToProcessCoverage.get(processDefinitionKey);
-        return processCoverage.getCoveredFlowNodeIds();
+        if (processCoverage != null) {
+            return processCoverage.getCoveredFlowNodeIds();
+        } else {
+            return Collections.emptySet();
+        }
     }
 
     @Override
     public Set<CoveredFlowNode> getCoveredFlowNodes(String processDefinitionKey) {
 
         final ProcessCoverage processCoverage = processDefinitionKeyToProcessCoverage.get(processDefinitionKey);
-        return processCoverage.getCoveredFlowNodes();
+        if (processCoverage != null) {
+            return processCoverage.getCoveredFlowNodes();
+        } else {
+            return Collections.emptySet();
+        }
     }
 
     /**
@@ -280,7 +292,11 @@ public class MethodCoverage implements AggregatedCoverage {
     public Set<String> getCoveredSequenceFlowIds(String processDefinitionKey) {
 
         final ProcessCoverage processCoverage = processDefinitionKeyToProcessCoverage.get(processDefinitionKey);
-        return processCoverage.getCoveredSequenceFlowIds();
+        if (processCoverage != null) {
+            return processCoverage.getCoveredSequenceFlowIds();
+        } else {
+            return Collections.emptySet();
+        }
     }
 
     /**
