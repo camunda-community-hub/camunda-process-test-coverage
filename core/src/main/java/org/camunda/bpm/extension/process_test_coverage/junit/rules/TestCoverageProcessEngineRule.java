@@ -313,7 +313,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         logCoverageDetail(testCoverage);
 
         // Create graphical report
-        CoverageReportUtil.createCurrentTestMethodReport(processEngine, coverageTestRunState);
+        CoverageReportUtil.createCurrentTestMethodReport(coverageTestRunState);
 
         if (testMethodNameToCoverageMatchers.containsKey(testName)) {
 
@@ -362,7 +362,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         logCoverageDetail(classCoverage);
 
         // Create graphical report
-        CoverageReportUtil.createClassReport(processEngine, coverageTestRunState);
+        CoverageReportUtil.createClassReport(coverageTestRunState);
 
         assertCoverage(classCoveragePercentage, classCoverageAssertionMatchers);
 
