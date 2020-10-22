@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * Attention, code smells!-) But: it has proven to be quite useful and
  * pragmatic for small projects like Camunda BPM Community Extensions.
  *
- * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Martin Schimak
  */
 public class Api {
 

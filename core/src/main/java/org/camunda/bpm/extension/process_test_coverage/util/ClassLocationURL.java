@@ -8,7 +8,7 @@ import java.security.CodeSource;
 
 /**
  * Based on info found at http://stackoverflow.com/questions/15359702/get-location-of-jar-file
- * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Martin Schimak
  */
 public class ClassLocationURL {
 

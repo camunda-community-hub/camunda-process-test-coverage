@@ -31,8 +31,6 @@ public class TestCoverageProcessEngineRuleBuilder {
     /**
      * Creates a TestCoverageProcessEngineRuleBuilder with the default class
      * coverage assertion property activated.
-     *
-     * @return
      */
     public static TestCoverageProcessEngineRuleBuilder create() {
         return createBase().optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY);
@@ -41,8 +39,6 @@ public class TestCoverageProcessEngineRuleBuilder {
     /**
      * Creates a TestCoverageProcessEngineRuleBuilder with the default class
      * coverage assertion property activated.
-     *
-     * @return
      */
     public static TestCoverageProcessEngineRuleBuilder create(ProcessEngine processEngine) {
         return createBase(processEngine).optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY);
@@ -53,7 +49,6 @@ public class TestCoverageProcessEngineRuleBuilder {
      * 
      * @param key
      *            System property name.
-     * @return
      */
     public TestCoverageProcessEngineRuleBuilder optionalAssertCoverageAtLeastProperty(String key) {
 
@@ -85,8 +80,6 @@ public class TestCoverageProcessEngineRuleBuilder {
 
     /**
      * Enables detailed logging of individual class and method coverage objects.
-     * 
-     * @return
      */
     public TestCoverageProcessEngineRuleBuilder withDetailedCoverageLogging() {
         rule.setDetailedCoverageLogging(true);
@@ -96,7 +89,6 @@ public class TestCoverageProcessEngineRuleBuilder {
     /**
      * Configures whenever test method coverage handling is needed.
      * @param needHandleTestMethodCoverage boolean
-     * @return
      */
     public TestCoverageProcessEngineRuleBuilder handleTestMethodCoverage(boolean needHandleTestMethodCoverage) {
         rule.setHandleTestMethodCoverage(needHandleTestMethodCoverage);
@@ -106,7 +98,6 @@ public class TestCoverageProcessEngineRuleBuilder {
     /**
      * Configures whenever class coverage handling is needed.
      * @param needHandleClassCoverage boolean
-     * @return
      */
     public TestCoverageProcessEngineRuleBuilder handleClassCoverage(boolean needHandleClassCoverage) {
         rule.setHandleClassCoverage(needHandleClassCoverage);
@@ -116,7 +107,6 @@ public class TestCoverageProcessEngineRuleBuilder {
     /**
      * Configures CoverageTestRunStateFactory used to create CoverageTestRunState. Useful for sharing state between several test-classes
      * @param coverageTestRunStateFactory
-     * @return
      */
     public TestCoverageProcessEngineRuleBuilder setCoverageTestRunStateFactory(CoverageTestRunStateFactory coverageTestRunStateFactory) {
         rule.setCoverageTestRunStateFactory(coverageTestRunStateFactory);
@@ -127,7 +117,6 @@ public class TestCoverageProcessEngineRuleBuilder {
      * Asserts if the class coverage is greater than the passed percentage.
      * 
      * @param percentage
-     * @return
      */
     public TestCoverageProcessEngineRuleBuilder assertClassCoverageAtLeast(double percentage) {
 
@@ -148,8 +137,6 @@ public class TestCoverageProcessEngineRuleBuilder {
 
     /**
      * Builds the coverage rule.
-     * 
-     * @return
      */
     public TestCoverageProcessEngineRule build() {
         return rule;

@@ -112,7 +112,7 @@ public class ClassCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves the covered flow nodes.
-     * Flow nodes with the same element ID but different process definition keys are retained. {@see CoveredElementComparator}
+     * Flow nodes with the same element ID but different process definition keys are retained. {see CoveredElementComparator}
      * 
      * @return A set of covered flow nodes.
      */
@@ -158,7 +158,7 @@ public class ClassCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves the covered sequence flows.
-     * Sequence flows with the same element ID but different process definition keys are retained. {@see CoveredElementComparator}
+     * Sequence flows with the same element ID but different process definition keys are retained. {see CoveredElementComparator}
      * 
      * @return A set of covered flow nodes.
      */

@@ -15,7 +15,6 @@ public abstract class CoveredElement {
     
     /**
      * Retrieves the element's ID.
-     * @return
      */
     public abstract String getElementId();
     

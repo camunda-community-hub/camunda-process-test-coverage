@@ -41,8 +41,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Add a process coverage to the method coverage.
-     * 
-     * @param processCoverage
      */
     public void addProcessCoverage(ProcessCoverage processCoverage) {
 
@@ -53,8 +51,6 @@ public class MethodCoverage implements AggregatedCoverage {
     /**
      * Add a covered element to the method coverage. 
      * The element is added according to the object fields.
-     * 
-     * @param element
      */
     public void addCoveredElement(CoveredElement element) {
 
@@ -68,8 +64,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Mark a covered element execution as ended.
-     * 
-     * @param element
      */
     public void endCoveredElement(CoveredElement element) {
 
@@ -168,7 +162,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves the flow nodes of all the process definitions in the method deployment.
-     * @return
      */
     public Set<FlowNode> getProcessDefinitionsFlowNodes() {
 
@@ -185,8 +178,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves the flow nodes for the process definition identified by the passed key in the method deployment.
-     * @param processDefinitionKey
-     * @return
      */
     public Set<FlowNode> getProcessDefinitionsFlowNodes(String processDefinitionKey) {
 
@@ -198,7 +189,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves the sequence flows of all the process definitions in the method deployment.
-     * @return
      */
     public Set<SequenceFlow> getProcessDefinitionsSequenceFlows() {
 
@@ -215,8 +205,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves the sequence flows for the process definition identified by the passed key in the method deployment.
-     * @param processDefinitionKey
-     * @return
      */
     public Set<SequenceFlow> getProcessDefinitionsSequenceFlows(String processDefinitionKey) {
 
@@ -228,7 +216,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves a set of covered flow nodes of the process definitions deployed by this test method.
-     * @return
      */
     public Set<CoveredFlowNode> getCoveredFlowNodes() {
 
@@ -245,7 +232,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves a set of covered sequence flows of the process definitions deployed by this test method.
-     * @return
      */
     public Set<CoveredSequenceFlow> getCoveredSequenceFlows() {
 
@@ -262,7 +248,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves a set of element IDs of covered flow nodes of the process definition identified by the passed key.
-     * @return
      */
     public Set<String> getCoveredFlowNodeIds(String processDefinitionKey) {
 
@@ -287,7 +272,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves a set of element IDs of sequence flows of the process definition identified by the passed key.
-     * @return
      */
     public Set<String> getCoveredSequenceFlowIds(String processDefinitionKey) {
 
@@ -301,7 +285,6 @@ public class MethodCoverage implements AggregatedCoverage {
 
     /**
      * Retrieves a set of elements of sequence flows of the process definition identified by the passed key.
-     * @return
      */
     @Override
     public Set<CoveredSequenceFlow> getCoveredSequenceFlows(String processDefinitionKey) {

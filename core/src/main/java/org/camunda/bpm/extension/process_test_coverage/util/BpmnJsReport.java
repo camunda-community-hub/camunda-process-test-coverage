@@ -99,7 +99,6 @@ public class BpmnJsReport {
    * @param coverage The coverage percentage.
    * @param testClass The name of the test class.
    * @param testMethod The name of the test method if applicable.
-   * @return
    * @throws IOException Thrown if an error occurs on report template read.
      */
   protected static String generateHtml(String javaScript, String bpmnXml,
@@ -154,9 +153,6 @@ public class BpmnJsReport {
 
     /**
      * Retrieve a formated percentage.
-     * 
-     * @param coverage
-     * @return
      */
     private static String getCoveragePercent(double coverage) {
 
@@ -168,9 +164,6 @@ public class BpmnJsReport {
 
     /**
      * Generate the add marker javascript for the passed flow node IDs.
-     * 
-     * @param flowNodeIds
-     * @return
      */
     protected static String generateJavaScriptFlowNodeAnnotations(Collection<CoveredFlowNode> flowNodeIds) {
 
@@ -194,9 +187,6 @@ public class BpmnJsReport {
 
     /**
      * Generate jquery markers for the passed sequence flow IDs.
-     * 
-     * @param sequenceFlowIds
-     * @return
      */
     protected static String generateJavaScriptSequenceFlowAnnotations(Collection<String> sequenceFlowIds) {
 
@@ -212,10 +202,6 @@ public class BpmnJsReport {
 
     /**
      * Write the html report.
-     * 
-     * @param filePath
-     * @param html
-     * @throws IOException
      */
     protected static void writeToFile(String filePath, String html) throws IOException {
         FileUtils.writeStringToFile(new File(filePath), html);

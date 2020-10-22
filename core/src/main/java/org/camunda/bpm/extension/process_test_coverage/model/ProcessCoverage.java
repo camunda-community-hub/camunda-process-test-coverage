@@ -57,9 +57,6 @@ public class ProcessCoverage {
      * Constructor assembling a pristine process coverage object from the
      * process definition and BPMN model information retrieved from the process
      * engine.
-     * 
-     * @param processEngine
-     * @param processDefinition
      */
     public ProcessCoverage(ProcessEngine processEngine, ProcessDefinition processDefinition) {
 
@@ -112,8 +109,6 @@ public class ProcessCoverage {
 
     /**
      * Adds a covered element to the coverage.
-     * 
-     * @param element
      */
     public void addCoveredElement(CoveredElement element) {
 
@@ -136,9 +131,7 @@ public class ProcessCoverage {
     /**
      * Mark a covered element execution as ended.
      * 
-     * @param element
-     *            A search object. Only the original object in the
-     *            coveredFlowNodes Set will be modified.
+     * @param element A search object. Only the original object in the coveredFlowNodes Set will be modified.
      */
     public void endCoveredElement(CoveredElement element) {
 
@@ -168,8 +161,6 @@ public class ProcessCoverage {
 
     /**
      * Retrieves the coverage percentage for all elements.
-     * 
-     * @return
      */
     public double getCoveragePercentage() {
         return ((double) getNumberOfAllCovered()) / ((double) getNumberOfAllDefined());
@@ -177,8 +168,6 @@ public class ProcessCoverage {
 
     /**
      * Retrieves the process definitions flow nodes.
-     * 
-     * @return
      */
     public Set<FlowNode> getDefinitionFlowNodes() {
         return definitionFlowNodes;
@@ -259,8 +248,6 @@ public class ProcessCoverage {
 
     /**
      * Retrieves the number of covered flow node and sequence flow elements.
-     * 
-     * @return
      */
     private int getNumberOfAllCovered() {
         return coveredFlowNodes.size() + coveredSequenceFlows.size();
@@ -269,8 +256,6 @@ public class ProcessCoverage {
     /**
      * Retrieves the number of flow node and sequence flow elements for the
      * process definition.
-     * 
-     * @return
      */
     private int getNumberOfAllDefined() {
         return definitionFlowNodes.size() + definitionSequenceFlows.size();
