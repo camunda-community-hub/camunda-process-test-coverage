@@ -81,5 +81,9 @@ WDW eLab GmbH is an innovative IT company and has great experience with complex 
 
 [Martin Schimak (plexiti)](https://github.com/martinschimak)
 
+## CI/CD
+
+https://ci.consulting.camunda.cloud/job/camunda/job/camunda-bpm-process-test-coverage/
+
 ## License
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](LICENSE) file.
