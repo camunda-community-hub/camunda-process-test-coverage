@@ -13,7 +13,7 @@
     </display>  
   </class>  
   <class id="2" language="java" 
-    name="org.camunda.bpm.extension.process_test_coverage.junit.rules.ProcessCoverageInMemProcessEngineConfiguration" 
+    name="org.camunda.bpm.extension.ProcessCoverageInMemProcessEngineConfiguration"
     project="camunda-bpm-process-test-coverage" 
     file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/ProcessCoverageInMemProcessEngineConfiguration.java" 
     binary="false" corner="BOTTOM_RIGHT">    
@@ -25,7 +25,7 @@
     </display>  
   </class>  
   <class id="3" language="java" 
-    name="org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRule" 
+    name="org.camunda.bpm.extension.TestCoverageProcessEngineRule"
     project="camunda-bpm-process-test-coverage" 
     file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/TestCoverageProcessEngineRule.java" 
     binary="false" corner="BOTTOM_RIGHT">    
@@ -37,7 +37,7 @@
     </display>  
   </class>  
   <class id="4" language="java" 
-    name="org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder" 
+    name="org.camunda.bpm.extension.TestCoverageProcessEngineRuleBuilder"
     project="camunda-bpm-process-test-coverage" 
     file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/junit/rules/TestCoverageProcessEngineRuleBuilder.java" 
     binary="false" corner="BOTTOM_RIGHT">    
@@ -114,7 +114,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil" 
+  <class id="11" language="java" name="org.camunda.bpm.extension.CoverageReportUtil"
     project="camunda-bpm-process-test-coverage" 
     file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/util/CoverageReportUtil.java" 
     binary="false" corner="BOTTOM_RIGHT">    
@@ -161,7 +161,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="org.camunda.bpm.extension.process_test_coverage.util.BpmnJsReport" 
+  <class id="15" language="java" name="org.camunda.bpm.extension.BpmnJsReport"
     project="camunda-bpm-process-test-coverage" 
     file="/camunda-bpm-process-test-coverage/src/main/java/org/camunda/bpm/extension/process_test_coverage/util/BpmnJsReport.java" 
     binary="false" corner="BOTTOM_RIGHT">    
