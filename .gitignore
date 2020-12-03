@@ -8,3 +8,6 @@ target/
 .settings/
 # GitHub Pages
 javadoc
+
+# FIXME: find out who writes this directory
+extension/extension/

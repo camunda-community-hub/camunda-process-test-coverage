@@ -1,10 +1,13 @@
 <a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg?branch=master"/></a> <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" /></a>
 
-# <img src="/doc/img/camunda.png" width="23" height="23" />&nbsp;Camunda&nbsp;BPM&nbsp;Process&nbsp;Test&nbsp;Coverage&nbsp; 
+
+![Camunda Logo](doc/img/camunda.png=23x23)
+
+# Camunda BPM Process Test Coverage 
 
 This Camunda BPM community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
-![Insurance Application](/doc/img/insurance-application.png)
+![Insurance Application](doc/img/insurance-application.png)
 
 ## Highlights
 
@@ -65,7 +68,7 @@ See a unit test example wired for Spring Testing [here](https://github.com/camun
 
 The software development team of [WDW eLab GmbH](http://www.wdw-elab.de) has contributed initial design and implementation of this project.
 
-![Screenshot](elab_logo.png)
+![Screenshot](doc/elab_logo.png)
 
 WDW eLab GmbH is an innovative IT company and has great experience with complex business support processes in complex IT environments. One of our specialties are customer support processes in telecommunications. We are proud to be an official Camunda BPM partner! Feel free to contact us via [Email](mailto:kontakt@wdw-elab.de)!
 
