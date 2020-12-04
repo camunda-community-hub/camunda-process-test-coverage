@@ -20,6 +20,7 @@ import org.junit.runner.Description;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -86,7 +87,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     /**
      * A list of process definition keys excluded from the test run.
      */
-    private List<String> excludedProcessDefinitionKeys;
+    private List<String> excludedProcessDefinitionKeys = Collections.emptyList();
 
     TestCoverageProcessEngineRule() {
         super();
@@ -271,18 +272,18 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         final String testName = description.getMethodName();
         final String runId = testName;
         final Suite suite = this.coverageCollector.getActiveSuite();
-        final Optional<Run> run = suite.getRun(runId);
+        final Run run = suite.getRun(runId);
 
-        if (run.isEmpty()) {
+        if (run == null) {
             return;
         }
 
-        final double coveragePercentage = run.get().calcuateCoverage(this.coverageCollector.getModels());
+        final double coveragePercentage = run.calculateCoverage(this.coverageCollector.getModels());
 
         // Log coverage percentage
         logger.info(testName + " test method coverage is " + coveragePercentage);
 
-        this.logCoverageDetail(run.get());
+        this.logCoverageDetail(run);
 
         // Create graphical report
         CoverageReportUtil.createCurrentTestMethodReport(this.coverageCollector, runId);
@@ -326,7 +327,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         // every test method
         // classCoverage.assertAllDeploymentsEqual();
 
-        final double suiteCoveragePercentage = suite.calcuateCoverage(this.coverageCollector.getModels());
+        final double suiteCoveragePercentage = suite.calculateCoverage(this.coverageCollector.getModels());
 
         // Log coverage percentage
         logger.info(suite.getName() + " test class coverage is: " + suiteCoveragePercentage);

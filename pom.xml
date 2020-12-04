@@ -35,8 +35,7 @@
         <camunda.version>7.14.0</camunda.version>
         <camunda.compile.version>7.14.0</camunda.compile.version>
         <spring.version>3.1.2.RELEASE</spring.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <version.java>11</version.java>
 
         <kotlin.version>1.4.20</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
@@ -168,7 +167,7 @@
                     <groupId>org.jetbrains.kotlin</groupId>
                     <version>${kotlin.version}</version>
                     <configuration>
-                        <jvmTarget>${java.version}</jvmTarget>
+                        <jvmTarget>${version.java}</jvmTarget>
                         <compilerPlugins>
                             <plugin>spring</plugin>
                             <plugin>no-arg</plugin>
@@ -220,8 +219,8 @@
                     <version>3.8.1</version>
                     <configuration>
                         <encoding>UTF-8</encoding>
-                        <source>11</source>
-                        <target>11</target>
+                        <source>${version.java}</source>
+                        <target>${version.java}</target>
                     </configuration>
                     <executions>
                         <!-- Replacing default-compile as it is treated specially by maven -->
@@ -261,7 +260,7 @@
                         <additionalOptions>
                             <additionalOption>-Xdoclint:none</additionalOption>
                         </additionalOptions>
-                        <source>11</source>
+                        <source>${version.java}</source>
                     </configuration>
                 </plugin>
             </plugins>

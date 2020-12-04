@@ -85,10 +85,10 @@ public class CoverageReportUtil {
      */
     public static void createCurrentTestMethodReport(final DefaultCollector collector, final String runId) {
         final Suite suite = collector.getActiveSuite();
-        final Optional<Run> coverage = collector.getActiveSuite().getRun(runId);
+        final Run coverage = collector.getActiveSuite().getRun(runId);
         final String reportDirectory = getReportDirectoryPath(suite.getName());
 
-        createReport(coverage.get(), collector, reportDirectory, suite.getName(), collector.getActiveRun().getName());
+        createReport(coverage, collector, reportDirectory, suite.getName(), collector.getActiveRun().getName());
 
     }
 
@@ -126,7 +126,7 @@ public class CoverageReportUtil {
                 final Collection<Event> distinctEvents = coverage.getEventsDistinct(model.getKey());
 
                 final Collection<Event> coveredFlowNodes = distinctEvents.stream()
-                                                                         .filter(event -> EventSource.FlOW_NODE.equals(event.getSource()))
+                                                                         .filter(event -> EventSource.FLOW_NODE.equals(event.getSource()))
                                                                          .collect(Collectors.toList());
 
                 final Collection<String> coveredSequenceFlowIds = distinctEvents.stream()
@@ -145,7 +145,7 @@ public class CoverageReportUtil {
                     coveredSequenceFlowIds,
                     reportDirectory + '/' + reportName,
                     model.getKey(),
-                    coverage.calcuateCoverage(model),
+                    coverage.calculateCoverage(model),
                     testClass,
                     testName);
 
