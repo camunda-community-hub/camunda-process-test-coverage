@@ -6,10 +6,7 @@ package org.camunda.bpm.extension.process_test_coverage.model
  * @author dominikhorn
  */
 class Model(
-    /**
-     * Technical Id of the model
-     */
-    val id: String,
+
     /**
      * Key of the Model
      */

@@ -88,7 +88,6 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
             eventType,
             activityId,
             execution.bpmnModelElementInstance.elementType.typeName,
-            execution.processInstance.processDefinitionId,
             getProcessKey(execution),
             Instant.now().epochSecond
         )

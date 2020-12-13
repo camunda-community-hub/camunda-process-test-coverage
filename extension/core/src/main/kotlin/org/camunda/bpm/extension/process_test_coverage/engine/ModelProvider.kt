@@ -31,7 +31,6 @@ class ModelProvider {
         val definitionFlowNodes = getExecutableFlowNodes(modelInstance.getModelElementsByType(FlowNode::class.java), key)
         val definitionSequenceFlows = getExecutableSequenceNodes(modelInstance.getModelElementsByType(SequenceFlow::class.java), definitionFlowNodes)
         return Model(
-            processDefinition.id,
             key,
             definitionFlowNodes.size + definitionSequenceFlows.size,
             processDefinition.versionTag,

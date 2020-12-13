@@ -68,7 +68,6 @@ class CompensationEventCoverageHandler : CompensationEventHandler() {
                 EventType.START,
                 sourceEventId,
                 "boundaryEvent",
-                processDefinition.id,
                 processDefinition.key,
                 Instant.now().epochSecond
             )
@@ -78,7 +77,6 @@ class CompensationEventCoverageHandler : CompensationEventHandler() {
                 EventType.END,
                 sourceEventId,
                 "boundaryEvent",
-                processDefinition.id,
                 processDefinition.key,
                 Instant.now().epochSecond
             )
