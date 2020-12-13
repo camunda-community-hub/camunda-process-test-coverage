@@ -17,7 +17,9 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <name>Camunda BPM Process Test Coverage Parent</name>
-    <description>Helper library to visualize and assert which parts of a BPMN process have been covered by a unit test.</description>
+    <description>Helper library to visualize and assert which parts of a BPMN process have been covered by a unit
+        test.
+    </description>
 
     <modules>
         <module>extension/core</module>
@@ -25,7 +27,7 @@
         <module>extension/junit4</module>
         <module>extension/junit5</module>
         <module>extension/report-generator</module>
-        <module>examples</module>
+        <module>examples/junit4</module>
     </modules>
 
     <properties>
