@@ -70,11 +70,6 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     private boolean handleTestMethodCoverage = true;
 
     /**
-     * Is class coverage handling needed?
-     */
-    private boolean handleClassCoverage = true;
-
-    /**
      * Matchers to be asserted on the class coverage percentage.
      */
     private final Collection<Matcher<Double>> classCoverageAssertionMatchers = new LinkedList<>();
@@ -150,7 +145,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         }
 
         // If the rule is a class rule get the class coverage
-        if (this.handleClassCoverage && !description.isTest()) {
+        if (!description.isTest()) {
             this.handleClassCoverage(description);
         }
 
@@ -285,9 +280,6 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
         this.logCoverageDetail(run);
 
-        // Create graphical report
-        CoverageReportUtil.createCurrentTestMethodReport(this.coverageCollector, runId);
-
         if (this.testMethodNameToCoverageMatchers.containsKey(testName)) {
 
             this.assertCoverage(coveragePercentage, this.testMethodNameToCoverageMatchers.get(testName));
@@ -335,7 +327,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         this.logCoverageDetail(suite);
 
         // Create graphical report
-        CoverageReportUtil.createClassReport(this.coverageCollector);
+        CoverageReportUtil.createReport(this.coverageCollector);
         CoverageReportUtil.createJsonReport(this.coverageCollector);
 
         this.assertCoverage(suiteCoveragePercentage, this.classCoverageAssertionMatchers);
@@ -389,10 +381,6 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
     public void setHandleTestMethodCoverage(final boolean handleTestMethodCoverage) {
         this.handleTestMethodCoverage = handleTestMethodCoverage;
-    }
-
-    public void setHandleClassCoverage(final boolean handleClassCoverage) {
-        this.handleClassCoverage = handleClassCoverage;
     }
 
     @Override

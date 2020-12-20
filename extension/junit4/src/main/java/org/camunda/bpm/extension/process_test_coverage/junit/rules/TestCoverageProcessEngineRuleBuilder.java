@@ -99,16 +99,6 @@ public class TestCoverageProcessEngineRuleBuilder {
     }
 
     /**
-     * Configures whenever class coverage handling is needed.
-     *
-     * @param needHandleClassCoverage boolean
-     */
-    public TestCoverageProcessEngineRuleBuilder handleClassCoverage(final boolean needHandleClassCoverage) {
-        this.rule.setHandleClassCoverage(needHandleClassCoverage);
-        return this;
-    }
-
-    /**
      * Asserts if the class coverage is greater than the passed percentage.
      *
      * @param percentage
