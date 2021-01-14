@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.camunda.bpm.model.xml.instance.ModelElementInstance;
@@ -62,11 +61,11 @@ public class ProcessCoverage {
 
         this.processDefinition = processDefinition;
 
-        final BpmnModelInstance modelInstance = processEngine.getRepositoryService().getBpmnModelInstance(
-                getProcessDefinitionId());
+        final ModelElementInstance modelInstance = processEngine.getRepositoryService().getBpmnModelInstance(
+                getProcessDefinitionId()).getModelElementById(processDefinition.getKey());
 
-        definitionFlowNodes = getExecutableFlowNodes(modelInstance.getModelElementsByType(FlowNode.class));
-        definitionSequenceFlows = getExecutableSequenceNodes(modelInstance.getModelElementsByType(SequenceFlow.class));
+        definitionFlowNodes = getExecutableFlowNodes(modelInstance.getChildElementsByType(FlowNode.class));
+        definitionSequenceFlows = getExecutableSequenceNodes(modelInstance.getChildElementsByType(SequenceFlow.class));
 
     }
 

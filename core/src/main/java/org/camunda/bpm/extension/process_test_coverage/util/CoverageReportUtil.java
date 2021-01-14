@@ -3,7 +3,6 @@ package org.camunda.bpm.extension.process_test_coverage.util;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.CoverageTestRunState;
 import org.camunda.bpm.extension.process_test_coverage.model.AggregatedCoverage;
@@ -96,6 +95,11 @@ public class CoverageReportUtil {
         final Set<ProcessDefinition> processDefinitions = coverage.getProcessDefinitions();
         for (ProcessDefinition processDefinition : processDefinitions) {
 
+            final double coveragePercentage = coverage.getCoveragePercentage(processDefinition.getKey());
+            if (coveragePercentage == 0.0) {
+                continue; // skip untested process definitions of BPMNs holding multiple process definitions
+            }
+            
             try {
 
                 // Assemble data
@@ -113,7 +117,7 @@ public class CoverageReportUtil {
                         coveredSequenceFlowIds,
                         reportDirectory + '/' + reportName,
                         processDefinition.getKey(),
-                        coverage.getCoveragePercentage(processDefinition.getKey()),
+                        coveragePercentage,
                         testClass,
                         testName);
 

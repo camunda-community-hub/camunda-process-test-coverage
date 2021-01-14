@@ -78,6 +78,7 @@ public class MethodCoverage implements AggregatedCoverage {
      * Retrieves the coverage percentage for all process definitions deployed
      * with the method.
      */
+    @Override
     public double getCoveragePercentage() {
 
         // Aggregate element collections
@@ -122,6 +123,7 @@ public class MethodCoverage implements AggregatedCoverage {
      * with the method.
      * @param processDefinitionKey
      */
+    @Override
     public double getCoveragePercentage(String processDefinitionKey) {
 
         ProcessCoverage processCoverage = processDefinitionKeyToProcessCoverage.get(processDefinitionKey);
@@ -249,6 +251,7 @@ public class MethodCoverage implements AggregatedCoverage {
     /**
      * Retrieves a set of element IDs of covered flow nodes of the process definition identified by the passed key.
      */
+    @Override
     public Set<String> getCoveredFlowNodeIds(String processDefinitionKey) {
 
         final ProcessCoverage processCoverage = processDefinitionKeyToProcessCoverage.get(processDefinitionKey);
@@ -273,6 +276,7 @@ public class MethodCoverage implements AggregatedCoverage {
     /**
      * Retrieves a set of element IDs of sequence flows of the process definition identified by the passed key.
      */
+    @Override
     public Set<String> getCoveredSequenceFlowIds(String processDefinitionKey) {
 
         final ProcessCoverage processCoverage = processDefinitionKeyToProcessCoverage.get(processDefinitionKey);
@@ -299,6 +303,7 @@ public class MethodCoverage implements AggregatedCoverage {
      * definitions having the same process definition key but coming from separate BPMNs
      * may be returned.
      */
+    @Override
     public Set<ProcessDefinition> getProcessDefinitions() {
 
         final Set<ProcessDefinition> processDefinitions = new TreeSet<ProcessDefinition>(
@@ -307,7 +312,9 @@ public class MethodCoverage implements AggregatedCoverage {
                     // Avoid removing process definitions with the same key, but coming from different BPMNs.
                     @Override
                     public int compare(ProcessDefinition o1, ProcessDefinition o2) {
-                        return o1.getResourceName().compareTo(o2.getResourceName());
+                        final String id1 = o1.getResourceName() + "#" + o1.getKey();
+                        final String id2 = o2.getResourceName() + "#" + o2.getKey();
+                        return id1.compareTo(id2);
                     }
                 });
 
