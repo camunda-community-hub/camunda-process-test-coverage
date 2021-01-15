@@ -3,13 +3,15 @@ package org.camunda.bpm.extension.process_test_coverage.model;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
+import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.camunda.bpm.model.xml.instance.ModelElementInstance;
 
@@ -61,49 +63,30 @@ public class ProcessCoverage {
 
         this.processDefinition = processDefinition;
 
-        final ModelElementInstance modelInstance = processEngine.getRepositoryService().getBpmnModelInstance(
-                getProcessDefinitionId()).getModelElementById(processDefinition.getKey());
+        final BpmnModelInstance bpmnModelInstance = processEngine.getRepositoryService().getBpmnModelInstance(
+                getProcessDefinitionId());
 
-        definitionFlowNodes = getExecutableFlowNodes(modelInstance.getChildElementsByType(FlowNode.class));
-        definitionSequenceFlows = getExecutableSequenceNodes(modelInstance.getChildElementsByType(SequenceFlow.class));
-
+        definitionFlowNodes = bpmnModelInstance.getModelElementsByType(FlowNode.class)
+                .stream()
+                .filter(fn -> isElementOfProcess(processDefinition.getKey(), fn))
+                .collect(Collectors.toSet());
+        definitionSequenceFlows = bpmnModelInstance.getModelElementsByType(SequenceFlow.class)
+                .stream()
+                .filter(sf -> definitionFlowNodes.contains(sf.getSource()))
+                .collect(Collectors.toSet());
+        
     }
-
-    private Set<FlowNode> getExecutableFlowNodes(final Collection<FlowNode> flowNodes) {
-
-        final HashSet<FlowNode> result = new HashSet<FlowNode>();
-        for (final FlowNode node : flowNodes) {
-            if (isExecutable(node)) {
-                result.add(node);
-            }
-        }
-        return result;
-
-    }
-
-    private boolean isExecutable(final ModelElementInstance node) {
-
-        if (node == null) {
+    
+    private boolean isElementOfProcess(String processDefinitionKey, ModelElementInstance element) {
+        
+        if (element == null) {
             return false;
         }
-
-        if (node instanceof org.camunda.bpm.model.bpmn.instance.Process) {
-            return ((org.camunda.bpm.model.bpmn.instance.Process) node).isExecutable();
+        if (element instanceof Process) {
+            return ((Process) element).getId().equals(processDefinitionKey);
         }
-
-        return isExecutable(node.getParentElement());
-    }
-
-    private Set<SequenceFlow> getExecutableSequenceNodes(final Collection<SequenceFlow> sequenceFlows) {
-
-        final HashSet<SequenceFlow> result = new HashSet<SequenceFlow>();
-        for (final SequenceFlow sequenceFlow : sequenceFlows) {
-            if (definitionFlowNodes.contains(sequenceFlow.getSource())) {
-                result.add(sequenceFlow);
-            }
-        }
-        return result;
-
+        return isElementOfProcess(processDefinitionKey, element.getParentElement());
+        
     }
 
     /**
