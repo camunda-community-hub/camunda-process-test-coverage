@@ -7,9 +7,12 @@ import javax.sql.DataSource;
 import org.camunda.bpm.engine.ProcessEngineConfiguration;
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.camunda.bpm.engine.impl.el.ExpressionManager;
+import org.camunda.bpm.engine.impl.javax.el.CompositeELResolver;
+import org.camunda.bpm.engine.impl.javax.el.ELResolver;
 import org.camunda.bpm.engine.spring.ProcessEngineFactoryBean;
 import org.camunda.bpm.engine.spring.SpringExpressionManager;
 import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.camunda.bpm.engine.test.mock.MockElResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -75,9 +78,14 @@ public class InMemProcessEngineConfiguration {
 
   @Bean
   ExpressionManager expressionManager() {
-
-    return new SpringExpressionManager(applicationContext, null);
-
+    return new SpringExpressionManager(applicationContext, null) {
+      @Override
+      protected ELResolver createElResolver() {
+        ELResolver elResolver = super.createElResolver();
+        ((CompositeELResolver) elResolver).add(new MockElResolver());
+        return elResolver;
+      }
+    };
   }
 
   @Bean
