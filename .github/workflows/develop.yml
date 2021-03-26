@@ -5,7 +5,7 @@ on:
     branches:
       - '*'
       - '**/*'
-      - 'master'
+      - '$default_branch'
 
 jobs:
   build:
