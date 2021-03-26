@@ -1,4 +1,4 @@
-# If this workflow is triggered by a push to $default_branch, it
+# If this workflow is triggered by a push to master, it
 #        deploys a SNAPSHOT
 # If this workflow is triggered by publishing a Release, it
 #        deploys a RELEASE with the selected version
@@ -7,7 +7,7 @@
 name: Deploy artifacts with Maven
 on:
   push:
-    branches: [$default_branch]
+    branches: [master]
   release:
     types: [published]
 jobs:
