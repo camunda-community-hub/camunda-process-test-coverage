@@ -17,7 +17,7 @@ enum class EventType {
     END,
 
     /**
-     * Transition take.
+     * Transition take (only for sequence flow).
      */
     TAKE
 }

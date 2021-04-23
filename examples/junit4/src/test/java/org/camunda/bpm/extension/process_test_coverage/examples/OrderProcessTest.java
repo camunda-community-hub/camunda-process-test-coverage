@@ -18,7 +18,7 @@ public class OrderProcessTest {
     public static final ProcessEngineRule processEngineRule = TestCoverageProcessEngineRuleBuilder.create().build();
 
     @Test
-    public void testHappyPath() {
+    public void shouldExecuteHappyPath() {
         final ProcessInstance instance = this.startProcess();
 
         assertThat(instance).isWaitingAt("Task_ProcessOrder");
@@ -35,7 +35,7 @@ public class OrderProcessTest {
     }
 
     @Test
-    public void testCancelOrder() {
+    public void shouldCancelOrder() {
         final ProcessInstance instance = this.startProcess();
 
         assertThat(instance).isWaitingAt("Task_ProcessOrder");

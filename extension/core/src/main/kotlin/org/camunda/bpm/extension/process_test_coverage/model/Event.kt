@@ -9,27 +9,27 @@ import java.time.Instant
  */
 data class Event(
         /**
-         * Source of the Event
+         * Source of the event (flow node, sequence flow or dmn rule).
          */
         val source: EventSource,
         /**
-         * Type of the event
+         * Type of the event.
          */
         val type: EventType,
         /**
-         * Definition key of the events element
+         * Definition key of the element where the event happened.
          */
         val definitionKey: String,
         /**
-         * Type of the events element
+         * Type of the events element.
          */
         val elementType: String,
         /**
-         * Key of the model in which the event happened
+         * Key of the model in which the event happened (process definition key).
          */
         val modelKey: String,
         /**
-         * Timestamp when the event happened
+         * Timestamp when the event happened.
          */
         val timestamp: Long = Instant.now().epochSecond
 )

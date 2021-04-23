@@ -1,28 +1,23 @@
 package org.camunda.bpm.extension.process_test_coverage.util;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.extension.process_test_coverage.export.CoverageStateJsonExporter;
-import org.camunda.bpm.extension.process_test_coverage.model.Coverage;
 import org.camunda.bpm.extension.process_test_coverage.model.DefaultCollector;
-import org.camunda.bpm.extension.process_test_coverage.model.Event;
-import org.camunda.bpm.extension.process_test_coverage.model.EventSource;
-import org.camunda.bpm.extension.process_test_coverage.model.EventType;
-import org.camunda.bpm.extension.process_test_coverage.model.Model;
 import org.camunda.bpm.extension.process_test_coverage.model.Suite;
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.Collection;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -43,19 +38,20 @@ public class CoverageReportUtil {
     private static final String REPORT_TEMPLATE = "bpmn.report-template.html";
 
 
-    public static void createReport(final DefaultCollector coverageCollector){
+    public static void createReport(final DefaultCollector coverageCollector) {
         final String result = CoverageStateJsonExporter.createCoverageStateResult(
-                coverageCollector.getSuites().values(),
-                coverageCollector.getModels());
+            coverageCollector.getSuites().values(),
+            coverageCollector.getModels());
         final Suite suite = coverageCollector.getActiveSuite();
         final String reportDirectory = getReportDirectoryPath(suite.getName());
         installReportDependencies(reportDirectory);
 
         try {
             final String report = generateHtml(result);
+            Files.createDirectories(Path.of(reportDirectory));
             writeToFile(reportDirectory + "/report.html", report);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException("Unable to create HTML report.", e);
         }
     }
 
@@ -67,20 +63,23 @@ public class CoverageReportUtil {
         final String reportDirectory = getReportDirectoryPath(suite.getName());
 
         try {
+            Files.createDirectories(Path.of(reportDirectory));
             writeToFile(reportDirectory + "/report.json", result);
         } catch (final IOException ex) {
-            logger.log(Level.SEVERE, "Unable to save JSON Report!", ex);
-            throw new RuntimeException();
+            throw new RuntimeException("Unable to create JSON report.", ex);
         }
     }
 
-    protected static String generateHtml(String result) throws IOException {
-        final String html = IOUtils.toString(CoverageReportUtil.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE));
+    protected static String generateHtml(String result) throws IOException, URISyntaxException {
+        String html = new BufferedReader(
+            new InputStreamReader(CoverageReportUtil.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE), StandardCharsets.UTF_8))
+            .lines()
+            .collect(Collectors.joining("\n"));
         return html.replace("{{__REPORT_JSON_PLACEHOLDER__}}", result);
     }
 
     private static void writeToFile(final String filePath, final String json) throws IOException {
-        FileUtils.writeStringToFile(new File(filePath), json);
+        Files.writeString(Path.of(filePath), json);
     }
 
     private static void installReportDependencies(final String reportDirectory) {
@@ -110,31 +109,22 @@ public class CoverageReportUtil {
 
                         final InputStream source = CoverageReportUtil.class.getResourceAsStream("/" + resourcePath);
                         if (resourcePath.endsWith("/")) {
-
                             resource.mkdirs();
-
                         } else {
-
                             resource.getParentFile().mkdirs();
-                            FileUtils.copyInputStreamToFile(source, resource);
+                            Files.copy(source, resource.toPath());
                         }
-
                     }
                 }
                 coverageJar.close();
-            }
-
-            // Tests executed in the IDE use directories
-            else {
-
+            } else {
+                // Tests executed in the IDE use directories
                 final File bowerSrc = new File(CoverageReportUtil.class.getResource("/" + REPORT_RESOURCES).toURI());
-                FileUtils.copyDirectory(bowerSrc, bowerComponents);
-
+                Files.copy(bowerSrc.toPath(), bowerComponents.toPath());
             }
 
         } catch (final Exception e) {
-
-            logger.log(Level.SEVERE, "Unable to copy bower_components!", e);
+            throw new RuntimeException("Unable to copy bower_components", e);
         }
     }
 

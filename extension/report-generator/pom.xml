@@ -7,22 +7,12 @@
         <artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
         <groupId>org.camunda.bpm.extension</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
 
     <artifactId>camunda-bpm-process-test-coverage-report-generator</artifactId>
     <name>Camunda BPM Process Test Coverage Report Generator</name>
 
-    <properties>
-        <npm.version>6.14.8</npm.version>
-        <node.version>v10.22.0</node.version>
-    </properties>
-
     <dependencies>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

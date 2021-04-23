@@ -8,15 +8,15 @@ package org.camunda.bpm.extension.process_test_coverage.model
 class Model(
 
     /**
-     * Key of the Model
+     * Key of the model.
      */
     val key: String,
     /**
-     * Total count of executable elements
+     * Total count of executable elements.
      */
     val totalElementCount: Int,
     /**
-     * Version of the model
+     * Version of the model.
      */
     val version: String?,
     /**

@@ -55,11 +55,10 @@ class CompensationEventCoverageHandler : CompensationEventHandler() {
         val processDefinition = activity.processDefinition as ProcessDefinitionEntity
 
         // Get compensation boundary event ID
-        val sourceEvent = activity.getProperty(
-            BpmnProperties.COMPENSATION_BOUNDARY_EVENT.name
-        ) as ActivityImpl?
+        val sourceEvent = activity.getProperty(BpmnProperties.COMPENSATION_BOUNDARY_EVENT.name) as ActivityImpl?
+
         if (sourceEvent != null) {
-            requireNotNull(this::coverageState.isInitialized) { "Coverage state must be initialized" }
+            require(this::coverageState.isInitialized) { "Coverage state must be initialized" }
             val sourceEventId = sourceEvent.activityId
 
             // Register event

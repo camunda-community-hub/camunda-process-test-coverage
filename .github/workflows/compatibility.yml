@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       # Build for three operating systems, four JVMs and latest six camunda versions
-      # On ubuntu also build ancient versions starting from 7.3
+      # On ubuntu also build ancient versions starting from 7.10
       matrix:
         os:
           - 'ubuntu-latest'
@@ -24,41 +24,17 @@ jobs:
           - '12'
           - '13'
         camunda-version:
-          - '7.14.0'
-          - '7.13.0'
-          - '7.12.0'
-          - '7.11.0'
-          - '7.10.0'
-          - '7.9.0'
-        include:
-          - os: 'ubuntu-latest'
-            jdk: '8'
-            camunda-version: '7.8.0'
-          - os: 'ubuntu-latest'
-            jdk: '8'
-            camunda-version: '7.7.0'
-          - os: 'ubuntu-latest'
-            jdk: '8'
-            camunda-version: '7.6.0'
-          - os: 'ubuntu-latest'
-            jdk: '8'
-            camunda-version: '7.5.0'
-          - os: 'ubuntu-latest'
-            jdk: '8'
-            camunda-version: '7.4.0'
-          - os: 'ubuntu-latest'
-            jdk: '8'
-            camunda-version: '7.3.0'
+          - '7.15'
+          - '7.14'
+          - '7.13'
+          - '7.12'
+          - '7.11'
+          - '7.10'
 
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.jdk }}
 
       - name: Cache .m2
         uses: actions/cache@v1
@@ -68,8 +44,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven
 
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.jdk }}
+
       - name: Prepare Maven Wrapper
         run: chmod +x ./mvnw
 
       - name: Build with Maven
-        run: ./mvnw clean verify -U -B -T4 "-Dcamunda.version=${{ matrix.camunda-version }}"
+        run: ./mvnw clean verify -U -B -T4 "-Pcamunda-bpm-engine-${{ matrix.camunda-version }}"

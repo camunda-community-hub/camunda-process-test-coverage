@@ -52,7 +52,7 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
 
 
     private fun execute(execution: DelegateExecution) {
-        requireNotNull(this::coverageState.isInitialized) { "Coverage state must be initialized" }
+        require(this::coverageState.isInitialized) { "Coverage state must be initialized" }
         if (ExecutionListener.EVENTNAME_START == execution.eventName) {
             val event = createEvent(
                 execution,

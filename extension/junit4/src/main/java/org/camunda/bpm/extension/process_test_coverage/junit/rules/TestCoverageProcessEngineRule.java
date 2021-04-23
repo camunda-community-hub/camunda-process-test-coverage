@@ -8,12 +8,12 @@ import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.extension.process_test_coverage.engine.CompensationEventCoverageHandler;
 import org.camunda.bpm.extension.process_test_coverage.engine.ElementCoverageParseListener;
+import org.camunda.bpm.extension.process_test_coverage.engine.ExecutionContextModelProvider;
 import org.camunda.bpm.extension.process_test_coverage.model.DefaultCollector;
 import org.camunda.bpm.extension.process_test_coverage.model.Run;
 import org.camunda.bpm.extension.process_test_coverage.model.Suite;
 import org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil;
 import org.hamcrest.Matcher;
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.Description;
@@ -25,10 +25,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Rule handling the process test coverage for individual test methods and the
@@ -51,7 +52,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     /**
      * The state of the current run (class and current method).
      */
-    private final DefaultCollector coverageCollector = new DefaultCollector();
+    private final DefaultCollector coverageCollector = new DefaultCollector(new ExecutionContextModelProvider());
 
     /**
      * Controls run state initialization.
@@ -126,13 +127,13 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             super.initializeProcessEngine();
         }
         // initialize the run state for class
-        this.initializeClassRunState(description);
+        this.initializeSuite(description);
         // let the process engine rule identify the deployed process
         super.starting(description);
 
         if (this.isRelevantTestMethod(description)) {
             // initialize the run state for method
-            this.initializeMethodRunState(description);
+            this.initializeRun(description);
         }
     }
 
@@ -146,11 +147,11 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
         // If the rule is a class rule get the class coverage
         if (!description.isTest()) {
-            this.handleClassCoverage(description);
+            this.handleClassCoverage();
         }
 
         // run derived finalization only of not used as a class rule
-        if (this.identityService != null) {
+        if (this.processEngineConfiguration != null) {
             super.finished(description);
         }
 
@@ -201,7 +202,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      *
      * @param description test class description
      */
-    private void initializeClassRunState(final Description description) {
+    private void initializeSuite(final Description description) {
         // Initialize new state once on @ClassRule run or on every individual @Rule run
         if (this.firstRun.compareAndSet(true, false)) {
 
@@ -209,7 +210,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             this.coverageCollector.createSuite(new Suite(suiteId, description.getClassName()));
             this.coverageCollector.setExcludedProcessDefinitionKeys(this.excludedProcessDefinitionKeys);
             this.coverageCollector.activateSuite(suiteId);
-            this.initializeListenerRunState();
+            this.initializeListeners();
         }
     }
 
@@ -219,7 +220,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      *
      * @param description test description
      */
-    private void initializeMethodRunState(final Description description) {
+    private void initializeRun(final Description description) {
         // method name is set only on test methods (not on classes or suites)
         final String runId = description.getMethodName();
         this.coverageCollector.createRun(new Run(runId, description.getMethodName()), this.coverageCollector.getActiveSuite().getId());
@@ -230,7 +231,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      * Sets the test run state for the coverage listeners. logging.
      * {@see ProcessCoverageInMemProcessEngineConfiguration}
      */
-    private void initializeListenerRunState() {
+    private void initializeListeners() {
 
         final ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) this.processEngine.getProcessEngineConfiguration();
 
@@ -252,7 +253,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
         } else {
             logger.warning("CompensationEventCoverageHandler not registered with process engine configuration!"
-                    + " Compensation boundary events coverage will not be registered.");
+                               + " Compensation boundary events coverage will not be registered.");
         }
 
     }
@@ -265,9 +266,8 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     private void handleTestMethodCoverage(final Description description) {
 
         final String testName = description.getMethodName();
-        final String runId = testName;
         final Suite suite = this.coverageCollector.getActiveSuite();
-        final Run run = suite.getRun(runId);
+        final Run run = suite.getRun(testName);
 
         if (run == null) {
             return;
@@ -295,23 +295,21 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
      */
     private boolean isRelevantTestMethod(final Description description) {
         return description.isTest() // test method
-                && (super.deploymentId != null) // deployment is set
-                && this.processEngine // the deployed process is not excluded
-                .getRepositoryService()
-                .createProcessDefinitionQuery()
-                .deploymentId(this.deploymentId)
-                .list()
-                .stream().anyMatch(it -> !this.isExcluded(it));
+            && (super.deploymentId != null) // deployment is set
+            && this.processEngine // the deployed process is not excluded
+                                  .getRepositoryService()
+                                  .createProcessDefinitionQuery()
+                                  .deploymentId(this.deploymentId)
+                                  .list()
+                                  .stream().anyMatch(it -> !this.isExcluded(it));
     }
 
     /**
      * If the rule is a @ClassRule log and assert the coverage and create a
      * graphical report. For the class coverage to work all the test method
      * deployments have to be equal.
-     *
-     * @param description test description
      */
-    private void handleClassCoverage(final Description description) {
+    private void handleClassCoverage() {
 
         final Suite suite = this.coverageCollector.getActiveSuite();
 
@@ -336,14 +334,12 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
     private void assertCoverage(final double coverage, final Collection<Matcher<Double>> matchers) {
         for (final Matcher<Double> matcher : matchers) {
-            Assert.assertThat(coverage, matcher);
+            assertThat(coverage, matcher);
         }
     }
 
     /**
      * Logs the string representation of the passed suite object.
-     *
-     * @param suite
      */
     private void logCoverageDetail(final Suite suite) {
 
@@ -354,8 +350,6 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
 
     /**
      * Logs the string representation of the passed run object.
-     *
-     * @param run
      */
     private void logCoverageDetail(final Run run) {
 

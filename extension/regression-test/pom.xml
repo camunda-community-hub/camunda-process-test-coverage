@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
+        <groupId>org.camunda.bpm.extension</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>camunda-bpm-process-test-coverage-test</artifactId>
+    <name>Camunda BPM Process Test Coverage Regression Test</name>
+    <description>
+        All library tests are here in order to allow compiling against Camunda BPM release and regression testing against different versions.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>camunda-bpm-process-test-coverage-core</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine</artifactId>
+            <version>${camunda.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine-spring</artifactId>
+            <version>${camunda.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <!-- Needed for InMemoryH2Test -->
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <!-- Needed to test SpringProcessWithCoverageTest -->
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Needed to test SpringProcessWithCoverageTest -->
+        <!--
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2.2</version>
+            <scope>test</scope>
+        </dependency>
+        -->
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <!-- Profiles just here to ease testing in IDEs -->
+        <profile>
+            <id>camunda-bpm-engine-LATEST</id>
+            <properties>
+                <camunda.version>LATEST</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.15</id>
+            <properties>
+                <camunda.version>7.15.0</camunda.version>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.14</id>
+            <properties>
+                <camunda.version>7.14.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.13</id>
+            <properties>
+                <camunda.version>7.13.12</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.12</id>
+            <properties>
+                <camunda.version>7.12.19</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.11</id>
+            <properties>
+                <camunda.version>7.11.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.10</id>
+            <properties>
+                <camunda.version>7.10.0</camunda.version>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>

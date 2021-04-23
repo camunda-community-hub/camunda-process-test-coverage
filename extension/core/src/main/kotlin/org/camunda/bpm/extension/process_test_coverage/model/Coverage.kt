@@ -8,7 +8,9 @@ interface Coverage {
     fun getEvents(): Collection<Event>
 
     /**
-     * Retrieve events collectd for particular model.
+     * Retrieve events collected for particular model.
+     * @param modelKey process model definition key.
+     * @return list of events collected for a provided model.
      */
     fun getEvents(modelKey: String): Collection<Event>
     fun getEventsDistinct(modelKey: String): Collection<Event>
