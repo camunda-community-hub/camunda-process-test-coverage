@@ -19,7 +19,6 @@ jobs:
           - 'windows-latest'
           - 'macos-latest'
         jdk:
-          - '8'
           - '11'
           - '12'
           - '13'
