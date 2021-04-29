@@ -2,7 +2,7 @@
 [![](https://img.shields.io/badge/Community%20Extension-An%20open%20source%20community%20maintained%20project-FF4700)](https://github.com/camunda-community-hub/community)
 
 
-![Camunda Logo](doc/img/Favicons-Circle-Colour.png=23x23)
+![Camunda Logo](doc/img/Favicons-Circle-Colour.png)
 
 # Camunda BPM Process Test Coverage 
 
@@ -20,7 +20,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 
 * Integrates with all versions of Camunda BPM starting with 7.3.0 and upwards 
 * Works with all relevant Java versions: 1.8 and 1.11 - using **JUnit 4.13.1** (4.11 does not work)
-* Is continuously checked against latest Camunda BPM releases - see the full [**travis-ci**](https://travis-ci.org/camunda/camunda-bpm-process-test-coverage) matrix for details: <a href="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage"><img src="https://travis-ci.org/camunda/camunda-bpm-process-test-coverage.svg?branch=master" /></a>
+* Is continuously checked against latest Camunda BPM releases 
 
 ## Get started with *3 simple steps*
 
