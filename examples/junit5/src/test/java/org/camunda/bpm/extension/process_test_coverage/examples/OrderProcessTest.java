@@ -13,6 +13,10 @@ import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 @Deployment(resources = "order-process.bpmn")
 public class OrderProcessTest {
 
+    @RegisterExtension
+    static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension.builder()
+            .assertClassCoverageAtLeast(0.9).build();
+
     @Test
     public void shouldExecuteHappyPath() {
         final ProcessInstance instance = this.startProcess();

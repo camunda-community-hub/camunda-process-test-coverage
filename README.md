@@ -19,18 +19,31 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 ## Just use it
 
 * Integrates with all versions of Camunda BPM starting with 7.3.0 and upwards 
-* Works with all relevant Java versions: 1.8 and 1.11 - using **JUnit 4.13.1** (4.11 does not work)
+* Works with all relevant Java versions: 1.8 and 1.11 - using **JUnit 4.13.1** (4.11 does not work) or **JUnit 5**
 * Is continuously checked against latest Camunda BPM releases 
 
 ## Get started with *3 simple steps*
 
 <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" align="right" /></a>**1.** Add a **Maven test dependency** to your project
 
+### JUnit4
+
 ```xml
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
-  <artifactId>camunda-bpm-process-test-coverage</artifactId>
-  <version>0.4.0</version>
+  <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <scope>test</scope>
+</dependency>
+```
+
+### JUnit5
+
+```xml
+<dependency>
+  <groupId>org.camunda.bpm.extension</groupId>
+  <artifactId>camunda-bpm-process-test-coverage-junit5</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -44,12 +57,30 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 </bean>
 ```
 
+### JUnit4
+
 **3.** Use the **TestCoverageProcessEngineRule** as your process engine JUnit rule
 
 ```java
 @Rule
 @ClassRule
 public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
+```
+
+### JUnit5
+
+**3.** Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension
+
+Either use @ExtendWith
+```java
+@ExtendWith(ProcessEngineCoverageExtension.class)
+public class MyProcessTest
+```
+or @RegisterExtension
+```java
+@RegisterExtension
+static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension
+        .builder().assertClassCoverageAtLeast(0.9).build();
 ```
 
 Running your JUnit tests now leaves **html** files for inidividual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:

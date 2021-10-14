@@ -50,7 +50,6 @@ class ProcessEngineCoverageExtension(
          * `-Dorg.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST=1.0`
          */
         const val DEFAULT_ASSERT_AT_LEAST_PROPERTY = "org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST"
-        const val INITIALIZED = "INITIALIZED"
     }
 
     /**
@@ -79,7 +78,7 @@ class ProcessEngineCoverageExtension(
     override fun beforeTestExecution(context: ExtensionContext) {
         super.beforeTestExecution(context)
         if (isRelevantTestMethod()) {
-            if (context.getStore().get(INITIALIZED) == null) {
+            if (!context.isSuiteInitialized()) {
                 initializeSuite(context)
             }
             // method name is set only on test methods (not on classes or suites)
@@ -111,7 +110,7 @@ class ProcessEngineCoverageExtension(
         coverageCollector.createSuite(Suite(suiteId, context.requiredTestClass.name))
         coverageCollector.setExcludedProcessDefinitionKeys(excludedProcessDefinitionKeys)
         coverageCollector.activateSuite(suiteId)
-        context.getStore().put(INITIALIZED, true)
+        context.suiteInitialized()
     }
 
     /**
@@ -246,23 +245,16 @@ class ProcessEngineCoverageExtension(
          * @param percentage minimal percentage for class coverage
          */
         fun assertClassCoverageAtLeast(percentage: Double) = this.apply {
-            coverageAtLeast = checkPercentage(percentage)
+            coverageAtLeast = percentage.checkPercentage()
         }
 
         fun excludeProcessDefinitionKeys(vararg processDefinitionKeys: String) = this.apply { excludedProcessDefinitionKeys = processDefinitionKeys.toList() }
         fun optionalAssertCoverageAtLeastProperty(property: String) = this.apply { optionalAssertCoverageAtLeastProperty = property }
-        private fun checkPercentage(percentage: Double): Double {
-            if (0 > percentage || percentage > 1) {
-                throw RuntimeException(
-                        "BAD TEST CONFIGURATION: coverageAtLeast " + percentage + " (" + 100 * percentage + "%) ")
-            }
-            return percentage
-        }
 
         private fun coverageFromSystemProperty(key: String): Double? {
             return System.getProperty(key)?.let {
                 try {
-                    checkPercentage(it.toDouble())
+                    it.toDouble().checkPercentage()
                 } catch (e: NumberFormatException) {
                     throw RuntimeException("BAD TEST CONFIGURATION: optionalAssertCoverageAtLeastProperty( \"$key\" ) must be double")
                 }
@@ -290,5 +282,16 @@ class ProcessEngineCoverageExtension(
 
 }
 
-fun ExtensionContext.getStore(): ExtensionContext.Store =
-        this.getStore(ExtensionContext.Namespace.create(ProcessEngineExtension::class.java))
+fun ExtensionContext.isSuiteInitialized(): Boolean =
+        this.root.getStore(ExtensionContext.Namespace.create(ProcessEngineExtension::class.java))
+                .getOrDefault(this.requiredTestClass.name, Boolean::class.java, false)
+
+fun ExtensionContext.suiteInitialized() =
+        this.root.getStore(ExtensionContext.Namespace.create(ProcessEngineExtension::class.java))
+                .put(this.requiredTestClass.name, true)
+
+fun Double.checkPercentage() =
+    if (0 > this || this > 1) {
+        throw RuntimeException(
+                "BAD TEST CONFIGURATION: coverageAtLeast " + this + " (" + 100 * this + "%) ")
+    } else this
