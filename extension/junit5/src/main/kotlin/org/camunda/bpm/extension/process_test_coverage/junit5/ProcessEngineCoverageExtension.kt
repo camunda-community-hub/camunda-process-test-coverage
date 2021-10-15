@@ -42,14 +42,6 @@ class ProcessEngineCoverageExtension(
     companion object : KLogging() {
         @JvmStatic
         fun builder() = Builder()
-
-        /**
-         * If you set this property to a ratio (e.g. "1.0" for full coverage),
-         * the Extension will fail the test run if the coverage is less.<br></br>
-         * Example parameter for running java:<br></br>
-         * `-Dorg.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST=1.0`
-         */
-        const val DEFAULT_ASSERT_AT_LEAST_PROPERTY = "org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST"
     }
 
     /**
@@ -215,9 +207,7 @@ class ProcessEngineCoverageExtension(
     }
 
     private fun assertCoverage(coverage: Double, conditions: List<Condition<Double>>) {
-        for (condition in conditions) {
-            Assertions.assertThat(coverage).satisfies(condition)
-        }
+        conditions.forEach { Assertions.assertThat(coverage).satisfies(it) }
     }
 
     fun addTestMethodCoverageCondition(methodName: String, condition: Condition<Double>) =
@@ -229,15 +219,39 @@ class ProcessEngineCoverageExtension(
             )
 
     data class Builder(
-            var configurationSource: String? = null,
+            var configurationResource: String? = null,
             var detailedCoverageLogging: Boolean = false,
             var handleTestMethodCoverage: Boolean = true,
             var coverageAtLeast: Double? = null,
             var excludedProcessDefinitionKeys: List<String> = listOf(),
             var optionalAssertCoverageAtLeastProperty: String = DEFAULT_ASSERT_AT_LEAST_PROPERTY
     ) {
-        fun configurationSource(configurationSource: String) = this.apply { this.configurationSource = configurationSource }
+
+        companion object {
+
+            /**
+             * If you set this property to a ratio (e.g. "1.0" for full coverage),
+             * the Extension will fail the test run if the coverage is less.<br></br>
+             * Example parameter for running java:<br></br>
+             * `-Dorg.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST=1.0`
+             */
+            const val DEFAULT_ASSERT_AT_LEAST_PROPERTY = "org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST"
+
+        }
+
+        /**
+         * Set the configuration resource for initializing the process engine.
+         */
+        fun configurationResource(configurationResource: String) = this.apply { this.configurationResource = configurationResource }
+
+        /**
+         * Turns on detailed coverage logging in debug scope.
+         */
         fun withDetailedCoverageLogging() = this.apply { detailedCoverageLogging = true }
+
+        /**
+         * Controls whether method coverage should be evaluated.
+         */
         fun handleTestMethodCoverage(handleTestMethodCoverage: Boolean) = this.apply { this.handleTestMethodCoverage = handleTestMethodCoverage }
 
         /**
@@ -248,7 +262,14 @@ class ProcessEngineCoverageExtension(
             coverageAtLeast = percentage.checkPercentage()
         }
 
+        /**
+         * Specifies keys of process definitions, that should be excluded from the coverage analysis.
+         */
         fun excludeProcessDefinitionKeys(vararg processDefinitionKeys: String) = this.apply { excludedProcessDefinitionKeys = processDefinitionKeys.toList() }
+
+        /**
+         * Specifies the key of the system property for optionally reading a minimal assertion coverage.
+         */
         fun optionalAssertCoverageAtLeastProperty(property: String) = this.apply { optionalAssertCoverageAtLeastProperty = property }
 
         private fun coverageFromSystemProperty(key: String): Double? {
@@ -256,7 +277,7 @@ class ProcessEngineCoverageExtension(
                 try {
                     it.toDouble().checkPercentage()
                 } catch (e: NumberFormatException) {
-                    throw RuntimeException("BAD TEST CONFIGURATION: optionalAssertCoverageAtLeastProperty( \"$key\" ) must be double")
+                    throw RuntimeException("BAD TEST CONFIGURATION: system property \"$key\" must be double")
                 }
             }
         }
@@ -271,7 +292,7 @@ class ProcessEngineCoverageExtension(
                     addClassCoverageAtLeast(it)
                 }
                 coverageAtLeast?.let { addClassCoverageAtLeast(it) }
-                configurationSource?.let { configurationSource(it) }
+                configurationResource?.let { this.configurationResource(it) }
                 if (processEngine == null) {
                     initializeProcessEngine()
                 }
