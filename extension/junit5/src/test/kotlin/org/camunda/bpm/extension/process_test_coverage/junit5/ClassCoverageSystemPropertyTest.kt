@@ -2,6 +2,7 @@ package org.camunda.bpm.extension.process_test_coverage.junit5
 
 import org.assertj.core.api.HamcrestCondition
 import org.camunda.bpm.engine.test.Deployment
+import org.camunda.bpm.extension.process_test_coverage.junit5.ProcessEngineCoverageExtension.Builder.Companion.DEFAULT_ASSERT_AT_LEAST_PROPERTY
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Test
@@ -16,20 +17,19 @@ class ClassCoverageSystemPropertyTest {
         val EXPECTED_COVERAGE = EXPECTED / ALL
 
         init {
-            System.setProperty(ProcessEngineCoverageExtension.DEFAULT_ASSERT_AT_LEAST_PROPERTY,
-                    "" + EXPECTED_COVERAGE)
+            System.setProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY, "$EXPECTED_COVERAGE")
         }
 
         @AfterAll
         @JvmStatic
         fun delSysProperty() {
-            System.clearProperty(ProcessEngineCoverageExtension.DEFAULT_ASSERT_AT_LEAST_PROPERTY)
+            System.clearProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY)
         }
 
         @RegisterExtension
         @JvmField
         var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension.builder()
-                .optionalAssertCoverageAtLeastProperty(ProcessEngineCoverageExtension.DEFAULT_ASSERT_AT_LEAST_PROPERTY)
+                .optionalAssertCoverageAtLeastProperty(DEFAULT_ASSERT_AT_LEAST_PROPERTY)
                 .build()
     }
 

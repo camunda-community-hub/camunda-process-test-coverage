@@ -30,7 +30,7 @@ public class MultipleDeploymentsForIndividualTestsTest {
     @Deployment(resources = { "superProcess.bpmn", "process.bpmn" })
     public void testPathAAndSuperPathA() {
         
-        Map<String, Object> variables = new HashMap<String, Object>();
+        Map<String, Object> variables = new HashMap<>();
         variables.put("path", "A");
         variables.put("superPath", "A");
         rule.getRuntimeService().startProcessInstanceByKey(PROCESS_DEFINITION_KEY, variables);
@@ -44,7 +44,7 @@ public class MultipleDeploymentsForIndividualTestsTest {
     @Deployment(resources = { "superProcess.bpmn", "process.bpmn" })
     public void testPathBAndSuperPathB() {
         
-        Map<String, Object> variables = new HashMap<String, Object>();
+        Map<String, Object> variables = new HashMap<>();
         variables.put("path", "B");
         variables.put("superPath", "B");
         

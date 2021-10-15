@@ -29,7 +29,7 @@
         <version.java>11</version.java>
         <kotlin.version>1.4.32</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin-logging.version>2.0.3</kotlin-logging.version>
+        <kotlin-logging.version>2.0.11</kotlin-logging.version>
     </properties>
 
     <dependencyManagement>
@@ -54,11 +54,7 @@
         <!-- Kotlin -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>kotlin-stdlib</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -115,7 +111,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.6</version>
+                        <version>3.0.1</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
