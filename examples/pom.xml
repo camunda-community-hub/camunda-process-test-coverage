@@ -15,6 +15,7 @@
 
     <modules>
         <module>junit4</module>
+        <module>junit5</module>
     </modules>
 
     <properties>

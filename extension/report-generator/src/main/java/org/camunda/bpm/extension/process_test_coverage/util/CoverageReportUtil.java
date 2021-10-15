@@ -11,9 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Enumeration;
 import java.util.Objects;
 import java.util.jar.JarEntry;
@@ -120,12 +119,33 @@ public class CoverageReportUtil {
             } else {
                 // Tests executed in the IDE use directories
                 final File bowerSrc = new File(CoverageReportUtil.class.getResource("/" + REPORT_RESOURCES).toURI());
-                Files.copy(bowerSrc.toPath(), bowerComponents.toPath());
+                bowerComponents.getParentFile().mkdirs();
+                copyFolder(bowerSrc.toPath(), bowerComponents.toPath());
             }
 
         } catch (final Exception e) {
             throw new RuntimeException("Unable to copy bower_components", e);
         }
+    }
+
+    private static void copyFolder(Path source, Path target)
+            throws IOException {
+        Files.walkFileTree(source, new SimpleFileVisitor<>() {
+
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+                    throws IOException {
+                Files.createDirectories(target.resolve(source.relativize(dir)));
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+                    throws IOException {
+                Files.copy(file, target.resolve(source.relativize(file)));
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 
     /**

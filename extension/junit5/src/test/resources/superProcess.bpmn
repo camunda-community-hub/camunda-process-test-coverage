@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:activiti="http://activiti.org/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.2.2">
+  <bpmn:process id="super-process-test-coverage" name="super-process-test-coverage" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_0myldbf</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0myldbf" sourceRef="StartEvent_1" targetRef="CallActivity_Subprocess" />
+    <bpmn:callActivity id="CallActivity_Subprocess" name="Test Subprocess" calledElement="process-test-coverage">
+      <bpmn:extensionElements>
+        <activiti:in source="path" target="path" />
+        <activiti:in source="superPath" target="superPath" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0myldbf</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1kub8vf</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_112s7in" name="Super A or B?">
+      <bpmn:incoming>SequenceFlow_1kub8vf</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_SuperA</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_SuperB</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1kub8vf" sourceRef="CallActivity_Subprocess" targetRef="ExclusiveGateway_112s7in" />
+    <bpmn:sequenceFlow id="SequenceFlow_SuperA" sourceRef="ExclusiveGateway_112s7in" targetRef="ManualTask_SuperA">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${superPath == 'A'}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_SuperB" sourceRef="ExclusiveGateway_112s7in" targetRef="ManualTask_SuperB">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${superPath == 'B'}]]></bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="EndEvent_1nexhxp">
+      <bpmn:incoming>SequenceFlow_0j7y0ob</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0j7y0ob" sourceRef="ManualTask_SuperA" targetRef="EndEvent_1nexhxp" />
+    <bpmn:endEvent id="EndEvent_1y80sz2">
+      <bpmn:incoming>SequenceFlow_0todesj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0todesj" sourceRef="ManualTask_SuperB" targetRef="EndEvent_1y80sz2" />
+    <bpmn:manualTask id="ManualTask_SuperA" name="Super A">
+      <bpmn:incoming>SequenceFlow_SuperA</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0j7y0ob</bpmn:outgoing>
+    </bpmn:manualTask>
+    <bpmn:manualTask id="ManualTask_SuperB" name="Super B">
+      <bpmn:incoming>SequenceFlow_SuperB</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0todesj</bpmn:outgoing>
+    </bpmn:manualTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="super-process-test-coverage">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0myldbf_di" bpmnElement="SequenceFlow_0myldbf">
+        <di:waypoint xsi:type="dc:Point" x="209" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="299" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="209" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="CallActivity_0poct8v_di" bpmnElement="CallActivity_Subprocess">
+        <dc:Bounds x="299" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_112s7in_di" bpmnElement="ExclusiveGateway_112s7in" isMarkerVisible="true">
+        <dc:Bounds x="464" y="95" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="444" y="70" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1kub8vf_di" bpmnElement="SequenceFlow_1kub8vf">
+        <di:waypoint xsi:type="dc:Point" x="399" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="464" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="386.5" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_05pplai_di" bpmnElement="SequenceFlow_SuperA">
+        <di:waypoint xsi:type="dc:Point" x="514" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="594" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="444" y="69" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0muhc54_di" bpmnElement="SequenceFlow_SuperB">
+        <di:waypoint xsi:type="dc:Point" x="489" y="145" />
+        <di:waypoint xsi:type="dc:Point" x="489" y="273" />
+        <di:waypoint xsi:type="dc:Point" x="594" y="273" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="444" y="162" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1nexhxp_di" bpmnElement="EndEvent_1nexhxp">
+        <dc:Bounds x="826" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="799" y="138" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0j7y0ob_di" bpmnElement="SequenceFlow_0j7y0ob">
+        <di:waypoint xsi:type="dc:Point" x="694" y="120" />
+        <di:waypoint xsi:type="dc:Point" x="826" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="715" y="110" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1y80sz2_di" bpmnElement="EndEvent_1y80sz2">
+        <dc:Bounds x="826" y="255" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="799" y="291" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0todesj_di" bpmnElement="SequenceFlow_0todesj">
+        <di:waypoint xsi:type="dc:Point" x="694" y="273" />
+        <di:waypoint xsi:type="dc:Point" x="826" y="273" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="715" y="263" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ManualTask_0d3xdj7_di" bpmnElement="ManualTask_SuperA">
+        <dc:Bounds x="594" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ManualTask_00jexvt_di" bpmnElement="ManualTask_SuperB">
+        <dc:Bounds x="594" y="233" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
