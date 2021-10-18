@@ -27,9 +27,6 @@ To build the project by yourself, go to your cmd line and enter ```mvn clean ins
 2. cd camunda-process-test-coverage/
 3. mvn clean install
 
-## Getting Comfortable
-* [Implementation Notes](IMPLEMENTATION.md)
-
 ## Creating Pull Requests
 
 We use pull requests for feature discussion and bug fixes. 

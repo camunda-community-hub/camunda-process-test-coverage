@@ -8,7 +8,7 @@
 
 This Camunda BPM community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
-![Insurance Application](doc/img/insurance-application.png)
+![Insurance Application](doc/img/flowcov_coverage_report.png)
 
 ## Highlights
 
@@ -20,7 +20,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 
 * Integrates with all versions of Camunda BPM starting with 7.3.0 and upwards 
 * Works with all relevant Java versions: 1.8 and 1.11 - using **JUnit 4.13.1** (4.11 does not work) or **JUnit 5**
-* Is continuously checked against latest Camunda BPM releases 
+* Is continuously checked against the latest Camunda BPM releases 
 
 ## Get started with *3 simple steps*
 
@@ -85,7 +85,7 @@ static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension
         .builder().assertClassCoverageAtLeast(0.9).build();
 ```
 
-Running your JUnit tests now leaves **html** files for inidividual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
+Running your JUnit tests now leaves **html** files for individual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
 
 ## New! Get Started with Spring Testing
 
