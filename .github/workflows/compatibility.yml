@@ -30,9 +30,9 @@ jobs:
           - os: 'ubuntu-latest'
             jdk: '11'
             camunda-version:
-            - '7.12' # 2019
-            - '7.11'
-            - '7.10' # 2018
+              - '7.12' # 2019
+              - '7.11'
+              - '7.10' # 2018
 
     runs-on: ${{ matrix.os }}
     steps:
