@@ -20,7 +20,7 @@
 
     <properties>
         <version.java>11</version.java>
-        <kotlin.version>1.4.32</kotlin.version>
+        <kotlin.version>1.5.31</kotlin.version>
 
         <camunda.version>7.15.0</camunda.version>
         <springboot.version>2.4.5</springboot.version>
