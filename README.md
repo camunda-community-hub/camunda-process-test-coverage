@@ -94,7 +94,6 @@ See a unit test example wired for Spring Testing [here](https://github.com/camun
 ## Further resources
 * [JavaDoc](https://camunda.github.io/camunda-bpm-process-test-coverage/javadoc)
 * [Issues](https://github.com/camunda/camunda-bpm-process-test-coverage/issues)
-* [Roadmap](#roadmap)
 * [Changelog](https://github.com/camunda/camunda-bpm-process-test-coverage/commits/master)
 * [Contributing](CONTRIBUTING.md)
 
