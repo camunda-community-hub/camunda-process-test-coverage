@@ -14,6 +14,24 @@
         All library tests are here in order to allow compiling against Camunda BPM release and regression testing against different versions.
     </description>
 
+    <properties>
+        <graalvm.version>21.2.0</graalvm.version>
+        <camunda.version>${camunda.compile.version}</camunda.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Re-define Camunda -->
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>${camunda.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -31,13 +49,11 @@
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine</artifactId>
-            <version>${camunda.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine-spring</artifactId>
-            <version>${camunda.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -136,13 +152,16 @@
             </properties>
         </profile>
         <profile>
+            <id>camunda-bpm-engine-7.16</id>
+            <properties>
+                <camunda.version>7.16.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
             <id>camunda-bpm-engine-7.15</id>
             <properties>
                 <camunda.version>7.15.0</camunda.version>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <profile>
             <id>camunda-bpm-engine-7.14</id>
@@ -173,6 +192,32 @@
             <properties>
                 <camunda.version>7.10.0</camunda.version>
             </properties>
+        </profile>
+
+        <profile>
+            <!-- Starting from JDK 12+, Nashorn is not part of JDK -->
+            <id>jdk11</id>
+            <activation>
+                <jdk>[11,</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.graalvm.sdk</groupId>
+                    <artifactId>graal-sdk</artifactId>
+                    <version>${graalvm.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.graalvm.js</groupId>
+                    <artifactId>js</artifactId>
+                    <version>${graalvm.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.graalvm.js</groupId>
+                    <artifactId>js-scriptengine</artifactId>
+                    <version>${graalvm.version}</version>
+                </dependency>
+            </dependencies>
         </profile>
     </profiles>
 
