@@ -11,7 +11,8 @@ jobs:
   build:
     strategy:
       fail-fast: false
-      # Build for three operating systems, two JVMs and latest six Camunda versions
+      # Build for three operating systems, two JVMs and latest four Camunda versions (last two years)
+      # On Ubuntu and JDK 11, we run it until 7.10 (Release end of 2018)
       matrix:
         os:
           - 'ubuntu-latest'
@@ -25,8 +26,13 @@ jobs:
           - '7.15'
           - '7.14' # 2020
           - '7.13'
-          - '7.12' # 2019
-          - '7.11'
+        include:
+          - os: 'ubuntu-latest'
+            jdk: '11'
+            camunda-version:
+            - '7.12' # 2019
+            - '7.11'
+            - '7.10' # 2018
 
     runs-on: ${{ matrix.os }}
     steps:
