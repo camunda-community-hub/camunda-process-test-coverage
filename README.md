@@ -26,7 +26,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 
 <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage/badge.svg" align="right" /></a>**1.** Add a **Maven test dependency** to your project
 
-### JUnit4
+#### JUnit4
 
 ```xml
 <dependency>
@@ -37,7 +37,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 </dependency>
 ```
 
-### JUnit5
+#### JUnit5
 
 ```xml
 <dependency>
@@ -57,9 +57,11 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 </bean>
 ```
 
-### JUnit4
+**3.** Wire the process engine in your JUnit test
 
-**3.** Use the **TestCoverageProcessEngineRule** as your process engine JUnit rule
+#### JUnit4
+
+Use the **TestCoverageProcessEngineRule** as your process engine JUnit rule
 
 ```java
 @Rule
@@ -67,16 +69,16 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
 ```
 
-### JUnit5
+#### JUnit5
 
-**3.** Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension
+Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension
 
-Either use @ExtendWith
+Either use `@ExtendWith`
 ```java
 @ExtendWith(ProcessEngineCoverageExtension.class)
 public class MyProcessTest
 ```
-or @RegisterExtension
+or `@RegisterExtension`
 ```java
 @RegisterExtension
 static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension
