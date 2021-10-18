@@ -136,6 +136,15 @@
             </properties>
         </profile>
         <profile>
+            <id>camunda-bpm-engine-7.16</id>
+            <properties>
+                <camunda.version>7.16.0</camunda.version>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
             <id>camunda-bpm-engine-7.15</id>
             <properties>
                 <camunda.version>7.15.0</camunda.version>

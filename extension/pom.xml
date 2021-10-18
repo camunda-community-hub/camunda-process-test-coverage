@@ -25,45 +25,19 @@
         <!-- We intentionally always compile against latest Camunda release,
         but test against many versions *provided* by user projects.
         Therefore the tests are in a separate module. -->
-        <camunda.compile.version>7.14.0</camunda.compile.version>
         <version.java>11</version.java>
-        <spring-boot.version>2.4.5</spring-boot.version>
+
+        <camunda.compile.version>7.16.0</camunda.compile.version>
+        <spring-boot.version>2.5.5</spring-boot.version>
+
         <npm.version>6.14.8</npm.version>
         <node.version>v10.22.0</node.version>
-
-        <kotlin.version>1.5.31</kotlin.version>
-        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin-logging.version>2.0.11</kotlin-logging.version>
         <gson.version>2.8.6</gson.version>
         <maven.test.skip>false</maven.test.skip>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Kotlin -->
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-bom</artifactId>
-                <version>${kotlin.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.github.microutils</groupId>
-                <artifactId>kotlin-logging-jvm</artifactId>
-                <version>${kotlin-logging.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.jetbrains.kotlin</groupId>
-                        <artifactId>kotlin-stdlib</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.jetbrains.kotlin</groupId>
-                        <artifactId>kotlin-stdlib-common</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
             <!-- Spring Boot import -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -198,7 +172,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1-jboss-2</version>
+                    <version>3.8.1</version>
                     <configuration>
                         <encoding>UTF-8</encoding>
                         <source>${version.java}</source>

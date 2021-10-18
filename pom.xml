@@ -50,18 +50,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <!-- Kotlin -->
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-        </dependency>
-    </dependencies>
-
     <build>
         <defaultGoal>clean install</defaultGoal>
         <pluginManagement>
@@ -96,9 +84,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:camunda/camunda-process-test-coverage.git</connection>
-        <url>scm:git:git@github.com:camunda/camunda-process-test-coverage.git</url>
-        <developerConnection>scm:git:git@github.com:camunda/camunda-process-test-coverage.git</developerConnection>
+        <connection>scm:git:git@github.com:camunda-community-hub/camunda-process-test-coverage.git</connection>
+        <url>scm:git:git@github.com:camunda-community-hub/camunda-process-test-coverage.git</url>
+        <developerConnection>scm:git:git@github.com:camunda-community-hub/camunda-process-test-coverage.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
