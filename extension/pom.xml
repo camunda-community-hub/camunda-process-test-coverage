@@ -33,7 +33,7 @@
         initialized on start-up and is failing if not present on the class path
         with: java.lang.NoClassDefFoundError: org/camunda/feel/context/Context
         -->
-        <camunda.compile.version>7.14.0</camunda.compile.version>
+        <camunda.compile.version>7.16.0</camunda.compile.version>
         <spring-boot.version>2.5.5</spring-boot.version>
 
         <npm.version>6.14.8</npm.version>
