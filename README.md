@@ -91,14 +91,12 @@ Running your JUnit tests now leaves **html** files for inidividual test methods 
 
 See a unit test example wired for Spring Testing [here](https://github.com/camunda/camunda-bpm-process-test-coverage/blob/master/test/src/test/java/org/camunda/bpm/extension/process_test_coverage/spring/SpringProcessWithCoverageTest.java).
 
-## Further resources
-* [JavaDoc](https://camunda.github.io/camunda-bpm-process-test-coverage/javadoc)
-* [Issues](https://github.com/camunda-community-hub/camunda-bpm-process-test-coverage/issues)
-* [Contributing](CONTRIBUTING.md)
+## News and Noteworthy & Contributors
 
-## Contributors
-
-There are a plenty contributors to this project. Its initial design has been created by the WDW eLab GmbH and some others, but then the project has been abondened and received a full rewrite including the new architecture. The project team is very helpful for any help and maintenance, check the release notes of individual releases about the changes and involved people.
+There are a plenty of contributors to this project. Its initial design has been created by the WDW eLab GmbH and some others, but then the project has been abandoned for some time 
+and received a full rewrite including the new architecture. We appreciate any help and effort you put into maintenance discussion and 
+further development. Please check the release notes of [individual releases](https://github.com/camunda-community-hub/camunda-bpm-process-test-coverage/releases) for the changes 
+and involved contributors.
 
 ## License
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](LICENSE) file.

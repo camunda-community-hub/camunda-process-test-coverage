@@ -16,7 +16,21 @@
 
     <properties>
         <graalvm.version>21.2.0</graalvm.version>
+        <camunda.version>${camunda.compile.version}</camunda.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Re-define Camunda -->
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>${camunda.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -35,13 +49,11 @@
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine</artifactId>
-            <version>${camunda.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine-spring</artifactId>
-            <version>${camunda.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -144,9 +156,6 @@
             <properties>
                 <camunda.version>7.16.0</camunda.version>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <profile>
             <id>camunda-bpm-engine-7.15</id>
@@ -186,7 +195,7 @@
         </profile>
 
         <profile>
-            <!-- Starting from JDK 11+, Nashorn is not part of JDK -->
+            <!-- Starting from JDK 12+, Nashorn is not part of JDK -->
             <id>jdk11</id>
             <activation>
                 <jdk>[11,</jdk>
