@@ -93,29 +93,12 @@ See a unit test example wired for Spring Testing [here](https://github.com/camun
 
 ## Further resources
 * [JavaDoc](https://camunda.github.io/camunda-bpm-process-test-coverage/javadoc)
-* [Issues](https://github.com/camunda/camunda-bpm-process-test-coverage/issues)
-* [Changelog](https://github.com/camunda/camunda-bpm-process-test-coverage/commits/master)
+* [Issues](https://github.com/camunda-community-hub/camunda-bpm-process-test-coverage/issues)
 * [Contributing](CONTRIBUTING.md)
-
-## Maintainers
-
-The software development team of [WDW eLab GmbH](http://www.wdw-elab.de) has contributed initial design and implementation of this project.
-
-![Screenshot](doc/elab_logo.png)
-
-WDW eLab GmbH is an innovative IT company and has great experience with complex business support processes in complex IT environments. One of our specialties are customer support processes in telecommunications. We are proud to be an official Camunda BPM partner! Feel free to contact us via [Email](mailto:kontakt@wdw-elab.de)!
 
 ## Contributors
 
-[Simon Zambrovski (holisticon)](https://github.com/zambrovski)
-
-[Irmin Okic (wdw-elab)](https://github.com/z0rbas)
-
-[Axel Groß (wdw-elab)](https://github.com/phax1)
-
-[Falko Menge (Camunda)](https://github.com/falko)
-
-[Martin Schimak (plexiti)](https://github.com/martinschimak)
+There are a plenty contributors to this project. Its initial design has been created by the WDW eLab GmbH and some others, but then the project has been abondened and received a full rewrite including the new architecture. The project team is very helpful for any help and maintenance, check the release notes of individual releases about the changes and involved people.
 
 ## License
-[Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](LICENSE) file.
+[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](LICENSE) file.
