@@ -23,6 +23,7 @@
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <maven.source.skip>true</maven.source.skip>
         <maven.install.skip>true</maven.install.skip>
+        <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
         <gpg.skip>true</gpg.skip>
     </properties>
 
@@ -51,20 +52,20 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+            <dependency>
+                <groupId>org.camunda.bpm.assert</groupId>
+                <artifactId>camunda-bpm-assert</artifactId>
+                <version>${camunda-bpm-assert.version}</version>
+                <scope>test</scope>
+            </dependency>
 
-            <!-- BOM -->
+            <!-- Own BOM -->
             <dependency>
                 <groupId>org.camunda.bpm.extension</groupId>
                 <artifactId>camunda-bpm-process-test-coverage-bom</artifactId>
                 <version>${project.parent.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.camunda.bpm.assert</groupId>
-                <artifactId>camunda-bpm-assert</artifactId>
-                <version>${camunda-bpm-assert.version}</version>
-                <scope>test</scope>
             </dependency>
 
         </dependencies>

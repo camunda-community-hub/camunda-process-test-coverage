@@ -1,15 +1,13 @@
 package org.camunda.bpm.extension.process_test_coverage.model
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
 import org.assertj.core.api.Assertions.assertThat
-import org.camunda.bpm.extension.process_test_coverage.engine.ExecutionContextModelProvider
 import org.camunda.bpm.extension.process_test_coverage.engine.ModelProvider
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import java.util.*
 
 

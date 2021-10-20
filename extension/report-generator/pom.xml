@@ -12,6 +12,10 @@
     <artifactId>camunda-bpm-process-test-coverage-report-generator</artifactId>
     <name>Camunda BPM Process Test Coverage Report Generator</name>
 
+    <properties>
+        <dokka.skip>true</dokka.skip>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>

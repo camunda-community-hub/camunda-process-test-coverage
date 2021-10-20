@@ -13,6 +13,10 @@
     <name>Camunda BPM Process Test Coverage JUnit4</name>
     <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
 
+    <properties>
+        <dokka.skip>true</dokka.skip>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
