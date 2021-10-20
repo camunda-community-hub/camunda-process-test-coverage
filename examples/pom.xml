@@ -22,6 +22,13 @@
         <camunda.version>7.16.0</camunda.version>
         <camunda-bpm-assert.version>13.0.0</camunda-bpm-assert.version>
         <springboot.version>2.5.5</springboot.version>
+
+        <jacoco.skip>true</jacoco.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <maven.sources.skip>true</maven.sources.skip>
+        <maven.install.skip>true</maven.install.skip>
+        <gpg.skip>true</gpg.skip>
+
     </properties>
 
     <dependencyManagement>
