@@ -28,6 +28,9 @@
         <kotlin.version>1.5.31</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin-logging.version>2.0.11</kotlin-logging.version>
+
+        <central.staging.deploy.url>${nexusUrl}</central.staging.deploy.url>
+        <central.staging.deploy.id>${serverId}</central.staging.deploy.id>
     </properties>
 
     <dependencyManagement>
@@ -119,32 +122,6 @@
                         <source>${version.java}</source>
                         <target>${version.java}</target>
                     </configuration>
-                    <executions>
-                        <!-- Replacing default-compile as it is treated specially by maven -->
-                        <execution>
-                            <id>default-compile</id>
-                            <phase>none</phase>
-                        </execution>
-                        <!-- Replacing default-testCompile as it is treated specially by maven -->
-                        <execution>
-                            <id>default-testCompile</id>
-                            <phase>none</phase>
-                        </execution>
-                        <execution>
-                            <id>java-compile</id>
-                            <phase>compile</phase>
-                            <goals>
-                                <goal>compile</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>java-test-compile</id>
-                            <phase>test-compile</phase>
-                            <goals>
-                                <goal>testCompile</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.jetbrains.dokka</groupId>
@@ -236,20 +213,23 @@
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.8</version>
                     <extensions>true</extensions>
                     <executions>
+                        <!-- the execution default-deploy (defined in camunda-release-parent) deploys into camunda nexus -->
+                        <!-- add additional execution to deploy to maven central -->
                         <execution>
-                            <id>default-deploy</id>
+                            <id>deploy-to-maven-central</id>
                             <phase>deploy</phase>
                             <goals>
                                 <goal>deploy</goal>
                             </goals>
                             <configuration>
                                 <detectBuildFailures>true</detectBuildFailures>
-                                <serverId>${serverId}</serverId>
-                                <nexusUrl>${nexusUrl}</nexusUrl>
+                                <serverId>${central.staging.deploy.id}</serverId>
+                                <nexusUrl>${central.staging.deploy.url}</nexusUrl>
                                 <skipStaging>true</skipStaging>
-                                <skipNexusStagingDeployMojo>${skip.camunda.release}</skipNexusStagingDeployMojo>
+                                <skipNexusStagingDeployMojo>${skip.central.release}</skipNexusStagingDeployMojo>
                             </configuration>
                         </execution>
                     </executions>
@@ -275,6 +255,36 @@
             </activation>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <executions>
+                            <!-- Replacing default-compile as it is treated specially by maven -->
+                            <execution>
+                                <id>default-compile</id>
+                                <phase>none</phase>
+                            </execution>
+                            <!-- Replacing default-testCompile as it is treated specially by maven -->
+                            <execution>
+                                <id>default-testCompile</id>
+                                <phase>none</phase>
+                            </execution>
+                            <execution>
+                                <id>java-compile</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>compile</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>java-test-compile</id>
+                                <phase>test-compile</phase>
+                                <goals>
+                                    <goal>testCompile</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.jetbrains.kotlin</groupId>
                         <artifactId>kotlin-maven-plugin</artifactId>
