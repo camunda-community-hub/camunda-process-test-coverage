@@ -11,7 +11,7 @@ jobs:
   build:
     strategy:
       fail-fast: false
-      # Build for three operating systems, currently JVMs 11 and latest four Camunda versions (last two years)
+      # Build for three operating systems, currently JVMs 11, 17 and latest four Camunda versions (last two years)
       # On Ubuntu and JDK 11, we run it until 7.10 (Release end of 2018)
       matrix:
         os:
@@ -20,7 +20,7 @@ jobs:
           - 'macos-latest'
         jdk:
           - '11'
-#          - '17'
+          - '17' # no official support yet by Camunda
         camunda-version:
           - '7.16' # 2021
           - '7.15'
