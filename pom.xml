@@ -20,7 +20,6 @@
     <modules>
         <module>extension</module>
         <module>bom</module>
-        <module>examples</module>
     </modules>
 
     <properties>
@@ -163,6 +162,15 @@
     </build>
 
     <profiles>
+        <profile>
+            <id>examples</id>
+            <activation>
+                <property><name>!skipExamples</name></property>
+            </activation>
+            <modules>
+                <module>examples</module>
+            </modules>
+        </profile>
         <profile>
             <id>activate-kotlin-support</id>
             <activation>
