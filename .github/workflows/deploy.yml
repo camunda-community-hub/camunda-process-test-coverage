@@ -25,7 +25,7 @@ jobs:
       - name: Deploy SNAPSHOT / Release
         uses: camunda-community-hub/community-action-maven-release@v1.0.9
         with:
-          maven-release-options: -DskipExamples # avoid publication of examples into repositories
+          maven-release-options: -DskipExamples # avoid publication of examples into public repositories
           release-version: ${{ github.event.release.tag_name }}
           release-profile: community-action-maven-release
           nexus-usr: ${{ secrets.NEXUS_USR }}
