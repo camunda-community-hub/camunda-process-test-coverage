@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.camunda.community</groupId>
         <artifactId>community-hub-release-parent</artifactId>
-        <version>1.2.1</version>
-        <relativePath />
+        <version>1.2.2</version>
+        <relativePath/>
     </parent>
 
     <groupId>org.camunda.bpm.extension</groupId>
     <artifactId>camunda-bpm-process-test-coverage-root</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>Camunda BPM Process Test Coverage Root</name>
     <description>Helper library to visualize and assert which parts of a BPMN process have been covered by a test.
@@ -28,9 +29,6 @@
         <kotlin.version>1.5.31</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin-logging.version>2.0.11</kotlin-logging.version>
-
-        <central.staging.deploy.url>${nexusUrl}</central.staging.deploy.url>
-        <central.staging.deploy.id>${serverId}</central.staging.deploy.id>
     </properties>
 
     <dependencyManagement>
@@ -60,7 +58,48 @@
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>1.12.0</version>
                 </plugin>
-
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                        <source>${version.java}</source>
+                        <target>${version.java}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.2</version>
+                    <configuration>
+                        <useSystemClassLoader>false</useSystemClassLoader>
+                        <shutdown>kill</shutdown>
+                        <runOrder>random</runOrder>
+                        <argLine>--illegal-access=permit -Djava.awt.headless=true -XX:+StartAttachListener -Xmx1024m
+                        </argLine>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>enforce-maven</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireMavenVersion>
+                                        <version>3.6.0</version>
+                                    </requireMavenVersion>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <!-- Kotlin compiler -->
                     <artifactId>kotlin-maven-plugin</artifactId>
@@ -113,127 +152,6 @@
                         </dependency>
                     </dependencies>
                 </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
-                    <configuration>
-                        <encoding>UTF-8</encoding>
-                        <source>${version.java}</source>
-                        <target>${version.java}</target>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.jetbrains.dokka</groupId>
-                    <artifactId>dokka-maven-plugin</artifactId>
-                    <version>1.5.31</version>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>javadocJar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <jdkVersion>11</jdkVersion>
-                        <reportUndocumented>false</reportUndocumented>
-                        <skipEmptyPackages>true</skipEmptyPackages>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <!-- Pin version down to 2.5 to be able to run on JDK 17 -->
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.5</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.22.2</version>
-                    <configuration>
-                        <useSystemClassLoader>false</useSystemClassLoader>
-                        <shutdown>kill</shutdown>
-                        <runOrder>random</runOrder>
-                        <argLine>--illegal-access=permit -Djava.awt.headless=true -XX:+StartAttachListener -Xmx1024m</argLine>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>3.2.0</version>
-                    <executions>
-                        <execution>
-                            <id>attach-kotlin-source</id>
-                            <phase>generate-sources</phase>
-                            <goals>
-                                <goal>add-source</goal>
-                            </goals>
-                            <configuration>
-                                <sources>
-                                    <source>${project.basedir}/src/main/kotlin</source>
-                                </sources>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>attach-kotlin-test</id>
-                            <phase>generate-test-sources</phase>
-                            <goals>
-                                <goal>add-test-source</goal>
-                            </goals>
-                            <configuration>
-                                <sources>
-                                    <source>${project.basedir}/src/test/kotlin</source>
-                                </sources>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>3.0.0</version>
-                    <executions>
-                        <execution>
-                            <id>enforce-maven</id>
-                            <goals>
-                                <goal>enforce</goal>
-                            </goals>
-                            <configuration>
-                                <rules>
-                                    <requireMavenVersion>
-                                        <version>3.6.0</version>
-                                    </requireMavenVersion>
-                                </rules>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.sonatype.plugins</groupId>
-                    <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.8</version>
-                    <extensions>true</extensions>
-                    <executions>
-                        <!-- the execution default-deploy (defined in camunda-release-parent) deploys into camunda nexus -->
-                        <!-- add additional execution to deploy to maven central -->
-                        <execution>
-                            <id>deploy-to-maven-central</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>deploy</goal>
-                            </goals>
-                            <configuration>
-                                <detectBuildFailures>true</detectBuildFailures>
-                                <serverId>${central.staging.deploy.id}</serverId>
-                                <nexusUrl>${central.staging.deploy.url}</nexusUrl>
-                                <skipStaging>true</skipStaging>
-                                <skipNexusStagingDeployMojo>${skip.central.release}</skipNexusStagingDeployMojo>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -254,6 +172,60 @@
                 </file>
             </activation>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.jetbrains.dokka</groupId>
+                            <artifactId>dokka-maven-plugin</artifactId>
+                            <version>1.5.31</version>
+                            <executions>
+                                <execution>
+                                    <id>attach-javadocs</id>
+                                    <phase>package</phase>
+                                    <goals>
+                                        <goal>javadocJar</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <jdkVersion>11</jdkVersion>
+                                <reportUndocumented>false</reportUndocumented>
+                                <skipEmptyPackages>true</skipEmptyPackages>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>build-helper-maven-plugin</artifactId>
+                            <version>3.2.0</version>
+                            <executions>
+                                <execution>
+                                    <id>attach-kotlin-source</id>
+                                    <phase>generate-sources</phase>
+                                    <goals>
+                                        <goal>add-source</goal>
+                                    </goals>
+                                    <configuration>
+                                        <sources>
+                                            <source>${project.basedir}/src/main/kotlin</source>
+                                        </sources>
+                                    </configuration>
+                                </execution>
+                                <execution>
+                                    <id>attach-kotlin-test</id>
+                                    <phase>generate-test-sources</phase>
+                                    <goals>
+                                        <goal>add-test-source</goal>
+                                    </goals>
+                                    <configuration>
+                                        <sources>
+                                            <source>${project.basedir}/src/test/kotlin</source>
+                                        </sources>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
