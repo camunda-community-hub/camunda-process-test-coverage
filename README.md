@@ -52,7 +52,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 
 ```xml
 <bean id="processEngineConfiguration"
-   class="org.camunda.bpm.extension.ProcessCoverageInMemProcessEngineConfiguration">
+   class="org.camunda.bpm.extension.process_test_coverage.engine.ProcessCoverageInMemProcessEngineConfiguration">
    ...
 </bean>
 ```
