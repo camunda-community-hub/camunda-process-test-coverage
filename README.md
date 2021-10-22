@@ -32,7 +32,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -43,7 +43,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage-junit5</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <scope>test</scope>
 </dependency>
 ```
