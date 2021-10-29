@@ -5,12 +5,16 @@ import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.extension.process_test_coverage.junit5.ProcessEngineCoverageExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 @ExtendWith(ProcessEngineCoverageExtension.class)
 @Deployment(resources = "order-process.bpmn")
 public class OrderProcessTest {
+
+//    @RegisterExtension
+//    public static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension.builder().build();
 
     @Test
     public void shouldExecuteHappyPath() {
