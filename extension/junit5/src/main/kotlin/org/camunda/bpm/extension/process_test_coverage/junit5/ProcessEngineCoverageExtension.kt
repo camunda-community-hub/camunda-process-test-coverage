@@ -59,6 +59,8 @@ class ProcessEngineCoverageExtension(
      */
     private val testMethodNameToCoverageConditions: MutableMap<String, MutableList<Condition<Double>>> = mutableMapOf()
 
+    private var suiteInitialized = false
+
     override fun postProcessTestInstance(testInstance: Any?, context: ExtensionContext) {
         super.postProcessTestInstance(testInstance, context)
         initializeListeners()
@@ -70,7 +72,7 @@ class ProcessEngineCoverageExtension(
     override fun beforeTestExecution(context: ExtensionContext) {
         super.beforeTestExecution(context)
         if (isRelevantTestMethod()) {
-            if (!context.isSuiteInitialized()) {
+            if (!suiteInitialized) {
                 initializeSuite(context)
             }
             // method name is set only on test methods (not on classes or suites)
@@ -102,7 +104,7 @@ class ProcessEngineCoverageExtension(
         coverageCollector.createSuite(Suite(suiteId, context.requiredTestClass.name))
         coverageCollector.setExcludedProcessDefinitionKeys(excludedProcessDefinitionKeys)
         coverageCollector.activateSuite(suiteId)
-        context.suiteInitialized()
+        suiteInitialized = true
     }
 
     /**
@@ -302,14 +304,6 @@ class ProcessEngineCoverageExtension(
     }
 
 }
-
-fun ExtensionContext.isSuiteInitialized(): Boolean =
-        this.root.getStore(ExtensionContext.Namespace.create(ProcessEngineExtension::class.java))
-                .getOrDefault(this.requiredTestClass.name, Boolean::class.java, false)
-
-fun ExtensionContext.suiteInitialized() =
-        this.root.getStore(ExtensionContext.Namespace.create(ProcessEngineExtension::class.java))
-                .put(this.requiredTestClass.name, true)
 
 fun Double.checkPercentage() =
     if (0 > this || this > 1) {

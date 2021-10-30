@@ -79,6 +79,9 @@ Either use `@ExtendWith`
 public class MyProcessTest
 ```
 or `@RegisterExtension`
+
+If you register the extension on a non-static field, no class coverage and therefore no report will be generated. This is due to the fact, that an instance of the extension will be created per test method.
+
 ```java
 @RegisterExtension
 static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension
