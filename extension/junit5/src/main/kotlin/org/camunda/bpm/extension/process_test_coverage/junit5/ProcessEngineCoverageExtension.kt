@@ -3,6 +3,7 @@ package org.camunda.bpm.extension.process_test_coverage.junit5
 import mu.KLogging
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
+import org.camunda.bpm.engine.ProcessEngineConfiguration
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
 import org.camunda.bpm.extension.junit5.test.ProcessEngineExtension
 import org.camunda.bpm.extension.process_test_coverage.engine.CompensationEventCoverageHandler
@@ -42,6 +43,10 @@ class ProcessEngineCoverageExtension(
     companion object : KLogging() {
         @JvmStatic
         fun builder() = Builder()
+        @JvmStatic
+        fun builder(configurationResource: String) = Builder(configurationResource = configurationResource)
+        @JvmStatic
+        fun builder(processEngineConfiguration: ProcessEngineConfiguration) = Builder(processEngineConfiguration = processEngineConfiguration)
     }
 
     /**
@@ -222,6 +227,7 @@ class ProcessEngineCoverageExtension(
 
     data class Builder(
             var configurationResource: String? = null,
+            val processEngineConfiguration: ProcessEngineConfiguration? = null,
             var detailedCoverageLogging: Boolean = false,
             var handleTestMethodCoverage: Boolean = true,
             var coverageAtLeast: Double? = null,
@@ -244,6 +250,9 @@ class ProcessEngineCoverageExtension(
         /**
          * Set the configuration resource for initializing the process engine.
          */
+        @Deprecated("Pass the configuration resource directly when creating the builder",
+                ReplaceWith("ProcessEngineCoverageExtension.builder(configurationResource)",
+                        "org.camunda.bpm.extension.process_test_coverage.junit5.ProcessEngineCoverageExtension"))
         fun configurationResource(configurationResource: String) = this.apply { this.configurationResource = configurationResource }
 
         /**
@@ -290,11 +299,15 @@ class ProcessEngineCoverageExtension(
                     handleTestMethodCoverage = handleTestMethodCoverage,
                     excludedProcessDefinitionKeys = excludedProcessDefinitionKeys
             ).apply {
-                coverageFromSystemProperty(optionalAssertCoverageAtLeastProperty)?.let {
+                coverageFromSystemProperty(this@Builder.optionalAssertCoverageAtLeastProperty)?.let {
                     addClassCoverageAtLeast(it)
                 }
-                coverageAtLeast?.let { addClassCoverageAtLeast(it) }
-                configurationResource?.let { this.configurationResource(it) }
+                this@Builder.coverageAtLeast?.let { addClassCoverageAtLeast(it) }
+                this@Builder.configurationResource?.let { this.configurationResource(it) }
+                if (this@Builder.processEngineConfiguration != null) {
+                    processEngine = this@Builder.processEngineConfiguration.buildProcessEngine()
+                    processEngineConfiguration = this@Builder.processEngineConfiguration as ProcessEngineConfigurationImpl
+                }
                 if (processEngine == null) {
                     initializeProcessEngine()
                 }
