@@ -141,7 +141,7 @@ class ProcessEngineCoverageExtension(
      * {@see ProcessCoverageInMemProcessEngineConfiguration}
      */
     private fun initializeListeners() {
-        val processEngineConfiguration = this.processEngine.processEngineConfiguration as ProcessEngineConfigurationImpl
+        val processEngineConfiguration = this.processEngineConfiguration
         val bpmnParseListeners = processEngineConfiguration.customPostBPMNParseListeners
         for (parseListener in bpmnParseListeners) {
             if (parseListener is ElementCoverageParseListener) {
@@ -253,7 +253,17 @@ class ProcessEngineCoverageExtension(
         @Deprecated("Pass the configuration resource directly when creating the builder",
                 ReplaceWith("ProcessEngineCoverageExtension.builder(configurationResource)",
                         "org.camunda.bpm.extension.process_test_coverage.junit5.ProcessEngineCoverageExtension"))
-        fun configurationResource(configurationResource: String) = this.apply { this.configurationResource = configurationResource }
+        fun configurationResource(configurationResource: String): Builder {
+            return if (this.configurationResource != null) {
+                logger.warn { "configuration resource ${this.configurationResource} already configured, ignoring $configurationResource" }
+                this
+            } else if (this.processEngineConfiguration != null) {
+                logger.warn { "process engine configuration ${this.processEngineConfiguration} already configured, ignoring $configurationResource" }
+                this
+            } else {
+                this.apply { this.configurationResource = configurationResource }
+            }
+        }
 
         /**
          * Turns on detailed coverage logging in debug scope.
@@ -306,9 +316,8 @@ class ProcessEngineCoverageExtension(
                 this@Builder.configurationResource?.let { this.configurationResource(it) }
                 if (this@Builder.processEngineConfiguration != null) {
                     processEngine = this@Builder.processEngineConfiguration.buildProcessEngine()
-                    processEngineConfiguration = this@Builder.processEngineConfiguration as ProcessEngineConfigurationImpl
-                }
-                if (processEngine == null) {
+                    processEngineConfiguration = processEngine.processEngineConfiguration as ProcessEngineConfigurationImpl
+                } else if (processEngine == null) {
                     initializeProcessEngine()
                 }
                 initializeListeners()
