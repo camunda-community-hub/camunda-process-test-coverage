@@ -74,20 +74,43 @@ public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.crea
 Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension
 
 Either use `@ExtendWith`
+
+Java
 ```java
 @ExtendWith(ProcessEngineCoverageExtension.class)
 public class MyProcessTest
+```
+
+Kotlin
+```kotlin
+@ExtendWith(ProcessEngineCoverageExtension::class)
+class MyProcessTest
 ```
 or `@RegisterExtension`
 
 If you register the extension on a non-static field, no class coverage and therefore no report will be generated. This is due to the fact, that an instance of the extension will be created per test method.
 
+The extension provides a Builder for programmatic creation, which takes either a path to a configuration resource, a process engine configuration or if nothing is passed uses the default configuration resources path (`camunda.cfg.xml`).
+
+The process engine configuration needs to be configured for test coverage. So use **either** the provided `ProcessCoverageInMemProcessEngineConfiguration`, `SpringProcessWithCoverageEngineConfiguration` or initialize the configuration with `ProcessCoverageConfigurator.initializeProcessCoverageExtensions(configuration)`.
+
+Java
 ```java
 @RegisterExtension
 static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension
         .builder().assertClassCoverageAtLeast(0.9).build();
 ```
 
+Kotlin
+```kotlin
+    companion object {
+        @JvmField
+        @RegisterExtension
+        var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension
+                .builder(ProcessCoverageInMemProcessEngineConfiguration())
+                .assertClassCoverageAtLeast(1.0).build()
+    }
+```
 Running your JUnit tests now leaves **html** files for individual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
 
 ## New! Get Started with Spring Testing
