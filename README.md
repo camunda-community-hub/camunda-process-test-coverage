@@ -90,9 +90,9 @@ or `@RegisterExtension`
 
 If you register the extension on a non-static field, no class coverage and therefore no report will be generated. This is due to the fact, that an instance of the extension will be created per test method.
 
-The extension provides a Builder for programmatic creation, which takes either a path to a configuration resource, a process engine configuration or if nothing is passed uses the default configuration resources paht (camunda.cfg.xml).
+The extension provides a Builder for programmatic creation, which takes either a path to a configuration resource, a process engine configuration or if nothing is passed uses the default configuration resources path (`camunda.cfg.xml`).
 
-The process engine configuration needs to be configured for test coverage. So use either the provided ProcessCoverageInMemProcessEngineConfiguration, SpringProcessWithCoverageEngineConfiguration or initialize the configuration with ProcessCoverageConfigurator.initializeProcessCoverageExtensions(configuration).
+The process engine configuration needs to be configured for test coverage. So use **either** the provided `ProcessCoverageInMemProcessEngineConfiguration`, `SpringProcessWithCoverageEngineConfiguration` or initialize the configuration with `ProcessCoverageConfigurator.initializeProcessCoverageExtensions(configuration)`.
 
 Java
 ```java
