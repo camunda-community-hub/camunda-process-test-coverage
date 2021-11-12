@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.camunda.bpm.extension.process_test_coverage.spring_test.ProcessEngineCoverageConfiguration
+org.springframework.test.context.TestExecutionListener=\
+  org.camunda.bpm.extension.process_test_coverage.spring_test.ProcessEngineCoverageTestExecutionListener
