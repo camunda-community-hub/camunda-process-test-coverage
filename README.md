@@ -48,6 +48,21 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 </dependency>
 ```
 
+#### Spring-Testing
+
+```xml
+<dependency>
+  <groupId>org.camunda.bpm.extension</groupId>
+  <artifactId>camunda-bpm-process-test-coverage-spring-test</artifactId>
+  <version>1.0.0</version>
+  <scope>test</scope>
+</dependency>
+```
+
+Steps #2 and #3 are not needed for Spring-Testing, as all components for testing are auto-configured.
+
+See example for setup and possibility for configuration of test coverage execution.
+
 **2.** Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml`
 
 ```xml
