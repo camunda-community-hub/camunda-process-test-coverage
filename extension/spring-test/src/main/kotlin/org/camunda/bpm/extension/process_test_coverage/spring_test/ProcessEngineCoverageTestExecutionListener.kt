@@ -17,9 +17,8 @@ import org.springframework.test.context.TestContext
 import org.springframework.test.context.TestExecutionListener
 
 /**
- * Extension for JUnit 5 which allows the tracking of coverage information for Camunda BPM process tests.
- * Based on the ProcessEngineExtension from the camunda-bpm-junit5 from the camunda community.
- * https://github.com/camunda-community-hub/camunda-bpm-junit5
+ * Test execution listener for process test coverage.
+ * Can be used with spring testing framework to get process test coverage in spring tests.
  *
  * @author Jan Rohwer
  */
@@ -67,31 +66,43 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
      * Handles creating the run if a relevant test method is called.
      */
     override fun beforeTestMethod(testContext: TestContext) {
-        if (!suiteInitialized) {
-            initializeSuite(testContext)
+        if (!isTestMethodExcluded(testContext)) {
+            if (!suiteInitialized) {
+                initializeSuite(testContext)
+            }
+            // method name is set only on test methods (not on classes or suites)
+            val runId: String = testContext.testMethod.name
+            coverageCollector.createRun(Run(runId, testContext.testMethod.name), coverageCollector.activeSuite.id)
+            coverageCollector.activateRun(runId)
         }
-        // method name is set only on test methods (not on classes or suites)
-        val runId: String = testContext.testMethod.name
-        coverageCollector.createRun(Run(runId, testContext.testMethod.name), coverageCollector.activeSuite.id)
-        coverageCollector.activateRun(runId)
     }
 
     /**
      * Handles evaluating the test method coverage after a relevant test method is finished.
      */
     override fun afterTestMethod(testContext: TestContext) {
-        if (processEngineCoverageProperties.handleTestMethodCoverage()) {
+        if (!isTestMethodExcluded(testContext) && processEngineCoverageProperties.handleTestMethodCoverage()) {
             handleTestMethodCoverage(testContext)
         }
     }
+
+    private fun isTestClassExcluded(testContext: TestContext) =
+            testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage}
+
+    private fun isTestMethodExcluded(testContext: TestContext) =
+            testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage}
+                    || testContext.testMethod.annotations.any { it is ExcludeFromProcessCoverage }
+
 
     /**
      * Initializes the suite for all upcoming tests.
      */
     override fun beforeTestClass(testContext: TestContext) {
-        loadConfiguration(testContext)
-        initializeListeners(testContext)
-        initializeSuite(testContext)
+        if (!isTestClassExcluded(testContext)) {
+            loadConfiguration(testContext)
+            initializeListeners(testContext)
+            initializeSuite(testContext)
+        }
     }
 
     private fun initializeSuite(testContext: TestContext) {
@@ -108,22 +119,24 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
      * deployments have to be equal.
      */
     override fun afterTestClass(testContext: TestContext) {
-        val suite = coverageCollector.activeSuite
+        if (!isTestClassExcluded(testContext)) {
+            val suite = coverageCollector.activeSuite
 
-        // Make sure the class coverage deals with the same deployments for
-        // every test method
-        // classCoverage.assertAllDeploymentsEqual();
-        val suiteCoveragePercentage = suite.calculateCoverage(coverageCollector.getModels())
+            // Make sure the class coverage deals with the same deployments for
+            // every test method
+            // classCoverage.assertAllDeploymentsEqual();
+            val suiteCoveragePercentage = suite.calculateCoverage(coverageCollector.getModels())
 
-        // Log coverage percentage
-        logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
-        logCoverageDetail(suite)
+            // Log coverage percentage
+            logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
+            logCoverageDetail(suite)
 
-        assertCoverage(suiteCoveragePercentage, classCoverageAssertionConditions)
+            assertCoverage(suiteCoveragePercentage, classCoverageAssertionConditions)
 
-        // Create graphical report
-        CoverageReportUtil.createReport(coverageCollector)
-        CoverageReportUtil.createJsonReport(coverageCollector)
+            // Create graphical report
+            CoverageReportUtil.createReport(coverageCollector)
+            CoverageReportUtil.createJsonReport(coverageCollector)
+        }
     }
 
     /**

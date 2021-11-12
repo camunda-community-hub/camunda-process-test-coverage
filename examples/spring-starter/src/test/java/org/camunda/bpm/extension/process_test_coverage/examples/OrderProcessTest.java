@@ -15,9 +15,7 @@ import org.springframework.test.context.TestExecutionListeners;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 @SpringBootTest
-@Import({CoverageTestConfiguration.class, ProcessEngineCoverageConfiguration.class})
-@TestExecutionListeners(value = ProcessEngineCoverageTestExecutionListener.class,
-        mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
+@Import(CoverageTestConfiguration.class)
 public class OrderProcessTest {
 
     @Autowired

@@ -37,6 +37,11 @@
             </dependency>
             <dependency>
                 <groupId>org.camunda.bpm.extension</groupId>
+                <artifactId>camunda-bpm-process-test-coverage-starter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.camunda.bpm.extension</groupId>
                 <artifactId>camunda-bpm-process-test-coverage-report-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>

@@ -5,6 +5,7 @@ import org.camunda.bpm.extension.process_test_coverage.engine.ProcessCoverageCon
 import org.camunda.bpm.spring.boot.starter.configuration.Ordering
 import org.camunda.bpm.spring.boot.starter.configuration.impl.AbstractCamundaConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
