@@ -24,40 +24,19 @@ import org.springframework.test.context.TestExecutionListener
  */
 class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordered {
 
-    companion object : KLogging() {
-        /**
-         * If you set this property to a ratio (e.g. "1.0" for full coverage),
-         * the Extension will fail the test run if the coverage is less.<br></br>
-         * Example parameter for running java:<br></br>
-         * `-Dorg.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST=1.0`
-         */
-        const val DEFAULT_ASSERT_AT_LEAST_PROPERTY = "org.camunda.bpm.extension.process_test_coverage.ASSERT_AT_LEAST"
-    }
+    companion object : KLogging()
 
     /**
      * The state of the current run (class and current method).
      */
     private val coverageCollector = DefaultCollector(ExecutionContextModelProvider())
 
-    /**
-     * Conditions to be asserted on the class coverage percentage.
-     */
-    private val classCoverageAssertionConditions: MutableList<Condition<Double>> = mutableListOf()
-
-    private lateinit var processEngineCoverageProperties: ProcessEngineCoverageProperties
+     private lateinit var processEngineCoverageProperties: ProcessEngineCoverageProperties
 
     private var suiteInitialized = false
 
     private fun loadConfiguration(testContext: TestContext) {
         processEngineCoverageProperties = testContext.applicationContext.getBean(ProcessEngineCoverageProperties::class.java)
-        processEngineCoverageProperties.coverageAtLeast()?.let { addClassCoverageAtLeast(it) }
-        System.getProperty(processEngineCoverageProperties.optionalAssertCoverageAtLeastProperty())?.let {
-            try {
-                addClassCoverageAtLeast(it.toDouble())
-            } catch (e: NumberFormatException) {
-                throw RuntimeException("BAD TEST CONFIGURATION: system property \"${processEngineCoverageProperties.optionalAssertCoverageAtLeastProperty()}\" must be double")
-            }
-        }
     }
 
     override fun getOrder() = Integer.MAX_VALUE
@@ -81,7 +60,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
      * Handles evaluating the test method coverage after a relevant test method is finished.
      */
     override fun afterTestMethod(testContext: TestContext) {
-        if (!isTestMethodExcluded(testContext) && processEngineCoverageProperties.handleTestMethodCoverage()) {
+        if (!isTestMethodExcluded(testContext) && processEngineCoverageProperties.handleTestMethodCoverage) {
             handleTestMethodCoverage(testContext)
         }
     }
@@ -108,7 +87,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
     private fun initializeSuite(testContext: TestContext) {
         val suiteId: String = testContext.testClass.name
         coverageCollector.createSuite(Suite(suiteId, testContext.testClass.name))
-        coverageCollector.setExcludedProcessDefinitionKeys(processEngineCoverageProperties.excludedProcessDefinitionKeys())
+        coverageCollector.setExcludedProcessDefinitionKeys(processEngineCoverageProperties.excludedProcessDefinitionKeys)
         coverageCollector.activateSuite(suiteId)
         suiteInitialized = true
     }
@@ -131,7 +110,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
             logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
             logCoverageDetail(suite)
 
-            assertCoverage(suiteCoveragePercentage, classCoverageAssertionConditions)
+            assertCoverage(suiteCoveragePercentage, processEngineCoverageProperties.classCoverageAssertionConditions)
 
             // Create graphical report
             CoverageReportUtil.createReport(coverageCollector)
@@ -178,7 +157,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
         logger.info("${run.name} test method coverage is $coveragePercentage")
         logCoverageDetail(run)
 
-        processEngineCoverageProperties.testMethodCoverageConditions()[run.name]?.let {
+        processEngineCoverageProperties.testMethodCoverageConditions[run.name]?.let {
             assertCoverage(coveragePercentage, it)
         }
     }
@@ -187,7 +166,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
      * Logs the string representation of the passed suite object.
      */
     private fun logCoverageDetail(suite: Suite) {
-        if (logger.isDebugEnabled && processEngineCoverageProperties.detailedCoverageLogging()) {
+        if (logger.isDebugEnabled && processEngineCoverageProperties.detailedCoverageLogging) {
             logger.debug(suite.toString())
         }
     }
@@ -196,7 +175,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
      * Logs the string representation of the passed run object.
      */
     private fun logCoverageDetail(run: Run) {
-        if (logger.isDebugEnabled && processEngineCoverageProperties.detailedCoverageLogging()) {
+        if (logger.isDebugEnabled && processEngineCoverageProperties.detailedCoverageLogging) {
             logger.debug(run.toString())
         }
     }
@@ -205,17 +184,5 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
         conditions.forEach { Assertions.assertThat(coverage).satisfies(it) }
     }
 
-    private fun addClassCoverageAtLeast(percentage: Double) {
-        percentage.checkPercentage()
-        classCoverageAssertionConditions.add(
-                Condition<Double>({ p -> p >= percentage }, "matches if the coverage ratio is at least $percentage")
-        )
-    }
 
 }
-
-fun Double.checkPercentage() =
-        if (0 > this || this > 1) {
-            throw RuntimeException(
-                    "BAD TEST CONFIGURATION: coverageAtLeast " + this + " (" + 100 * this + "%) ")
-        } else this
