@@ -113,6 +113,34 @@ Kotlin
 ```
 Running your JUnit tests now leaves **html** files for individual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
 
+**4. (Optional)** configure outout path for reports
+
+by default the reports are written to `./target/process-test-coverage/`. To change it you can set the system property `camunda-bpm-process-test-coverage.target-dir-root`
+
+##### in maven pom.xml
+```xml
+<plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-surefire-plugin</artifactId>
+<version>3.0.0-M5</version>
+<configuration>
+  <systemPropertyVariables>
+    <camunda-bpm-process-test-coverage.target-dir-root>${project.build.directory}/my-coverage-reports/</camunda-bpm-process-test-coverage.target-dir-root>
+  </systemPropertyVariables>
+</configuration>
+</plugin>
+```
+
+##### in build.gradle.kts
+```kotlin
+tasks {
+    withType<Test> {
+        systemProperties = mapOf(
+            "camunda-bpm-process-test-coverage.target-dir-root" to "$buildDir/my-coverage-reports/"
+        )
+    }
+}
+```
 ## New! Get Started with Spring Testing
 
 See a unit test example wired for Spring Testing [here](https://github.com/camunda/camunda-bpm-process-test-coverage/blob/master/test/src/test/java/org/camunda/bpm/extension/process_test_coverage/spring/SpringProcessWithCoverageTest.java).
