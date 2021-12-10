@@ -48,13 +48,53 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 </dependency>
 ```
 
+#### Spring-Testing
+
+```xml
+<dependency>
+  <groupId>org.camunda.bpm.extension</groupId>
+  <artifactId>camunda-bpm-process-test-coverage-spring-test</artifactId>
+  <version>1.0.0</version>
+  <scope>test</scope>
+</dependency>
+```
+
+#### Spring-Testing with starter
+
+```xml
+<dependency>
+  <groupId>org.camunda.bpm.extension</groupId>
+  <artifactId>camunda-bpm-process-test-coverage-starter</artifactId>
+  <version>1.0.0</version>
+  <scope>test</scope>
+</dependency>
+```
+
+With the starter steps #2 and #3 are not needed anymore, as everything is auto-configured. This means you have to explicitly exclude all test classes and test methods,
+that should not be included in the test coverage.
+
+You can do that, by using the following annotation on the class or method level.
+
+```java
+@ExcludeFromProcessCoverage
+```
+
 **2.** Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml`
+
+#### JUnit4 and JUnit5
 
 ```xml
 <bean id="processEngineConfiguration"
    class="org.camunda.bpm.extension.process_test_coverage.engine.ProcessCoverageInMemProcessEngineConfiguration">
    ...
 </bean>
+```
+
+#### Spring-Testing
+
+Import test configuration to enable coverage in process engine.
+```java
+@Import(ProcessEngineCoverageConfiguration.class)
 ```
 
 **3.** Wire the process engine in your JUnit test
@@ -111,6 +151,23 @@ Kotlin
                 .assertClassCoverageAtLeast(1.0).build()
     }
 ```
+
+#### Spring-Testing
+
+```java
+@TestExecutionListeners(value = ProcessEngineCoverageTestExecutionListener.class,
+        mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
+```
+
+You can exlude test methods from the coverage by annotating them like this
+
+```java
+@ExcludeFromProcessCoverage
+public void testWithoutCoverage() {}
+```
+
+### Running the tests
+
 Running your JUnit tests now leaves **html** files for individual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
 
 **4. (Optional)** configure output path for reports
@@ -143,7 +200,8 @@ tasks {
 ```
 ## New! Get Started with Spring Testing
 
-See a unit test example wired for Spring Testing [here](https://github.com/camunda/camunda-bpm-process-test-coverage/blob/master/test/src/test/java/org/camunda/bpm/extension/process_test_coverage/spring/SpringProcessWithCoverageTest.java).
+
+Look at the examples and unit tests for further configuration options.
 
 ## News and Noteworthy & Contributors
 

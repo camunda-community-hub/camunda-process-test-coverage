@@ -16,6 +16,7 @@
         <module>core</module>
         <module>junit4</module>
         <module>junit5</module>
+        <module>spring-test</module>
         <module>report-generator</module>
     </modules>
 
