@@ -33,7 +33,7 @@
         with: java.lang.NoClassDefFoundError: org/camunda/feel/context/Context
         -->
         <camunda.compile.version>7.14.0</camunda.compile.version>
-        <spring-boot.version>2.5.7</spring-boot.version>
+        <spring-boot.version>2.6.1</spring-boot.version>
 
         <npm.version>6.14.8</npm.version>
         <node.version>v10.22.0</node.version>
