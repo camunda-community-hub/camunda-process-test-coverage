@@ -113,7 +113,7 @@ Kotlin
 ```
 Running your JUnit tests now leaves **html** files for individual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
 
-**4. (Optional)** configure outout path for reports
+**4. (Optional)** configure output path for reports
 
 by default the reports are written to `./target/process-test-coverage/`. To change it you can set the system property `camunda-bpm-process-test-coverage.target-dir-root`
 
