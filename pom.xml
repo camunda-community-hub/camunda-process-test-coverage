@@ -25,9 +25,9 @@
 
     <properties>
         <version.java>11</version.java>
-        <kotlin.version>1.5.31</kotlin.version>
+        <kotlin.version>1.6.0</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin-logging.version>2.0.11</kotlin-logging.version>
+        <kotlin-logging.version>2.1.15</kotlin-logging.version>
     </properties>
 
     <dependencyManagement>
@@ -185,7 +185,7 @@
                         <plugin>
                             <groupId>org.jetbrains.dokka</groupId>
                             <artifactId>dokka-maven-plugin</artifactId>
-                            <version>1.5.31</version>
+                            <version>1.6.0</version>
                             <executions>
                                 <execution>
                                     <id>attach-javadocs</id>
