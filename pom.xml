@@ -25,7 +25,7 @@
 
     <properties>
         <version.java>11</version.java>
-        <kotlin.version>1.6.0</kotlin.version>
+        <kotlin.version>1.6.10</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin-logging.version>2.1.16</kotlin-logging.version>
     </properties>
