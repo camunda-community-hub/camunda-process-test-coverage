@@ -24,7 +24,7 @@
     </modules>
 
     <properties>
-        <version.java>11</version.java>
+        <version.java>1.8</version.java>
         <kotlin.version>1.6.10</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin-logging.version>2.1.21</kotlin-logging.version>
@@ -106,6 +106,8 @@
                     <version>${kotlin.version}</version>
                     <configuration>
                         <jvmTarget>${version.java}</jvmTarget>
+                        <languageVersion>1.5</languageVersion>
+                        <apiVersion>1.5</apiVersion>
                         <compilerPlugins>
                             <plugin>spring</plugin>
                             <plugin>no-arg</plugin>
