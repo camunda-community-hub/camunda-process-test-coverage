@@ -18,7 +18,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 
 ## Just use it
 
-* Integrates with all versions of Camunda BPM starting with 7.12.0 and upwards
+* Integrates with all versions of Camunda BPM starting with 7.10.0 and upwards
 * Is continuously checked against the latest Camunda BPM releases (check out our compatibility CI/CD pipeline)
 * Tested with JDKs 11 and 17
 * Works with Java starting with 1.8 and following 
