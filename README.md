@@ -13,18 +13,20 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 ## Highlights
 
 * **Visually verify** the paths covered by individual tests **methods** and whole test **classes**
-* Visually check gateway **expressions** and transaction borders (**savepoints**) used by your process
+* Visually check gateway **expressions** and transaction borders (**save points**) used by your process
 * Calculate and **verify** the nodes (_and_ sequence flow) **coverage** ratio reached by tests methods and classes
 
 ## Just use it
 
-* Integrates with all versions of Camunda BPM starting with 7.3.0 and upwards 
-* Works with all relevant Java versions: 1.8 and 1.11 - using **JUnit 4.13.1** (4.11 does not work) or **JUnit 5**
+* Integrates with all versions of Camunda BPM starting with 7.12.0 and upwards 
+* Works with Java version 11 and following - using **JUnit 4.13.1** (4.11 does not work) or **JUnit 5**
 * Is continuously checked against the latest Camunda BPM releases 
 
 ## Get started with *3 simple steps*
 
-<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage-core/badge.svg" align="right" /></a>**1.** Add a **Maven test dependency** to your project
+<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage-core/badge.svg" align="right" /></a>
+
+**1.** Add a **Maven test dependency** to your project
 
 #### JUnit4
 
@@ -32,7 +34,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
-  <version>1.0.0</version>
+  <version>${camunda-bpm-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -43,7 +45,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage-junit5</artifactId>
-  <version>1.0.0</version>
+  <version>${camunda-bpm-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -54,7 +56,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage-spring-test</artifactId>
-  <version>1.0.0</version>
+  <version>${camunda-bpm-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -65,7 +67,7 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 <dependency>
   <groupId>org.camunda.bpm.extension</groupId>
   <artifactId>camunda-bpm-process-test-coverage-starter</artifactId>
-  <version>1.0.0</version>
+  <version>${camunda-bpm-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -179,7 +181,7 @@ by default the reports are written to `./target/process-test-coverage/`. To chan
 <plugin>
 <groupId>org.apache.maven.plugins</groupId>
 <artifactId>maven-surefire-plugin</artifactId>
-<version>3.0.0-M5</version>
+<version>2.22.2</version>
 <configuration>
   <systemPropertyVariables>
     <camunda-bpm-process-test-coverage.target-dir-root>${project.build.directory}/my-coverage-reports/</camunda-bpm-process-test-coverage.target-dir-root>
@@ -199,7 +201,6 @@ tasks {
 }
 ```
 ## New! Get Started with Spring Testing
-
 
 Look at the examples and unit tests for further configuration options.
 
