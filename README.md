@@ -18,15 +18,16 @@ This Camunda BPM community extension **visualises** test process **paths** and *
 
 ## Just use it
 
-* Integrates with all versions of Camunda BPM starting with 7.12.0 and upwards 
-* Works with Java version 11 and following - using **JUnit 4.13.1** (4.11 does not work) or **JUnit 5**
-* Is continuously checked against the latest Camunda BPM releases 
+* Integrates with all versions of Camunda BPM starting with 7.10.0 and upwards
+* Is continuously checked against the latest Camunda BPM releases (check out our compatibility CI/CD pipeline)
+* Tested with JDKs 11 and 17
+* Works with Java starting with 1.8 and following 
+* Supports **JUnit 4.13.1** (4.11 does not work) or **JUnit 5**
+* Can be used inside Spring Tests 
 
 ## Get started with *3 simple steps*
 
-<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage-core/badge.svg" align="right" /></a>
-
-**1.** Add a **Maven test dependency** to your project
+**1.** Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage-core/badge.svg" align="right" /></a>
 
 #### JUnit4
 
@@ -200,15 +201,14 @@ tasks {
     }
 }
 ```
-## New! Get Started with Spring Testing
-
-Look at the examples and unit tests for further configuration options.
-
 ## News and Noteworthy & Contributors
 
-There are a plenty of contributors to this project. Its initial design has been created by the WDW eLab GmbH and some others, but then the project has been abandoned for some time 
-and received a full rewrite including the new architecture. We appreciate any help and effort you put into maintenance discussion and 
-further development. Please check the release notes of [individual releases](https://github.com/camunda-community-hub/camunda-bpm-process-test-coverage/releases) for the changes 
+There are a plenty of contributors to this project. Its initial design has been created by the WDW eLab GmbH and some others, 
+but then the project has been abandoned for some time and received a full rewrite including the new architecture by members 
+of flowcov.io squad and BPM craftsmen from Holisticon AG. We appreciate any help and effort you put into maintenance 
+discussion and further development. 
+
+Please check the release notes of [individual releases](https://github.com/camunda-community-hub/camunda-bpm-process-test-coverage/releases) for the changes 
 and involved contributors.
 
 ## License
