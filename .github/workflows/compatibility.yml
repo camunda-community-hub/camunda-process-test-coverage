@@ -19,8 +19,10 @@ jobs:
           - 'windows-latest'
           - 'macos-latest'
         jdk:
+          - '8'
           - '11'
-          - '17' # no official support yet by Camunda
+          - '15'
+          #- '17' # no official support yet by Camunda
         camunda-version:
           - '7.16' # 2021
           - '7.15'
