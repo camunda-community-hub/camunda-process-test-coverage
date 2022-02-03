@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.RegisterExtension
 
 class ProcessEngineConfigurationTest {
 
+    @Suppress("DEPRECATION")
     companion object {
         @JvmField
         @RegisterExtension
