@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -47,7 +48,7 @@ public class CoverageReportUtil {
 
         try {
             final String report = generateHtml(result);
-            Files.createDirectories(Path.of(reportDirectory));
+            Files.createDirectories(FileSystems.getDefault().getPath(reportDirectory));
             writeToFile(reportDirectory + "/report.html", report);
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException("Unable to create HTML report.", e);
@@ -62,7 +63,7 @@ public class CoverageReportUtil {
         final String reportDirectory = getReportDirectoryPath(suite.getName());
 
         try {
-            Files.createDirectories(Path.of(reportDirectory));
+            Files.createDirectories(FileSystems.getDefault().getPath(reportDirectory));
             writeToFile(reportDirectory + "/report.json", result);
         } catch (final IOException ex) {
             throw new RuntimeException("Unable to create JSON report.", ex);
@@ -70,15 +71,17 @@ public class CoverageReportUtil {
     }
 
     protected static String generateHtml(String result) throws IOException, URISyntaxException {
+        InputStream template =  CoverageReportUtil.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE);
+        Objects.requireNonNull(template);
         String html = new BufferedReader(
-            new InputStreamReader(CoverageReportUtil.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE), StandardCharsets.UTF_8))
+            new InputStreamReader(template, StandardCharsets.UTF_8))
             .lines()
             .collect(Collectors.joining("\n"));
         return html.replace("{{__REPORT_JSON_PLACEHOLDER__}}", result);
     }
 
     private static void writeToFile(final String filePath, final String json) throws IOException {
-        Files.writeString(Path.of(filePath), json);
+        Files.write(FileSystems.getDefault().getPath(filePath), json.getBytes(StandardCharsets.UTF_8));
     }
 
     private static void installReportDependencies(final String reportDirectory) {
@@ -100,17 +103,20 @@ public class CoverageReportUtil {
                 final Enumeration<JarEntry> entries = coverageJar.entries();
 
                 while (entries.hasMoreElements()) {
-
                     final String resourcePath = entries.nextElement().getName();
                     if (resourcePath.startsWith(REPORT_RESOURCES)) {
-
                         final File resource = new File(parent, resourcePath);
-
                         final InputStream source = CoverageReportUtil.class.getResourceAsStream("/" + resourcePath);
+                        Objects.requireNonNull(source);
                         if (resourcePath.endsWith("/")) {
-                            resource.mkdirs();
+                            logger.info("Creating directory " + resource.getAbsolutePath());
+                            if (!resource.exists() && !resource.mkdirs()) {
+                                throw new IllegalStateException("Could not create report directory " + resource.getAbsolutePath());
+                            }
                         } else {
-                            resource.getParentFile().mkdirs();
+                            if (!resource.getParentFile().exists() && !resource.getParentFile().mkdirs()) {
+                                throw new IllegalStateException("Could not create report directory " + resource.getParentFile().getAbsolutePath());
+                            }
                             Files.copy(source, resource.toPath());
                         }
                     }
@@ -118,8 +124,12 @@ public class CoverageReportUtil {
                 coverageJar.close();
             } else {
                 // Tests executed in the IDE use directories
-                final File bowerSrc = new File(CoverageReportUtil.class.getResource("/" + REPORT_RESOURCES).toURI());
-                bowerComponents.getParentFile().mkdirs();
+                URL reportResources = CoverageReportUtil.class.getResource("/" + REPORT_RESOURCES);
+                Objects.requireNonNull(reportResources);
+                final File bowerSrc = new File(reportResources.toURI());
+                if (!bowerComponents.getParentFile().exists() && !bowerComponents.getParentFile().mkdirs()) {
+                    throw new IllegalStateException("Could not create report directory " + bowerComponents.getParentFile().getAbsolutePath());
+                }
                 copyFolder(bowerSrc.toPath(), bowerComponents.toPath());
             }
 
@@ -130,7 +140,7 @@ public class CoverageReportUtil {
 
     private static void copyFolder(Path source, Path target)
             throws IOException {
-        Files.walkFileTree(source, new SimpleFileVisitor<>() {
+        Files.walkFileTree(source, new SimpleFileVisitor<Path>() {
 
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)

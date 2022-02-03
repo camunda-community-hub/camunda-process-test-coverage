@@ -21,11 +21,6 @@
     </modules>
 
     <properties>
-        <!-- We intentionally always compile against latest Camunda release,
-        but test against many versions *provided* by user projects.
-        Therefore the tests are in a separate module. -->
-        <version.java>11</version.java>
-
         <!--
         For backwards compatibility we pin the version to compile to Camunda 7.14.
         Camunda 7.15 introduced a dependency to Feel DMN engine which is

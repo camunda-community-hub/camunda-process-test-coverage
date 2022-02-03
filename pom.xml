@@ -75,8 +75,7 @@
                         <useSystemClassLoader>false</useSystemClassLoader>
                         <shutdown>kill</shutdown>
                         <runOrder>random</runOrder>
-                        <argLine>--illegal-access=permit -Djava.awt.headless=true -XX:+StartAttachListener -Xmx1024m
-                        </argLine>
+                        <argLine>-Djava.awt.headless=true -XX:+StartAttachListener -Xmx1024m</argLine>
                     </configuration>
                 </plugin>
                 <plugin>
