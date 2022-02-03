@@ -12,7 +12,8 @@ Regression test versions are:
 
 | JDK \ Camunda Version | 7.10 | 7.11 | 7.12 | 7.13 | 7.14 | 7.15 | 7.16 | 
 |-----------------------|------|------|------|------|------|------|------|
-| JDK 11 (LTS)          | yes  | yes  |  yes | yes  | yes  | yes  |  yes |
+| JDK 1.8 (LTS)         | yes  | yes  |  yes | yes  | yes  | yes  |  yes |
+| JDK 11 (LTS)          |  no* |  no* |  no* | yes  | yes  | yes  |  yes |
 | JDK 17 (LTS)          |  no* |  no* |  no* | yes  | yes  | yes  |  yes |
 |                       |      |      |      |      |      |      |      |
 
