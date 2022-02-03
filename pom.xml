@@ -11,7 +11,7 @@
     <groupId>org.camunda.bpm.extension</groupId>
     <artifactId>camunda-bpm-process-test-coverage-root</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
 
     <name>Camunda BPM Process Test Coverage Root</name>
     <description>Helper library to visualize and assert which parts of a BPMN process have been covered by a test.
