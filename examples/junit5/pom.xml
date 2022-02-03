@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.camunda.bpm.extension</groupId>
         <artifactId>camunda-bpm-process-test-coverage-examples-parent</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4-SNAPSHOT</version>
     </parent>
 
     <name>Camunda BPM Process Test Coverage Example JUnit5</name>
