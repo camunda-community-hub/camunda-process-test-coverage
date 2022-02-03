@@ -79,7 +79,6 @@ public class CoverageReportUtil {
 
     private static void writeToFile(final String filePath, final String json) throws IOException {
       Files.write(Paths.get(filePath), json.getBytes());
-      //Files.writeString(Paths.get(filePath), json);
     }
 
     private static void installReportDependencies(final String reportDirectory) {
