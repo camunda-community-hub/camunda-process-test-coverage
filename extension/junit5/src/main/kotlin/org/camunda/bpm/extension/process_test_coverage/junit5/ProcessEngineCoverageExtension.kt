@@ -101,7 +101,9 @@ class ProcessEngineCoverageExtension(
      * Initializes the suite for all upcoming tests.
      */
     override fun beforeAll(context: ExtensionContext) {
-        initializeSuite(context)
+        if (!suiteInitialized) {
+            initializeSuite(context)
+        }
     }
 
     private fun initializeSuite(context: ExtensionContext) {
@@ -119,21 +121,25 @@ class ProcessEngineCoverageExtension(
      */
     override fun afterAll(context: ExtensionContext) {
         val suite = coverageCollector.activeSuite
+        if (context.uniqueId == suite.id) {
 
-        // Make sure the class coverage deals with the same deployments for
-        // every test method
-        // classCoverage.assertAllDeploymentsEqual();
-        val suiteCoveragePercentage = suite.calculateCoverage(coverageCollector.getModels())
+            // only generate report and coverage if the current context is the one, that started the suite
 
-        // Log coverage percentage
-        logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
-        logCoverageDetail(suite)
+            // Make sure the class coverage deals with the same deployments for
+            // every test method
+            // classCoverage.assertAllDeploymentsEqual();
+            val suiteCoveragePercentage = suite.calculateCoverage(coverageCollector.getModels())
 
-        assertCoverage(suiteCoveragePercentage, classCoverageAssertionConditions)
+            // Log coverage percentage
+            logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
+            logCoverageDetail(suite)
 
-        // Create graphical report
-        CoverageReportUtil.createReport(coverageCollector)
-        CoverageReportUtil.createJsonReport(coverageCollector)
+            assertCoverage(suiteCoveragePercentage, classCoverageAssertionConditions)
+
+            // Create graphical report
+            CoverageReportUtil.createReport(coverageCollector)
+            CoverageReportUtil.createJsonReport(coverageCollector)
+        }
     }
 
     /**
