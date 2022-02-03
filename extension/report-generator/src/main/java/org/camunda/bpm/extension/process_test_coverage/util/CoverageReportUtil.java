@@ -47,7 +47,7 @@ public class CoverageReportUtil {
 
         try {
             final String report = generateHtml(result);
-            Files.createDirectories(Path.of(reportDirectory));
+            Files.createDirectories(Paths.get(reportDirectory));
             writeToFile(reportDirectory + "/report.html", report);
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException("Unable to create HTML report.", e);
@@ -62,7 +62,7 @@ public class CoverageReportUtil {
         final String reportDirectory = getReportDirectoryPath(suite.getName());
 
         try {
-            Files.createDirectories(Path.of(reportDirectory));
+            Files.createDirectories(Paths.get(reportDirectory));
             writeToFile(reportDirectory + "/report.json", result);
         } catch (final IOException ex) {
             throw new RuntimeException("Unable to create JSON report.", ex);
@@ -78,7 +78,7 @@ public class CoverageReportUtil {
     }
 
     private static void writeToFile(final String filePath, final String json) throws IOException {
-        Files.writeString(Path.of(filePath), json);
+        Files.writeString(Paths.get(filePath), json);
     }
 
     private static void installReportDependencies(final String reportDirectory) {
@@ -130,7 +130,7 @@ public class CoverageReportUtil {
 
     private static void copyFolder(Path source, Path target)
             throws IOException {
-        Files.walkFileTree(source, new SimpleFileVisitor<>() {
+        Files.walkFileTree(source, new SimpleFileVisitor<Path>() {
 
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
