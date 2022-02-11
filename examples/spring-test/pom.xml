@@ -46,6 +46,11 @@
             <artifactId>camunda-bpm-assert</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.holunda.testing</groupId>
+            <artifactId>camunda-bpm-jgiven</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.assertj</groupId>

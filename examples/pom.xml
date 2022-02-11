@@ -17,6 +17,7 @@
         <!-- assertj must be pinned to support camunda-assert -->
         <assertj.version>3.18.1</assertj.version>
         <camunda-bpm-assert.version>13.0.0</camunda-bpm-assert.version>
+        <camunda-bpm-jgiven.version>0.0.8</camunda-bpm-jgiven.version>
         <springboot.version>2.6.4</springboot.version>
 
         <jacoco.skip>true</jacoco.skip>
@@ -74,6 +75,13 @@
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
                 <version>${assertj.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.holunda.testing</groupId>
+                <artifactId>camunda-bpm-jgiven</artifactId>
+                <version>${camunda-bpm-jgiven.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
