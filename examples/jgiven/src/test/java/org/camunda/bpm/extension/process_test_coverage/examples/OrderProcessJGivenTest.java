@@ -4,9 +4,11 @@ import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.junit.ScenarioTest;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions;
 import org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
 import org.camunda.bpm.engine.variable.impl.VariableMapImpl;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,6 +20,12 @@ public class OrderProcessJGivenTest extends ScenarioTest<OrderProcessStage, Orde
     @ClassRule
     @ScenarioState
     public static final ProcessEngineRule processEngineRule = TestCoverageProcessEngineRuleBuilder.create().build();
+
+    @BeforeClass
+    public static void reset() {
+        // Process engine is cached in the thread and therefore the engine from earlier tests would be used
+        AbstractAssertions.reset();
+    }
 
     @Test
     public void shouldExecuteHappyPath() {
