@@ -13,7 +13,7 @@ public class OrderProcessStage extends ProcessStage<OrderProcessStage, OrderProc
         processInstanceSupplier.start();
         assertThat(processInstanceSupplier.get()).isNotNull();
         assertThat(processInstanceSupplier.get()).isStarted();
-        return this;
+        return self();
     }
 
 }
