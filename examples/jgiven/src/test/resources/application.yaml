@@ -8,3 +8,4 @@ camunda:
     admin-user:
       id: demo
       password: demo
+    history-level: full
