@@ -134,11 +134,12 @@ class ProcessEngineCoverageExtension(
             logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
             logCoverageDetail(suite)
 
-            assertCoverage(suiteCoveragePercentage, classCoverageAssertionConditions)
-
             // Create graphical report
             CoverageReportUtil.createReport(coverageCollector)
             CoverageReportUtil.createJsonReport(coverageCollector)
+
+            assertCoverage(suiteCoveragePercentage, classCoverageAssertionConditions)
+
         }
     }
 
