@@ -4,27 +4,20 @@ import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.extension.process_test_coverage.junit5.ProcessEngineCoverageExtension;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 
-// @ExtendWith(ProcessEngineCoverageExtension.class)
-@Deployment(resources = {"test.bpmn"})
-class CoverageTest {
+@Deployment(resources = {"intermediate-link-throw-event.bpmn"})
+class IntermediateLinkThrowEventTest {
 
-    /**
-     * Using static ProcessEngineCoverageExtension does not write any html file
-     * <p>
-     * To identify problem remove static from variable extension and add commented out @ExtendWith(ProcessEngineCoverageExtension.class)
-     */
     @RegisterExtension
     static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension.builder()
             .assertClassCoverageAtLeast(1.0d)
             .build();
 
     @Test
-    void coverage_100_fails_because_of_Link_Intermediate_Throw_Event() {
+    void should_have_100_percent_coverage_with_intermediate_link_throw_event() {
         ProcessInstance processInstance = extension.getProcessEngine().getRuntimeService().startProcessInstanceByKey("Testprocess");
         assertThat(processInstance).isEnded();
     }
