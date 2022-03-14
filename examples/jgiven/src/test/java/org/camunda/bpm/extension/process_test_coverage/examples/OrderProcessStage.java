@@ -9,7 +9,7 @@ import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertT
 public class OrderProcessStage extends ProcessStage<OrderProcessStage, OrderProcessBean> {
 
     public OrderProcessStage process_is_started() {
-        processInstanceSupplier = new OrderProcessBean(camunda.getProcessEngine());
+        processInstanceSupplier = new OrderProcessBean(camunda);
         processInstanceSupplier.start();
         assertThat(processInstanceSupplier.get()).isNotNull();
         assertThat(processInstanceSupplier.get()).isStarted();

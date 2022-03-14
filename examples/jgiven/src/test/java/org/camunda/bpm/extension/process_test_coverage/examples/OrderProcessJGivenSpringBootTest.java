@@ -3,14 +3,12 @@ package org.camunda.bpm.extension.process_test_coverage.examples;
 import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.junit.ScenarioTest;
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions;
 import org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
 import org.camunda.bpm.engine.variable.impl.VariableMapImpl;
 import org.camunda.bpm.extension.process_test_coverage.spring_test.ProcessEngineCoverageConfiguration;
 import org.camunda.bpm.extension.process_test_coverage.spring_test.ProcessEngineCoverageTestExecutionListener;
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +17,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import javax.annotation.PostConstruct;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,16 +28,8 @@ import javax.annotation.PostConstruct;
 public class OrderProcessJGivenSpringBootTest extends ScenarioTest<OrderProcessStage, OrderProcessStage, OrderProcessStage> {
 
     @Autowired
-    private ProcessEngine processEngine;
-
-    @Rule
     @ScenarioState
-    public ProcessEngineRule processEngineRule;
-
-    @PostConstruct
-    public void initRule() {
-        processEngineRule = new ProcessEngineRule(processEngine);
-    }
+    private ProcessEngine processEngine;
 
     @BeforeClass
     public static void reset() {

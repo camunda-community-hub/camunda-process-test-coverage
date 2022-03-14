@@ -2,6 +2,7 @@ package org.camunda.bpm.extension.process_test_coverage.examples;
 
 import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.junit.ScenarioTest;
+import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions;
@@ -27,8 +28,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class OrderProcessJGivenInMemTest extends ScenarioTest<OrderProcessStage, OrderProcessStage, OrderProcessStage> {
 
     @Rule
+    public final ProcessEngineRule processEngineRule = new ProcessEngineRule(ProcessEngineConfiguration.getProcessEngine());
+
     @ScenarioState
-    public final ProcessEngineRule processEngineRule = ProcessEngineConfiguration.getProcessEngineRule();
+    private final ProcessEngine camunda = ProcessEngineConfiguration.getProcessEngine();
 
     @BeforeClass
     public static void reset() {

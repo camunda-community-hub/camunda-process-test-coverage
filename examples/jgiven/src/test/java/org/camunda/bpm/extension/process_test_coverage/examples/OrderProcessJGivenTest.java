@@ -2,6 +2,7 @@ package org.camunda.bpm.extension.process_test_coverage.examples;
 
 import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.junit.ScenarioTest;
+import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions;
@@ -18,8 +19,10 @@ public class OrderProcessJGivenTest extends ScenarioTest<OrderProcessStage, Orde
 
     @Rule
     @ClassRule
-    @ScenarioState
     public static final ProcessEngineRule processEngineRule = TestCoverageProcessEngineRuleBuilder.create().build();
+
+    @ScenarioState
+    private final ProcessEngine camunda = processEngineRule.getProcessEngine();
 
     @BeforeClass
     public static void reset() {
