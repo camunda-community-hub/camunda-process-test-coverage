@@ -16,7 +16,7 @@
         <camunda.version>7.16.0</camunda.version>
         <!-- assertj must be pinned to support camunda-assert -->
         <assertj.version>3.18.1</assertj.version>
-        <camunda-bpm-assert.version>13.0.0</camunda-bpm-assert.version>
+        <camunda-bpm-assert.version>14.0.0</camunda-bpm-assert.version>
         <springboot.version>2.6.5</springboot.version>
 
         <jacoco.skip>true</jacoco.skip>
