@@ -4,9 +4,9 @@
 
 ![Camunda Logo](doc/img/Favicons-Circle-Colour.png)
 
-# Camunda BPM Process Test Coverage 
+# Camunda Platform 7 Process Test Coverage 
 
-This Camunda BPM community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
+This Camunda Platform 7 community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
 ![Insurance Application](doc/img/flowcov_coverage_report.png)
 
@@ -203,7 +203,7 @@ tasks {
 ```
 ## News and Noteworthy & Contributors
 
-There are a plenty of contributors to this project. Its initial design has been created by the WDW eLab GmbH and some others, 
+There are plenty of contributors to this project. Its initial design has been created by the WDW eLab GmbH and some others, 
 but then the project has been abandoned for some time and received a full rewrite including the new architecture by members 
 of flowcov.io squad and BPM craftsmen from Holisticon AG. We appreciate any help and effort you put into maintenance 
 discussion and further development. 
