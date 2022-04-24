@@ -18,8 +18,7 @@
         <assertj.version>3.18.1</assertj.version>
         <camunda-bpm-assert.version>14.0.0</camunda-bpm-assert.version>
         <camunda-bpm-jgiven.version>0.2.0</camunda-bpm-jgiven.version>
-        <springboot.version>2.6.6</springboot.version>
-
+        <springboot.version>2.6.7</springboot.version>
         <jacoco.skip>true</jacoco.skip>
         <dokka.skip>true</dokka.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
