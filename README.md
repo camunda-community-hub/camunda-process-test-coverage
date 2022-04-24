@@ -34,7 +34,7 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm.extension</groupId>
+  <groupId>org.camunda.community</groupId>
   <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
   <version>${camunda-bpm-process-test-coverage.version}</version>
   <scope>test</scope>
@@ -45,7 +45,7 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm.extension</groupId>
+  <groupId>org.camunda.community</groupId>
   <artifactId>camunda-bpm-process-test-coverage-junit5</artifactId>
   <version>${camunda-bpm-process-test-coverage.version}</version>
   <scope>test</scope>
@@ -56,7 +56,7 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm.extension</groupId>
+  <groupId>org.camunda.community</groupId>
   <artifactId>camunda-bpm-process-test-coverage-spring-test</artifactId>
   <version>${camunda-bpm-process-test-coverage.version}</version>
   <scope>test</scope>
@@ -67,7 +67,7 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm.extension</groupId>
+  <groupId>org.camunda.community</groupId>
   <artifactId>camunda-bpm-process-test-coverage-starter</artifactId>
   <version>${camunda-bpm-process-test-coverage.version}</version>
   <scope>test</scope>
