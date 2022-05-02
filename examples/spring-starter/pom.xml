@@ -2,13 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.camunda.community</groupId>
-        <artifactId>camunda-platform-7-process-test-coverage-examples-parent</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <groupId>org.camunda.bpm.extension</groupId>
+        <artifactId>camunda-bpm-process-test-coverage-examples-parent</artifactId>
+        <version>1.0.4-SNAPSHOT</version>
     </parent>
 
     <name>Camunda BPM Process Test Coverage Example Spring-Testing with starter</name>
-    <artifactId>camunda-platform-7-process-test-coverage-examples-spring-starter</artifactId>
+    <artifactId>camunda-bpm-process-test-coverage-examples-spring-starter</artifactId>
 
     <dependencies>
         <dependency>
@@ -17,8 +17,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.camunda.community</groupId>
-            <artifactId>camunda-platform-7-process-test-coverage-starter</artifactId>
+            <groupId>org.camunda.bpm.extension</groupId>
+            <artifactId>camunda-bpm-process-test-coverage-starter</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
