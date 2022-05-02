@@ -47,7 +47,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
+            <artifactId>camunda-bpm-process-test-coverage-junit4-platform-7</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>

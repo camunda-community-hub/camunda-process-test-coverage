@@ -19,7 +19,7 @@
 
     <modules>
         <module>extension</module>
-        <module>starter</module>
+        <module>starter-platform-7</module>
         <module>bom</module>
     </modules>
 

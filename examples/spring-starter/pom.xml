@@ -18,7 +18,7 @@
 
         <dependency>
             <groupId>org.camunda.bpm.extension</groupId>
-            <artifactId>camunda-bpm-process-test-coverage-starter</artifactId>
+            <artifactId>camunda-bpm-process-test-coverage-starter-platform-7</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

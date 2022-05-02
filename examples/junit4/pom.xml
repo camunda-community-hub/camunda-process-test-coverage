@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>org.camunda.bpm.extension</groupId>
-            <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
+            <artifactId>camunda-bpm-process-test-coverage-junit4-platform-7</artifactId>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm</groupId>

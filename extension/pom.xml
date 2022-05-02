@@ -14,9 +14,10 @@
 
     <modules>
         <module>core</module>
-        <module>junit4</module>
-        <module>junit5</module>
-        <module>spring-test</module>
+        <module>platform-7</module>
+        <module>junit4-platform-7</module>
+        <module>junit5-platform-7</module>
+        <module>spring-test-platform-7</module>
         <module>report-generator</module>
     </modules>
 
@@ -63,12 +64,12 @@
             </dependency>
             <dependency>
                 <groupId>org.camunda.bpm.extension</groupId>
-                <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
+                <artifactId>camunda-bpm-process-test-coverage-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.camunda.bpm.extension</groupId>
-                <artifactId>camunda-bpm-process-test-coverage-junit5</artifactId>
+                <artifactId>camunda-bpm-process-test-coverage-junit4-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
