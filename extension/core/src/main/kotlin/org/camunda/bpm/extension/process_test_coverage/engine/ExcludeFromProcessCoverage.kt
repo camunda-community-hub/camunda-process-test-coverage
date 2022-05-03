@@ -1,4 +1,4 @@
-package org.camunda.bpm.extension.process_test_coverage.spring_test
+package org.camunda.bpm.extension.process_test_coverage.engine
 
 /**
  * Annotation to mark test classes or methods, that should be excluded from

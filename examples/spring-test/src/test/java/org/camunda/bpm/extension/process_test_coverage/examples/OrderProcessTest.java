@@ -2,7 +2,7 @@ package org.camunda.bpm.extension.process_test_coverage.examples;
 
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.extension.process_test_coverage.spring_test.ExcludeFromProcessCoverage;
+import org.camunda.bpm.extension.process_test_coverage.engine.ExcludeFromProcessCoverage;
 import org.camunda.bpm.extension.process_test_coverage.spring_test.ProcessEngineCoverageConfiguration;
 import org.camunda.bpm.extension.process_test_coverage.spring_test.ProcessEngineCoverageTestExecutionListener;
 import org.junit.jupiter.api.Assertions;

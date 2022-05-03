@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://activiti.org/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.7.2">
+  <bpmn:collaboration id="MainCollaboration">
+    <bpmn:participant id="Participant_Test" processRef="testCoverageRatio" />
+  </bpmn:collaboration>
+  <bpmn:process id="testCoverageRatio" name="" isExecutable="true">
+    <bpmn:endEvent id="EndEvent_ClerkChoosen" name="">
+      <bpmn:incoming>SequenceFlow_01magu6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:subProcess id="SubProcess_1aqoyfm">
+      <bpmn:incoming>SequenceFlow_13033cs</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_11dgehr</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics>
+        <bpmn:loopCardinality xsi:type="bpmn:tExpression">2</bpmn:loopCardinality>
+      </bpmn:multiInstanceLoopCharacteristics>
+      <bpmn:startEvent id="StartEvent_ClerkScoring" name="">
+        <bpmn:outgoing>SequenceFlow_0yenclv</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="BusinessRuleTask_ClerkScoring" name="" camunda:expression="#{true}">
+        <bpmn:incoming>SequenceFlow_0yenclv</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_0ay2o3c</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:sequenceFlow id="SequenceFlow_0ay2o3c" sourceRef="BusinessRuleTask_ClerkScoring" targetRef="EndEvent_ClerkScoring" />
+      <bpmn:endEvent id="EndEvent_ClerkScoring" name="">
+        <bpmn:incoming>SequenceFlow_0ay2o3c</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="SequenceFlow_0yenclv" sourceRef="StartEvent_ClerkScoring" targetRef="BusinessRuleTask_ClerkScoring" />
+    </bpmn:subProcess>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_AtLeastOneClerkFound" name="">
+      <bpmn:incoming>SequenceFlow_0mu87z1</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_13033cs</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1529dlv</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:startEvent id="StartEvent_1jfk2kl">
+      <bpmn:outgoing>SequenceFlow_123xqh2</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_ElectClerkAccordingScoring" name="" camunda:expression="#{true}">
+      <bpmn:incoming>SequenceFlow_11dgehr</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_01magu6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_01magu6" sourceRef="Task_ElectClerkAccordingScoring" targetRef="EndEvent_ClerkChoosen" />
+    <bpmn:sequenceFlow id="SequenceFlow_13033cs" name="" sourceRef="ExclusiveGateway_AtLeastOneClerkFound" targetRef="SubProcess_1aqoyfm">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ok}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_11dgehr" sourceRef="SubProcess_1aqoyfm" targetRef="Task_ElectClerkAccordingScoring" />
+    <bpmn:sequenceFlow id="SequenceFlow_0mu87z1" sourceRef="Task_LoadAgencies" targetRef="ExclusiveGateway_AtLeastOneClerkFound" />
+    <bpmn:sequenceFlow id="SequenceFlow_1529dlv" name="" sourceRef="ExclusiveGateway_AtLeastOneClerkFound" targetRef="EndEvent_DirectSalesChoosen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${not ok}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_123xqh2" sourceRef="StartEvent_1jfk2kl" targetRef="Task_LoadAgencies" />
+    <bpmn:userTask id="Task_LoadAgencies" name="">
+      <bpmn:incoming>SequenceFlow_123xqh2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0mu87z1</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_DirectSalesChoosen" name="">
+      <bpmn:incoming>SequenceFlow_1529dlv</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="MainCollaboration">
+      <bpmndi:BPMNShape id="Participant_0uqrz10_di" bpmnElement="Participant_Test">
+        <dc:Bounds x="121" y="76" width="1102" height="334" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0p9cd8m_di" bpmnElement="ExclusiveGateway_AtLeastOneClerkFound" isMarkerVisible="true">
+        <dc:Bounds x="447" y="164" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="472" y="119" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1jfk2kl_di" bpmnElement="StartEvent_1jfk2kl">
+        <dc:Bounds x="198" y="171" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="216" y="207" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1oscbyc_di" bpmnElement="EndEvent_ClerkChoosen">
+        <dc:Bounds x="1132" y="171" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1150" y="207" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0cj2zw4_di" bpmnElement="EndEvent_DirectSalesChoosen">
+        <dc:Bounds x="454" y="246" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="472" y="282" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_1aqoyfm_di" bpmnElement="SubProcess_1aqoyfm" isExpanded="true">
+        <dc:Bounds x="576" y="121" width="316" height="138" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0mu87z1_di" bpmnElement="SequenceFlow_0mu87z1">
+        <di:waypoint xsi:type="dc:Point" x="384" y="189" />
+        <di:waypoint xsi:type="dc:Point" x="447" y="189" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="416" y="174" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_13033cs_di" bpmnElement="SequenceFlow_13033cs">
+        <di:waypoint xsi:type="dc:Point" x="497" y="189" />
+        <di:waypoint xsi:type="dc:Point" x="576" y="189" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="504" y="166" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_123xqh2_di" bpmnElement="SequenceFlow_123xqh2">
+        <di:waypoint xsi:type="dc:Point" x="234" y="189" />
+        <di:waypoint xsi:type="dc:Point" x="284" y="189" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="259" y="174" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="StartEvent_02fqceh_di" bpmnElement="StartEvent_ClerkScoring">
+        <dc:Bounds x="596" y="163" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="614" y="199" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BusinessRuleTask_1xppb2l_di" bpmnElement="BusinessRuleTask_ClerkScoring">
+        <dc:Bounds x="680" y="141" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_084f7b7_di" bpmnElement="EndEvent_ClerkScoring">
+        <dc:Bounds x="826" y="163" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="844" y="199" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ay2o3c_di" bpmnElement="SequenceFlow_0ay2o3c">
+        <di:waypoint xsi:type="dc:Point" x="780" y="181" />
+        <di:waypoint xsi:type="dc:Point" x="826" y="181" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="806" y="156" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1529dlv_di" bpmnElement="SequenceFlow_1529dlv">
+        <di:waypoint xsi:type="dc:Point" x="472" y="214" />
+        <di:waypoint xsi:type="dc:Point" x="472" y="246" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="487" y="230" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0yenclv_di" bpmnElement="SequenceFlow_0yenclv">
+        <di:waypoint xsi:type="dc:Point" x="632" y="181" />
+        <di:waypoint xsi:type="dc:Point" x="680" y="181" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="787" y="156" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_01magu6_di" bpmnElement="SequenceFlow_01magu6">
+        <di:waypoint xsi:type="dc:Point" x="1066" y="189" />
+        <di:waypoint xsi:type="dc:Point" x="1132" y="189" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1099" y="174" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_11dgehr_di" bpmnElement="SequenceFlow_11dgehr">
+        <di:waypoint xsi:type="dc:Point" x="892" y="189" />
+        <di:waypoint xsi:type="dc:Point" x="966" y="189" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="929" y="174" width="0" height="0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1rw0rkd_di" bpmnElement="Task_ElectClerkAccordingScoring">
+        <dc:Bounds x="966" y="149" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_18b8w0k_di" bpmnElement="Task_LoadAgencies">
+        <dc:Bounds x="284" y="149" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

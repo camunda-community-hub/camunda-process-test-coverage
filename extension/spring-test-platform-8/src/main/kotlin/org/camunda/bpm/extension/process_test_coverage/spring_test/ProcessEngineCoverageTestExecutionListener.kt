@@ -1,19 +1,19 @@
 package org.camunda.bpm.extension.process_test_coverage.spring_test
 
+import io.camunda.zeebe.process.test.assertions.BpmnAssert
+import io.camunda.zeebe.spring.test.ZeebeTestExecutionListener
 import mu.KLogging
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
-import org.camunda.bpm.engine.ProcessEngine
 import org.camunda.bpm.extension.process_test_coverage.engine.ExcludeFromProcessCoverage
-import org.camunda.bpm.extension.process_test_coverage.engine.ExecutionContextModelProvider
-import org.camunda.bpm.extension.process_test_coverage.engine.ProcessEngineAdapter
+import org.camunda.bpm.extension.process_test_coverage.engine.ZeebeModelProvider
+import org.camunda.bpm.extension.process_test_coverage.engine.createEvents
 import org.camunda.bpm.extension.process_test_coverage.model.DefaultCollector
 import org.camunda.bpm.extension.process_test_coverage.model.Run
 import org.camunda.bpm.extension.process_test_coverage.model.Suite
 import org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil
 import org.springframework.core.Ordered
 import org.springframework.test.context.TestContext
-import org.springframework.test.context.TestExecutionListener
 
 /**
  * Test execution listener for process test coverage.
@@ -21,14 +21,14 @@ import org.springframework.test.context.TestExecutionListener
  *
  * @author Jan Rohwer
  */
-class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordered {
+class ProcessEngineCoverageTestExecutionListener : ZeebeTestExecutionListener(), Ordered {
 
     companion object : KLogging()
 
     /**
      * The state of the current run (class and current method).
      */
-    private val coverageCollector = DefaultCollector(ExecutionContextModelProvider())
+    private val coverageCollector = DefaultCollector(ZeebeModelProvider())
 
      private lateinit var processEngineCoverageProperties: ProcessEngineCoverageProperties
 
@@ -44,6 +44,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
      * Handles creating the run if a relevant test method is called.
      */
     override fun beforeTestMethod(testContext: TestContext) {
+        super.beforeTestMethod(testContext)
         if (!isTestMethodExcluded(testContext)) {
             if (!suiteInitialized) {
                 initializeSuite(testContext)
@@ -59,16 +60,18 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
      * Handles evaluating the test method coverage after a relevant test method is finished.
      */
     override fun afterTestMethod(testContext: TestContext) {
+        createEvents(coverageCollector, BpmnAssert.getRecordStream())
         if (!isTestMethodExcluded(testContext) && processEngineCoverageProperties.handleTestMethodCoverage) {
             handleTestMethodCoverage(testContext)
         }
+        super.afterTestMethod(testContext)
     }
 
     private fun isTestClassExcluded(testContext: TestContext) =
             testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage }
 
     private fun isTestMethodExcluded(testContext: TestContext) =
-            testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage}
+            testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage }
                     || testContext.testMethod.annotations.any { it is ExcludeFromProcessCoverage }
 
 
@@ -76,9 +79,9 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
      * Initializes the suite for all upcoming tests.
      */
     override fun beforeTestClass(testContext: TestContext) {
+        super.beforeTestClass(testContext)
         if (!isTestClassExcluded(testContext)) {
             loadConfiguration(testContext)
-            ProcessEngineAdapter(getProcessEngine(testContext), coverageCollector).initializeListeners()
             initializeSuite(testContext)
         }
     }
@@ -98,6 +101,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
      */
     override fun afterTestClass(testContext: TestContext) {
         if (!isTestClassExcluded(testContext)) {
+
             val suite = coverageCollector.activeSuite
 
             // Make sure the class coverage deals with the same deployments for
@@ -115,9 +119,8 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
             CoverageReportUtil.createReport(coverageCollector)
             CoverageReportUtil.createJsonReport(coverageCollector)
         }
+        super.afterTestClass(testContext)
     }
-
-    private fun getProcessEngine(testContext: TestContext) = testContext.applicationContext.getBean(ProcessEngine::class.java)
 
     /**
      * Logs and asserts the test method coverage and creates a graphical report.
