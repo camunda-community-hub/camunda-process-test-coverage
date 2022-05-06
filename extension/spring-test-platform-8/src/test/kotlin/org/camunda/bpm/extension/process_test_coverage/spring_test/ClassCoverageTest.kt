@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.context.annotation.Import
-import org.springframework.test.context.TestExecutionListeners
 
 
 @SpringBootApplication
@@ -20,7 +19,6 @@ class Application
 @SpringBootTest
 @ZeebeSpringTest
 @Import(ProcessEngineCoverageConfiguration::class)
-@TestExecutionListeners(value = [ProcessEngineCoverageTestExecutionListener::class], mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 class ClassCoverageTest {
 
     @Autowired

@@ -20,6 +20,11 @@
             <artifactId>camunda-bpm-process-test-coverage-report-generator</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.camunda</groupId>
+            <artifactId>zeebe-process-test-assertions</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <scope>provided</scope>

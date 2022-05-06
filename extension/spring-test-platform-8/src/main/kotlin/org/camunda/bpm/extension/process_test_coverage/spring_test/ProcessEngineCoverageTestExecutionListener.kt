@@ -1,7 +1,5 @@
 package org.camunda.bpm.extension.process_test_coverage.spring_test
 
-import io.camunda.zeebe.process.test.assertions.BpmnAssert
-import io.camunda.zeebe.spring.test.ZeebeTestExecutionListener
 import mu.KLogging
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
@@ -14,6 +12,7 @@ import org.camunda.bpm.extension.process_test_coverage.model.Suite
 import org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil
 import org.springframework.core.Ordered
 import org.springframework.test.context.TestContext
+import org.springframework.test.context.TestExecutionListener
 
 /**
  * Test execution listener for process test coverage.
@@ -21,7 +20,7 @@ import org.springframework.test.context.TestContext
  *
  * @author Jan Rohwer
  */
-class ProcessEngineCoverageTestExecutionListener : ZeebeTestExecutionListener(), Ordered {
+class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordered {
 
     companion object : KLogging()
 
@@ -30,9 +29,11 @@ class ProcessEngineCoverageTestExecutionListener : ZeebeTestExecutionListener(),
      */
     private val coverageCollector = DefaultCollector(ZeebeModelProvider())
 
-     private lateinit var processEngineCoverageProperties: ProcessEngineCoverageProperties
+    private lateinit var processEngineCoverageProperties: ProcessEngineCoverageProperties
 
     private var suiteInitialized = false
+
+    private val methodStartTime = mutableMapOf<String, Long>()
 
     private fun loadConfiguration(testContext: TestContext) {
         processEngineCoverageProperties = testContext.applicationContext.getBean(ProcessEngineCoverageProperties::class.java)
@@ -44,7 +45,6 @@ class ProcessEngineCoverageTestExecutionListener : ZeebeTestExecutionListener(),
      * Handles creating the run if a relevant test method is called.
      */
     override fun beforeTestMethod(testContext: TestContext) {
-        super.beforeTestMethod(testContext)
         if (!isTestMethodExcluded(testContext)) {
             if (!suiteInitialized) {
                 initializeSuite(testContext)
@@ -52,6 +52,7 @@ class ProcessEngineCoverageTestExecutionListener : ZeebeTestExecutionListener(),
             // method name is set only on test methods (not on classes or suites)
             val runId: String = testContext.testMethod.name
             coverageCollector.createRun(Run(runId, testContext.testMethod.name), coverageCollector.activeSuite.id)
+            methodStartTime[testContext.testMethod.name] = System.currentTimeMillis()
             coverageCollector.activateRun(runId)
         }
     }
@@ -60,11 +61,12 @@ class ProcessEngineCoverageTestExecutionListener : ZeebeTestExecutionListener(),
      * Handles evaluating the test method coverage after a relevant test method is finished.
      */
     override fun afterTestMethod(testContext: TestContext) {
-        createEvents(coverageCollector, BpmnAssert.getRecordStream())
-        if (!isTestMethodExcluded(testContext) && processEngineCoverageProperties.handleTestMethodCoverage) {
-            handleTestMethodCoverage(testContext)
+        if (!isTestMethodExcluded(testContext)) {
+            createEvents(coverageCollector, methodStartTime[testContext.testMethod.name]!!)
+            if (processEngineCoverageProperties.handleTestMethodCoverage) {
+                handleTestMethodCoverage(testContext)
+            }
         }
-        super.afterTestMethod(testContext)
     }
 
     private fun isTestClassExcluded(testContext: TestContext) =
@@ -79,7 +81,6 @@ class ProcessEngineCoverageTestExecutionListener : ZeebeTestExecutionListener(),
      * Initializes the suite for all upcoming tests.
      */
     override fun beforeTestClass(testContext: TestContext) {
-        super.beforeTestClass(testContext)
         if (!isTestClassExcluded(testContext)) {
             loadConfiguration(testContext)
             initializeSuite(testContext)
@@ -119,7 +120,6 @@ class ProcessEngineCoverageTestExecutionListener : ZeebeTestExecutionListener(),
             CoverageReportUtil.createReport(coverageCollector)
             CoverageReportUtil.createJsonReport(coverageCollector)
         }
-        super.afterTestClass(testContext)
     }
 
     /**

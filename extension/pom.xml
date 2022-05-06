@@ -60,6 +60,14 @@
                 <type>pom</type>
             </dependency>
 
+            <!-- Zeebe -->
+            <dependency>
+                <groupId>io.camunda</groupId>
+                <artifactId>zeebe-process-test-assertions</artifactId>
+                <scope>provided</scope>
+                <version>${zeebe.version}</version>
+            </dependency>
+
             <!-- Own modules -->
             <dependency>
                 <groupId>org.camunda.bpm.extension</groupId>

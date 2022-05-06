@@ -1,10 +1,12 @@
 package org.camunda.bpm.extension.process_test_coverage.junit5
 
+import io.camunda.zeebe.process.test.assertions.BpmnAssert
 import mu.KLogging
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
 import org.camunda.bpm.extension.process_test_coverage.engine.ExcludeFromProcessCoverage
 import org.camunda.bpm.extension.process_test_coverage.engine.ZeebeModelProvider
+import org.camunda.bpm.extension.process_test_coverage.engine.createEvents
 import org.camunda.bpm.extension.process_test_coverage.model.DefaultCollector
 import org.camunda.bpm.extension.process_test_coverage.model.Run
 import org.camunda.bpm.extension.process_test_coverage.model.Suite
@@ -54,17 +56,20 @@ class ProcessEngineCoverageExtension(
 
     private var suiteInitialized = false
 
+    private val lastEventTime = mutableMapOf<String, Long>()
+
     /**
      * Handles creating the run if a relevant test method is called.
      */
     override fun beforeTestExecution(context: ExtensionContext) {
-        if (isTestMethodExcluded(context)) {
+        if (!isTestMethodExcluded(context)) {
             if (!suiteInitialized) {
                 initializeSuite(context)
             }
             // method name is set only on test methods (not on classes or suites)
             val runId: String = context.uniqueId
             coverageCollector.createRun(Run(runId, context.requiredTestMethod.name), coverageCollector.activeSuite.id)
+            lastEventTime[context.requiredTestMethod.name] = BpmnAssert.getRecordStream().processInstanceRecords().maxOfOrNull { it.timestamp } ?: -1
             coverageCollector.activateRun(runId)
         }
     }
@@ -73,8 +78,11 @@ class ProcessEngineCoverageExtension(
      * Handles evaluating the test method coverage after a relevant test method is finished.
      */
     override fun afterTestExecution(context: ExtensionContext) {
-        if (handleTestMethodCoverage && isTestMethodExcluded(context)) {
-            handleTestMethodCoverage(context)
+        if (!isTestMethodExcluded(context)) {
+            createEvents(coverageCollector, lastEventTime[context.requiredTestMethod.name]!!)
+            if (handleTestMethodCoverage) {
+                handleTestMethodCoverage(context)
+            }
         }
     }
 

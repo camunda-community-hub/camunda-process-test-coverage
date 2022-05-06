@@ -23,9 +23,9 @@
             <artifactId>camunda-bpm-process-test-coverage-report-generator</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.camunda</groupId>
-            <artifactId>spring-zeebe-test-testcontainer</artifactId>
-            <version>${spring-zeebe.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -46,6 +46,12 @@
             <artifactId>assertj-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>io.camunda</groupId>
+            <artifactId>spring-zeebe-test-testcontainer</artifactId>
+            <version>${spring-zeebe.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>io.camunda</groupId>
             <artifactId>spring-zeebe-starter</artifactId>
