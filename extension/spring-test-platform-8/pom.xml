@@ -83,4 +83,18 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>skip-tests</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+            <activation>
+                <os>
+                    <name>!linux</name>
+                </os>
+            </activation>
+        </profile>
+    </profiles>
+
 </project>
