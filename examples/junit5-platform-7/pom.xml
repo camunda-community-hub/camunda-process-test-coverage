@@ -7,8 +7,8 @@
         <version>1.0.4-SNAPSHOT</version>
     </parent>
 
-    <name>Camunda Process Test Coverage Example JUnit5</name>
-    <artifactId>camunda-process-test-coverage-examples-junit5</artifactId>
+    <name>Camunda Process Test Coverage Example JUnit5 Platform 7</name>
+    <artifactId>camunda-process-test-coverage-examples-junit5-platform-7</artifactId>
 
     <dependencies>
         <dependency>

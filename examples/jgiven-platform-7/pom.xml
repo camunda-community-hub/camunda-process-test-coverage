@@ -7,8 +7,8 @@
         <version>1.0.4-SNAPSHOT</version>
     </parent>
 
-    <name>Camunda Process Test Coverage Example Spring-Testing</name>
-    <artifactId>camunda-process-test-coverage-examples-spring-test</artifactId>
+    <name>Camunda Process Test Coverage Example JGiven Platform 7</name>
+    <artifactId>camunda-process-test-coverage-examples-jgiven-platform-7</artifactId>
 
     <dependencies>
         <dependency>
@@ -16,6 +16,11 @@
             <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.camunda.community.process_test_coverage</groupId>
+            <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.camunda.community.process_test_coverage</groupId>
             <artifactId>camunda-process-test-coverage-spring-test-platform-7</artifactId>
@@ -44,6 +49,11 @@
         <dependency>
             <groupId>org.camunda.bpm.assert</groupId>
             <artifactId>camunda-bpm-assert</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.holunda.testing</groupId>
+            <artifactId>camunda-bpm-jgiven</artifactId>
             <scope>test</scope>
         </dependency>
 
