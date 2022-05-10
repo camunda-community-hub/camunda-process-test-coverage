@@ -28,14 +28,14 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ## Get started with *3 simple steps*
 
-**1.** Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage-core/badge.svg" align="right" /></a>
+**1.** Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage-core/badge.svg" align="right" /></a>
 
 #### JUnit4
 
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit4</artifactId>
+  <artifactId>camunda-process-test-coverage-junit4-platform7</artifactId>
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
@@ -46,7 +46,7 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit5</artifactId>
+  <artifactId>camunda-process-test-coverage-junit5-platform7</artifactId>
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
@@ -57,7 +57,7 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-spring-test</artifactId>
+  <artifactId>camunda-process-test-coverage-spring-test-platform7</artifactId>
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
@@ -68,7 +68,7 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-starter</artifactId>
+  <artifactId>camunda-process-test-coverage-starter-platform7</artifactId>
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
@@ -89,7 +89,7 @@ You can do that, by using the following annotation on the class or method level.
 
 ```xml
 <bean id="processEngineConfiguration"
-   class="org.camunda.bpm.extension.process_test_coverage.engine.ProcessCoverageInMemProcessEngineConfiguration">
+   class="org.camunda.community.process_test_coverage.engine.platform7.ProcessCoverageInMemProcessEngineConfiguration">
    ...
 </bean>
 ```

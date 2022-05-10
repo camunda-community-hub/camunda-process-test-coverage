@@ -10,21 +10,21 @@
         <property name="customEventHandlers">
             <list merge="true">
                 <bean
-                        class="org.camunda.bpm.extension.process_test_coverage.engine.CompensationEventCoverageHandler"/>
+                        class="org.camunda.community.process_test_coverage.engine.platform7.CompensationEventCoverageHandler"/>
             </list>
         </property>
 
         <property name="customPostBPMNParseListeners">
             <list>
                 <bean
-                        class="org.camunda.bpm.extension.process_test_coverage.engine.ElementCoverageParseListener"/>
+                        class="org.camunda.community.process_test_coverage.engine.platform7.ElementCoverageParseListener"/>
             </list>
         </property>
 
     </bean>
 
     <!-- Alternatively use the ProcessCoverageInMemProcessEngineConfiguration with programmatically registered listeners and handlers. -->
-    <!-- bean id="processEngineConfiguration" class="org.camunda.bpm.extension.ProcessCoverageInMemProcessEngineConfiguration">
+    <!-- bean id="processEngineConfiguration" class="org.camunda.community.engine.platform7.ProcessCoverageInMemProcessEngineConfiguration">
         </bean -->
 
 </beans>
