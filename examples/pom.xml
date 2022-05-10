@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.camunda.bpm.extension</groupId>
-        <artifactId>camunda-bpm-process-test-coverage-root</artifactId>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
+        <artifactId>camunda-process-test-coverage-root</artifactId>
         <version>1.0.4-SNAPSHOT</version>
     </parent>
 
-    <name>Camunda BPM Process Test Coverage Examples Parent</name>
-    <artifactId>camunda-bpm-process-test-coverage-examples-parent</artifactId>
+    <name>Camunda Process Test Coverage Examples Parent</name>
+    <artifactId>camunda-process-test-coverage-examples-parent</artifactId>
     <packaging>pom</packaging>
 
     <properties>
@@ -63,8 +63,8 @@
 
             <!-- Own BOM -->
             <dependency>
-                <groupId>org.camunda.bpm.extension</groupId>
-                <artifactId>camunda-bpm-process-test-coverage-bom</artifactId>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-bom</artifactId>
                 <version>${project.parent.version}</version>
                 <scope>import</scope>
                 <type>pom</type>

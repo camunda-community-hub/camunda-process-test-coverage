@@ -3,19 +3,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.camunda.bpm.extension</groupId>
-        <artifactId>camunda-bpm-process-test-coverage-root</artifactId>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
+        <artifactId>camunda-process-test-coverage-root</artifactId>
         <version>1.0.4-SNAPSHOT</version>
     </parent>
 
-    <name>Camunda BPM Process Test Coverage Extension Parent</name>
-    <artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
+    <name>Camunda Process Test Coverage Extension Parent</name>
+    <artifactId>camunda-process-test-coverage-parent</artifactId>
     <packaging>pom</packaging>
 
     <modules>
         <module>core</module>
-        <module>platform-7</module>
-        <module>platform-8</module>
+        <module>engine-platform-7</module>
+        <module>engine-platform-8</module>
         <module>junit4-platform-7</module>
         <module>junit5-platform-7</module>
         <module>junit5-platform-8</module>
@@ -70,28 +70,28 @@
 
             <!-- Own modules -->
             <dependency>
-                <groupId>org.camunda.bpm.extension</groupId>
-                <artifactId>camunda-bpm-process-test-coverage-core</artifactId>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.bpm.extension</groupId>
-                <artifactId>camunda-bpm-process-test-coverage-platform-7</artifactId>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-engine-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.bpm.extension</groupId>
-                <artifactId>camunda-bpm-process-test-coverage-platform-8</artifactId>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-engine-platform-8</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.bpm.extension</groupId>
-                <artifactId>camunda-bpm-process-test-coverage-junit4-platform-7</artifactId>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.bpm.extension</groupId>
-                <artifactId>camunda-bpm-process-test-coverage-report-generator</artifactId>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-report-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -131,7 +131,7 @@
                 <property><name>!skipExamples</name></property>
             </activation>
             <modules>
-                <module>regression-test</module>
+                <module>regression-test-junit4-platform-7</module>
             </modules>
         </profile>
     </profiles>

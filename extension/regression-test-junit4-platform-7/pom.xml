@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
-        <groupId>org.camunda.bpm.extension</groupId>
+        <artifactId>camunda-process-test-coverage-parent</artifactId>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
         <version>1.0.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>camunda-bpm-process-test-coverage-test</artifactId>
-    <name>Camunda BPM Process Test Coverage Regression Test</name>
+    <artifactId>camunda-process-test-coverage-test-junit4-platform-7</artifactId>
+    <name>Camunda Process Test Coverage Regression Test JUnit4 Platform 7</name>
     <description>
-        All library tests are here in order to allow compiling against Camunda BPM release and regression testing against different versions.
+        All library tests are here in order to allow compiling against Camunda Platform 7 release and regression testing against different versions.
     </description>
 
     <properties>
@@ -41,13 +41,13 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-bpm-process-test-coverage-core</artifactId>
+            <artifactId>camunda-process-test-coverage-core</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-bpm-process-test-coverage-junit4-platform-7</artifactId>
+            <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>

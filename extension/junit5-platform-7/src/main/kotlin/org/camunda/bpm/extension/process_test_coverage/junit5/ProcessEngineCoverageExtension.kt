@@ -17,7 +17,7 @@ import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 
 /**
- * Extension for JUnit 5 which allows the tracking of coverage information for Camunda BPM process tests.
+ * Extension for JUnit 5 which allows the tracking of coverage information for Camunda process tests.
  * Based on the ProcessEngineExtension from the camunda-bpm-junit5 from the camunda community.
  * https://github.com/camunda-community-hub/camunda-bpm-junit5
  *

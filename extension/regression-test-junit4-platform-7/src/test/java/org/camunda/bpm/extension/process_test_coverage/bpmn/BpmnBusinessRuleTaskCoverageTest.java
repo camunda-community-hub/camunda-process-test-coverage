@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class BpmnBusinessRuleTaskCoverageTest {
     /**
-     * XXXX &lt;camunda&gt; namespace support works from Camunda BPM versions
+     * XXXX &lt;camunda&gt; namespace support works from Camunda Platform 7 versions
      * 7.4.0, 7.3.3, 7.2.6 onwards.
      */
 

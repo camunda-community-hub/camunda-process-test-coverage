@@ -20,7 +20,7 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 ## Just use it
 
 * Integrates with all versions of Camunda Platform 7 starting with 7.10.0 and upwards
-* Is continuously checked against the latest Camunda BPM releases (check out our compatibility CI/CD pipeline)
+* Is continuously checked against the latest Camunda Platform 7 releases (check out our compatibility CI/CD pipeline)
 * Tested with JDKs 11 and 17
 * Works with Java starting with 1.8 and following 
 * Supports **JUnit 4.13.1** (4.11 does not work) or **JUnit 5**
@@ -28,15 +28,15 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ## Get started with *3 simple steps*
 
-**1.** Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage-core/badge.svg" align="right" /></a>
+**1.** Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage-core/badge.svg" align="right" /></a>
 
 #### JUnit4
 
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm.extension</groupId>
-  <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
-  <version>${camunda-bpm-process-test-coverage.version}</version>
+  <groupId>org.camunda.community.process_test_coverage</groupId>
+  <artifactId>camunda-process-test-coverage-junit4</artifactId>
+  <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -45,9 +45,9 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm.extension</groupId>
-  <artifactId>camunda-bpm-process-test-coverage-junit5</artifactId>
-  <version>${camunda-bpm-process-test-coverage.version}</version>
+  <groupId>org.camunda.community.process_test_coverage</groupId>
+  <artifactId>camunda-process-test-coverage-junit5</artifactId>
+  <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -56,9 +56,9 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm.extension</groupId>
-  <artifactId>camunda-bpm-process-test-coverage-spring-test</artifactId>
-  <version>${camunda-bpm-process-test-coverage.version}</version>
+  <groupId>org.camunda.community.process_test_coverage</groupId>
+  <artifactId>camunda-process-test-coverage-spring-test</artifactId>
+  <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -67,9 +67,9 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ```xml
 <dependency>
-  <groupId>org.camunda.bpm.extension</groupId>
-  <artifactId>camunda-bpm-process-test-coverage-starter</artifactId>
-  <version>${camunda-bpm-process-test-coverage.version}</version>
+  <groupId>org.camunda.community.process_test_coverage</groupId>
+  <artifactId>camunda-process-test-coverage-starter</artifactId>
+  <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -176,7 +176,7 @@ Running your JUnit tests now leaves **html** files for individual test methods a
 
 **4. (Optional)** configure output path for reports
 
-by default the reports are written to `./target/process-test-coverage/`. To change it you can set the system property `camunda-bpm-process-test-coverage.target-dir-root`
+by default the reports are written to `./target/process-test-coverage/`. To change it you can set the system property `camunda-process-test-coverage.target-dir-root`
 
 ##### in maven pom.xml
 ```xml
@@ -186,7 +186,7 @@ by default the reports are written to `./target/process-test-coverage/`. To chan
 <version>2.22.2</version>
 <configuration>
   <systemPropertyVariables>
-    <camunda-bpm-process-test-coverage.target-dir-root>${project.build.directory}/my-coverage-reports/</camunda-bpm-process-test-coverage.target-dir-root>
+    <camunda-process-test-coverage.target-dir-root>${project.build.directory}/my-coverage-reports/</camunda-process-test-coverage.target-dir-root>
   </systemPropertyVariables>
 </configuration>
 </plugin>
@@ -197,7 +197,7 @@ by default the reports are written to `./target/process-test-coverage/`. To chan
 tasks {
     withType<Test> {
         systemProperties = mapOf(
-            "camunda-bpm-process-test-coverage.target-dir-root" to "$buildDir/my-coverage-reports/"
+            "camunda-process-test-coverage.target-dir-root" to "$buildDir/my-coverage-reports/"
         )
     }
 }
@@ -209,7 +209,7 @@ but then the project has been abandoned for some time and received a full rewrit
 of flowcov.io squad and BPM craftsmen from Holisticon AG. We appreciate any help and effort you put into maintenance 
 discussion and further development. 
 
-Please check the release notes of [individual releases](https://github.com/camunda-community-hub/camunda-bpm-process-test-coverage/releases) for the changes 
+Please check the release notes of [individual releases](https://github.com/camunda-community-hub/camunda-process-test-coverage/releases) for the changes 
 and involved contributors.
 
 ## License

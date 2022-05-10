@@ -1,5 +1,5 @@
 {
-  "name": "camunda-bpm-process-test-coverage",
+  "name": "camunda-process-test-coverage",
   "version": "0.0.0",
   "private": true,
   "dependencies": {

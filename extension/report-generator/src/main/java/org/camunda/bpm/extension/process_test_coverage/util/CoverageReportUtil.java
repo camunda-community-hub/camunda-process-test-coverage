@@ -33,7 +33,7 @@ public class CoverageReportUtil {
     /**
      * Root directory for all coverage reports.
      */
-    public static String TARGET_DIR_ROOT = System.getProperty("camunda-bpm-process-test-coverage.target-dir-root", "target/process-test-coverage/");
+    public static String TARGET_DIR_ROOT = System.getProperty("camunda-process-test-coverage.target-dir-root", "target/process-test-coverage/");
     public static final String REPORT_RESOURCES = "static";
     private static final String REPORT_TEMPLATE = "bpmn.report-template.html";
 

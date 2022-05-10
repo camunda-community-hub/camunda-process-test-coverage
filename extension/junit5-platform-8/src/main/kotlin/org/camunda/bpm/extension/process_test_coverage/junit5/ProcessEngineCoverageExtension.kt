@@ -14,7 +14,7 @@ import org.camunda.bpm.extension.process_test_coverage.util.CoverageReportUtil
 import org.junit.jupiter.api.extension.*
 
 /**
- * Extension for JUnit 5 which allows the tracking of coverage information for Camunda BPM Platform 8 (Zeebe) process tests.
+ * Extension for JUnit 5 which allows the tracking of coverage information for Camunda Platform 8 (Zeebe) process tests.
  *
  * @author Jan Rohwer
  */

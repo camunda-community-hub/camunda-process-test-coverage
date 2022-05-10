@@ -2,18 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.camunda.bpm.extension</groupId>
-        <artifactId>camunda-bpm-process-test-coverage-examples-parent</artifactId>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
+        <artifactId>camunda-process-test-coverage-examples-parent</artifactId>
         <version>1.0.4-SNAPSHOT</version>
     </parent>
 
-    <name>Camunda BPM Process Test Coverage Example JUnit4</name>
-    <artifactId>camunda-bpm-process-test-coverage-examples-junit4</artifactId>
+    <name>Camunda Process Test Coverage Example JUnit4</name>
+    <artifactId>camunda-process-test-coverage-examples-junit4</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.camunda.bpm.extension</groupId>
-            <artifactId>camunda-bpm-process-test-coverage-junit4-platform-7</artifactId>
+            <groupId>org.camunda.community.process_test_coverage</groupId>
+            <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm</groupId>

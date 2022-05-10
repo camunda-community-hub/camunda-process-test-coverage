@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
-        <groupId>org.camunda.bpm.extension</groupId>
+        <artifactId>camunda-process-test-coverage-parent</artifactId>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
         <version>1.0.4-SNAPSHOT</version>
     </parent>
 
-    <name>Camunda BPM Process Test Coverage Core</name>
-    <artifactId>camunda-bpm-process-test-coverage-core</artifactId>
+    <name>Camunda Process Test Coverage Core</name>
+    <artifactId>camunda-process-test-coverage-core</artifactId>
 
     <properties>
         <dokka.skip>true</dokka.skip>

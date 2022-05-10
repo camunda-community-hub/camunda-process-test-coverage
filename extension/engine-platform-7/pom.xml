@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.camunda.bpm.extension</groupId>
-        <artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
+        <artifactId>camunda-process-test-coverage-parent</artifactId>
         <version>1.0.4-SNAPSHOT</version>
     </parent>
 
-    <name>Camunda BPM Process Test Coverage Platform 7</name>
-    <artifactId>camunda-bpm-process-test-coverage-platform-7</artifactId>
+    <name>Camunda Process Test Coverage Engine Platform 7</name>
+    <artifactId>camunda-process-test-coverage-engine-platform-7</artifactId>
 
     <properties>
         <dokka.skip>true</dokka.skip>
@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-bpm-process-test-coverage-core</artifactId>
+            <artifactId>camunda-process-test-coverage-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm</groupId>

@@ -2,12 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>camunda-bpm-process-test-coverage-parent</artifactId>
-        <groupId>org.camunda.bpm.extension</groupId>
+        <artifactId>camunda-process-test-coverage-parent</artifactId>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
         <version>1.0.4-SNAPSHOT</version>
     </parent>
-    <name>Camunda BPM Process Test Coverage Spring-Testing Platform 7</name>
-    <artifactId>camunda-bpm-process-test-coverage-spring-test-platform-7</artifactId>
+    <name>Camunda Process Test Coverage Spring-Testing Platform 7</name>
+    <artifactId>camunda-process-test-coverage-spring-test-platform-7</artifactId>
 
 
     <dependencies>
@@ -21,11 +21,11 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-bpm-process-test-coverage-platform-7</artifactId>
+            <artifactId>camunda-process-test-coverage-engine-platform-7</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-bpm-process-test-coverage-report-generator</artifactId>
+            <artifactId>camunda-process-test-coverage-report-generator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm</groupId>
