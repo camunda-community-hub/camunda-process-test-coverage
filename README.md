@@ -5,9 +5,9 @@
 
 ![Camunda Logo](doc/img/Favicons-Circle-Colour.png)
 
-# Camunda Platform 7 Process Test Coverage 
+# Camunda Process Test Coverage 
 
-This Camunda Platform 7 community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
+This Camunda Platform 7 and Platform 8 ommunity extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
 ![Insurance Application](doc/img/flowcov_coverage_report.png)
 
@@ -19,7 +19,7 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ## Just use it
 
-* Integrates with all versions of Camunda Platform 7 starting with 7.10.0 and upwards
+* Integrates with all versions of Camunda Platform 7 starting with 7.10.0 and upwards as well as Camunda Platform 8
 * Is continuously checked against the latest Camunda Platform 7 releases (check out our compatibility CI/CD pipeline)
 * Tested with JDKs 11 and 17
 * Works with Java starting with 1.8 and following 
@@ -30,7 +30,7 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 **1.** Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage-core/badge.svg" align="right" /></a>
 
-#### JUnit4
+#### JUnit4 (only Platform 7)
 
 ```xml
 <dependency>
@@ -41,34 +41,37 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 </dependency>
 ```
 
-#### JUnit5
+#### JUnit5 (Platform 7 or Platform 8)
 
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit5-platform7</artifactId>
+  <artifactId>camunda-process-test-coverage-junit5-platform7</artifactId> 
+  <!-- <artifactId>camunda-process-test-coverage-junit5-platform8</artifactId> -->
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
 
-#### Spring-Testing
+#### Spring-Testing (Platform 7 or Platform 8)
 
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
   <artifactId>camunda-process-test-coverage-spring-test-platform7</artifactId>
+  <!-- <artifactId>camunda-process-test-coverage-spring-test-platform8</artifactId> -->
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
 
-#### Spring-Testing with starter
+#### Spring-Testing with starter (Platform 7 or Platform 8)
 
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
   <artifactId>camunda-process-test-coverage-starter-platform7</artifactId>
+  <!-- <artifactId>camunda-process-test-coverage-starter-platform8</artifactId> -->
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
@@ -83,7 +86,7 @@ You can do that, by using the following annotation on the class or method level.
 @ExcludeFromProcessCoverage
 ```
 
-**2.** Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml`
+**2.** Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml` (only needed for Platform 7)
 
 #### JUnit4 and JUnit5
 
@@ -115,7 +118,7 @@ public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.crea
 
 #### JUnit5
 
-Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension
+Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension (available for Platform 7 and Platform 8)
 
 Either use `@ExtendWith`
 
@@ -158,12 +161,8 @@ Kotlin
 
 #### Spring-Testing
 
-```java
-@TestExecutionListeners(value = ProcessEngineCoverageTestExecutionListener.class,
-        mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
-```
-
-You can exlude test methods from the coverage by annotating them like this
+TestExecutionListener is automatically registered.
+You can exclude test methods or classes from the coverage by annotating them like this
 
 ```java
 @ExcludeFromProcessCoverage
