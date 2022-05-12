@@ -86,6 +86,8 @@ public class OrderProcessTest {
         } else {
             zeebe.newCompleteCommand(userTaskJob.getKey()).send().join();
         }
+        // Let the workflow engine do whatever it needs to do
+        engine.waitForIdleState(Duration.ofSeconds(10));
     }
 
     private ProcessInstanceEvent startProcess() {
