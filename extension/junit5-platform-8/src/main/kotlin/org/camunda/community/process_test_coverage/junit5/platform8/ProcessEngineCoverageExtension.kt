@@ -56,7 +56,10 @@ class ProcessEngineCoverageExtension(
 
     private var suiteInitialized = false
 
-    private val lastEventTime = mutableMapOf<String, Long>()
+    /**
+     * Map of test method to last event time, when test method was started.
+     */
+    private val lastEventTimestamp = mutableMapOf<String, Long>()
 
     /**
      * Handles creating the run if a relevant test method is called.
@@ -69,7 +72,7 @@ class ProcessEngineCoverageExtension(
             // method name is set only on test methods (not on classes or suites)
             val runId: String = context.uniqueId
             coverageCollector.createRun(Run(runId, context.requiredTestMethod.name), coverageCollector.activeSuite.id)
-            lastEventTime[context.requiredTestMethod.name] = BpmnAssert.getRecordStream().processInstanceRecords().maxOfOrNull { it.timestamp } ?: -1
+            lastEventTimestamp[context.requiredTestMethod.name] = BpmnAssert.getRecordStream().processInstanceRecords().maxOfOrNull { it.timestamp } ?: -1
             coverageCollector.activateRun(runId)
         }
     }
@@ -79,7 +82,7 @@ class ProcessEngineCoverageExtension(
      */
     override fun afterTestExecution(context: ExtensionContext) {
         if (!isTestMethodExcluded(context)) {
-            createEvents(coverageCollector, lastEventTime[context.requiredTestMethod.name]!!)
+            createEvents(coverageCollector, lastEventTimestamp[context.requiredTestMethod.name]!!)
             if (handleTestMethodCoverage) {
                 handleTestMethodCoverage(context)
             }

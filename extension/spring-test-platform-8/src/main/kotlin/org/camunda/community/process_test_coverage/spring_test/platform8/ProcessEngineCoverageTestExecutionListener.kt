@@ -33,7 +33,10 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
 
     private var suiteInitialized = false
 
-    private val methodStartTime = mutableMapOf<String, Long>()
+    /**
+     * Map of test method name to start timestamp of the test.
+     */
+    private val methodStartTimestamp = mutableMapOf<String, Long>()
 
     private fun loadConfiguration(testContext: TestContext) {
         processEngineCoverageProperties = testContext.applicationContext.getBean(ProcessEngineCoverageProperties::class.java)
@@ -52,7 +55,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
             // method name is set only on test methods (not on classes or suites)
             val runId: String = testContext.testMethod.name
             coverageCollector.createRun(Run(runId, testContext.testMethod.name), coverageCollector.activeSuite.id)
-            methodStartTime[testContext.testMethod.name] = System.currentTimeMillis()
+            methodStartTimestamp[testContext.testMethod.name] = System.currentTimeMillis()
             coverageCollector.activateRun(runId)
         }
     }
@@ -62,7 +65,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
      */
     override fun afterTestMethod(testContext: TestContext) {
         if (!isTestMethodExcluded(testContext)) {
-            createEvents(coverageCollector, methodStartTime[testContext.testMethod.name]!!)
+            createEvents(coverageCollector, methodStartTimestamp[testContext.testMethod.name]!!)
             if (processEngineCoverageProperties.handleTestMethodCoverage) {
                 handleTestMethodCoverage(testContext)
             }

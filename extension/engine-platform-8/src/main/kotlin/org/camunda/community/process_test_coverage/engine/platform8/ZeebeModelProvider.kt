@@ -20,8 +20,10 @@ import java.util.stream.Collectors
 class ZeebeModelProvider: ModelProvider {
 
     override fun getModel(key: String): Model {
+        // find the process metatdata for the given process definition key
         val processMetadata = getRecordStream().deploymentRecords()
             .firstNotNullOfOrNull { it.value.processesMetadata.firstOrNull { p -> p.bpmnProcessId == key } }
+        // find the deployed resource coresponding to the process metadata
         val resource = getRecordStream().deploymentRecords()
             .firstNotNullOfOrNull { it.value.resources.firstOrNull { res -> res.resourceName == processMetadata?.resourceName } }
 

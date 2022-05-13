@@ -12,11 +12,13 @@ import org.camunda.community.process_test_coverage.core.model.EventType
 
 /**
  * Creates events for the collector from the record stream of the zeebe process engine.
+ * @param collector collector in use for events
+ * @param eventCutoffTimestamp timestamp for the cut-off of events in the record stream. Only events happened afterwards are relevant.
  */
-fun createEvents(collector: Collector, lastEventTime: Long) {
+fun createEvents(collector: Collector, eventCutoffTimestamp: Long) {
     BpmnAssert.getRecordStream().processInstanceRecords()
         .filter { it.recordType == RecordType.EVENT }
-        .filter { it.timestamp > lastEventTime }
+        .filter { it.timestamp > eventCutoffTimestamp }
         .filter { it.value.bpmnElementType != BpmnElementType.PROCESS }
         .mapNotNull { mapEvent(it) }
         .forEach { collector.addEvent(it) }
