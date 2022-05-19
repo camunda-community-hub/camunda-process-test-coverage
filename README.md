@@ -5,9 +5,9 @@
 
 ![Camunda Logo](doc/img/Favicons-Circle-Colour.png)
 
-# Camunda Platform 7 Process Test Coverage 
+# Camunda Process Test Coverage 
 
-This Camunda Platform 7 community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
+This Camunda Platform 7 and Platform 8 ommunity extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
 ![Insurance Application](doc/img/flowcov_coverage_report.png)
 
@@ -19,8 +19,8 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ## Just use it
 
-* Integrates with all versions of Camunda Platform 7 starting with 7.10.0 and upwards
-* Is continuously checked against the latest Camunda BPM releases (check out our compatibility CI/CD pipeline)
+* Integrates with all versions of Camunda Platform 7 starting with 7.10.0 and upwards as well as Camunda Platform 8
+* Is continuously checked against the latest Camunda Platform 7 releases (check out our compatibility CI/CD pipeline)
 * Tested with JDKs 11 and 17
 * Works with Java starting with 1.8 and following 
 * Supports **JUnit 4.13.1** (4.11 does not work) or **JUnit 5**
@@ -28,48 +28,51 @@ This Camunda Platform 7 community extension **visualises** test process **paths*
 
 ## Get started with *3 simple steps*
 
-**1.** Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-process-test-coverage-core/badge.svg" align="right" /></a>
+**1.** Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage-core/badge.svg" align="right" /></a>
 
-#### JUnit4
+#### JUnit4 (only Platform 7)
 
 ```xml
 <dependency>
-  <groupId>org.camunda.community</groupId>
-  <artifactId>camunda-bpm-process-test-coverage-junit4</artifactId>
-  <version>${camunda-bpm-process-test-coverage.version}</version>
+  <groupId>org.camunda.community.process_test_coverage</groupId>
+  <artifactId>camunda-process-test-coverage-junit4-platform7</artifactId>
+  <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
 
-#### JUnit5
+#### JUnit5 (Platform 7 or Platform 8)
 
 ```xml
 <dependency>
-  <groupId>org.camunda.community</groupId>
-  <artifactId>camunda-bpm-process-test-coverage-junit5</artifactId>
-  <version>${camunda-bpm-process-test-coverage.version}</version>
+  <groupId>org.camunda.community.process_test_coverage</groupId>
+  <artifactId>camunda-process-test-coverage-junit5-platform7</artifactId> 
+  <!-- <artifactId>camunda-process-test-coverage-junit5-platform8</artifactId> -->
+  <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
 
-#### Spring-Testing
+#### Spring-Testing (Platform 7 or Platform 8)
 
 ```xml
 <dependency>
-  <groupId>org.camunda.community</groupId>
-  <artifactId>camunda-bpm-process-test-coverage-spring-test</artifactId>
-  <version>${camunda-bpm-process-test-coverage.version}</version>
+  <groupId>org.camunda.community.process_test_coverage</groupId>
+  <artifactId>camunda-process-test-coverage-spring-test-platform7</artifactId>
+  <!-- <artifactId>camunda-process-test-coverage-spring-test-platform8</artifactId> -->
+  <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
 
-#### Spring-Testing with starter
+#### Spring-Testing with starter (Platform 7 or Platform 8)
 
 ```xml
 <dependency>
-  <groupId>org.camunda.community</groupId>
-  <artifactId>camunda-bpm-process-test-coverage-starter</artifactId>
-  <version>${camunda-bpm-process-test-coverage.version}</version>
+  <groupId>org.camunda.community.process_test_coverage</groupId>
+  <artifactId>camunda-process-test-coverage-starter-platform7</artifactId>
+  <!-- <artifactId>camunda-process-test-coverage-starter-platform8</artifactId> -->
+  <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -83,13 +86,13 @@ You can do that, by using the following annotation on the class or method level.
 @ExcludeFromProcessCoverage
 ```
 
-**2.** Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml`
+**2.** Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml` (only needed for Platform 7)
 
 #### JUnit4 and JUnit5
 
 ```xml
 <bean id="processEngineConfiguration"
-   class="org.camunda.bpm.extension.process_test_coverage.engine.ProcessCoverageInMemProcessEngineConfiguration">
+   class="org.camunda.community.process_test_coverage.engine.platform7.ProcessCoverageInMemProcessEngineConfiguration">
    ...
 </bean>
 ```
@@ -115,7 +118,7 @@ public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.crea
 
 #### JUnit5
 
-Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension
+Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension (available for Platform 7 and Platform 8)
 
 Either use `@ExtendWith`
 
@@ -158,12 +161,8 @@ Kotlin
 
 #### Spring-Testing
 
-```java
-@TestExecutionListeners(value = ProcessEngineCoverageTestExecutionListener.class,
-        mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
-```
-
-You can exlude test methods from the coverage by annotating them like this
+TestExecutionListener is automatically registered.
+You can exclude test methods or classes from the coverage by annotating them like this
 
 ```java
 @ExcludeFromProcessCoverage
@@ -176,7 +175,7 @@ Running your JUnit tests now leaves **html** files for individual test methods a
 
 **4. (Optional)** configure output path for reports
 
-by default the reports are written to `./target/process-test-coverage/`. To change it you can set the system property `camunda-bpm-process-test-coverage.target-dir-root`
+by default the reports are written to `./target/process-test-coverage/`. To change it you can set the system property `camunda-process-test-coverage.target-dir-root`
 
 ##### in maven pom.xml
 ```xml
@@ -186,7 +185,7 @@ by default the reports are written to `./target/process-test-coverage/`. To chan
 <version>2.22.2</version>
 <configuration>
   <systemPropertyVariables>
-    <camunda-bpm-process-test-coverage.target-dir-root>${project.build.directory}/my-coverage-reports/</camunda-bpm-process-test-coverage.target-dir-root>
+    <camunda-process-test-coverage.target-dir-root>${project.build.directory}/my-coverage-reports/</camunda-process-test-coverage.target-dir-root>
   </systemPropertyVariables>
 </configuration>
 </plugin>
@@ -197,7 +196,7 @@ by default the reports are written to `./target/process-test-coverage/`. To chan
 tasks {
     withType<Test> {
         systemProperties = mapOf(
-            "camunda-bpm-process-test-coverage.target-dir-root" to "$buildDir/my-coverage-reports/"
+            "camunda-process-test-coverage.target-dir-root" to "$buildDir/my-coverage-reports/"
         )
     }
 }
@@ -209,7 +208,7 @@ but then the project has been abandoned for some time and received a full rewrit
 of flowcov.io squad and BPM craftsmen from Holisticon AG. We appreciate any help and effort you put into maintenance 
 discussion and further development. 
 
-Please check the release notes of [individual releases](https://github.com/camunda-community-hub/camunda-bpm-process-test-coverage/releases) for the changes 
+Please check the release notes of [individual releases](https://github.com/camunda-community-hub/camunda-process-test-coverage/releases) for the changes 
 and involved contributors.
 
 ## License

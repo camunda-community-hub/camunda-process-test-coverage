@@ -3,19 +3,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.camunda.community</groupId>
-        <artifactId>camunda-platform-7-process-test-coverage-root</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
+        <artifactId>camunda-process-test-coverage-root</artifactId>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <name>Camunda BPM Process Test Coverage Examples Parent</name>
-    <artifactId>camunda-platform-7-process-test-coverage-examples-parent</artifactId>
+    <name>Camunda Process Test Coverage Examples Parent</name>
+    <artifactId>camunda-process-test-coverage-examples-parent</artifactId>
     <packaging>pom</packaging>
 
     <properties>
         <camunda.version>7.16.0</camunda.version>
-        <!-- assertj must be pinned to support camunda-assert -->
-        <assertj.version>3.18.1</assertj.version>
+        <zeebe.version>8.0.2</zeebe.version>
+        <spring-zeebe.version>8.0.4</spring-zeebe.version>
         <camunda-bpm-assert.version>15.0.0</camunda-bpm-assert.version>
         <camunda-bpm-jgiven.version>0.2.0</camunda-bpm-jgiven.version>
         <springboot.version>2.6.7</springboot.version>
@@ -28,10 +28,13 @@
     </properties>
 
     <modules>
-        <module>junit4</module>
-        <module>junit5</module>
-        <module>spring-test</module>
-        <module>spring-starter</module>
+        <module>junit4-platform-7</module>
+        <module>junit5-platform-7</module>
+        <module>junit5-platform-8</module>
+        <module>spring-test-platform-7</module>
+        <module>spring-test-platform-8</module>
+        <module>spring-starter-platform-7</module>
+        <module>spring-starter-platform-8</module>
     </modules>
 
     <dependencyManagement>
@@ -63,18 +66,11 @@
 
             <!-- Own BOM -->
             <dependency>
-                <groupId>org.camunda.community</groupId>
-                <artifactId>camunda-platform-7-process-test-coverage-bom</artifactId>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-bom</artifactId>
                 <version>${project.parent.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.assertj</groupId>
-                <artifactId>assertj-core</artifactId>
-                <version>${assertj.version}</version>
-                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -92,7 +88,7 @@
                 <jdk>[11,)</jdk>
             </activation>
             <modules>
-                <module>jgiven</module>
+                <module>jgiven-platform-7</module>
             </modules>
         </profile>
     </profiles>
