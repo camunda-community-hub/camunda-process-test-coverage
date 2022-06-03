@@ -69,5 +69,5 @@ jobs:
 
       # This is for main
       - name: Deploy latest develop snapshot docs to GH pages.
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         run: mike deploy snapshot --push --rebase
