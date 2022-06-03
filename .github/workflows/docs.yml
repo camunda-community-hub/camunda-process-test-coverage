@@ -67,7 +67,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: mike set-default stable --push --rebase
 
-      # This is for develop
+      # This is for main
       - name: Deploy latest develop snapshot docs to GH pages.
-        if: github.ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/main'
         run: mike deploy snapshot --push --rebase
