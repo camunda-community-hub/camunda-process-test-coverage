@@ -3,92 +3,52 @@
 ![Compatible with: Camunda Platform 7](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%207-26d07c)
 
 
-![Camunda Logo](doc/img/Favicons-Circle-Colour.png)
+![Camunda Logo](docs/assets/img/Favicons-Circle-Colour.png)
 
-# Camunda Process Test Coverage 
+# Camunda Process Test Coverage
 
 This Camunda Platform 7 and Platform 8 ommunity extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
-![Insurance Application](doc/img/flowcov_coverage_report.png)
+![Coverage report](docs/assets/img/flowcov_coverage_report.png)
 
 ## Highlights
 
 * **Visually verify** the paths covered by individual tests **methods** and whole test **classes**
 * Visually check gateway **expressions** and transaction borders (**save points**) used by your process
-* Calculate and **verify** the nodes (_and_ sequence flow) **coverage** ratio reached by tests methods and classes
+* Calculate and **verify** the nodes (_and_ sequence flow) **coverage** ratio reached by tests methods and classes.
 
 ## Just use it
 
 * Integrates with all versions of Camunda Platform 7 starting with 7.10.0 and upwards as well as Camunda Platform 8
 * Is continuously checked against the latest Camunda Platform 7 releases (check out our compatibility CI/CD pipeline)
 * Tested with JDKs 11 and 17
-* Works with Java starting with 1.8 and following 
-* Supports **JUnit 4.13.1** (4.11 does not work) or **JUnit 5**
-* Can be used inside Spring Tests 
+* Works with Java starting with 1.8 and following
+* Supports **JUnit 4.13.1+** (4.11 does not work) or **JUnit 5**
+* Can be used inside Spring Tests
 
-## Get started with *3 simple steps*
+## Documentation
 
-**1.** Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage-core/badge.svg" align="right" /></a>
+If you are interested in further documentation, please check our [Documentation Page](https://)
 
-#### JUnit4 (only Platform 7)
+## Installation
 
-```xml
-<dependency>
-  <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit4-platform7</artifactId>
-  <version>${camunda-process-test-coverage.version}</version>
-  <scope>test</scope>
-</dependency>
-```
+ Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage-core/badge.svg" align="right" /></a>
 
-#### JUnit5 (Platform 7 or Platform 8)
+### JUnit5 (Platform 7 or Platform 8)
 
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit5-platform7</artifactId> 
+  <artifactId>camunda-process-test-coverage-junit5-platform7</artifactId>
   <!-- <artifactId>camunda-process-test-coverage-junit5-platform8</artifactId> -->
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
 
-#### Spring-Testing (Platform 7 or Platform 8)
+## Configuration
 
-```xml
-<dependency>
-  <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-spring-test-platform7</artifactId>
-  <!-- <artifactId>camunda-process-test-coverage-spring-test-platform8</artifactId> -->
-  <version>${camunda-process-test-coverage.version}</version>
-  <scope>test</scope>
-</dependency>
-```
-
-#### Spring-Testing with starter (Platform 7 or Platform 8)
-
-```xml
-<dependency>
-  <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-starter-platform7</artifactId>
-  <!-- <artifactId>camunda-process-test-coverage-starter-platform8</artifactId> -->
-  <version>${camunda-process-test-coverage.version}</version>
-  <scope>test</scope>
-</dependency>
-```
-
-With the starter steps #2 and #3 are not needed anymore, as everything is auto-configured. This means you have to explicitly exclude all test classes and test methods,
-that should not be included in the test coverage.
-
-You can do that, by using the following annotation on the class or method level.
-
-```java
-@ExcludeFromProcessCoverage
-```
-
-**2.** Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml` (only needed for Platform 7)
-
-#### JUnit4 and JUnit5
+Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml` (only needed for Platform 7)
 
 ```xml
 <bean id="processEngineConfiguration"
@@ -96,27 +56,6 @@ You can do that, by using the following annotation on the class or method level.
    ...
 </bean>
 ```
-
-#### Spring-Testing
-
-Import test configuration to enable coverage in process engine.
-```java
-@Import(ProcessEngineCoverageConfiguration.class)
-```
-
-**3.** Wire the process engine in your JUnit test
-
-#### JUnit4
-
-Use the **TestCoverageProcessEngineRule** as your process engine JUnit rule
-
-```java
-@Rule
-@ClassRule
-public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
-```
-
-#### JUnit5
 
 Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension (available for Platform 7 and Platform 8)
 
@@ -141,75 +80,37 @@ The extension provides a Builder for programmatic creation, which takes either a
 
 The process engine configuration needs to be configured for test coverage. So use **either** the provided `ProcessCoverageInMemProcessEngineConfiguration`, `SpringProcessWithCoverageEngineConfiguration` or initialize the configuration with `ProcessCoverageConfigurator.initializeProcessCoverageExtensions(configuration)`.
 
-Java
+If you use Java:
 ```java
 @RegisterExtension
 static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension
         .builder().assertClassCoverageAtLeast(0.9).build();
 ```
 
-Kotlin
+If you prefer Kotlin:
 ```kotlin
-    companion object {
-        @JvmField
-        @RegisterExtension
-        var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension
-                .builder(ProcessCoverageInMemProcessEngineConfiguration())
-                .assertClassCoverageAtLeast(1.0).build()
-    }
+companion object {
+    @JvmField
+    @RegisterExtension
+    var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension
+            .builder(ProcessCoverageInMemProcessEngineConfiguration())
+            .assertClassCoverageAtLeast(1.0).build()
+}
 ```
 
-#### Spring-Testing
-
-TestExecutionListener is automatically registered.
-You can exclude test methods or classes from the coverage by annotating them like this
-
-```java
-@ExcludeFromProcessCoverage
-public void testWithoutCoverage() {}
-```
-
-### Running the tests
+## Running the tests
 
 Running your JUnit tests now leaves **html** files for individual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
 
-**4. (Optional)** configure output path for reports
 
-by default the reports are written to `./target/process-test-coverage/`. To change it you can set the system property `camunda-process-test-coverage.target-dir-root`
-
-##### in maven pom.xml
-```xml
-<plugin>
-<groupId>org.apache.maven.plugins</groupId>
-<artifactId>maven-surefire-plugin</artifactId>
-<version>2.22.2</version>
-<configuration>
-  <systemPropertyVariables>
-    <camunda-process-test-coverage.target-dir-root>${project.build.directory}/my-coverage-reports/</camunda-process-test-coverage.target-dir-root>
-  </systemPropertyVariables>
-</configuration>
-</plugin>
-```
-
-##### in build.gradle.kts
-```kotlin
-tasks {
-    withType<Test> {
-        systemProperties = mapOf(
-            "camunda-process-test-coverage.target-dir-root" to "$buildDir/my-coverage-reports/"
-        )
-    }
-}
-```
 ## News and Noteworthy & Contributors
 
-There are plenty of contributors to this project. Its initial design has been created by the WDW eLab GmbH and some others, 
-but then the project has been abandoned for some time and received a full rewrite including the new architecture by members 
-of flowcov.io squad and BPM craftsmen from Holisticon AG. We appreciate any help and effort you put into maintenance 
-discussion and further development. 
+There are plenty of contributors to this project. Its initial design has been created by the WDW eLab GmbH and some others,
+but then the project has been abandoned for some time and received a full rewrite including the new architecture by members
+of flowcov.io squad and BPM craftsmen from Holisticon AG. We appreciate any help and effort you put into maintenance
+discussion and further development.
 
-Please check the release notes of [individual releases](https://github.com/camunda-community-hub/camunda-process-test-coverage/releases) for the changes 
-and involved contributors.
+Please check the release notes of [individual releases](https://github.com/camunda-community-hub/camunda-process-test-coverage/releases) for the changes and involved contributors.
 
 ## License
-[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](LICENSE) file.
+[Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](LICENSE.md) file.
