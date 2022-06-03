@@ -17,11 +17,10 @@ When using the issue tracker:
 
 Create a pull request if you would like to have an in-depth discussion about some piece of code.
 
-
 ## Setting Up the Project Locally
 
-The project is build using [Maven 3](https://maven.apache.org/) as build tool.  
-To build the project by yourself, go to your cmd line and enter ```mvn clean install``` on the root of the checked out project.  
+The project is build using [Maven 3](https://maven.apache.org/) as build tool.
+To build the project by yourself, go to your cmd line and enter ```mvn clean install``` on the root of the checked out project.
 
 1. git clone https://github.com/camunda/camunda-process-test-coverage.git
 2. cd camunda-process-test-coverage/
@@ -29,7 +28,7 @@ To build the project by yourself, go to your cmd line and enter ```mvn clean ins
 
 ## Creating Pull Requests
 
-We use pull requests for feature discussion and bug fixes. 
+We use pull requests for feature discussion and bug fixes.
 If you are not yet familiar on how to create a pull request, [read this great guide](https://gun.io/blog/how-to-github-fork-branch-and-pull-request).
 
 Some things that make it easier for us to accept your pull requests:
@@ -41,4 +40,3 @@ Some things that make it easier for us to accept your pull requests:
 * The work is combined into a single commit
 
 We'd be glad to assist you if you do not get these things right in the first place.
-
