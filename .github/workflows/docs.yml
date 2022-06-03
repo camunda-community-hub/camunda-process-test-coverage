@@ -3,7 +3,7 @@ name: Build the docs
 on:
   push:
     branches:
-      - develop
+      - master
     tags:
       - '*'
 
