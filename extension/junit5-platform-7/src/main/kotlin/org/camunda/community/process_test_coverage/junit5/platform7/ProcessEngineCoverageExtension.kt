@@ -100,10 +100,12 @@ class ProcessEngineCoverageExtension(
      * Initializes the suite for all upcoming tests.
      */
     override fun beforeAll(context: ExtensionContext) {
-        if (!suiteInitialized || (context.uniqueId != coverageCollector.activeSuite.id)) {
+        if (!suiteInitialized || (context.uniqueId != coverageCollector.activeSuite.id) && !isNested(context)) {
             initializeSuite(context)
         }
     }
+
+    private fun isNested(context: ExtensionContext) = context.parent.map { it.uniqueId == coverageCollector.activeSuite.id }.orElse(false)
 
     private fun initializeSuite(context: ExtensionContext) {
         val suiteId: String = context.uniqueId
