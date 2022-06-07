@@ -97,7 +97,7 @@ class ProcessEngineCoverageExtension(
      * Initializes the suite for all upcoming tests.
      */
     override fun beforeAll(context: ExtensionContext) {
-        if (!suiteInitialized) {
+        if (!suiteInitialized || (context.uniqueId != coverageCollector.activeSuite.id)) {
             initializeSuite(context)
         }
     }

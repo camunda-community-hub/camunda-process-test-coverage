@@ -4,18 +4,15 @@ import org.camunda.community.process_test_coverage.core.export.CoverageStateJson
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector;
 import org.camunda.community.process_test_coverage.core.model.Suite;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URISyntaxException;
+import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Logger;
@@ -39,38 +36,35 @@ public class CoverageReportUtil {
 
 
     public static void createReport(final DefaultCollector coverageCollector) {
-        final String result = CoverageStateJsonExporter.createCoverageStateResult(
-            coverageCollector.getSuites().values(),
-            coverageCollector.getModels());
-        final Suite suite = coverageCollector.getActiveSuite();
-        final String reportDirectory = getReportDirectoryPath(suite.getName());
-        installReportDependencies(reportDirectory);
-
-        try {
-            final String report = generateHtml(result);
-            Files.createDirectories(FileSystems.getDefault().getPath(reportDirectory));
-            writeToFile(reportDirectory + "/report.html", report);
-        } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException("Unable to create HTML report.", e);
-        }
+        writeReport(coverageCollector, true, "report.html", CoverageReportUtil::generateHtml);
     }
 
     public static void createJsonReport(final DefaultCollector coverageCollector) {
+        writeReport(coverageCollector, false, "report.json", result -> result);
+    }
+
+    private static void writeReport(final DefaultCollector coverageCollector, boolean installReportDependencies,
+                                    final String fileName, final Function<String, String> reportCreator) {
+        Suite suite = coverageCollector.getActiveSuite();
         final String result = CoverageStateJsonExporter.createCoverageStateResult(
-            coverageCollector.getSuites().values(),
-            coverageCollector.getModels());
-        final Suite suite = coverageCollector.getActiveSuite();
+                Collections.singleton(suite),
+                coverageCollector.getModels().stream().filter(
+                        it -> suite.getEvents(it.getKey()).size() > 0).collect(Collectors.toSet()));
+
         final String reportDirectory = getReportDirectoryPath(suite.getName());
+        if (installReportDependencies) {
+            installReportDependencies(reportDirectory);
+        }
 
         try {
             Files.createDirectories(FileSystems.getDefault().getPath(reportDirectory));
-            writeToFile(reportDirectory + "/report.json", result);
+            writeToFile(reportDirectory + "/" + fileName, reportCreator.apply(result));
         } catch (final IOException ex) {
-            throw new RuntimeException("Unable to create JSON report.", ex);
+            throw new RuntimeException("Unable to write report.", ex);
         }
     }
 
-    protected static String generateHtml(String result) throws IOException, URISyntaxException {
+    protected static String generateHtml(String result) {
         InputStream template =  CoverageReportUtil.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE);
         Objects.requireNonNull(template);
         String html = new BufferedReader(
