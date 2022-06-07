@@ -81,6 +81,17 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.camunda.community.process_test_coverage</groupId>
+                    <artifactId>camunda-process-test-coverage-report-aggregator-plugin</artifactId>
+                    <version>${project.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
     <profiles>
         <profile>
             <id>java11</id>

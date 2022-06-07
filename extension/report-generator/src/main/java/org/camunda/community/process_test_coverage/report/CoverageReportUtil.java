@@ -36,35 +36,41 @@ public class CoverageReportUtil {
 
 
     public static void createReport(final DefaultCollector coverageCollector) {
-        writeReport(coverageCollector, true, "report.html", CoverageReportUtil::generateHtml);
+        writeReport(createCoverageStateResult(coverageCollector), true,
+                getReportDirectoryPath(coverageCollector.getActiveSuite().getName()),
+                "report.html", CoverageReportUtil::generateHtml);
     }
 
     public static void createJsonReport(final DefaultCollector coverageCollector) {
-        writeReport(coverageCollector, false, "report.json", result -> result);
+        writeReport(createCoverageStateResult(coverageCollector), false,
+                getReportDirectoryPath(coverageCollector.getActiveSuite().getName()),
+                "report.json", result -> result);
     }
 
-    private static void writeReport(final DefaultCollector coverageCollector, boolean installReportDependencies,
-                                    final String fileName, final Function<String, String> reportCreator) {
+    private static String createCoverageStateResult(final DefaultCollector coverageCollector) {
         Suite suite = coverageCollector.getActiveSuite();
-        final String result = CoverageStateJsonExporter.createCoverageStateResult(
+        return CoverageStateJsonExporter.createCoverageStateResult(
                 Collections.singleton(suite),
                 coverageCollector.getModels().stream().filter(
                         it -> suite.getEvents(it.getKey()).size() > 0).collect(Collectors.toSet()));
+    }
 
-        final String reportDirectory = getReportDirectoryPath(suite.getName());
+    public static void writeReport(final String coverageResult, boolean installReportDependencies,
+                                   final String reportDirectory, final String fileName, final Function<String, String> reportCreator) {
+
         if (installReportDependencies) {
             installReportDependencies(reportDirectory);
         }
 
         try {
             Files.createDirectories(FileSystems.getDefault().getPath(reportDirectory));
-            writeToFile(reportDirectory + "/" + fileName, reportCreator.apply(result));
+            writeToFile(reportDirectory + "/" + fileName, reportCreator.apply(coverageResult));
         } catch (final IOException ex) {
             throw new RuntimeException("Unable to write report.", ex);
         }
     }
 
-    protected static String generateHtml(String result) {
+    public static String generateHtml(String result) {
         InputStream template =  CoverageReportUtil.class.getClassLoader().getResourceAsStream(REPORT_TEMPLATE);
         Objects.requireNonNull(template);
         String html = new BufferedReader(
