@@ -26,7 +26,7 @@
 
     <properties>
         <version.java>1.8</version.java>
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.7.0</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin-logging.version>2.1.23</kotlin-logging.version>
     </properties>
