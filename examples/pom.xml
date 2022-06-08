@@ -19,6 +19,8 @@
         <camunda-bpm-assert.version>15.0.0</camunda-bpm-assert.version>
         <camunda-bpm-jgiven.version>0.2.0</camunda-bpm-jgiven.version>
         <springboot.version>2.7.0</springboot.version>
+        <!-- pin to latest H2 1.x version as camunda 7.14 is not compatible with 2.x -->
+        <h2.version>1.4.202</h2.version>
         <jacoco.skip>true</jacoco.skip>
         <dokka.skip>true</dokka.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
@@ -39,6 +41,13 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- pin to latest H2 1.x version as camunda 7.14 is not compatible with 2.x -->
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
+            </dependency>
 
             <!-- Spring Boot import -->
             <dependency>
