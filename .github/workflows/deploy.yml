@@ -39,11 +39,10 @@ jobs:
           maven-usr: ${{ secrets.MAVEN_CENTRAL_DEPLOYMENT_USR }}
           maven-psw: ${{ secrets.MAVEN_CENTRAL_DEPLOYMENT_PSW }}
           maven-gpg-passphrase: ${{ secrets.MAVEN_CENTRAL_GPG_SIGNING_KEY_PASSPHRASE }}
-          maven-url: s01.oss.sonatype.org
           github-token: ${{ secrets.GITHUB_TOKEN }}
         id: release
-      - if: github.event.release
-        name: Attach artifacts to GitHub Release (Release only)
+      - name: Attach artifacts to GitHub Release (Release only)
+        if: github.event.release
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -52,3 +51,8 @@ jobs:
           asset_path: ${{ steps.release.outputs.artifacts_archive_path }}
           asset_name: ${{ steps.release.outputs.artifacts_archive_path }}
           asset_content_type: application/zip
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.0.2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
