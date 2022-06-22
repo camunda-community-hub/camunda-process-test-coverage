@@ -16,6 +16,7 @@
     <name>Camunda Process Test Coverage Root</name>
     <description>Helper library to visualize and assert which parts of a BPMN process have been covered by a test.
     </description>
+    <url>https://github.com/camunda-community-hub/camunda-process-test-coverage/</url>
 
     <modules>
         <module>extension</module>
@@ -174,6 +175,7 @@
                 <module>examples</module>
             </modules>
         </profile>
+
         <profile>
             <id>activate-kotlin-support</id>
             <activation>
@@ -278,6 +280,33 @@
                     <plugin>
                         <groupId>org.jetbrains.dokka</groupId>
                         <artifactId>dokka-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
+        <!--
+          Profile creating all artifacts: JARs, POMs, Sources, JavaDoc and all signatures.
+        -->
+        <profile>
+            <id>community-action-maven-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>oss-maven-central</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
                     </plugin>
                 </plugins>
             </build>
