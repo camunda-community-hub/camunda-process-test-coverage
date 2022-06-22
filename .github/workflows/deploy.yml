@@ -31,13 +31,16 @@ jobs:
         with:
           maven-release-options: -DskipExamples # avoid publication of examples into public repositories
           release-version: ${{ github.event.release.tag_name }}
+          release-profile: community-action-maven-release
+          central-release-profile: oss-maven-central
           nexus-usr: ${{ secrets.NEXUS_USR }}
           nexus-psw: ${{ secrets.NEXUS_PSW }}
           maven-usr: ${{ secrets.MAVEN_CENTRAL_DEPLOYMENT_USR }}
           maven-psw: ${{ secrets.MAVEN_CENTRAL_DEPLOYMENT_PSW }}
+          maven-url: oss.sonatype.org
           maven-gpg-passphrase: ${{ secrets.MAVEN_CENTRAL_GPG_SIGNING_KEY_PASSPHRASE }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-        id: release
+          id: release
       - name: Attach artifacts to GitHub Release (Release only)
         if: github.event.release
         uses: actions/upload-release-asset@v1
