@@ -77,7 +77,8 @@
                         <useSystemClassLoader>false</useSystemClassLoader>
                         <shutdown>kill</shutdown>
                         <runOrder>random</runOrder>
-                        <argLine>-Djava.awt.headless=true -XX:+StartAttachListener -Xmx1024m</argLine>
+                        <forkedProcessExitTimeoutInSeconds>300</forkedProcessExitTimeoutInSeconds>
+                        <argLine>-Djava.awt.headless=true -XX:+StartAttachListener -Xmx1024m -XX:MaxPermSize=256m</argLine>
                     </configuration>
                 </plugin>
                 <plugin>
