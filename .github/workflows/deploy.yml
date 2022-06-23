@@ -33,7 +33,7 @@ jobs:
           maven-release-options: -DskipExamples # avoid publication of examples into public repositories
           release-version: ${{ github.event.release.tag_name }}
           release-profile: community-action-maven-release
-          central-release-profile: community-action-maven-release,oss-maven-central
+          central-release-profile: oss-maven-central
           nexus-usr: ${{ secrets.NEXUS_USR }}
           nexus-psw: ${{ secrets.NEXUS_PSW }}
           maven-usr: ${{ secrets.MAVEN_CENTRAL_DEPLOYMENT_USR }}
