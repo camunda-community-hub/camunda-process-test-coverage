@@ -91,7 +91,7 @@
                 </plugin>
                 <plugin>
                     <groupId>org.camunda.community.process_test_coverage</groupId>
-                    <artifactId>camunda-process-test-coverage-report-aggregator-plugin</artifactId>
+                    <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
                     <version>${project.version}</version>
                 </plugin>
             </plugins>
@@ -118,7 +118,7 @@
             </plugin>
             <plugin>
                 <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-report-aggregator-plugin</artifactId>
+                <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </reporting>
