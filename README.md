@@ -29,7 +29,7 @@ This Camunda Platform 7 and Platform 8 community extension **visualises** test p
 
 ## Documentation
 
-If you are interested in further documentation, please check our [Documentation Page](https://)
+If you are interested in further documentation, please check our [Documentation Page](https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/index.html)
 
 ## Installation
 
