@@ -37,7 +37,10 @@ class ReportAggregatorMojoIT {
                     File(result.mavenProjectResult.targetProjectDirectory, "expected_result.json").readText(),
                     JsonObject::class.java
                 )
-                assertThat(actual).isEqualTo(expected)
+                assertThat(actual.getAsJsonArray("suites")).containsExactlyInAnyOrderElementsOf(
+                    expected.getAsJsonArray("suites"))
+                assertThat(actual.getAsJsonArray("models")).containsExactlyInAnyOrderElementsOf(
+                    expected.getAsJsonArray("models"))
             })
     }
 
@@ -55,7 +58,10 @@ class ReportAggregatorMojoIT {
                     File(result.mavenProjectResult.targetProjectDirectory, "expected_result.json").readText(),
                     JsonObject::class.java
                 )
-                assertThat(actual).isEqualTo(expected)
+                assertThat(actual.getAsJsonArray("suites")).containsExactlyInAnyOrderElementsOf(
+                    expected.getAsJsonArray("suites"))
+                assertThat(actual.getAsJsonArray("models")).containsExactlyInAnyOrderElementsOf(
+                    expected.getAsJsonArray("models"))
             })
     }
 
