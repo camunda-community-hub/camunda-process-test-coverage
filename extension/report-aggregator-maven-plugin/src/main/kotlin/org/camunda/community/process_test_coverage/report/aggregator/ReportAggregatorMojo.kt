@@ -106,7 +106,7 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
                 ) { result -> result }
                 CoverageReportUtil.writeReport(createCoverageStateResult(it.suites, it.models), true,
                     outputDirectory.path, "report.html", CoverageReportUtil::generateHtml)
-            } ?: throw MavenExecutionException("No coverage results found", project.model.pomFile)
+            } ?: log.warn("No coverage results found, skipping execution")
     }
 
 }

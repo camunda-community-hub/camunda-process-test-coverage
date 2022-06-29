@@ -1,11 +1,13 @@
 package org.camunda.community.process_test_coverage.report.aggregator
 
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.soebes.itf.extension.assertj.MavenITAssertions.assertThat
-
 import com.soebes.itf.jupiter.extension.MavenJupiterExtension
 import com.soebes.itf.jupiter.extension.MavenTest
 import com.soebes.itf.jupiter.maven.MavenExecutionResult
 import java.io.File
+import java.util.function.Consumer
 
 @MavenJupiterExtension
 class ReportAggregatorMojoIT {
@@ -16,6 +18,7 @@ class ReportAggregatorMojoIT {
             .project()
             .hasTarget()
             .withFile("process-test-coverage/all/report.json")
+            .exists().isFile
             .hasSameTextualContentAs(File(result.mavenProjectResult.targetProjectDirectory,
                 "target/process-test-coverage/org.camunda.community.process_test_coverage.report.aggregator.test.FirstTest/report.json"))
     }
@@ -26,7 +29,16 @@ class ReportAggregatorMojoIT {
             .project()
             .hasTarget()
             .withFile("process-test-coverage/all/report.json")
-            .hasSameTextualContentAs(File(result.mavenProjectResult.targetProjectDirectory, "expected_result.json"))
+            .exists().isFile
+            .content()
+            .satisfies(Consumer {
+                val actual = Gson().fromJson(it, JsonObject::class.java)
+                val expected = Gson().fromJson(
+                    File(result.mavenProjectResult.targetProjectDirectory, "expected_result.json").readText(),
+                    JsonObject::class.java
+                )
+                assertThat(actual).isEqualTo(expected)
+            })
     }
 
     @MavenTest
@@ -35,7 +47,16 @@ class ReportAggregatorMojoIT {
             .project()
             .hasTarget()
             .withFile("process-test-coverage/all/report.json")
-            .hasSameTextualContentAs(File(result.mavenProjectResult.targetProjectDirectory, "expected_result.json"))
+            .exists().isFile
+            .content()
+            .satisfies(Consumer {
+                val actual = Gson().fromJson(it, JsonObject::class.java)
+                val expected = Gson().fromJson(
+                    File(result.mavenProjectResult.targetProjectDirectory, "expected_result.json").readText(),
+                    JsonObject::class.java
+                )
+                assertThat(actual).isEqualTo(expected)
+            })
     }
 
 }
