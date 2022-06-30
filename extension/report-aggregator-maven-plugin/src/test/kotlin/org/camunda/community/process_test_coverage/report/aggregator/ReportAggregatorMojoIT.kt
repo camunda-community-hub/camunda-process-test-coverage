@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.soebes.itf.extension.assertj.MavenITAssertions.assertThat
 import com.soebes.itf.jupiter.extension.MavenJupiterExtension
+import com.soebes.itf.jupiter.extension.MavenProject
 import com.soebes.itf.jupiter.extension.MavenTest
 import com.soebes.itf.jupiter.maven.MavenExecutionResult
 import java.io.File
@@ -13,18 +14,18 @@ import java.util.function.Consumer
 class ReportAggregatorMojoIT {
 
     @MavenTest
-    fun should_generate_same_file_with_one_result(result: MavenExecutionResult) {
+    fun one_result(result: MavenExecutionResult) {
         assertThat(result).isSuccessful
             .project()
             .hasTarget()
             .withFile("process-test-coverage/all/report.json")
             .exists().isFile
             .hasSameTextualContentAs(File(result.mavenProjectResult.targetProjectDirectory,
-                "target/process-test-coverage/org.camunda.community.process_test_coverage.report.aggregator.test.FirstTest/report.json"))
+                "target/process-test-coverage/test.FirstTest/report.json"))
     }
 
     @MavenTest
-    fun should_generate_combined_file_with_two_results(result: MavenExecutionResult) {
+    fun two_results(result: MavenExecutionResult) {
         assertThat(result).isSuccessful
             .project()
             .hasTarget()
@@ -45,7 +46,7 @@ class ReportAggregatorMojoIT {
     }
 
     @MavenTest
-    fun should_generate_combined_file_with_multiple_projects(result: MavenExecutionResult) {
+    fun multiple_projects(result: MavenExecutionResult) {
         assertThat(result).isSuccessful
             .project()
             .hasTarget()
