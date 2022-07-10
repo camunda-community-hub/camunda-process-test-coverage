@@ -33,8 +33,8 @@ If you are interested in further documentation, please check our [Documentation 
 
 ## Installation
 
- Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage-core/badge.svg" align="right" /></a>
-
+ Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage-bom"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage-bom/badge.svg" align="right" /></a>
+0
 ### JUnit5 (Platform 7 or Platform 8)
 
 ```xml
