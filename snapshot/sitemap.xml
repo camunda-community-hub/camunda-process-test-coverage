@@ -2,57 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/index.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/getting-started.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/developer-guide/contribution.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/developer-guide/project-setup.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/introduction/index.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/introduction/features.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/introduction/further-outlook.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/introduction/motivation.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/introduction/solution.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/user-guide/index.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/user-guide/configuration.html</loc>
-         <lastmod>2022-07-10</lastmod>
+         <lastmod>2022-07-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
