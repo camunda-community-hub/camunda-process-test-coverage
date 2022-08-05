@@ -40,8 +40,8 @@ If you are interested in further documentation, please check our [Documentation 
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit5-platform7</artifactId>
-  <!-- <artifactId>camunda-process-test-coverage-junit5-platform8</artifactId> -->
+  <artifactId>camunda-process-test-coverage-junit5-platform-7</artifactId>
+  <!-- <artifactId>camunda-process-test-coverage-junit5-platform-8</artifactId> -->
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
