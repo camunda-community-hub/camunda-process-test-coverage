@@ -18,7 +18,7 @@ Current version available on Maven Central is: <a href="https://maven-badges.her
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit4-platform7</artifactId>
+  <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
@@ -29,8 +29,8 @@ Current version available on Maven Central is: <a href="https://maven-badges.her
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit5-platform7</artifactId>
-  <!-- <artifactId>camunda-process-test-coverage-junit5-platform8</artifactId> -->
+  <artifactId>camunda-process-test-coverage-junit5-platform-7</artifactId>
+  <!-- <artifactId>camunda-process-test-coverage-junit5-platform-8</artifactId> -->
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
@@ -41,8 +41,8 @@ Current version available on Maven Central is: <a href="https://maven-badges.her
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-spring-test-platform7</artifactId>
-  <!-- <artifactId>camunda-process-test-coverage-spring-test-platform8</artifactId> -->
+  <artifactId>camunda-process-test-coverage-spring-test-platform-7</artifactId>
+  <!-- <artifactId>camunda-process-test-coverage-spring-test-platform-8</artifactId> -->
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
@@ -53,8 +53,8 @@ Current version available on Maven Central is: <a href="https://maven-badges.her
 ```xml
 <dependency>
   <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-starter-platform7</artifactId>
-  <!-- <artifactId>camunda-process-test-coverage-starter-platform8</artifactId> -->
+  <artifactId>camunda-process-test-coverage-starter-platform-7</artifactId>
+  <!-- <artifactId>camunda-process-test-coverage-starter-platform-8</artifactId> -->
   <version>${camunda-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
