@@ -82,6 +82,8 @@ plugins:
   - git-revision-date-localized:
       type: date
       fallback_to_build_date: true
+  - mkdocs-pom-parser-plugin:
+      path: pom.xml
 
 nav:
   - Home: index.md
