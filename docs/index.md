@@ -1,4 +1,4 @@
-This Camunda Platform 7 and Platform 8 ommunity extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
+This Camunda Platform 7 and Platform 8 community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
 ![Coverage report](assets/img/flowcov_coverage_report.png)
 
@@ -12,7 +12,6 @@ This Camunda Platform 7 and Platform 8 ommunity extension **visualises** test pr
 ## Quick Start
 
 If you just want to start using the library, please consult our [Getting Started](getting-started.md) guide.
-
 
 ## User Guide
 

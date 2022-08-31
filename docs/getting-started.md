@@ -6,12 +6,9 @@ Please define the version of the library using properties like this:
 
 ```xml
 <properties>
-  <camunda-process-test-coverage.version>2.0.0</camunda-process-test-coverage.version>
+  <camunda-process-test-coverage.version>{{ POM_VERSION }}</camunda-process-test-coverage.version>
 </properties>
 ```
-
-Current version available on Maven Central is: <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-process-test-coverage-core/badge.svg" /></a>
-
 
 ### JUnit4 (only Platform 7)
 
