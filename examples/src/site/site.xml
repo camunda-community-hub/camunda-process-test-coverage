@@ -1,0 +1,5 @@
+<project name="Examples" combine.self="override">
+    <body>
+        <menu ref="reports"/>
+    </body>
+</project>

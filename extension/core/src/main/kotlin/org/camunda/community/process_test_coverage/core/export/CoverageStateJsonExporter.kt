@@ -21,4 +21,8 @@ object CoverageStateJsonExporter {
     fun createCoverageStateResult(suites: Collection<Suite> = emptyList(), models: Collection<Model> = emptyList()): String =
         Gson().toJson(CoverageStateResult(suites, models))
 
+    @JvmStatic
+    fun readCoverageStateResult(json: String): CoverageStateResult =
+        Gson().fromJson(json, CoverageStateResult::class.java)
+
 }
