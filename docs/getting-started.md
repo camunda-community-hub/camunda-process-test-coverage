@@ -149,3 +149,72 @@ public void testWithoutCoverage() {}
 
 Running your JUnit tests now leaves **html** files for individual test methods as well as whole test classes in your project's `target/process-test-coverage` folder. Just open one, check yourself - and have fun with your process tests! :smile:
 
+## Aggregating results
+
+Normally the results are written for each class under test. For aggregation of the results, there is a maven plugin to do the job.
+This can be done differently depending on your needs.
+
+### Aggregating reports in one maven module
+
+If you just want to aggregate all reports in one maven module, the plugin can be defined in the POM under the build -> plugins section.
+
+```xml
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>aggregate-reports</id>
+                        <goals>
+                            <goal>aggregate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+```
+
+This will activate the plugin in the correct lifecycle and generate an aggregated report in the directory target/process_test_coverage/all (if not otherwise configured).
+
+### Aggregating reports of multiple modules in reactor
+
+The plugin will try to collect all reports for the modules in the current reactor. For an example configuration see the pom.xml in the examples directory.
+Please note, that the plugin needs to run *after* the tests are run for all modules, therefore the plugin cannot be added to the plugins section in this use case.
+
+You can still configure the plugin in the pluginManagement section.
+
+```xml
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.camunda.community.process_test_coverage</groupId>
+                    <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
+                    <version>x.y.z</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+```
+
+It can then be invoked by calling *mvn camunda-process-test-coverage-report-aggregator:aggregate*.
+
+### Usage as a reporting plugin
+
+The plugin can also be used in the site generation. For this to work, the same conditions hold as before.
+The configuration for this use case looks like this:
+
+```xml
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
+                <version>x.y.z</version>
+            </plugin>
+        </plugins>
+    </reporting>
+```
