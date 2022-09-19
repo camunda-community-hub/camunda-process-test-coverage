@@ -40,6 +40,9 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Set git core.longpaths flag 
+        run: git config --global core.longpaths true
+
       - name: Checkout code
         uses: actions/checkout@v2
 
