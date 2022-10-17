@@ -22,6 +22,7 @@ jobs:
           - '11'
           - '17' # no official support yet by Camunda
         camunda-version:
+          - '7.17' # 2022
           - '7.16' # 2021
           - '7.15'
           - '7.14' # 2020
@@ -63,4 +64,4 @@ jobs:
         run: chmod +x ./mvnw
 
       - name: Build with Maven
-        run: ./mvnw clean verify -U -B -T4 "-Pcamunda-bpm-engine-${{ matrix.camunda-version }}"
+        run: ./mvnw clean verify -U -B -T4 "-Pregression-test"
