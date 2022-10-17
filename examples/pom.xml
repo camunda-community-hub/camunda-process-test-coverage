@@ -14,7 +14,7 @@
 
     <properties>
         <camunda.version>7.16.0</camunda.version>
-        <zeebe.version>8.0.7</zeebe.version>
+        <zeebe.version>8.1.0</zeebe.version>
         <spring-zeebe.version>8.0.9</spring-zeebe.version>
         <camunda-bpm-assert.version>15.0.0</camunda-bpm-assert.version>
         <camunda-bpm-jgiven.version>0.2.0</camunda-bpm-jgiven.version>
@@ -30,11 +30,8 @@
     <modules>
         <module>junit4-platform-7</module>
         <module>junit5-platform-7</module>
-        <module>junit5-platform-8</module>
         <module>spring-test-platform-7</module>
-        <module>spring-test-platform-8</module>
         <module>spring-starter-platform-7</module>
-        <module>spring-starter-platform-8</module>
     </modules>
 
     <dependencyManagement>
@@ -130,6 +127,9 @@
             </activation>
             <modules>
                 <module>jgiven-platform-7</module>
+                <module>junit5-platform-8</module>
+                <module>spring-test-platform-8</module>
+                <module>spring-starter-platform-8</module>
             </modules>
         </profile>
     </profiles>

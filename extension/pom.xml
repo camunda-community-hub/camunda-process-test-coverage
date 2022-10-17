@@ -33,7 +33,7 @@
         with: java.lang.NoClassDefFoundError: org/camunda/feel/context/Context
         -->
         <camunda.compile.version>7.14.0</camunda.compile.version>
-        <zeebe.version>8.0.7</zeebe.version>
+        <zeebe.version>8.1.0</zeebe.version>
         <spring-zeebe.version>8.0.9</spring-zeebe.version>
         <spring-boot.version>2.6.7</spring-boot.version>
 
@@ -107,9 +107,6 @@
     <profiles>
         <profile>
             <id>regression-test</id>
-            <activation>
-                <property><name>!skipExamples</name></property>
-            </activation>
             <modules>
                 <module>regression-test-junit4-platform-7</module>
             </modules>
