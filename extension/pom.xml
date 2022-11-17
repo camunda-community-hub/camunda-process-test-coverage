@@ -23,6 +23,7 @@
         <module>spring-test-platform-8</module>
         <module>report-generator</module>
         <module>report-aggregator-maven-plugin</module>
+        <module>report-aggregator-gradle-plugin</module>
     </modules>
 
     <properties>
