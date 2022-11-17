@@ -11,9 +11,9 @@ class ReportAggregatorPluginTest {
     @Test
     fun reportAggregatorTest() {
         val project: Project = ProjectBuilder.builder().build()
-        project.pluginManager.apply("org.camunda.community.process-test-coverage")
+        project.pluginManager.apply("org.camunda.community.process_test_coverage.report-aggregator")
         assertTrue(
-            project.pluginManager.hasPlugin("org.camunda.community.process-test-coverage")
+            project.pluginManager.hasPlugin("org.camunda.community.process_test_coverage.report-aggregator")
         )
         assertNotNull(project.tasks.getByName("aggregate-process-test-coverage"))
     }
