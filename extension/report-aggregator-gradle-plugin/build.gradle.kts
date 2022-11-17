@@ -6,8 +6,8 @@ plugins {
 
 repositories {
     mavenCentral()
-    mavenLocal {
-        uri("file://${projectDir}/target/dependencies")
+    maven {
+        url = uri("file://${projectDir}/target/dependencies")
     }
 }
 
