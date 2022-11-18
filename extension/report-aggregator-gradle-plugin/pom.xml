@@ -17,19 +17,9 @@
         built artifacts are then attached to this Maven project once the build completed successfully.
         IDEs are typically confused by this setup and this subproject should be directly imported as
         a Gradle project to avoid errors. Alternatively, this project should be ignored.
-        When running Maven clean, this module might fail if the dependencies were never packaged before.
-        This is due to the resolution scope of the maven-exec-plugin where the byte-buddy dependency is
-        attempted to be resolved what fails if the project was never build on the current machine for
-        a given snapshot version.
     -->
-
     <properties>
         <gradle.exec>gradlew</gradle.exec>
-        <gradle.disabled>false</gradle.disabled>
-        <gradle.release>false</gradle.release>
-        <skipTests>false</skipTests>
-        <androidTests>false</androidTests>
-        <japicmp.skip>true</japicmp.skip>
         <!-- Actual values must be set via settings.xml or using command line arguments since they cannot be published. -->
         <gradle.publish.key />
         <gradle.publish.secret />
@@ -106,9 +96,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <configuration>
-                    <skip>${gradle.disabled}</skip>
-                </configuration>
                 <executions>
                     <execution>
                         <id>gradle-clean</id>
@@ -123,6 +110,7 @@
                                 <argument>-Pgroup=${project.groupId}</argument>
                                 <argument>-PprojectName=${project.artifactId}</argument>
                                 <argument>-Pversion=${project.version}</argument>
+                                <argument>-PkotlinVersion=${kotlin.version}</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -139,9 +127,12 @@
                                 <argument>-Pgroup=${project.groupId}</argument>
                                 <argument>-PprojectName=${project.artifactId}</argument>
                                 <argument>-Pversion=${project.version}</argument>
+                                <argument>-PkotlinVersion=${kotlin.version}</argument>
+                                <argument>-S</argument>
                             </arguments>
                         </configuration>
                     </execution>
+                    <!--
                     <execution>
                         <id>gradle-publish</id>
                         <phase>deploy</phase>
@@ -155,9 +146,14 @@
                                 <argument>-Pgroup=${project.groupId}</argument>
                                 <argument>-PprojectName=${project.artifactId}</argument>
                                 <argument>-Pversion=${project.version}</argument>
+                                <argument>-PkotlinVersion=${kotlin.version}</argument>
+                                <argument>-Pgradle.publish.key=${gradle.publish.key}</argument>
+                                <argument>-Pgradle.publish.secret=${gradle.publish.secret}</argument>
+                                <argument>-S</argument>
                             </arguments>
                         </configuration>
                     </execution>
+                    -->
                 </executions>
             </plugin>
             <!-- copy generated JARs -->
@@ -233,16 +229,6 @@
             </properties>
         </profile>
 
-        <!-- Activates the Gradle release configuration. -->
-        <profile>
-            <id>gradle-release</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <properties>
-                <gradle.release>true</gradle.release>
-            </properties>
-        </profile>
     </profiles>
 
 </project>

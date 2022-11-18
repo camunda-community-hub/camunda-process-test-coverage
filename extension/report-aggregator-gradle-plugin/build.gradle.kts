@@ -1,7 +1,7 @@
 plugins {
-    kotlin("jvm").version("1.7.21")
+    kotlin("jvm")
     id("java-gradle-plugin")
-    id("com.gradle.plugin-publish").version("1.0.0")
+    id("com.gradle.plugin-publish")
 }
 
 repositories {
@@ -15,7 +15,7 @@ dependencies {
     implementation(gradleApi())
     implementation(group = "org.camunda.community.process_test_coverage", name = "camunda-process-test-coverage-report-generator", version = "$version")
     testImplementation(gradleTestKit())
-    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.8.2")
+    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.8.1")
 }
 
 tasks.withType<Test>().configureEach {
