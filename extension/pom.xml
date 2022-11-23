@@ -33,7 +33,7 @@
         with: java.lang.NoClassDefFoundError: org/camunda/feel/context/Context
         -->
         <camunda.compile.version>7.14.0</camunda.compile.version>
-        <zeebe.version>8.1.3</zeebe.version>
+        <zeebe.version>8.1.4</zeebe.version>
         <spring-zeebe.version>8.1.5</spring-zeebe.version>
         <spring-boot.version>2.6.7</spring-boot.version>
 
