@@ -820,7 +820,7 @@ The configuration for this use case looks like this:</p>
 </code></pre></div>
 <h3 id="usage-of-the-gradle-plugin">Usage of the gradle plugin<a class="headerlink" href="#usage-of-the-gradle-plugin" title="Permanent link">#</a></h3>
 <p>The functionality to aggregate the process test coverage reports is also provided as a gradle plugin.
-For this to work you have to include the plugin in the gradle build file.</p>
+For this to work you have to include the plugin in the gradle build file <code>build.gradle.kts</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">buildscript</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="n">repositories</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">        </span><span class="n">mavenCentral</span><span class="p">()</span><span class="w"></span>
@@ -830,9 +830,7 @@ For this to work you have to include the plugin in the gradle build file.</p>
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 
-<span class="n">plugins</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="err">&#39;</span><span class="n">org</span><span class="p">.</span><span class="na">camunda</span><span class="p">.</span><span class="na">community</span><span class="p">.</span><span class="na">process_test_coverage</span><span class="p">.</span><span class="na">report</span><span class="o">-</span><span class="n">aggregator</span><span class="err">&#39;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="n">apply</span><span class="p">(</span><span class="n">plugin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;org.camunda.community.process_test_coverage.report-aggregator&quot;</span><span class="p">)</span><span class="w"></span>
 </code></pre></div>
 <p>Afterwards the reports can be aggregated by calling <code>gradle aggregateProcessTestCoverage</code>.</p>
 
