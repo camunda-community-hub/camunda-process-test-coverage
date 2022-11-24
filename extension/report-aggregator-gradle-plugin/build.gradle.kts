@@ -25,7 +25,7 @@ tasks.withType<Test>().configureEach {
 
 gradlePlugin {
     plugins {
-        create("aggregate-process-test-coverage") {
+        create("aggregateProcessTestCoverage") {
             id = "org.camunda.community.process_test_coverage.report-aggregator"
             implementationClass = "org.camunda.community.process_test_coverage.report.aggregator.ReportAggregatorPlugin"
         }

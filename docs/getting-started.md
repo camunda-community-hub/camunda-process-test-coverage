@@ -222,7 +222,7 @@ The configuration for this use case looks like this:
 ### Usage of the gradle plugin
 
 The functionality to aggregate the process test coverage reports is also provided as a gradle plugin.
-For this to work you have to include the plugin in the gradle build file.
+For this to work you have to include the plugin in the gradle build file `build.gradle.kts`.
 
 ```kotlin
 buildscript {
@@ -234,9 +234,7 @@ buildscript {
     }
 }
 
-plugins {
-    id 'org.camunda.community.process_test_coverage.report-aggregator'
-}
+apply(plugin = "org.camunda.community.process_test_coverage.report-aggregator")
 ```
 
 Afterwards the reports can be aggregated by calling `gradle aggregateProcessTestCoverage`.
