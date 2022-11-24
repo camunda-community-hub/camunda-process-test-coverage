@@ -18,7 +18,8 @@ class ReportAggregatorPlugin : Plugin<Project> {
     }
 
     override fun apply(project: Project) {
-        project.task("aggregate-process-test-coverage")
+        val outputDirectory = calcOutputDirectory(project)
+        project.task("aggregateProcessTestCoverage")
             .doLast {
                 project.allprojects
                     .asSequence()
@@ -38,20 +39,21 @@ class ReportAggregatorPlugin : Plugin<Project> {
                     )
                     }
                     ?.let {
+                        println(outputDirectory)
                         CoverageReportUtil.writeReport(
                             CoverageStateJsonExporter.createCoverageStateResult(it.suites, it.models), false,
-                            calcOutputDirectory(project), "report.json"
+                            outputDirectory, "report.json"
                         ) { result -> result }
                         CoverageReportUtil.writeReport(
                             CoverageStateJsonExporter.createCoverageStateResult(it.suites, it.models), true,
-                            calcOutputDirectory(project), "report.html", CoverageReportUtil::generateHtml)
+                            outputDirectory, "report.html", CoverageReportUtil::generateHtml)
                     } ?: project.logger.warn("No coverage results found, skipping execution")
             }
     }
 
     private fun calcOutputDirectory(project: Project): String {
-        val extension = project.extensions.create("process-test-coverage", ReportAggregatorPluginExtension::class.java)
-        return extension.outputDirectory ?: File(project.buildDir, "process-test-coverage/all").absolutePath
+        val extension = project.extensions.create("aggregateProcessTestCoverage", ReportAggregatorPluginExtension::class.java)
+        return extension.outputDirectory ?: File(project.projectDir, TARGET_DIR_ROOT + "all").absolutePath
     }
 
 }

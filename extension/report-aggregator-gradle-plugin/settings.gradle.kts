@@ -1,6 +1,6 @@
 val projectName: String by settings
 
-rootProject.name = "$projectName"
+rootProject.name = projectName
 
 pluginManagement {
     val kotlinVersion: String by settings
