@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
+        <artifactId>camunda-process-test-coverage-parent</artifactId>
+        <version>2.0.1-SNAPSHOT</version>
+    </parent>
+
+    <name>Camunda Process Test Coverage Report Aggregator Gradle Plugin</name>
+    <artifactId>camunda-process-test-coverage-report-aggregator-gradle-plugin</artifactId>
+
+    <!--
+        This subproject is built by Gradle as the Gradle plugin API requires a Gradle build. This POM
+        triggers the Gradle build via a Gradle execution plugin in order to keep the build seamless. The
+        built artifacts are then attached to this Maven project once the build completed successfully.
+        IDEs are typically confused by this setup and this subproject should be directly imported as
+        a Gradle project to avoid errors. Alternatively, this project should be ignored.
+    -->
+    <properties>
+        <gradle.exec>gradlew</gradle.exec>
+        <!-- Actual values must be set via settings.xml or using command line arguments since they cannot be published. -->
+        <gradle.publish.key />
+        <gradle.publish.secret />
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>camunda-process-test-coverage-report-generator</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources-maven</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- The Gradle plugin must be built by Gradle; therefore the compilation is skipped. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <skipMain>true</skipMain>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Gradle is also responsible for creating javadoc such that this task is skipped here. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <!-- copy all dependencies to target/dependencies -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                        <configuration>
+                            <useBaseVersion>true</useBaseVersion>
+                            <addParentPoms>true</addParentPoms>
+                            <copyPom>true</copyPom>
+                            <useRepositoryLayout>true</useRepositoryLayout>
+                            <outputDirectory>${project.build.directory}/dependencies</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Tie Maven executions into the Gradle life-cycle. -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>gradle-clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${project.basedir}/${gradle.exec}</executable>
+                            <arguments>
+                                <argument>clean</argument>
+                                <argument>-Pgroup=${project.groupId}</argument>
+                                <argument>-PprojectName=${project.artifactId}</argument>
+                                <argument>-Pversion=${project.version}</argument>
+                                <argument>-PkotlinVersion=${kotlin.version}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>gradle-build</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${project.basedir}/${gradle.exec}</executable>
+                            <arguments>
+                                <argument>build</argument>
+                                <argument>-Pgroup=${project.groupId}</argument>
+                                <argument>-PprojectName=${project.artifactId}</argument>
+                                <argument>-Pversion=${project.version}</argument>
+                                <argument>-PkotlinVersion=${kotlin.version}</argument>
+                                <argument>-S</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!--
+                    <execution>
+                        <id>gradle-publish</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${project.basedir}/${gradle.exec}</executable>
+                            <arguments>
+                                <argument>publishPlugins</argument>
+                                <argument>-Pgroup=${project.groupId}</argument>
+                                <argument>-PprojectName=${project.artifactId}</argument>
+                                <argument>-Pversion=${project.version}</argument>
+                                <argument>-PkotlinVersion=${kotlin.version}</argument>
+                                <argument>-Pgradle.publish.key=${gradle.publish.key}</argument>
+                                <argument>-Pgradle.publish.secret=${gradle.publish.secret}</argument>
+                                <argument>-S</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    -->
+                </executions>
+            </plugin>
+            <!-- copy generated JARs -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-gradle-jars</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+
+                        <configuration>
+                            <outputDirectory>${basedir}/target</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>build/libs/</directory>
+                                    <includes>
+                                        <include>${project.artifactId}-${project.version}.jar</include>
+                                        <include>${project.artifactId}-${project.version}-sources.jar</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- attach copied JARs to build -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-artifacts</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>attach-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <artifacts>
+                                <artifact>
+                                    <file>target/${project.artifactId}-${project.version}-javadoc.jar</file>
+                                    <type>jar</type>
+                                    <classifier>javadoc</classifier>
+                                </artifact>
+                                <artifact>
+                                    <file>target/${project.artifactId}-${project.version}-sources.jar</file>
+                                    <type>jar</type>
+                                    <classifier>sources</classifier>
+                                </artifact>
+                            </artifacts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Defines the correct Gradle wrapper binary to use when run on Windows. -->
+        <profile>
+            <id>gradle-windows</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <os>
+                    <family>Windows</family>
+                </os>
+            </activation>
+            <properties>
+                <gradle.exec>gradlew.bat</gradle.exec>
+            </properties>
+        </profile>
+
+    </profiles>
+
+</project>
