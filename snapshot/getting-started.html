@@ -498,6 +498,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#usage-of-the-gradle-plugin" class="md-nav__link">
+    Usage of the gradle plugin
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -791,7 +798,7 @@ Please note, that the plugin needs to run <em>after</em> the tests are run for a
                 <span class="nt">&lt;plugin&gt;</span>
                     <span class="nt">&lt;groupId&gt;</span>org.camunda.community.process_test_coverage<span class="nt">&lt;/groupId&gt;</span>
                     <span class="nt">&lt;artifactId&gt;</span>camunda-process-test-coverage-report-aggregator-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
-                    <span class="nt">&lt;version&gt;</span>x.y.z<span class="nt">&lt;/version&gt;</span>
+                    <span class="nt">&lt;version&gt;</span>${camunda-process-test-coverage.version}<span class="nt">&lt;/version&gt;</span>
                 <span class="nt">&lt;/plugin&gt;</span>
             <span class="nt">&lt;/plugins&gt;</span>
         <span class="nt">&lt;/pluginManagement&gt;</span>
@@ -806,11 +813,28 @@ The configuration for this use case looks like this:</p>
             <span class="nt">&lt;plugin&gt;</span>
                 <span class="nt">&lt;groupId&gt;</span>org.camunda.community.process_test_coverage<span class="nt">&lt;/groupId&gt;</span>
                 <span class="nt">&lt;artifactId&gt;</span>camunda-process-test-coverage-report-aggregator-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
-                <span class="nt">&lt;version&gt;</span>x.y.z<span class="nt">&lt;/version&gt;</span>
+                <span class="nt">&lt;version&gt;</span>${camunda-process-test-coverage.version}<span class="nt">&lt;/version&gt;</span>
             <span class="nt">&lt;/plugin&gt;</span>
         <span class="nt">&lt;/plugins&gt;</span>
     <span class="nt">&lt;/reporting&gt;</span>
 </code></pre></div>
+<h3 id="usage-of-the-gradle-plugin">Usage of the gradle plugin<a class="headerlink" href="#usage-of-the-gradle-plugin" title="Permanent link">#</a></h3>
+<p>The functionality to aggregate the process test coverage reports is also provided as a gradle plugin.
+For this to work you have to include the plugin in the gradle build file.</p>
+<div class="highlight"><pre><span></span><code><span class="n">buildscript</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">repositories</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">mavenCentral</span><span class="p">()</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">dependencies</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">classpath</span><span class="p">(</span><span class="s">&quot;org.camunda.community.process_test_coverage:camunda-process-test-coverage-report-aggregator-gradle-plugin:2.0.1-SNAPSHOT&quot;</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="n">plugins</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="err">&#39;</span><span class="n">org</span><span class="p">.</span><span class="na">camunda</span><span class="p">.</span><span class="na">community</span><span class="p">.</span><span class="na">process_test_coverage</span><span class="p">.</span><span class="na">report</span><span class="o">-</span><span class="n">aggregator</span><span class="err">&#39;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p>Afterwards the reports can be aggregated by calling <code>gradle aggregateProcessTestCoverage</code>.</p>
 
   <hr>
 <div class="md-source-file">
