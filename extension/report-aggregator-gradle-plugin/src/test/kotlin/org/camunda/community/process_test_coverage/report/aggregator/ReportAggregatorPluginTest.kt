@@ -44,13 +44,13 @@ class ReportAggregatorPluginTest {
     fun setup() {
         settingsFile = File(testProjectDir, "settings.gradle")
         buildFile = File(testProjectDir, "build.gradle")
-        Files.writeString(settingsFile.toPath(), "rootProject.name = 'process-coverage-gradle-plugin-test'")
+        Files.write(settingsFile.toPath(), "rootProject.name = 'process-coverage-gradle-plugin-test'".toByteArray())
         val buildFileContent = """
             plugins {
                 id 'org.camunda.community.process_test_coverage.report-aggregator'
             }
         """
-        Files.writeString(buildFile.toPath(), buildFileContent)
+        Files.write(buildFile.toPath(), buildFileContent.toByteArray())
         gradleRunner = GradleRunner.create()
             .withProjectDir(testProjectDir)
             .withPluginClasspath()
@@ -89,7 +89,7 @@ class ReportAggregatorPluginTest {
             include("module1")
             include("module2")
         """
-        Files.writeString(settingsFile.toPath(), settingsFileContent)
+        Files.write(settingsFile.toPath(), settingsFileContent.toByteArray())
         val result = gradleRunner.build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":aggregateProcessTestCoverage")?.outcome)
         assertResult()
