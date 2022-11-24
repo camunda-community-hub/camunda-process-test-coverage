@@ -193,7 +193,7 @@ You can still configure the plugin in the pluginManagement section.
                 <plugin>
                     <groupId>org.camunda.community.process_test_coverage</groupId>
                     <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
-                    <version>x.y.z</version>
+                    <version>${camunda-process-test-coverage.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -213,8 +213,30 @@ The configuration for this use case looks like this:
             <plugin>
                 <groupId>org.camunda.community.process_test_coverage</groupId>
                 <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
-                <version>x.y.z</version>
+                <version>${camunda-process-test-coverage.version}</version>
             </plugin>
         </plugins>
     </reporting>
 ```
+
+### Usage of the gradle plugin
+
+The functionality to aggregate the process test coverage reports is also provided as a gradle plugin.
+For this to work you have to include the plugin in the gradle build file.
+
+```kotlin
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.camunda.community.process_test_coverage:camunda-process-test-coverage-report-aggregator-gradle-plugin:{{ POM_VERSION }}")
+    }
+}
+
+plugins {
+    id 'org.camunda.community.process_test_coverage.report-aggregator'
+}
+```
+
+Afterwards the reports can be aggregated by calling `gradle aggregateProcessTestCoverage`.
