@@ -24,6 +24,7 @@
         <module>report-generator</module>
         <module>report-aggregator-maven-plugin</module>
         <module>report-aggregator-gradle-plugin</module>
+        <module>sonar-process-test-coverage-plugin</module>
     </modules>
 
     <properties>
