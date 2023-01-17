@@ -14,7 +14,7 @@
     </description>
 
     <properties>
-        <graalvm.version>22.3.0</graalvm.version>
+        <graalvm.version>22.3.1</graalvm.version>
         <camunda.version>${camunda.compile.version}</camunda.version>
 
         <jacoco.skip>true</jacoco.skip>
