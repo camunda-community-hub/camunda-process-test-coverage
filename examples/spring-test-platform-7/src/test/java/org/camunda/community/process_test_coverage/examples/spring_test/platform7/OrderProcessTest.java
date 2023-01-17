@@ -14,8 +14,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 @SpringBootTest
-// needed to shut down the spring context after the test, so that it doesn't interfere with the other tests
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @Import({CoverageTestConfiguration.class, ProcessEngineCoverageConfiguration.class})
 public class OrderProcessTest {
 

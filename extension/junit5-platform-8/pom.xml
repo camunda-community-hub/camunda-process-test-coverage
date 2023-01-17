@@ -4,7 +4,7 @@
     <parent>
         <artifactId>camunda-process-test-coverage-parent</artifactId>
         <groupId>org.camunda.community.process_test_coverage</groupId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.1-SNAPSHOT</version>
     </parent>
     <name>Camunda Process Test Coverage JUnit5 Platform 8</name>
     <artifactId>camunda-process-test-coverage-junit5-platform-8</artifactId>
@@ -45,11 +45,6 @@
             <groupId>io.camunda</groupId>
             <artifactId>zeebe-process-test-extension-testcontainer</artifactId>
             <version>${zeebe.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

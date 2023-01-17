@@ -12,9 +12,7 @@ import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertT
 class IntermediateLinkThrowEventTest {
 
     @RegisterExtension
-    static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension.builder()
-            .assertClassCoverageAtLeast(1.0d)
-            .build();
+    static ProcessEngineCoverageExtension extension = ProcessEngineExtensionProvider.extension;
 
     @Test
     void should_have_100_percent_coverage_with_intermediate_link_throw_event() {

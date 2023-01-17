@@ -1,0 +1,90 @@
+name: Build the docs
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Upgrade pip
+        run: |
+          # install pip=>20.1 to use "pip cache dir"
+          python3 -m pip install --upgrade pip
+
+      - name: Get pip cache dir
+        id: pip-cache
+        run: echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('./docs/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: python3 -m pip install -r ./docs/requirements.txt
+
+      - name: Set git username and email
+        run: |
+          #
+          git config --global user.email "${GH_USERNAME}@users.noreply.github.com"
+          git config --global user.name "${GH_USERNAME}"
+        env:
+          GH_USERNAME: ${{ github.actor }}
+
+      - name: Pre-fetch the gh-pages branch
+        run: git fetch
+
+      - name: Build docs with MkDocs
+        run: mkdocs build
+
+      - name: Read the tag name
+        id: get_tag_name
+        if: startsWith(github.ref, 'refs/tags/')
+        run: echo "TAG_NAME=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+
+      # This is for a tagged version
+      - name: Create a new version of documentation and push to GH pages.
+        if: startsWith(github.ref, 'refs/tags/')
+        run: mike deploy ${{ steps.get_tag_name.outputs.TAG_NAME }} stable -u --push --rebase
+
+      - name: Make stable to default.
+        if: startsWith(github.ref, 'refs/tags/')
+        run: mike set-default stable --push --rebase
+
+      # This is for master branch
+      - name: Deploy latest develop snapshot docs to GH pages.
+        if: github.ref == 'refs/heads/master'
+        run: mike deploy snapshot -u --push --rebase
+
+      # This is for release close
+      - name: Get the release version
+        if: github.event.release
+        run: |
+          VERSION=$(echo ${{ github.event.release.name }} | cut -d' ' -f2)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Create a new version of documentation and push to GH pages.
+        if: github.event.release
+        run: mike deploy ${{ env.VERSION }} stable -u --push --rebase
+
+      - name: Make stable to default.
+        if: github.event.release
+        run: mike set-default stable --push --rebase

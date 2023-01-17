@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.camunda.community.process_test_coverage</groupId>
         <artifactId>camunda-process-test-coverage-root</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.1-SNAPSHOT</version>
     </parent>
 
     <name>Camunda Process Test Coverage Extension Parent</name>
@@ -22,6 +22,8 @@
         <module>spring-test-platform-7</module>
         <module>spring-test-platform-8</module>
         <module>report-generator</module>
+        <module>report-aggregator-maven-plugin</module>
+        <module>report-aggregator-gradle-plugin</module>
     </modules>
 
     <properties>
@@ -32,12 +34,13 @@
         with: java.lang.NoClassDefFoundError: org/camunda/feel/context/Context
         -->
         <camunda.compile.version>7.14.0</camunda.compile.version>
-        <zeebe.version>8.0.3</zeebe.version>
-        <spring-zeebe.version>8.0.5</spring-zeebe.version>
         <spring-boot.version>2.7.0</spring-boot.version>
 
         <!-- pin to latest H2 1.x version as camunda 7.14 is not compatible with 2.x -->
         <h2.version>1.4.202</h2.version>
+
+        <zeebe.version>8.1.4</zeebe.version>
+        <spring-zeebe.version>8.1.6</spring-zeebe.version>
 
         <npm.version>6.14.8</npm.version>
         <node.version>v10.22.0</node.version>
@@ -110,38 +113,13 @@
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <!-- Kotlin -->
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-        </dependency>
-    </dependencies>
-
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <plugins>
-            <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
 
     <profiles>
         <profile>
             <id>regression-test</id>
-            <activation>
-                <property><name>!skipExamples</name></property>
-            </activation>
             <modules>
                 <module>regression-test-junit4-platform-7</module>
             </modules>
