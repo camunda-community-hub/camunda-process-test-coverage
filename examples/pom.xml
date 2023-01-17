@@ -14,10 +14,10 @@
 
     <properties>
         <camunda.version>7.16.0</camunda.version>
-        <zeebe.version>8.0.6</zeebe.version>
-        <spring-zeebe.version>8.0.8</spring-zeebe.version>
+        <zeebe.version>8.1.4</zeebe.version>
+        <spring-zeebe.version>8.1.6</spring-zeebe.version>
         <camunda-bpm-assert.version>15.0.0</camunda-bpm-assert.version>
-        <camunda-bpm-jgiven.version>0.2.0</camunda-bpm-jgiven.version>
+        <camunda-bpm-jgiven.version>0.4.0</camunda-bpm-jgiven.version>
         <springboot.version>2.6.7</springboot.version>
         <jacoco.skip>true</jacoco.skip>
         <dokka.skip>true</dokka.skip>
@@ -30,11 +30,8 @@
     <modules>
         <module>junit4-platform-7</module>
         <module>junit5-platform-7</module>
-        <module>junit5-platform-8</module>
         <module>spring-test-platform-7</module>
-        <module>spring-test-platform-8</module>
         <module>spring-starter-platform-7</module>
-        <module>spring-starter-platform-8</module>
     </modules>
 
     <dependencyManagement>
@@ -87,7 +84,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.12.0</version>
+                    <version>3.12.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.camunda.community.process_test_coverage</groupId>
@@ -102,7 +99,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.2</version>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -130,6 +127,9 @@
             </activation>
             <modules>
                 <module>jgiven-platform-7</module>
+                <module>junit5-platform-8</module>
+                <module>spring-test-platform-8</module>
+                <module>spring-starter-platform-8</module>
             </modules>
         </profile>
     </profiles>

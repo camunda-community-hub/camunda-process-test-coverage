@@ -64,7 +64,7 @@
 
     <profiles>
         <profile>
-            <id>skip-tests</id>
+            <id>skip-tests-non-linux</id>
             <properties>
                 <maven.test.skip>true</maven.test.skip>
             </properties>
@@ -72,6 +72,15 @@
                 <os>
                     <name>!linux</name>
                 </os>
+            </activation>
+        </profile>
+        <profile>
+            <id>skip-tests-java-8</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+            <activation>
+                <jdk>(,11)</jdk>
             </activation>
         </profile>
     </profiles>
