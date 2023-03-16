@@ -17,7 +17,7 @@
         <zeebe.version>8.1.4</zeebe.version>
         <spring-zeebe.version>8.1.6</spring-zeebe.version>
         <camunda-bpm-assert.version>15.0.0</camunda-bpm-assert.version>
-        <camunda-bpm-jgiven.version>0.4.0</camunda-bpm-jgiven.version>
+        <camunda-bpm-jgiven.version>0.4.1</camunda-bpm-jgiven.version>
         <springboot.version>2.6.7</springboot.version>
         <jacoco.skip>true</jacoco.skip>
         <dokka.skip>true</dokka.skip>
