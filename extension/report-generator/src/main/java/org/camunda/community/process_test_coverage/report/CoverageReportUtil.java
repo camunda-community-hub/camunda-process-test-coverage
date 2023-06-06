@@ -34,6 +34,14 @@ public class CoverageReportUtil {
     public static final String REPORT_RESOURCES = "static";
     private static final String REPORT_TEMPLATE = "bpmn.report-template.html";
 
+    public static void deleteRepports(final DefaultCollector coverageCollector) {
+        var directory = new File(getReportDirectoryPath(coverageCollector.getActiveSuite().getName()));
+        try {
+            FileUtils.cleanDirectory(directory);
+        } catch (IOException ex) {
+            throw new RuntimeException("Unable to clean directory: " + directory.getName() , ex);
+        }
+    }
 
     public static void createReport(final DefaultCollector coverageCollector) {
         writeReport(createCoverageStateResult(coverageCollector), true,
