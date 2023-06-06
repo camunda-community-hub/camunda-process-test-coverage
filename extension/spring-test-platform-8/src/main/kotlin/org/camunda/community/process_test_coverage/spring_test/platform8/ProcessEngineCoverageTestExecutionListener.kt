@@ -88,7 +88,7 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
             loadConfiguration(testContext)
             initializeSuite(testContext)
             // Delete repports from previously runs
-            CoverageReportUtil.deleteRepports(coverageCollector);
+            CoverageReportUtil.deleteReports(coverageCollector);
         }
     }
 

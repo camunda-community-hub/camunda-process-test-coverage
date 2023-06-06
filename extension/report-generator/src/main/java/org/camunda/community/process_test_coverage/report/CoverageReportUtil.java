@@ -34,7 +34,7 @@ public class CoverageReportUtil {
     public static final String REPORT_RESOURCES = "static";
     private static final String REPORT_TEMPLATE = "bpmn.report-template.html";
 
-    public static void deleteRepports(final DefaultCollector coverageCollector) {
+    public static void deleteReports(final DefaultCollector coverageCollector) {
         var directory = new File(getReportDirectoryPath(coverageCollector.getActiveSuite().getName()));
         try {
             FileUtils.cleanDirectory(directory);
