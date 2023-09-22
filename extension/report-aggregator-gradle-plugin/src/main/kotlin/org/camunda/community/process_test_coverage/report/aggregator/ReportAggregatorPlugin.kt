@@ -1,6 +1,8 @@
 package org.camunda.community.process_test_coverage.report.aggregator
 
-import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter
+import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.combineCoverageStateResults
+import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.createCoverageStateResult
+import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.readCoverageStateResult
 import org.camunda.community.process_test_coverage.core.export.CoverageStateResult
 import org.camunda.community.process_test_coverage.report.CoverageReportUtil
 import org.gradle.api.Plugin
@@ -32,20 +34,15 @@ class ReportAggregatorPlugin : Plugin<Project> {
                         project.logger.debug("Reading file ${it.path}")
                         it.readText(Charsets.UTF_8)
                     }
-                    .map { CoverageStateJsonExporter.readCoverageStateResult(it) }
-                    .reduceOrNull { result1, result2 -> CoverageStateResult(
-                        result1.suites + result2.suites,
-                        result1.models.plus(result2.models.filter { new -> !result1.models.map { model -> model.key }.contains(new.key) })
-                    )
-                    }
+                    .reduceOrNull { result1, result2 -> combineCoverageStateResults(result1, result2) }
                     ?.let {
-                        println(outputDirectory)
+                        val report = readCoverageStateResult(it)
                         CoverageReportUtil.writeReport(
-                            CoverageStateJsonExporter.createCoverageStateResult(it.suites, it.models), false,
+                            createCoverageStateResult(report.suites, report.models), false,
                             outputDirectory, "report.json"
                         ) { result -> result }
                         CoverageReportUtil.writeReport(
-                            CoverageStateJsonExporter.createCoverageStateResult(it.suites, it.models), true,
+                            createCoverageStateResult(report.suites, report.models), true,
                             outputDirectory, "report.html", CoverageReportUtil::generateHtml)
                     } ?: project.logger.warn("No coverage results found, skipping execution")
             }

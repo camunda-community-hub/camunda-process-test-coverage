@@ -12,7 +12,7 @@ class ReportPathsProvider(
 
     companion object {
         private val LOG: Logger = Loggers.get(ReportPathsProvider::class.java)
-        private val DEFAULT_PATHS = arrayOf("target/process-test-coverage/**/report.json")
+        private val DEFAULT_PATHS = arrayOf("**/process-test-coverage/**/report.json")
         const val REPORT_PATHS_PROPERTY_KEY = "sonar.process-test-coverage.jsonReportPaths"
     }
 
@@ -24,6 +24,7 @@ class ReportPathsProvider(
         val reportPaths: MutableSet<Path> = HashSet()
         if (patternPathList.isNotEmpty()) {
             for (patternPath in patternPathList) {
+                LOG.info("Scanning {} with pattern {}", baseDir, patternPath)
                 val paths: List<Path> = WildcardPatternFileScanner.scan(baseDir, patternPath)
                 if (paths.isEmpty() && patternPathList.size > 1) {
                     LOG.info("Coverage report doesn't exist for pattern: '{}'", patternPath)

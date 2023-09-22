@@ -66,13 +66,13 @@ object WildcardPatternFileScanner {
             return paths
         } catch (e: IOException) {
             LOG.error(
-                "Failed to get Process Test Converage report paths: Scanning '" + baseDirectory + "' with pattern '" + unixLikePatternPath + "'" +
+                "Failed to get Process Test Coverage report paths: Scanning '" + baseDirectory + "' with pattern '" + unixLikePatternPath + "'" +
                         " threw a " + e.javaClass.simpleName + ": " + e.message
             )
             return emptyList()
         } catch (e: RuntimeException) {
             LOG.error(
-                ("Failed to get Process Test Converage report paths: Scanning '" + baseDirectory + "' with pattern '" + unixLikePatternPath + "'" +
+                ("Failed to get Process Test Coverage report paths: Scanning '" + baseDirectory + "' with pattern '" + unixLikePatternPath + "'" +
                         " threw a " + e.javaClass.simpleName + ": " + e.message)
             )
             return emptyList()
