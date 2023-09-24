@@ -4,12 +4,12 @@ import org.camunda.bpm.model.bpmn.Bpmn
 import org.camunda.bpm.model.bpmn.BpmnModelInstance
 import org.camunda.bpm.model.bpmn.instance.*
 import org.camunda.bpm.model.xml.instance.ModelElementInstance
+import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.createCoverageStateResult
 import org.camunda.community.process_test_coverage.core.export.CoverageStateResult
 import org.camunda.community.process_test_coverage.core.model.Model
 import org.sonar.api.batch.fs.InputFile
 import org.sonar.api.batch.sensor.SensorContext
 import org.sonar.api.utils.log.Loggers
-import java.io.ByteArrayInputStream
 import java.util.stream.Collectors
 
 
@@ -48,6 +48,11 @@ class ReportImporter(private val ctx: SensorContext) {
                 .on(ctx.project())
                 .forMetric(ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE)
                 .withValue((coveredElementCount.toDouble() / totalElementCount.toDouble()).asPercent())
+                .save()
+        ctx.newMeasure<String>()
+                .on(ctx.project())
+                .forMetric(ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE_REPORT)
+                .withValue(createCoverageStateResult(result.suites, result.models))
                 .save()
     }
 

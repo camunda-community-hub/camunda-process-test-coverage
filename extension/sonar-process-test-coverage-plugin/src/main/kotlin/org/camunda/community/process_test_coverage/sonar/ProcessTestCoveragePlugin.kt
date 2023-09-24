@@ -11,6 +11,7 @@ class ProcessTestCoveragePlugin : Plugin {
         context.addExtensions(BpmnLanguage::class.java, BpmnQualityProfile::class.java)
         context.addExtension(ProcessTestCoverageMetrics::class.java)
         context.addExtensions(ProcessTestCoverageSensor::class.java, ProcessTestCoverageProjectSensor::class.java)
+        context.addExtension(ProcessTestCoveragePage::class.java)
         context.addExtension(
             PropertyDefinition.builder(ReportPathsProvider.REPORT_PATHS_PROPERTY_KEY)
                 .onQualifiers(Qualifiers.PROJECT)

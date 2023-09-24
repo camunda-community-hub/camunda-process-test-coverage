@@ -32,16 +32,88 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>org.camunda.community.process_test_coverage</groupId>
+                            <artifactId>camunda-process-test-coverage-report-generator</artifactId>
+                            <version>${project.version}</version>
+                            <outputDirectory>target</outputDirectory>
+                            <includes>**/*.js,**/*.css</includes>
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
                 <artifactId>sonar-packaging-maven-plugin</artifactId>
                 <version>1.21.0.505</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <pluginKey>processTestCoverage</pluginKey>
+                    <pluginKey>camundaProcessTestCoverage</pluginKey>
                     <pluginClass>org.camunda.community.process_test_coverage.sonar.ProcessTestCoveragePlugin</pluginClass>
                     <pluginSourcesUrl>https://github.com/camunda-community-hub/camunda-process-test-coverage</pluginSourcesUrl>
                     <sonarQubeMinVersion>9.5</sonarQubeMinVersion>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.14.0</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <id>install node and npm </id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v18.14.2</nodeVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <phase>initialize</phase>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <phase>initialize</phase>
+                        <id>npm version</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>version ${project.version} --allow-same-version</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <phase>compile</phase>
+                        <id>npm run script</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
