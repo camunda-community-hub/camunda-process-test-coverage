@@ -13,7 +13,7 @@ class ProcessTestCoveragePlugin : Plugin {
         context.addExtensions(ProcessTestCoverageSensor::class.java, ProcessTestCoverageProjectSensor::class.java)
         context.addExtension(ProcessTestCoveragePage::class.java)
         context.addExtension(
-            PropertyDefinition.builder(ReportPathsProvider.REPORT_PATHS_PROPERTY_KEY)
+            PropertyDefinition.builder(ReportsProvider.REPORT_PATHS_PROPERTY_KEY)
                 .onQualifiers(Qualifiers.PROJECT)
                 .multiValues(true)
                 .category("Process Test Coverage")

@@ -20,13 +20,13 @@ class ProcessTestCoverageSensor : Sensor {
     }
 
     override fun execute(context: SensorContext) {
-        val reportPathsProvider = ReportPathsProvider(context)
+        val reportsProvider = ReportsProvider(context)
         val importer = ReportImporter(context)
-        importReports(reportPathsProvider, importer)
+        importReports(reportsProvider, importer)
     }
 
-    private fun importReports(reportPathsProvider: ReportPathsProvider, importer: ReportImporter) {
-        val reportPaths = reportPathsProvider.getPaths()
+    private fun importReports(reportsProvider: ReportsProvider, importer: ReportImporter) {
+        val reportPaths = reportsProvider.getModuleReports()
         if (reportPaths.isEmpty()) {
             LOG.info("No report imported, no coverage information will be imported by Process Test Coverage Report Importer")
             return
