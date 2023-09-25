@@ -3,6 +3,7 @@
  */
 import React from "react";
 import ProcessTestCoverageReportApp from "./components/ProcessTestCoverageReportApp";
+import "../style.css"
 
 // This creates a page for process-test-coverage, which shows a html report
 

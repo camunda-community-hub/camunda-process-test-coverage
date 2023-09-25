@@ -41,8 +41,8 @@
                             <groupId>org.camunda.community.process_test_coverage</groupId>
                             <artifactId>camunda-process-test-coverage-report-generator</artifactId>
                             <version>${project.version}</version>
-                            <outputDirectory>target</outputDirectory>
-                            <includes>**/*.js,**/*.css</includes>
+                            <outputDirectory>target/classes</outputDirectory>
+                            <includes>**/*.js,**/*.css,**/*.html</includes>
                         </artifactItem>
                     </artifactItems>
                 </configuration>
@@ -117,5 +117,5 @@
             </plugin>
         </plugins>
     </build>
-
+    
 </project>

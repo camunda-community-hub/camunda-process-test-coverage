@@ -32,7 +32,7 @@ public class CoverageReportUtil {
      */
     public static String TARGET_DIR_ROOT = System.getProperty("camunda-process-test-coverage.target-dir-root", "target/process-test-coverage/");
     public static final String REPORT_RESOURCES = "static";
-    private static final String REPORT_TEMPLATE = "bpmn.report-template.html";
+    private static final String REPORT_TEMPLATE = "html/bpmn.report-template.html";
 
 
     public static void createReport(final DefaultCollector coverageCollector) {

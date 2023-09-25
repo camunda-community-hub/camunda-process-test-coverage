@@ -1,0 +1,4 @@
+.camunda-process-test-coverage-report-container {
+    display: flex;
+    flex-direction: column;
+}
