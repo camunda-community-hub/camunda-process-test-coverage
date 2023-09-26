@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
+        <artifactId>camunda-process-test-coverage-root</artifactId>
+        <version>2.1.1-SNAPSHOT</version>
+    </parent>
+
+    <name>Camunda Process Test Coverage Regression Tests Parent</name>
+    <artifactId>camunda-process-test-coverage-regression-tests-parent</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <graalvm.version>22.3.2</graalvm.version>
+        <camunda.version>${camunda.compile.version}</camunda.version>
+
+        <jacoco.skip>true</jacoco.skip>
+        <dokka.skip>true</dokka.skip>
+        <maven.javadoc.skip>true</maven.javadoc.skip>
+        <maven.source.skip>true</maven.source.skip>
+        <maven.install.skip>true</maven.install.skip>
+        <gpg.skip>true</gpg.skip>
+    </properties>
+
+    <modules>
+        <module>junit4-platform-7</module>
+        <module>junit5-platform-7</module>
+        <module>spring-test-platform-7</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- Spring Boot import -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- Re-define Camunda -->
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>${camunda.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <!-- Profiles just here to ease testing in IDEs -->
+        <profile>
+            <id>camunda-bpm-engine-LATEST</id>
+            <properties>
+                <camunda.version>LATEST</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.19</id>
+            <properties>
+                <camunda.version>7.19.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.18</id>
+            <properties>
+                <camunda.version>7.18.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.17</id>
+            <properties>
+                <camunda.version>7.17.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.16</id>
+            <properties>
+                <camunda.version>7.16.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.15</id>
+            <properties>
+                <camunda.version>7.15.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.14</id>
+            <properties>
+                <camunda.version>7.14.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.13</id>
+            <properties>
+                <camunda.version>7.13.0</camunda.version>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- Starting from JDK 12+, Nashorn is not part of JDK -->
+            <id>jdk11</id>
+            <activation>
+                <jdk>[11,</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.graalvm.sdk</groupId>
+                    <artifactId>graal-sdk</artifactId>
+                    <version>${graalvm.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.graalvm.js</groupId>
+                    <artifactId>js</artifactId>
+                    <version>${graalvm.version}</version>
+                    <scope>runtime</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.graalvm.js</groupId>
+                    <artifactId>js-scriptengine</artifactId>
+                    <version>${graalvm.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+</project>
