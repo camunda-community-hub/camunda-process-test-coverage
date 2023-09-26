@@ -1,14 +1,15 @@
 package org.camunda.community.process_test_coverage.sonar
 
 import org.assertj.core.api.Assertions.assertThat
+import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.sonar.api.batch.fs.internal.TestInputFileBuilder
 import org.sonar.api.batch.sensor.SensorDescriptor
 import org.sonar.api.batch.sensor.internal.SensorContextTester
+import org.sonar.api.batch.sensor.measure.Measure
 import org.sonar.api.config.internal.MapSettings
 import java.io.File
-import java.nio.file.Files
 
 class ProcessTestCoverageProjectSensorTest {
     private val sensor = ProcessTestCoverageProjectSensor()
@@ -49,8 +50,8 @@ class ProcessTestCoverageProjectSensorTest {
         context.setSettings(settings)
         sensor.execute(context)
         assertThat(context.measure(context.project().key(), ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE).value()).isEqualTo(100.0)
-        assertThat(context.measure(context.project().key(), ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE_REPORT).value())
-                .isEqualTo(File("target/test-classes/one_result/expected_result.json").readText())
+        assertCoverageStatusReport(context.measure(context.project().key(), ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE_REPORT),
+                File("target/test-classes/one_result/expected_result.json"))
     }
 
     @Test
@@ -66,8 +67,8 @@ class ProcessTestCoverageProjectSensorTest {
         context.setSettings(settings)
         sensor.execute(context)
         assertThat(context.measure(context.project().key(), ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE).value()).isEqualTo(100.0)
-        assertThat(context.measure(context.project().key(), ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE_REPORT).value())
-                .isEqualTo(File("target/test-classes/two_results/expected_result.json").readText())
+        assertCoverageStatusReport(context.measure(context.project().key(), ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE_REPORT),
+                File("target/test-classes/two_results/expected_result.json"))
     }
 
     @Test
@@ -89,9 +90,18 @@ class ProcessTestCoverageProjectSensorTest {
         sensor.execute(context)
         assertThat(context.measure(context.project().key(), ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE).value())
                 .isEqualTo((5.0 / 6.0) * 100.0)
-        assertThat(context.measure(context.project().key(), ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE_REPORT).value())
-                .isEqualTo(File("target/test-classes/multiple_projects/expected_result.json").readText())
+        assertCoverageStatusReport(context.measure(context.project().key(), ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE_REPORT),
+                File("target/test-classes/multiple_projects/expected_result.json"))
 
+    }
+
+    private fun assertCoverageStatusReport(measure: Measure<String>, expectedResult: File) {
+        val coverageResult = CoverageStateJsonExporter.readCoverageStateResult(measure.value())
+        val expectedCoverageResult = CoverageStateJsonExporter.readCoverageStateResult(
+                expectedResult.readText()
+        )
+        assertThat(coverageResult.models).isEqualTo(expectedCoverageResult.models)
+        assertThat(coverageResult.suites).isEqualTo(expectedCoverageResult.suites)
     }
 
 
