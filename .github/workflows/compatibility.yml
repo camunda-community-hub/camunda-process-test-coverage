@@ -26,20 +26,25 @@ jobs:
           - '7.18'
           - '7.17' # 2022
           - '7.16' # 2021
-          - '7.15'
         include:
           - os: 'ubuntu-latest'
             jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
-            camunda-version:
-              - '7.18'
-              - '7.17' # 2022
-              - '7.16' # 2021
-              - '7.15'
-              - '7.14' # 2020
-              - '7.13'
-              - '7.12' # 2019
-              - '7.11'
-              - '7.10' # 2018
+            camunda-version: '7.18'
+          - os: 'ubuntu-latest'
+            jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
+            camunda-version: '7.17' # 2022
+          - os: 'ubuntu-latest'
+            jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
+            camunda-version: '7.16' # 2021
+          - os: 'ubuntu-latest'
+            jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
+            camunda-version: '7.15' # 2021
+          - os: 'ubuntu-latest'
+            jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
+            camunda-version: '7.14' # 2020
+          - os: 'ubuntu-latest'
+            jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
+            camunda-version: '7.13'
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -67,4 +72,4 @@ jobs:
         run: chmod +x ./mvnw
 
       - name: Build with Maven
-        run: ./mvnw clean verify -U -B -T4 "-Pregression-test" "-Dcamunda.version=${{ matrix.camunda-version }}.0" -DskipExamples
+        run: ./mvnw clean verify -U -B -T4 "-Pregression-test" "-Pcamunda-bpm-engine-${{ matrix.camunda-version }}" -DskipExamples
