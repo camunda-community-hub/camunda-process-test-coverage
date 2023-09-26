@@ -5,7 +5,7 @@ package org.camunda.community.process_test_coverage.core.model
  *
  * @author dominikhorn
  */
-class Model(
+data class Model(
 
     /**
      * Key of the model.

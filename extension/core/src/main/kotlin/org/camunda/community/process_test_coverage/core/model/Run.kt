@@ -5,7 +5,7 @@ package org.camunda.community.process_test_coverage.core.model
  *
  * @author dominikhorn
  */
-class Run(
+data class Run(
     /**
      * The id of the run
      */

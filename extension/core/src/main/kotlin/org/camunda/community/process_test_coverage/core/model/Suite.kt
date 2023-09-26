@@ -5,7 +5,7 @@ package org.camunda.community.process_test_coverage.core.model
  *
  * @author dominikhorn
  */
-class Suite(
+data class Suite(
     /**
      * The id of the suite
      */
