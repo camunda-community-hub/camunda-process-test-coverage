@@ -58,23 +58,6 @@
             <artifactId>assertj-core</artifactId>
         </dependency>
 
-        <dependency>
-            <!-- Needed for InMemoryH2Test -->
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-library</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
 </project>
