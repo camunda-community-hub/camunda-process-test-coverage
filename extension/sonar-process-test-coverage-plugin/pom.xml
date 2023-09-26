@@ -10,7 +10,7 @@
     <artifactId>sonar-camunda-process-test-coverage-plugin</artifactId>
     <packaging>sonar-plugin</packaging>
     <properties>
-        <sonar-plugin-api.version>9.5.0.71</sonar-plugin-api.version>
+        <sonar-plugin-api.version>9.9.0.229</sonar-plugin-api.version>
     </properties>
     <dependencies>
         <dependency>
@@ -65,7 +65,7 @@
                     <pluginKey>camundaProcessTestCoverage</pluginKey>
                     <pluginClass>org.camunda.community.process_test_coverage.sonar.ProcessTestCoveragePlugin</pluginClass>
                     <pluginSourcesUrl>https://github.com/camunda-community-hub/camunda-process-test-coverage</pluginSourcesUrl>
-                    <sonarQubeMinVersion>9.5</sonarQubeMinVersion>
+                    <sonarQubeMinVersion>9.9</sonarQubeMinVersion>
                 </configuration>
             </plugin>
             <plugin>
@@ -117,5 +117,5 @@
             </plugin>
         </plugins>
     </build>
-    
+
 </project>
