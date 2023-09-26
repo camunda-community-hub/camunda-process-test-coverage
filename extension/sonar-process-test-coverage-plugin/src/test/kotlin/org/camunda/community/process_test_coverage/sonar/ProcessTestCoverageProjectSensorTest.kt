@@ -100,8 +100,7 @@ class ProcessTestCoverageProjectSensorTest {
         val expectedCoverageResult = CoverageStateJsonExporter.readCoverageStateResult(
                 expectedResult.readText()
         )
-        assertThat(coverageResult.models).isEqualTo(expectedCoverageResult.models)
-        assertThat(coverageResult.suites).isEqualTo(expectedCoverageResult.suites)
+        assertThat(coverageResult).isEqualTo(expectedCoverageResult)
     }
 
 
