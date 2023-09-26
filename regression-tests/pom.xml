@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <artifactId>camunda-process-test-coverage-parent</artifactId>
         <groupId>org.camunda.community.process_test_coverage</groupId>
-        <version>2.1.0</version>
+        <artifactId>camunda-process-test-coverage-root</artifactId>
+        <version>2.1.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>camunda-process-test-coverage-test-junit4-platform-7</artifactId>
-    <name>Camunda Process Test Coverage Regression Test JUnit4 Platform 7</name>
-    <description>
-        All library tests are here in order to allow compiling against Camunda Platform 7 release and regression testing against different versions.
-    </description>
+    <name>Camunda Process Test Coverage Regression Tests Parent</name>
+    <artifactId>camunda-process-test-coverage-regression-tests-parent</artifactId>
+    <packaging>pom</packaging>
 
     <properties>
         <graalvm.version>22.3.2</graalvm.version>
@@ -25,8 +25,24 @@
         <gpg.skip>true</gpg.skip>
     </properties>
 
+    <modules>
+        <module>junit4-platform-7</module>
+        <module>junit5-platform-7</module>
+        <module>spring-test-platform-7</module>
+    </modules>
+
     <dependencyManagement>
         <dependencies>
+
+            <!-- Spring Boot import -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
             <!-- Re-define Camunda -->
             <dependency>
                 <groupId>org.camunda.bpm</groupId>
@@ -37,92 +53,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-core</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine-spring</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <!-- Needed for InMemoryH2Test -->
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <!-- Needed to test SpringProcessWithCoverageTest -->
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Needed to test SpringProcessWithCoverageTest -->
-        <!--
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>2.2.2</version>
-            <scope>test</scope>
-        </dependency>
-        -->
-    </dependencies>
 
     <profiles>
         <!-- Profiles just here to ease testing in IDEs -->
