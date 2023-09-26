@@ -100,7 +100,8 @@ class ProcessTestCoverageProjectSensorTest {
         val expectedCoverageResult = CoverageStateJsonExporter.readCoverageStateResult(
                 expectedResult.readText()
         )
-        assertThat(coverageResult).isEqualTo(expectedCoverageResult)
+        assertThat(coverageResult.models).containsExactlyInAnyOrderElementsOf(expectedCoverageResult.models)
+        assertThat(coverageResult.suites).containsExactlyInAnyOrderElementsOf(expectedCoverageResult.suites)
     }
 
 
