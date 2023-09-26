@@ -16,7 +16,7 @@ class ProcessTestCoverageSensor : Sensor {
     }
 
     override fun describe(descriptor: SensorDescriptor) {
-        descriptor.name("Process Test Coverage Report Importer")
+        descriptor.name("Camunda Process Test Coverage")
     }
 
     override fun execute(context: SensorContext) {
