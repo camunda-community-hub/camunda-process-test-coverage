@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
+        <artifactId>camunda-process-test-coverage-regression-tests-parent</artifactId>
+        <version>2.1.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>camunda-process-test-coverage-regression-tests-junit5-platform-7</artifactId>
+    <name>Camunda Process Test Coverage Regression Test JUnit5 Platform 7</name>
+    <description>
+        All library tests are here in order to allow compiling against Camunda Platform 7 release and regression testing against different versions.
+    </description>
+
+</project>
