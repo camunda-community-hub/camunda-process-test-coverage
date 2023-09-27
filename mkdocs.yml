@@ -91,6 +91,7 @@ nav:
   - User Guide:
       - Overview: user-guide/index.md
       - Configuration: user-guide/configuration.md
+      - Sonarqube: user-guide/sonarqube.md
   - Developer Guide:
       - Contributing: developer-guide/contribution.md
       - Project Setup: developer-guide/project-setup.md
