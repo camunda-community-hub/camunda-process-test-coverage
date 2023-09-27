@@ -12,26 +12,24 @@
         <meta name="author" content="Camunda OSS Developers">
       
       
-        <link rel="canonical" href="https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/index.html">
+        <link rel="canonical" href="https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/user-guide/sonarqube.html">
       
       
       
-        <link rel="next" href="getting-started.html">
       
-      
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.2">
     
     
       
-        <title>Camunda Process Test Coverage</title>
+        <title>Sonarqube - Camunda Process Test Coverage</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.d451bc0e.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.d451bc0e.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.a5377069.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a5377069.min.css">
       
       
 
@@ -50,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="assets/css/extra.css">
+      <link rel="stylesheet" href="../assets/css/extra.css">
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -81,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#highlights" class="md-skip">
+        <a href="#sonarqube-plugin" class="md-skip">
           Skip to content
         </a>
       
@@ -101,9 +99,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="index.html" title="Camunda Process Test Coverage" class="md-header__button md-logo" aria-label="Camunda Process Test Coverage" data-md-component="logo">
+    <a href="../index.html" title="Camunda Process Test Coverage" class="md-header__button md-logo" aria-label="Camunda Process Test Coverage" data-md-component="logo">
       
-  <img src="assets/img/camunda-logo.png" alt="logo">
+  <img src="../assets/img/camunda-logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -120,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Sonarqube
             
           </span>
         </div>
@@ -216,11 +214,9 @@
         
   
   
-    
   
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="index.html" class="md-tabs__link">
+    <li class="md-tabs__item">
+      <a href="../index.html" class="md-tabs__link">
         
   
     
@@ -237,7 +233,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="getting-started.html" class="md-tabs__link">
+      <a href="../getting-started.html" class="md-tabs__link">
         
   
     
@@ -256,7 +252,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="user-guide/index.html" class="md-tabs__link">
+        <a href="index.html" class="md-tabs__link">
           
   
   User Guide
@@ -274,7 +270,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="developer-guide/contribution.html" class="md-tabs__link">
+        <a href="../developer-guide/contribution.html" class="md-tabs__link">
           
   
   Developer Guide
@@ -315,9 +311,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="index.html" title="Camunda Process Test Coverage" class="md-nav__button md-logo" aria-label="Camunda Process Test Coverage" data-md-component="logo">
+    <a href="../index.html" title="Camunda Process Test Coverage" class="md-nav__button md-logo" aria-label="Camunda Process Test Coverage" data-md-component="logo">
       
-  <img src="assets/img/camunda-logo.png" alt="logo">
+  <img src="../assets/img/camunda-logo.png" alt="logo">
 
     </a>
     Camunda Process Test Coverage
@@ -341,27 +337,9 @@
       
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="index.html" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -370,52 +348,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#highlights" class="md-nav__link">
-    Highlights
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#quick-start" class="md-nav__link">
-    Quick Start
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#user-guide" class="md-nav__link">
-    User Guide
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contribution" class="md-nav__link">
-    Contribution
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -426,7 +358,7 @@
   
   
     <li class="md-nav__item">
-      <a href="getting-started.html" class="md-nav__link">
+      <a href="../getting-started.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -484,7 +416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/index.html" class="md-nav__link">
+      <a href="index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -504,7 +436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="user-guide/configuration.html" class="md-nav__link">
+      <a href="configuration.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -570,7 +502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="developer-guide/contribution.html" class="md-nav__link">
+      <a href="../developer-guide/contribution.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -590,7 +522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="developer-guide/project-setup.html" class="md-nav__link">
+      <a href="../developer-guide/project-setup.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -629,22 +561,26 @@
   
 
 
-  <h1>Home</h1>
+  <h1>Sonarqube</h1>
 
-<p>This Camunda Platform 7 and Platform 8 community extension <strong>visualises</strong> test process <strong>paths</strong> and <strong>checks</strong> your process model <strong>coverage</strong> ratio. Running  typical JUnit tests now leaves <strong>html</strong> files in your build output. Just open one and check yourself what your test did:</p>
-<p><img alt="Coverage report" src="assets/img/flowcov_coverage_report.png" /></p>
-<h2 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link">#</a></h2>
-<ul>
-<li><strong>Visually verify</strong> the paths covered by individual tests <strong>methods</strong> and whole test <strong>classes</strong></li>
-<li>Visually check gateway <strong>expressions</strong> and transaction borders (<strong>save points</strong>) used by your process</li>
-<li>Calculate and <strong>verify</strong> the nodes (<em>and</em> sequence flow) <strong>coverage</strong> ratio reached by tests methods and classes.</li>
-</ul>
-<h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">#</a></h2>
-<p>If you just want to start using the library, please consult our <a href="getting-started.html">Getting Started</a> guide.</p>
-<h2 id="user-guide">User Guide<a class="headerlink" href="#user-guide" title="Permanent link">#</a></h2>
-<p>If you have any questions regarding configuration and usage, please conduct the <a href="user-guide/index.html">User Guide</a>.</p>
-<h2 id="contribution">Contribution<a class="headerlink" href="#contribution" title="Permanent link">#</a></h2>
-<p>If you want to contribute to this project, feel free to do so. Start with <a href="developer-guide/contribution.html">Contributing guide</a>.</p>
+<h2 id="sonarqube-plugin">Sonarqube plugin<a class="headerlink" href="#sonarqube-plugin" title="Permanent link">#</a></h2>
+<p>A plugin for sonarqube is provided with the artifact</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;dependency&gt;</span>
+<span class="w">  </span><span class="nt">&lt;groupId&gt;</span>org.camunda.community.process_test_coverage<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">  </span><span class="nt">&lt;artifactId&gt;</span>sonar-camunda-process-test-coverage-plugin<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">  </span><span class="nt">&lt;version&gt;</span>${camunda-process-test-coverage.version}<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div>
+<p>To install this plugin into Sonarqube please have a look at:
+https://docs.sonarsource.com/sonarqube/latest/setup-and-upgrade/install-a-plugin/
+Currently we don't provide the plugin via the marketplace, so it has to be manually installed.</p>
+<p>The plugin can be configured via sonar.process-test-coverage.jsonReportPaths property.
+This can be used to define comma separated glob patterns to find the json report files of the coverage calculation.</p>
+<p>The plugin adds a coverage measure for each found BPMN diagram and also an accumulated one on project level.
+<img alt="Processes coverage" src="assets/img/sonarqube_coverage_processes.png" />
+<img alt="Project coverage" src="assets/img/sonarqube_coverage_project.png" /></p>
+<p>Also a HTML for the project is added as a project report page.
+<img alt="Project report page" src="assets/img/sonarqube_coverage_report_page.png" />)</p>
 
   <hr>
 <div class="md-source-file">
@@ -703,10 +639,10 @@
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "toc.integrate"], "search": "assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "toc.integrate"], "search": "../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.726fbb30.min.js"></script>
+      <script src="../assets/javascripts/bundle.726fbb30.min.js"></script>
       
     
   </body>
