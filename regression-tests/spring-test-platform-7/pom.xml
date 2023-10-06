@@ -66,16 +66,21 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-library</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <scope>test</scope>
         </dependency>
 
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>camunda-bpm-engine-7.20</id>
+            <properties>
+                <camunda.version>7.20.0</camunda.version>
+                <spring-boot.version>3.1.4</spring-boot.version>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>

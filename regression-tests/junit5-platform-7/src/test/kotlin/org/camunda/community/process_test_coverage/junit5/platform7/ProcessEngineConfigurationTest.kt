@@ -12,7 +12,10 @@ class ProcessEngineConfigurationTest {
         @JvmField
         @RegisterExtension
         var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension
-                .builder(ProcessCoverageInMemProcessEngineConfiguration().apply { this.jdbcUrl = "jdbc:h2:mem:camunda2" })
+                .builder(ProcessCoverageInMemProcessEngineConfiguration().apply {
+                    this.jdbcUrl = "jdbc:h2:mem:camunda2"
+                    this.historyTimeToLive = "P1D"
+                })
                 .configurationResource("ignored")
                 .assertClassCoverageAtLeast(1.0).build()
     }

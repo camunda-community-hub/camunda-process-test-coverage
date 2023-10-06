@@ -68,6 +68,7 @@ public class InMemProcessEngineConfiguration {
     config.setDataSource(dataSource());
     config.setDatabaseSchemaUpdate("true");
     config.setHistory(ProcessEngineConfiguration.HISTORY_FULL);
+    config.setHistoryTimeToLive("P1D");
     config.setJobExecutorActivate(false);
     config.init();
     return config;
