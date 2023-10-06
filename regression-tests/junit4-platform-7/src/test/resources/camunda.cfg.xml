@@ -6,6 +6,7 @@
 
     <bean id="processEngineConfiguration"
           class="org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+        <property name="historyTimeToLive" value="P1D"/>
 
         <property name="customEventHandlers">
             <list merge="true">
