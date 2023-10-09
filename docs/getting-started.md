@@ -238,3 +238,25 @@ apply(plugin = "org.camunda.community.process_test_coverage.report-aggregator")
 ```
 
 Afterwards the reports can be aggregated by calling `gradle aggregateProcessTestCoverage`.
+
+## Sonarqube plugin
+
+We also provide a plugin for displaying process test coverage in Sonarqube.
+This functionality is provided by the artifact:
+
+```xml
+<dependency>
+  <groupId>org.camunda.community.process_test_coverage</groupId>
+  <artifactId>sonar-camunda-process-test-coverage-plugin</artifactId>
+  <version>${camunda-process-test-coverage.version}</version>
+</dependency>
+```
+
+To install this plugin into Sonarqube please have a look at:
+https://docs.sonarsource.com/sonarqube/latest/setup-and-upgrade/install-a-plugin/
+Currently we don't provide the plugin via the marketplace, so it has to be manually installed.
+
+To get the measures into Sonarqube, you have to include the BPMN files into the sonar input sources.
+E.g. by calling mvn sonar:sonar -Dsonar.sources=src/main or otherwise including the BPMN files by pattern.
+Afterwards you'll have a process test coverage measurement on project level and for all BPMN files in your sources.
+Also the report HTML is included as a page on project level.

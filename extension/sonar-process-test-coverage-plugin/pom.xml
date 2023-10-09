@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>camunda-process-test-coverage-parent</artifactId>
+        <groupId>org.camunda.community.process_test_coverage</groupId>
+        <version>2.2.1-SNAPSHOT</version>
+    </parent>
+    <name>Camunda Process Test Coverage Sonar Plugin</name>
+    <artifactId>sonar-camunda-process-test-coverage-plugin</artifactId>
+    <packaging>sonar-plugin</packaging>
+    <properties>
+        <sonar-plugin-api.version>9.9.0.229</sonar-plugin-api.version>
+        <sonar.api.impl.version>9.6.1.59531</sonar.api.impl.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.sonarsource.api.plugin</groupId>
+            <artifactId>sonar-plugin-api</artifactId>
+            <version>${sonar-plugin-api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.community.process_test_coverage</groupId>
+            <artifactId>camunda-process-test-coverage-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm.model</groupId>
+            <artifactId>camunda-bpmn-model</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.sonarsource.sonarqube</groupId>
+            <artifactId>sonar-plugin-api-impl</artifactId>
+            <version>${sonar.api.impl.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <artifactItems>
+                        <artifactItem>
+                            <groupId>org.camunda.community.process_test_coverage</groupId>
+                            <artifactId>camunda-process-test-coverage-report-generator</artifactId>
+                            <version>${project.version}</version>
+                            <outputDirectory>target/classes</outputDirectory>
+                            <includes>**/*.js,**/*.css,**/*.html</includes>
+                        </artifactItem>
+                    </artifactItems>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+                <artifactId>sonar-packaging-maven-plugin</artifactId>
+                <version>1.21.0.505</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <pluginKey>camundaProcessTestCoverage</pluginKey>
+                    <pluginClass>org.camunda.community.process_test_coverage.sonar.ProcessTestCoveragePlugin</pluginClass>
+                    <pluginSourcesUrl>https://github.com/camunda-community-hub/camunda-process-test-coverage</pluginSourcesUrl>
+                    <sonarQubeMinVersion>9.9</sonarQubeMinVersion>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.14.0</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <id>install node and npm </id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v18.14.2</nodeVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <phase>initialize</phase>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <phase>initialize</phase>
+                        <id>npm version</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>version ${project.version} --allow-same-version</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <phase>compile</phase>
+                        <id>npm run script</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

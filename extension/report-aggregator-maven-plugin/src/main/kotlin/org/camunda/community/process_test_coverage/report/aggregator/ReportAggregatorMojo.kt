@@ -1,6 +1,5 @@
 package org.camunda.community.process_test_coverage.report.aggregator
 
-import org.apache.maven.MavenExecutionException
 import org.apache.maven.doxia.sink.Sink
 import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugins.annotations.LifecyclePhase
@@ -8,9 +7,9 @@ import org.apache.maven.plugins.annotations.Mojo
 import org.apache.maven.plugins.annotations.Parameter
 import org.apache.maven.project.MavenProject
 import org.apache.maven.reporting.MavenReport
+import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.combineCoverageStateResults
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.createCoverageStateResult
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.readCoverageStateResult
-import org.camunda.community.process_test_coverage.core.export.CoverageStateResult
 import org.camunda.community.process_test_coverage.report.CoverageReportUtil
 import org.codehaus.plexus.util.FileUtils
 import java.io.File
@@ -95,16 +94,13 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
                 log.debug("Reading file ${it.path}")
                 FileUtils.fileRead(it)
             }
-            .map { readCoverageStateResult(it) }
-            .reduceOrNull { result1, result2 -> CoverageStateResult(
-                result1.suites + result2.suites,
-                result1.models.plus(result2.models.filter { new -> !result1.models.map { model -> model.key }.contains(new.key) })
-            )}
+            .reduceOrNull { result1, result2 -> combineCoverageStateResults(result1, result2) }
             ?.let {
-                CoverageReportUtil.writeReport(createCoverageStateResult(it.suites, it.models), false,
+                val report = readCoverageStateResult(it)
+                CoverageReportUtil.writeReport(createCoverageStateResult(report.suites, report.models), false,
                     outputDirectory.path, "report.json"
                 ) { result -> result }
-                CoverageReportUtil.writeReport(createCoverageStateResult(it.suites, it.models), true,
+                CoverageReportUtil.writeReport(createCoverageStateResult(report.suites, report.models), true,
                     outputDirectory.path, "report.html", CoverageReportUtil::generateHtml)
             } ?: log.warn("No coverage results found, skipping execution")
     }
