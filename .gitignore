@@ -1,4 +1,6 @@
 target/
+.gradle/
+build/
 # IDEA
 .idea/
 *.iml
@@ -8,3 +10,5 @@ target/
 .settings/
 # GitHub Pages
 
+node/
+node_modules/

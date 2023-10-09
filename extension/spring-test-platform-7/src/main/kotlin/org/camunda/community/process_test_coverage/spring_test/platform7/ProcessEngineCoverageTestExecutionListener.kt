@@ -108,12 +108,12 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
             // Log coverage percentage
             logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
             logCoverageDetail(suite)
-
-            assertCoverage(suiteCoveragePercentage, processEngineCoverageProperties.classCoverageAssertionConditions)
-
+            
             // Create graphical report
             CoverageReportUtil.createReport(coverageCollector)
             CoverageReportUtil.createJsonReport(coverageCollector)
+
+            assertCoverage(suiteCoveragePercentage, processEngineCoverageProperties.classCoverageAssertionConditions)
         }
     }
 

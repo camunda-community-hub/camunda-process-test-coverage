@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:modeler="http://camunda.org/schema/modeler/1.0" exporter="CamundaModeler"
+                  exporterVersion="5.0.0" expressionLanguage="http://www.w3.org/1999/XPath"
+                  id="Definitions_1r3mlfs" modeler:executionPlatform="CamundaPlatform"
+                  modeler:executionPlatformVersion="7.17.0" targetNamespace="http://bpmn.io/schema/bpmn"
+                  typeLanguage="http://www.w3.org/2001/XMLSchema">
+
+    <bpmn:process id="Testprocess2" isClosed="false" isExecutable="true" processType="None">
+        <bpmn:startEvent id="StartEvent" isInterrupting="true" name="Start" parallelMultiple="false">
+            <bpmn:outgoing>Flow</bpmn:outgoing>
+        </bpmn:startEvent>
+        <bpmn:endEvent id="EndEvent" name="End">
+            <bpmn:incoming>Flow</bpmn:incoming>
+        </bpmn:endEvent>
+        <bpmn:sequenceFlow id="Flow" sourceRef="StartEvent" targetRef="EndEvent"/>
+    </bpmn:process>
+
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="Testprocess2" id="BPMNPlane_1">
+            <bpmndi:BPMNEdge bpmnElement="Flow" id="Flow_di">
+                <di:waypoint x="215" y="97"/>
+                <di:waypoint x="272" y="97"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="StartEvent" id="StartEvent_di">
+                <dc:Bounds height="36" width="36" x="179" y="79"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="14" width="28" x="183" y="122"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="EndEvent" id="EndEvent_di">
+                <dc:Bounds height="36" width="36" x="272" y="79"/>
+                <bpmndi:BPMNLabel>
+                    <dc:Bounds height="14" width="21" x="280" y="122"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -25,4 +25,14 @@ object CoverageStateJsonExporter {
     fun readCoverageStateResult(json: String): CoverageStateResult =
         Gson().fromJson(json, CoverageStateResult::class.java)
 
+    @JvmStatic
+    fun combineCoverageStateResults(json1: String, json2: String): String {
+        val result1 = readCoverageStateResult(json1)
+        val result2 = readCoverageStateResult(json2)
+        return createCoverageStateResult(
+                result1.suites + result2.suites,
+                result1.models.plus(result2.models.filter { new -> !result1.models.map { model -> model.key }.contains(new.key) })
+        )
+    }
+
 }

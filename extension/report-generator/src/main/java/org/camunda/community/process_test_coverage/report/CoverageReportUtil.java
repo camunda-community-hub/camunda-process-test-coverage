@@ -32,7 +32,7 @@ public class CoverageReportUtil {
      */
     public static String TARGET_DIR_ROOT = System.getProperty("camunda-process-test-coverage.target-dir-root", "target/process-test-coverage/");
     public static final String REPORT_RESOURCES = "static";
-    private static final String REPORT_TEMPLATE = "bpmn.report-template.html";
+    private static final String REPORT_TEMPLATE = "html/bpmn.report-template.html";
 
 
     public static void createReport(final DefaultCollector coverageCollector) {
@@ -86,8 +86,8 @@ public class CoverageReportUtil {
 
     private static void installReportDependencies(final String reportDirectory) {
         final File parent = new File(reportDirectory).getParentFile();
-        final File bowerComponents = new File(parent, REPORT_RESOURCES);
-        if (bowerComponents.exists()) {
+        final File reportResourcesDir = new File(parent, REPORT_RESOURCES);
+        if (reportResourcesDir.exists()) {
             // No need to install
             return;
         }
@@ -126,15 +126,15 @@ public class CoverageReportUtil {
                 // Tests executed in the IDE use directories
                 URL reportResources = CoverageReportUtil.class.getResource("/" + REPORT_RESOURCES);
                 Objects.requireNonNull(reportResources);
-                final File bowerSrc = new File(reportResources.toURI());
-                if (!bowerComponents.getParentFile().exists() && !bowerComponents.getParentFile().mkdirs()) {
-                    throw new IllegalStateException("Could not create report directory " + bowerComponents.getParentFile().getAbsolutePath());
+                final File reportResourcesSrc = new File(reportResources.toURI());
+                if (!reportResourcesDir.getParentFile().exists() && !reportResourcesDir.getParentFile().mkdirs()) {
+                    throw new IllegalStateException("Could not create report directory " + reportResourcesDir.getParentFile().getAbsolutePath());
                 }
-                copyFolder(bowerSrc.toPath(), bowerComponents.toPath());
+                copyFolder(reportResourcesSrc.toPath(), reportResourcesDir.toPath());
             }
 
         } catch (final Exception e) {
-            throw new RuntimeException("Unable to copy bower_components", e);
+            throw new RuntimeException("Unable to copy report resources", e);
         }
     }
 

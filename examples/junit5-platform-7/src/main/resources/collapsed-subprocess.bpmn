@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1etzhqs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.11.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.19.0">
+  <bpmn:process id="CollapsedSubProcessTest" isExecutable="true" camunda:historyTimeToLive="1">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_0kgdnhv</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0kgdnhv" sourceRef="StartEvent_1" targetRef="CollapsedSubProcess" />
+    <bpmn:subProcess id="CollapsedSubProcess" name="Collapsed SubProcess">
+      <bpmn:incoming>Flow_0kgdnhv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lqsz06</bpmn:outgoing>
+      <bpmn:startEvent id="Event_1ieuc4o">
+        <bpmn:outgoing>Flow_1sprl5w</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:sequenceFlow id="Flow_1sprl5w" sourceRef="Event_1ieuc4o" targetRef="SubTask" />
+      <bpmn:endEvent id="Event_1bnmj0i">
+        <bpmn:incoming>Flow_13jlopt</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_13jlopt" sourceRef="SubTask" targetRef="Event_1bnmj0i" />
+      <bpmn:userTask id="SubTask" name="Sub Task">
+        <bpmn:incoming>Flow_1sprl5w</bpmn:incoming>
+        <bpmn:outgoing>Flow_13jlopt</bpmn:outgoing>
+      </bpmn:userTask>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_0lqsz06" sourceRef="CollapsedSubProcess" targetRef="TheTask" />
+    <bpmn:endEvent id="Event_1uyd3xx">
+      <bpmn:incoming>Flow_19qe0dz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_19qe0dz" sourceRef="TheTask" targetRef="Event_1uyd3xx" />
+    <bpmn:userTask id="TheTask" name="The task">
+      <bpmn:incoming>Flow_0lqsz06</bpmn:incoming>
+      <bpmn:outgoing>Flow_19qe0dz</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="CollapsedSubProcessTest">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1uyd3xx_di" bpmnElement="Event_1uyd3xx">
+        <dc:Bounds x="592" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0fa78l9_di" bpmnElement="TheTask">
+        <dc:Bounds x="430" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0684vvx_di" bpmnElement="CollapsedSubProcess">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0kgdnhv_di" bpmnElement="Flow_0kgdnhv">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19qe0dz_di" bpmnElement="Flow_19qe0dz">
+        <di:waypoint x="530" y="117" />
+        <di:waypoint x="592" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lqsz06_di" bpmnElement="Flow_0lqsz06">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="430" y="117" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_06odhxf">
+    <bpmndi:BPMNPlane id="BPMNPlane_1m9ptxa" bpmnElement="CollapsedSubProcess">
+      <bpmndi:BPMNShape id="Event_1ieuc4o_di" bpmnElement="Event_1ieuc4o">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1bnmj0i_di" bpmnElement="Event_1bnmj0i">
+        <dc:Bounds x="392" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qordf0_di" bpmnElement="SubTask">
+        <dc:Bounds x="240" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1sprl5w_di" bpmnElement="Flow_1sprl5w">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="240" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13jlopt_di" bpmnElement="Flow_13jlopt">
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="392" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
