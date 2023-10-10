@@ -63,11 +63,6 @@
             <artifactId>spring-orm</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <!-- Needed for InMemoryH2Test -->
@@ -89,15 +84,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Needed to test SpringProcessWithCoverageTest -->
-        <!--
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib</artifactId>
-            <version>2.2.2</version>
-            <scope>test</scope>
-        </dependency>
-        -->
     </dependencies>
 
 </project>

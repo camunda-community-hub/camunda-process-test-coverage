@@ -13,12 +13,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <camunda.version>7.16.0</camunda.version>
-        <zeebe.version>8.2.13</zeebe.version>
-        <spring-zeebe.version>8.2.4</spring-zeebe.version>
-        <camunda-bpm-assert.version>15.0.0</camunda-bpm-assert.version>
-        <camunda-bpm-jgiven.version>0.4.1</camunda-bpm-jgiven.version>
-        <springboot.version>2.6.7</springboot.version>
+        <camunda.version>${camunda.compile.version}</camunda.version>
         <jacoco.skip>true</jacoco.skip>
         <dokka.skip>true</dokka.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
@@ -41,7 +36,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>${springboot.version}</version>
+                <version>${spring-boot.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -54,12 +49,6 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-            <dependency>
-                <groupId>org.camunda.bpm.assert</groupId>
-                <artifactId>camunda-bpm-assert</artifactId>
-                <version>${camunda-bpm-assert.version}</version>
-                <scope>test</scope>
-            </dependency>
 
             <!-- Own BOM -->
             <dependency>
@@ -70,12 +59,6 @@
                 <type>pom</type>
             </dependency>
 
-            <dependency>
-                <groupId>io.holunda.testing</groupId>
-                <artifactId>camunda-bpm-jgiven</artifactId>
-                <version>${camunda-bpm-jgiven.version}</version>
-                <scope>test</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
@@ -121,7 +104,7 @@
     </reporting>
     <profiles>
         <profile>
-            <id>java11</id>
+            <id>jdk11</id>
             <activation>
                 <jdk>[11,)</jdk>
             </activation>

@@ -7,7 +7,6 @@ Optionally, you might configure output path for reports. By default the reports 
 <plugin>
 <groupId>org.apache.maven.plugins</groupId>
 <artifactId>maven-surefire-plugin</artifactId>
-<version>2.22.2</version>
 <configuration>
   <systemPropertyVariables>
     <camunda-process-test-coverage.target-dir-root>${project.build.directory}/my-coverage-reports/</camunda-process-test-coverage.target-dir-root>

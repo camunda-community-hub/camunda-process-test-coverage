@@ -9,11 +9,6 @@
     <name>Camunda Process Test Coverage JUnit5 Platform 7</name>
     <artifactId>camunda-process-test-coverage-junit5-platform-7</artifactId>
 
-    <properties>
-        <camunda-bpm-junit5.version>7.20.0</camunda-bpm-junit5.version>
-    </properties>
-
-
     <dependencies>
         <!-- We intentionally always compile against latest Camunda release,
         but test against many versions *provided* by user projects.
@@ -37,6 +32,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-bpm-junit5</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <scope>provided</scope>
@@ -48,11 +48,6 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-bpm-junit5</artifactId>
-            <version>${camunda-bpm-junit5.version}</version>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>

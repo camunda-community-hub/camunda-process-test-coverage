@@ -24,10 +24,16 @@
             <artifactId>camunda-engine-spring</artifactId>
         </dependency>
 
+
         <!-- Test Dependencies -->
         <dependency>
-            <groupId>org.camunda.bpm.assert</groupId>
+            <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-bpm-assert</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-bpm-junit5</artifactId>
             <scope>test</scope>
         </dependency>
 

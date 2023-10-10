@@ -32,15 +32,12 @@
         <kotlin-logging.version>3.0.0</kotlin-logging.version>
 
         <!--
-        For backwards compatibility we pin the version to compile to Camunda 7.16.
-        Camunda 7.15 introduced a dependency to Feel DMN engine which is
-        initialized on start-up and is failing if not present on the class path
-        with: java.lang.NoClassDefFoundError: org/camunda/feel/context/Context
+        For backwards compatibility we pin the version to compile to Camunda 7.17.
         -->
-        <camunda.compile.version>7.16.0</camunda.compile.version>
-        <zeebe.version>8.2.13</zeebe.version>
+        <camunda.compile.version>7.17.0</camunda.compile.version>
+        <zeebe.version>8.2.8</zeebe.version>
         <spring-zeebe.version>8.2.4</spring-zeebe.version>
-        <spring-boot.version>2.6.7</spring-boot.version>
+        <spring-boot.version>2.7.16</spring-boot.version>
 
     </properties>
 
@@ -103,6 +100,9 @@
                                     <requireMavenVersion>
                                         <version>3.6.0</version>
                                     </requireMavenVersion>
+                                    <requireJavaVersion>
+                                        <version>1.8</version>
+                                    </requireJavaVersion>
                                 </rules>
                             </configuration>
                         </execution>
