@@ -43,14 +43,14 @@
         </dependency>
 
         <dependency>
-            <groupId>io.camunda</groupId>
-            <artifactId>spring-zeebe-test-testcontainer</artifactId>
+            <groupId>io.camunda.spring</groupId>
+            <artifactId>spring-boot-starter-camunda-test-testcontainer</artifactId>
             <version>${spring-zeebe.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.camunda</groupId>
-            <artifactId>spring-zeebe-starter</artifactId>
+            <groupId>io.camunda.spring</groupId>
+            <artifactId>spring-boot-starter-camunda</artifactId>
             <version>${spring-zeebe.version}</version>
             <scope>test</scope>
         </dependency>

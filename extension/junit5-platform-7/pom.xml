@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <properties>
-        <camunda-bpm-junit5.version>1.1.0</camunda-bpm-junit5.version>
-    </properties>
     <parent>
         <artifactId>camunda-process-test-coverage-parent</artifactId>
         <groupId>org.camunda.community.process_test_coverage</groupId>
@@ -12,11 +9,10 @@
     <name>Camunda Process Test Coverage JUnit5 Platform 7</name>
     <artifactId>camunda-process-test-coverage-junit5-platform-7</artifactId>
 
-
     <dependencies>
         <!-- We intentionally always compile against latest Camunda release,
         but test against many versions *provided* by user projects.
-        Therefore the tests are in a separate module. -->
+        Therefor the tests are in a separate module. -->
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine</artifactId>
@@ -36,6 +32,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-bpm-junit5</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <scope>provided</scope>
@@ -47,11 +48,6 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.camunda.bpm.extension</groupId>
-            <artifactId>camunda-bpm-junit5</artifactId>
-            <version>${camunda-bpm-junit5.version}</version>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>

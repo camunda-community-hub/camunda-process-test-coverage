@@ -26,7 +26,7 @@
 
         <!-- Test Dependencies -->
         <dependency>
-            <groupId>org.camunda.bpm.assert</groupId>
+            <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-bpm-assert</artifactId>
             <scope>test</scope>
         </dependency>
