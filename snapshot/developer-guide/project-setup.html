@@ -20,7 +20,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
     
     
       
@@ -28,7 +28,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.bd3936ea.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6a10b989.min.css">
       
         
         <link rel="stylesheet" href="../assets/stylesheets/palette.356b1318.min.css">
@@ -604,8 +604,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#integration-tests" class="md-nav__link">
-    Integration Tests
+  <a href="#regression-tests" class="md-nav__link">
+    Regression Tests
   </a>
   
 </li>
@@ -636,13 +636,6 @@
           <li class="md-nav__item">
   <a href="#generation-of-javadoc-and-sources" class="md-nav__link">
     Generation of JavaDoc and Sources
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#starting-example-applications" class="md-nav__link">
-    Starting example applications
   </a>
   
 </li>
@@ -723,28 +716,25 @@
 <p>If you are interested in developing and building the project please read the following the instructions carefully.</p>
 <h2 id="version-control">Version control<a class="headerlink" href="#version-control" title="Permanent link">#</a></h2>
 <p>To get sources of the project, please execute:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/camunda-communit-hub/camunda-rest-client-spring-boot.git
-<span class="nb">cd</span><span class="w"> </span>camunda-rest-client-spring-boot
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/camunda-community-hub/camunda-process-test-coverage.git
+<span class="nb">cd</span><span class="w"> </span>camunda-process-test-coverage
 </code></pre></div>
-<p>We are using gitflow in our git SCM for naming b## Support Matrixranches. That means that you should start from <code>develop</code> branch,
+<p>We are using gitflow in our git SCM for naming branches. That means that you should start from <code>develop</code> branch,
 create a <code>feature/&lt;name&gt;</code> out of it and once it is completed create a pull request containing
 it. Please squash your commits before submitting and use semantic commit messages, if possible.</p>
 <h2 id="project-build">Project Build<a class="headerlink" href="#project-build" title="Permanent link">#</a></h2>
 <p>Perform the following steps to get a development setup up and running.</p>
 <div class="highlight"><pre><span></span><code>./mvnw<span class="w"> </span>clean<span class="w"> </span>install
 </code></pre></div>
-<h2 id="integration-tests">Integration Tests<a class="headerlink" href="#integration-tests" title="Permanent link">#</a></h2>
-<p>By default, the build command will ignore the run of <code>failsafe</code> Maven plugin executing the integration tests
-(usual JUnit tests with class names ending with ITest). In order to run integration tests, please
+<h2 id="regression-tests">Regression Tests<a class="headerlink" href="#regression-tests" title="Permanent link">#</a></h2>
+<p>By default, the build command will ignore the run of the regression tests. In order to run the regression tests, please
 call from your command line:</p>
-<div class="highlight"><pre><span></span><code>./mvnw<span class="w"> </span>-Pitest
+<div class="highlight"><pre><span></span><code>./mvnw<span class="w"> </span>-Pregression-test
 </code></pre></div>
 <h2 id="project-build-modes-and-profiles">Project build modes and profiles<a class="headerlink" href="#project-build-modes-and-profiles" title="Permanent link">#</a></h2>
 <h3 id="camunda-version">Camunda Version<a class="headerlink" href="#camunda-version" title="Permanent link">#</a></h3>
-<p>You can choose the used Camunda version by specifying the profile <code>camunda-ee</code> or <code>camunda-ce</code>. The default
-version is a Community Edition. Specify <code>-Pcamunda-ee</code> to switch to Camunda Enterprise edition. This will
-require a valid Camunda license. You can put it into a file <code>~/.camunda/license.txt</code> and it will be detected
-automatically.</p>
+<p>The library is compiled against an older version of Camunda (see camunda.compile.version property in parent POM).
+To select a Camunda version for the tests you can start with a designated profile e.g. camunda-bpm-engine-7.18.</p>
 <h3 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">#</a></h3>
 <p>We are using MkDocs for generation of a static site documentation and rely on markdown as much as possible.</p>
 <div class="admonition note">
@@ -757,17 +747,6 @@ the http://localhost:8000/ from your browser.</p>
 <p>By default, the sources and javadoc API documentation are not generated from the source code. To enable this:</p>
 <div class="highlight"><pre><span></span><code>./mvnw<span class="w"> </span>clean<span class="w"> </span>install<span class="w"> </span>-Prelease<span class="w"> </span>-Dgpg.skip<span class="o">=</span><span class="nb">true</span>
 </code></pre></div>
-<h4 id="starting-example-applications">Starting example applications<a class="headerlink" href="#starting-example-applications" title="Permanent link">#</a></h4>
-<p>To start applications, either use your IDE and create
-run configuration for the class:</p>
-<ul>
-<li><code>org.camunda.bpm.extension.rest.example.standalone.CamundaRestClientExampleApplication</code></li>
-<li><code>org.camunda.bpm.extension.rest.example.processapplication.CamundaRestClientExampleApplicationWithEngineProvided</code></li>
-</ul>
-<p>Alternatively, you can run them from the command line:</p>
-<div class="highlight"><pre><span></span><code>./mvn<span class="w"> </span>spring-boot:run<span class="w"> </span>-f<span class="w"> </span>examples/example
-./mvn<span class="w"> </span>spring-boot:run<span class="w"> </span>-f<span class="w"> </span>examples/example-provided
-</code></pre></div>
 <h3 id="continuous-integration">Continuous Integration<a class="headerlink" href="#continuous-integration" title="Permanent link">#</a></h3>
 <p>Github Actions are building all branches on commit hook (for codecov).
 In addition, a Github Actions are used to build PRs and all branches.</p>
@@ -777,7 +756,7 @@ In addition, a Github Actions are used to build PRs and all branches.</p>
 <p>Every Maven module is enabled by default. If you want to change this, please provide the property</p>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;maven.deploy.skip&gt;</span>true<span class="nt">&lt;/maven.deploy.skip&gt;</span>
 </code></pre></div>
-<p>inside the corresponding <code>pom.xml</code>. Currently, all <code>examples</code> are <em>EXCLUDED</em> from publication into Maven Central.</p>
+<p>inside the corresponding <code>pom.xml</code>. Currently, all <code>examples</code> are <em>EXCLUDED</em> from publication into Maven Central.<code></code></p>
 
   <hr>
 <div class="md-source-file">
@@ -840,7 +819,7 @@ In addition, a Github Actions are used to build PRs and all branches.</p>
     <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "toc.integrate"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.94c44541.min.js"></script>
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
       
     
   </body>
