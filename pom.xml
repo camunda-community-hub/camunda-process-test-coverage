@@ -29,7 +29,8 @@
         <version.java>1.8</version.java>
         <kotlin.version>1.9.10</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin-logging.version>3.0.2</kotlin-logging.version>
+        <kotlin-logging.version>3.0.0</kotlin-logging.version>
+
         <!--
         For backwards compatibility we pin the version to compile to Camunda 7.14.
         Camunda 7.15 introduced a dependency to Feel DMN engine which is
@@ -40,6 +41,7 @@
         <zeebe.version>8.2.13</zeebe.version>
         <spring-zeebe.version>8.2.4</spring-zeebe.version>
         <spring-boot.version>2.6.7</spring-boot.version>
+
     </properties>
 
     <dependencyManagement>
