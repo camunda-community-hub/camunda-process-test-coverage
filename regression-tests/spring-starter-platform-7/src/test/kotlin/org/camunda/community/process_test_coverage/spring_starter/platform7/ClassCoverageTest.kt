@@ -1,4 +1,4 @@
-package org.camunda.community.process_test_coverage.spring_test.platform7
+package org.camunda.community.process_test_coverage.spring_starter.platform7
 
 import org.camunda.bpm.engine.RuntimeService
 import org.junit.jupiter.api.Test
@@ -12,8 +12,7 @@ import org.springframework.test.context.TestExecutionListeners
 class Application
 
 @SpringBootTest
-@Import(CoverageTestConfiguration::class, ProcessEngineCoverageConfiguration::class)
-@TestExecutionListeners(value = [ProcessEngineCoverageTestExecutionListener::class], mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
+@Import(CoverageTestConfiguration::class)
 class ClassCoverageTest {
 
     @Autowired
