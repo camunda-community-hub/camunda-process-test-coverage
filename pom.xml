@@ -29,7 +29,7 @@
         <version.java>1.8</version.java>
         <kotlin.version>1.9.20</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin-logging.version>3.0.0</kotlin-logging.version>
+        <kotlin-logging.version>3.0.5</kotlin-logging.version>
 
         <!--
         For backwards compatibility we pin the version to compile to Camunda 7.17.
