@@ -1,6 +1,5 @@
 package org.camunda.community.process_test_coverage.report.aggregator
 
-import org.apache.maven.doxia.sink.Sink
 import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugins.annotations.LifecyclePhase
 import org.apache.maven.plugins.annotations.Mojo
@@ -11,7 +10,6 @@ import org.camunda.community.process_test_coverage.core.export.CoverageStateJson
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.createCoverageStateResult
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.readCoverageStateResult
 import org.camunda.community.process_test_coverage.report.CoverageReportUtil
-import org.codehaus.plexus.util.FileUtils
 import java.io.File
 import java.util.*
 
@@ -43,7 +41,7 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
     @Parameter(property = "process-test-coverage.skip", defaultValue = "false")
     private var skip = false
 
-    override fun generate(sink: Sink, locale: Locale) {
+    override fun generate(sink: org.codehaus.doxia.sink.Sink?, locale: Locale) {
         executeReport(locale)
     }
 
@@ -86,13 +84,16 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
         reactorProjects
             .asSequence()
             .map {
-                log.debug("Processing module ${it.name}")
-                FileUtils.getFiles(it.basedir, "$TARGET_DIR_ROOT/**/report.json", "**/all/report.json")
+                log.debug("Processing module ${it.name} with basedir ${it.basedir}")
+                it.basedir.walk()
+                    .filter { file -> file.isFile && file.name == "report.json" }
+                    .filter { file -> file.toRelativeString(it.basedir).startsWith(TARGET_DIR_ROOT) }
+                    .filter { file -> !file.absolutePath.endsWith("/all/report.json") }
             }
             .flatten()
             .map {
                 log.debug("Reading file ${it.path}")
-                FileUtils.fileRead(it)
+                it.readText()
             }
             .reduceOrNull { result1, result2 -> combineCoverageStateResults(result1, result2) }
             ?.let {
