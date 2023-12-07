@@ -88,7 +88,7 @@
                     <pluginKey>camundaProcessTestCoverage</pluginKey>
                     <pluginClass>org.camunda.community.process_test_coverage.sonar.ProcessTestCoveragePlugin</pluginClass>
                     <pluginSourcesUrl>https://github.com/camunda-community-hub/camunda-process-test-coverage</pluginSourcesUrl>
-                    <sonarQubeMinVersion>9.9</sonarQubeMinVersion>
+                    <pluginApiMinVersion>9.9</pluginApiMinVersion>
                 </configuration>
             </plugin>
             <plugin>
