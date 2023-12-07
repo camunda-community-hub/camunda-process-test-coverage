@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <graalvm.version>22.3.2</graalvm.version>
+        <graalvm.version>23.0.2</graalvm.version>
         <camunda.version>${camunda.compile.version}</camunda.version>
 
         <jacoco.skip>true</jacoco.skip>
@@ -29,6 +29,7 @@
         <module>junit4-platform-7</module>
         <module>junit5-platform-7</module>
         <module>spring-test-platform-7</module>
+        <module>spring-starter-platform-7</module>
     </modules>
 
     <dependencyManagement>

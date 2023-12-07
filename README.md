@@ -2,6 +2,7 @@
 [![](https://img.shields.io/badge/Community%20Extension-An%20open%20source%20community%20maintained%20project-FF4700)](https://github.com/camunda-community-hub/community)
 ![Compatible with: Camunda Platform 7](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%207-26d07c)
 ![Compatible with: Camunda Platform 8](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%208-26d07c)
+![Supported Camunda versions](https://img.shields.io/badge/Camunda%20Version-%207.17%20to%207.20%20and%208-orange.svg)
 
 
 ![Camunda Logo](docs/assets/img/Favicons-Circle-Colour.png)
@@ -20,10 +21,10 @@ This Camunda Platform 7 and Platform 8 community extension **visualises** test p
 
 ## Just use it
 
-* Integrates with all versions of Camunda Platform 7 starting with 7.10.0 and upwards as well as Camunda Platform 8
+* Integrates with all versions of Camunda Platform 7 starting with 7.17.0 and upwards as well as Camunda Platform 8
 * Is continuously checked against the latest Camunda Platform 7 releases (check out our compatibility CI/CD pipeline)
 * Tested with JDKs 11 and 17
-* Works with Java starting with 1.8 and following
+* Works with Java starting with 1.8 and following (depending on support by version of used Camunda Platform)
 * Supports **JUnit 4.13.1+** (4.11 does not work) or **JUnit 5**
 * Can be used inside Spring Tests
 

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.camunda.community</groupId>
         <artifactId>community-hub-release-parent</artifactId>
-        <version>1.4.3</version>
+        <version>1.4.4</version>
         <relativePath />
     </parent>
 
@@ -27,9 +27,9 @@
 
     <properties>
         <version.java>1.8</version.java>
-        <kotlin.version>1.9.10</kotlin.version>
+        <kotlin.version>1.9.21</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin-logging.version>3.0.0</kotlin-logging.version>
+        <kotlin-logging.version>3.0.5</kotlin-logging.version>
 
         <!--
         For backwards compatibility we pin the version to compile to Camunda 7.17.
@@ -37,7 +37,7 @@
         <camunda.compile.version>7.17.0</camunda.compile.version>
         <zeebe.version>8.2.8</zeebe.version>
         <spring-zeebe.version>8.2.4</spring-zeebe.version>
-        <spring-boot.version>2.7.16</spring-boot.version>
+        <spring-boot.version>2.7.17</spring-boot.version>
 
     </properties>
 
@@ -76,7 +76,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.1.2</version>
+                    <version>3.2.2</version>
                     <configuration>
                         <useSystemClassLoader>false</useSystemClassLoader>
                         <shutdown>kill</shutdown>
@@ -170,7 +170,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
-                    <version>3.1.0</version>
+                    <version>3.1.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -231,7 +231,7 @@
                         <plugin>
                             <groupId>org.jetbrains.dokka</groupId>
                             <artifactId>dokka-maven-plugin</artifactId>
-                            <version>1.9.0</version>
+                            <version>1.9.10</version>
                             <executions>
                                 <execution>
                                     <id>attach-javadocs</id>
@@ -250,7 +250,7 @@
                         <plugin>
                             <groupId>org.codehaus.mojo</groupId>
                             <artifactId>build-helper-maven-plugin</artifactId>
-                            <version>3.4.0</version>
+                            <version>3.5.0</version>
                             <executions>
                                 <execution>
                                     <id>attach-kotlin-source</id>
