@@ -4,11 +4,10 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.soebes.itf.extension.assertj.MavenITAssertions.assertThat
 import com.soebes.itf.jupiter.extension.MavenJupiterExtension
-import com.soebes.itf.jupiter.extension.MavenProject
 import com.soebes.itf.jupiter.extension.MavenTest
 import com.soebes.itf.jupiter.maven.MavenExecutionResult
-import java.io.File
 import java.util.function.Consumer
+import kotlin.io.path.readText
 
 @MavenJupiterExtension
 class ReportAggregatorMojoIT {
@@ -19,8 +18,9 @@ class ReportAggregatorMojoIT {
             .project()
             .hasTarget()
             .withFile("process-test-coverage/all/report.json")
-            .exists().isFile
-            .hasSameTextualContentAs(File(result.mavenProjectResult.targetProjectDirectory,
+            .exists()
+            .isRegularFile()
+            .hasSameTextualContentAs(result.mavenProjectResult.targetProjectDirectory.resolve(
                 "target/process-test-coverage/test.FirstTest/report.json"))
     }
 
@@ -30,12 +30,13 @@ class ReportAggregatorMojoIT {
             .project()
             .hasTarget()
             .withFile("process-test-coverage/all/report.json")
-            .exists().isFile
+            .exists()
+            .isRegularFile()
             .content()
             .satisfies(Consumer {
                 val actual = Gson().fromJson(it, JsonObject::class.java)
                 val expected = Gson().fromJson(
-                    File(result.mavenProjectResult.targetProjectDirectory, "expected_result.json").readText(),
+                    result.mavenProjectResult.targetProjectDirectory.resolve("expected_result.json").readText(),
                     JsonObject::class.java
                 )
                 assertThat(actual.getAsJsonArray("suites")).containsExactlyInAnyOrderElementsOf(
@@ -51,12 +52,13 @@ class ReportAggregatorMojoIT {
             .project()
             .hasTarget()
             .withFile("process-test-coverage/all/report.json")
-            .exists().isFile
+            .exists()
+            .isRegularFile()
             .content()
             .satisfies(Consumer {
                 val actual = Gson().fromJson(it, JsonObject::class.java)
                 val expected = Gson().fromJson(
-                    File(result.mavenProjectResult.targetProjectDirectory, "expected_result.json").readText(),
+                    result.mavenProjectResult.targetProjectDirectory.resolve("expected_result.json").readText(),
                     JsonObject::class.java
                 )
                 assertThat(actual.getAsJsonArray("suites")).containsExactlyInAnyOrderElementsOf(
