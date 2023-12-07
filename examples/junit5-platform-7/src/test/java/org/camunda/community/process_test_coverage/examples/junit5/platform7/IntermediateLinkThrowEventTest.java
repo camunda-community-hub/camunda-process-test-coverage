@@ -9,13 +9,13 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 
 @Deployment(resources = {"intermediate-link-throw-event.bpmn"})
-class IntermediateLinkThrowEventTest {
+public class IntermediateLinkThrowEventTest {
 
     @RegisterExtension
-    static ProcessEngineCoverageExtension extension = ProcessEngineExtensionProvider.extension;
+    public static ProcessEngineCoverageExtension extension = ProcessEngineExtensionProvider.extension;
 
     @Test
-    void should_have_100_percent_coverage_with_intermediate_link_throw_event() {
+    public void should_have_100_percent_coverage_with_intermediate_link_throw_event() {
         ProcessInstance processInstance = extension.getProcessEngine().getRuntimeService().startProcessInstanceByKey("Testprocess");
         assertThat(processInstance).isEnded();
     }

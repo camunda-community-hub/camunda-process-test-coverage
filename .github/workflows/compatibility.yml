@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       # Build for three operating systems, currently JVMs 11, 17 and latest four Camunda versions (last two years)
-      # We run Legacy support test on Ubuntu, JDK 1.8 until 7.10 (Release end of 2018).
+      # We run Legacy support test on Ubuntu, JDK 1.8 until 7.17 (Release 2022).
       matrix:
         os:
           - 'ubuntu-latest'
@@ -20,27 +20,22 @@ jobs:
           - 'macos-latest'
         jdk:
           - '11'
-          - '17' # no official support yet by Camunda
+          - '17'
         camunda-version:
-          - '7.18'
+          - '7.20' # 2023
+          - '7.19' # 2023
+          - '7.18' # 2022
           - '7.17' # 2022
-          - '7.16' # 2021
-          - '7.15'
-          - '7.14' # 2020
-          - '7.13'
+        exclude:
+          - jdk: '11'
+            camunda-version: '7.20'
         include:
           - os: 'ubuntu-latest'
             jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
-            camunda-version:
-              - '7.18'
-              - '7.17' # 2022
-              - '7.16' # 2021
-              - '7.15'
-              - '7.14' # 2020
-              - '7.13'
-              - '7.12' # 2019
-              - '7.11'
-              - '7.10' # 2018
+            camunda-version: '7.18'
+          - os: 'ubuntu-latest'
+            jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
+            camunda-version: '7.17' # 2022
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -67,5 +62,8 @@ jobs:
       - name: Prepare Maven Wrapper
         run: chmod +x ./mvnw
 
+      - name: Check for valid camunda profile
+        run: ./mvnw enforcer:enforce -f regression-tests -Drules=requireProfileIdsExist "-Pcamunda-bpm-engine-${{ matrix.camunda-version }}"
+
       - name: Build with Maven
-        run: ./mvnw clean verify -U -B -T4 "-Pregression-test"
+        run: ./mvnw clean verify -U -B -T4 "-Pregression-test" "-Pcamunda-bpm-engine-${{ matrix.camunda-version }}" -DskipExamples -DskipPlugins

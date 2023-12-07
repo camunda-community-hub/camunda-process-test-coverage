@@ -5,11 +5,11 @@ If you are interested in developing and building the project please read the fol
 To get sources of the project, please execute:
 
 ```sh
-git clone https://github.com/camunda-communit-hub/camunda-rest-client-spring-boot.git
-cd camunda-rest-client-spring-boot
+git clone https://github.com/camunda-community-hub/camunda-process-test-coverage.git
+cd camunda-process-test-coverage
 ```
 
-We are using gitflow in our git SCM for naming b## Support Matrixranches. That means that you should start from `develop` branch,
+We are using gitflow in our git SCM for naming branches. That means that you should start from `develop` branch,
 create a `feature/<name>` out of it and once it is completed create a pull request containing
 it. Please squash your commits before submitting and use semantic commit messages, if possible.
 
@@ -21,24 +21,21 @@ Perform the following steps to get a development setup up and running.
 ./mvnw clean install
 ```
 
-## Integration Tests
+## Regression Tests
 
-By default, the build command will ignore the run of `failsafe` Maven plugin executing the integration tests
-(usual JUnit tests with class names ending with ITest). In order to run integration tests, please
+By default, the build command will ignore the run of the regression tests. In order to run the regression tests, please
 call from your command line:
 
 ```sh
-./mvnw -Pitest
+./mvnw -Pregression-test
 ```
 
 ## Project build modes and profiles
 
 ### Camunda Version
 
-You can choose the used Camunda version by specifying the profile `camunda-ee` or `camunda-ce`. The default
-version is a Community Edition. Specify `-Pcamunda-ee` to switch to Camunda Enterprise edition. This will
-require a valid Camunda license. You can put it into a file `~/.camunda/license.txt` and it will be detected
-automatically.
+The library is compiled against an older version of Camunda (see camunda.compile.version property in parent POM).
+To select a Camunda version for the tests you can start with a designated profile e.g. camunda-bpm-engine-7.18.
 
 ### Documentation
 
@@ -59,21 +56,6 @@ By default, the sources and javadoc API documentation are not generated from the
 ./mvnw clean install -Prelease -Dgpg.skip=true
 ```
 
-#### Starting example applications
-
-To start applications, either use your IDE and create
-run configuration for the class:
-
-* `org.camunda.bpm.extension.rest.example.standalone.CamundaRestClientExampleApplication`
-* `org.camunda.bpm.extension.rest.example.processapplication.CamundaRestClientExampleApplicationWithEngineProvided`
-
-Alternatively, you can run them from the command line:
-
-```sh
-./mvn spring-boot:run -f examples/example
-./mvn spring-boot:run -f examples/example-provided
-```
-
 ### Continuous Integration
 
 Github Actions are building all branches on commit hook (for codecov).
@@ -91,4 +73,5 @@ Every Maven module is enabled by default. If you want to change this, please pro
 <maven.deploy.skip>true</maven.deploy.skip>
 ```
 
-inside the corresponding `pom.xml`. Currently, all `examples` are _EXCLUDED_ from publication into Maven Central.
+inside the corresponding `pom.xml`. Currently, all `examples` are _EXCLUDED_ from publication into Maven Central.`
+`

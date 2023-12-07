@@ -4,16 +4,20 @@
     <parent>
         <artifactId>camunda-process-test-coverage-parent</artifactId>
         <groupId>org.camunda.community.process_test_coverage</groupId>
-        <version>2.0.1-SNAPSHOT</version>
+        <version>2.2.1-SNAPSHOT</version>
     </parent>
     <name>Camunda Process Test Coverage Report Aggregator Maven Plugin</name>
     <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
 
+    <prerequisites>
+        <maven>${maven.version}</maven>
+    </prerequisites>
+
     <properties>
-        <maven.version>3.9.0</maven.version>
-        <maven-reporting.version>3.1.0</maven-reporting.version>
-        <maven-plugin.version>3.8.1</maven-plugin.version>
+        <maven.version>3.6.3</maven.version>
+        <maven-plugin-tools.version>3.10.2</maven-plugin-tools.version>
+        <maven-reporting.version>3.1.1</maven-reporting.version>
         <itf.version>0.12.0</itf.version>
     </properties>
 
@@ -42,7 +46,7 @@
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
             <artifactId>maven-plugin-annotations</artifactId>
-            <version>${maven-plugin.version}</version>
+            <version>${maven-plugin-tools.version}</version>
             <scope>provided</scope> <!-- annotations are not used at runtime because @Retention(value=CLASS), they are needed only to build the plugin -->
         </dependency>
         <dependency>
@@ -90,7 +94,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
-                <version>${maven-plugin.version}</version>
+                <version>${maven-plugin-tools.version}</version>
                 <executions>
                     <execution>
                         <id>default-descriptor</id>
@@ -122,12 +126,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>3.2.2</version>
                 <configuration>
-                    <systemProperties>
+                    <systemPropertyVariables>
                         <maven.version>${maven.version}</maven.version>
                         <maven.home>${maven.home}</maven.home>
-                    </systemProperties>
+                    </systemPropertyVariables>
                 </configuration>
                 <executions>
                     <execution>

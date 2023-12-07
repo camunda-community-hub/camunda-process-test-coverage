@@ -10,3 +10,5 @@ build/
 .settings/
 # GitHub Pages
 
+node/
+node_modules/

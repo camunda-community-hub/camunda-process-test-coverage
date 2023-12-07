@@ -1,0 +1,39 @@
+{
+  "suites": [
+    {
+      "id": "[engine:junit-jupiter]/[class:org.camunda.community.process_test_coverage.report.aggregator.SecondTest]",
+      "name": "org.camunda.community.process_test_coverage.report.aggregator.SecondTest",
+      "runs": [
+        {
+          "id": "[engine:junit-jupiter]/[class:org.camunda.community.process_test_coverage.report.aggregator.SecondTest]/[method:should_have_100_percent_coverage]",
+          "name": "should_have_100_percent_coverage",
+          "events": [
+            {
+              "source": "FLOW_NODE",
+              "type": "START",
+              "definitionKey": "EndEvent",
+              "elementType": "endEvent",
+              "modelKey": "Testprocess",
+              "timestamp": 1654807399
+            },
+            {
+              "source": "FLOW_NODE",
+              "type": "END",
+              "definitionKey": "EndEvent",
+              "elementType": "endEvent",
+              "modelKey": "Testprocess",
+              "timestamp": 1654807399
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "models": [
+    {
+      "key": "Testprocess",
+      "totalElementCount": 3,
+      "xml": "\u003c?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?\u003e\n\u003cbpmn:definitions xmlns:bpmn=\"http://www.omg.org/spec/BPMN/20100524/MODEL\"\nxmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\"\nxmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\"\nxmlns:di=\"http://www.omg.org/spec/DD/20100524/DI\"\nxmlns:modeler=\"http://camunda.org/schema/modeler/1.0\" exporter=\"CamundaModeler\"\nexporterVersion=\"5.0.0\" expressionLanguage=\"http://www.w3.org/1999/XPath\"\nid=\"Definitions_1r3mlfs\" modeler:executionPlatform=\"CamundaPlatform\"\nmodeler:executionPlatformVersion=\"7.17.0\" targetNamespace=\"http://bpmn.io/schema/bpmn\"\ntypeLanguage=\"http://www.w3.org/2001/XMLSchema\"\u003e\n\n\u003cbpmn:process id=\"Testprocess\" isClosed=\"false\" isExecutable=\"true\" processType=\"None\"\u003e\n\u003cbpmn:startEvent id=\"StartEvent\" isInterrupting=\"true\" name=\"Start\" parallelMultiple=\"false\"\u003e\n\u003cbpmn:outgoing\u003eFlow\u003c/bpmn:outgoing\u003e\n\u003c/bpmn:startEvent\u003e\n\u003cbpmn:endEvent id=\"EndEvent\" name=\"End\"\u003e\n\u003cbpmn:incoming\u003eFlow\u003c/bpmn:incoming\u003e\n\u003c/bpmn:endEvent\u003e\n\u003cbpmn:sequenceFlow id=\"Flow\" sourceRef=\"StartEvent\" targetRef=\"EndEvent\"/\u003e\n\u003c/bpmn:process\u003e\n\n\u003cbpmndi:BPMNDiagram id=\"BPMNDiagram_1\"\u003e\n\u003cbpmndi:BPMNPlane bpmnElement=\"Testprocess\" id=\"BPMNPlane_1\"\u003e\n\u003cbpmndi:BPMNEdge bpmnElement=\"Flow\" id=\"Flow_di\"\u003e\n\u003cdi:waypoint x=\"215\" y=\"97\"/\u003e\n\u003cdi:waypoint x=\"272\" y=\"97\"/\u003e\n\u003c/bpmndi:BPMNEdge\u003e\n\u003cbpmndi:BPMNShape bpmnElement=\"StartEvent\" id=\"StartEvent_di\"\u003e\n\u003cdc:Bounds height=\"36\" width=\"36\" x=\"179\" y=\"79\"/\u003e\n\u003cbpmndi:BPMNLabel\u003e\n\u003cdc:Bounds height=\"14\" width=\"28\" x=\"183\" y=\"122\"/\u003e\n\u003c/bpmndi:BPMNLabel\u003e\n\u003c/bpmndi:BPMNShape\u003e\n\u003cbpmndi:BPMNShape bpmnElement=\"EndEvent\" id=\"EndEvent_di\"\u003e\n\u003cdc:Bounds height=\"36\" width=\"36\" x=\"272\" y=\"79\"/\u003e\n\u003cbpmndi:BPMNLabel\u003e\n\u003cdc:Bounds height=\"14\" width=\"21\" x=\"280\" y=\"122\"/\u003e\n\u003c/bpmndi:BPMNLabel\u003e\n\u003c/bpmndi:BPMNShape\u003e\n\u003c/bpmndi:BPMNPlane\u003e\n\u003c/bpmndi:BPMNDiagram\u003e\n\u003c/bpmn:definitions\u003e\n"
+    }
+  ]
+}
