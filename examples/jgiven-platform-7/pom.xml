@@ -11,7 +11,7 @@
     <artifactId>camunda-process-test-coverage-examples-jgiven-platform-7</artifactId>
 
     <properties>
-        <jgiven.version>1.3.0</jgiven.version>
+        <jgiven.version>1.3.1</jgiven.version>
         <camunda-bpm-jgiven.version>0.4.1</camunda-bpm-jgiven.version>
     </properties>
 
