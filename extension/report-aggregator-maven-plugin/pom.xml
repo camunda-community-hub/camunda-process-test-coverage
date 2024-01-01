@@ -18,7 +18,7 @@
         <maven.version>3.6.3</maven.version>
         <maven-plugin-tools.version>3.10.2</maven-plugin-tools.version>
         <maven-reporting.version>3.1.1</maven-reporting.version>
-        <itf.version>0.13.0</itf.version>
+        <itf.version>0.13.1</itf.version>
     </properties>
 
     <dependencies>
