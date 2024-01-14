@@ -2,37 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/index.html</loc>
-         <lastmod>2024-01-03</lastmod>
+         <lastmod>2024-01-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/getting-started.html</loc>
-         <lastmod>2024-01-03</lastmod>
+         <lastmod>2024-01-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/developer-guide/contribution.html</loc>
-         <lastmod>2024-01-03</lastmod>
+         <lastmod>2024-01-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/developer-guide/project-setup.html</loc>
-         <lastmod>2024-01-03</lastmod>
+         <lastmod>2024-01-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/user-guide/index.html</loc>
-         <lastmod>2024-01-03</lastmod>
+         <lastmod>2024-01-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/user-guide/configuration.html</loc>
-         <lastmod>2024-01-03</lastmod>
+         <lastmod>2024-01-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/user-guide/sonarqube.html</loc>
-         <lastmod>2024-01-03</lastmod>
+         <lastmod>2024-01-14</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
