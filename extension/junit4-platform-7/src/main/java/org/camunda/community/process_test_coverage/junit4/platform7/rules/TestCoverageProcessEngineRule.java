@@ -13,6 +13,7 @@ import org.hamcrest.Matcher;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.Description;
+import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -214,7 +215,7 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
     private void initializeRun(final Description description) {
         // method name is set only on test methods (not on classes or suites)
         final String runId = description.getMethodName();
-        this.coverageCollector.createRun(new Run(runId, description.getMethodName()), this.coverageCollector.getActiveSuite().getId());
+        this.coverageCollector.createRun(new Run(runId, getTestName(description)), this.coverageCollector.getActiveSuite().getId());
         this.coverageCollector.activateRun(runId);
     }
 
@@ -245,6 +246,11 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
             this.assertCoverage(coveragePercentage, this.testMethodNameToCoverageMatchers.get(testName));
 
         }
+    }
+
+    private String getTestName(Description description) {
+        return description.getDisplayName() != null && !description.getDisplayName().trim().isEmpty()
+                ? description.getDisplayName() : description.getMethodName();
     }
 
     /**

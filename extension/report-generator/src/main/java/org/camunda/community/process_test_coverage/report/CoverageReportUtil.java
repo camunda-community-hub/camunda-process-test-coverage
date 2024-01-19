@@ -37,13 +37,13 @@ public class CoverageReportUtil {
 
     public static void createReport(final DefaultCollector coverageCollector) {
         writeReport(createCoverageStateResult(coverageCollector), true,
-                getReportDirectoryPath(coverageCollector.getActiveSuite().getName()),
+                getReportDirectoryPath(coverageCollector.getActiveSuite().getId()),
                 "report.html", CoverageReportUtil::generateHtml);
     }
 
     public static void createJsonReport(final DefaultCollector coverageCollector) {
         writeReport(createCoverageStateResult(coverageCollector), false,
-                getReportDirectoryPath(coverageCollector.getActiveSuite().getName()),
+                getReportDirectoryPath(coverageCollector.getActiveSuite().getId()),
                 "report.json", result -> result);
     }
 
