@@ -40,6 +40,7 @@ class ProcessEngineCoverageExtension(
         ) : ProcessEngineExtension(), BeforeAllCallback, AfterAllCallback {
 
     companion object : KLogging() {
+        private const val KEY_SUITE_CONTEXT_ID = "SUITE_CONTEXT_ID"
         @JvmStatic
         fun builder() = Builder()
         @JvmStatic
@@ -77,11 +78,11 @@ class ProcessEngineCoverageExtension(
         super.beforeTestExecution(context)
         if (isRelevantTestMethod()) {
             if (!suiteInitialized) {
-                initializeSuite(context)
+                initializeSuite(context, context.requiredTestClass.name)
             }
             // method name is set only on test methods (not on classes or suites)
             val runId: String = context.uniqueId
-            coverageCollector.createRun(Run(runId, context.requiredTestMethod.name), coverageCollector.activeSuite.id)
+            coverageCollector.createRun(Run(runId, context.displayName), coverageCollector.activeSuite.id)
             coverageCollector.activateRun(runId)
         }
     }
@@ -100,19 +101,31 @@ class ProcessEngineCoverageExtension(
      * Initializes the suite for all upcoming tests.
      */
     override fun beforeAll(context: ExtensionContext) {
-        if (!suiteInitialized || (context.uniqueId != coverageCollector.activeSuite.id) && !isNested(context)) {
-            initializeSuite(context)
+        if (!suiteInitialized || (context.uniqueId != context.getActiveSuiteContextId()) && !isNested(context)) {
+            initializeSuite(context, context.displayName)
         }
     }
 
-    private fun isNested(context: ExtensionContext) = context.parent.map { it.uniqueId == coverageCollector.activeSuite.id }.orElse(false)
+    private fun isNested(context: ExtensionContext) = context.parent.map { it.uniqueId == context.getActiveSuiteContextId() }.orElse(false)
 
-    private fun initializeSuite(context: ExtensionContext) {
-        val suiteId: String = context.uniqueId
-        coverageCollector.createSuite(Suite(suiteId, context.requiredTestClass.name))
+    private fun initializeSuite(context: ExtensionContext, name: String) {
+        val suiteId = context.requiredTestClass.name
+        coverageCollector.createSuite(Suite(suiteId, name))
         coverageCollector.setExcludedProcessDefinitionKeys(excludedProcessDefinitionKeys)
         coverageCollector.activateSuite(suiteId)
+        context.setActiveSuiteContextId()
         suiteInitialized = true
+    }
+
+    private fun ExtensionContext.setActiveSuiteContextId() {
+        getStore(this.root).put(KEY_SUITE_CONTEXT_ID, this.uniqueId)
+    }
+
+    private fun ExtensionContext.getActiveSuiteContextId() =
+        getStore(this.root).get(KEY_SUITE_CONTEXT_ID)
+
+    private fun getStore(context: ExtensionContext): ExtensionContext.Store {
+        return context.getStore(ExtensionContext.Namespace.create(javaClass, context.uniqueId))
     }
 
     /**
@@ -121,8 +134,8 @@ class ProcessEngineCoverageExtension(
      * deployments have to be equal.
      */
     override fun afterAll(context: ExtensionContext) {
-        val suite = coverageCollector.activeSuite
-        if (context.uniqueId == suite.id) {
+        if (context.uniqueId == context.getActiveSuiteContextId()) {
+            val suite = coverageCollector.activeSuite
 
             // only generate report and coverage if the current context is the one, that started the suite
 
