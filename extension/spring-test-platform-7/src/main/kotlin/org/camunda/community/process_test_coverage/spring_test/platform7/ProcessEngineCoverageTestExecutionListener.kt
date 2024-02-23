@@ -65,11 +65,11 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
     }
 
     private fun isTestClassExcluded(testContext: TestContext) =
-            testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage }
+        testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage }
+                || testContext.applicationContext.getBeanNamesForType(ProcessEngineCoverageProperties::class.java).isEmpty()
 
     private fun isTestMethodExcluded(testContext: TestContext) =
-            testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage}
-                    || testContext.testMethod.annotations.any { it is ExcludeFromProcessCoverage }
+        isTestClassExcluded(testContext) || testContext.testMethod.annotations.any { it is ExcludeFromProcessCoverage }
 
 
     /**
