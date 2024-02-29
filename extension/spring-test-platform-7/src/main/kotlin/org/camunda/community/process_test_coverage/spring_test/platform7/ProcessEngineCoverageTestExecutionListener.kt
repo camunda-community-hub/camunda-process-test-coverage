@@ -11,9 +11,11 @@ import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.core.model.Run
 import org.camunda.community.process_test_coverage.core.model.Suite
 import org.camunda.community.process_test_coverage.report.CoverageReportUtil
+import org.springframework.beans.factory.NoSuchBeanDefinitionException
 import org.springframework.core.Ordered
 import org.springframework.test.context.TestContext
 import org.springframework.test.context.TestExecutionListener
+import org.springframework.util.PatternMatchUtils
 
 /**
  * Test execution listener for process test coverage.
@@ -35,7 +37,11 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
     private var suiteInitialized = false
 
     private fun loadConfiguration(testContext: TestContext) {
-        processEngineCoverageProperties = testContext.applicationContext.getBean(ProcessEngineCoverageProperties::class.java)
+        processEngineCoverageProperties = try {
+            testContext.applicationContext.getBean(ProcessEngineCoverageProperties::class.java)
+        } catch (ex: NoSuchBeanDefinitionException) {
+            ProcessEngineCoverageProperties()
+        }
     }
 
     override fun getOrder() = Integer.MAX_VALUE
@@ -66,18 +72,24 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
 
     private fun isTestClassExcluded(testContext: TestContext) =
         testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage }
-                || testContext.applicationContext.getBeanNamesForType(ProcessEngineCoverageProperties::class.java).isEmpty()
+                || !matchesInclusionPattern(testContext)
+                || testContext.applicationContext.getBeanNamesForType(ProcessEngine::class.java).isEmpty()
+
+    private fun matchesInclusionPattern(testContext: TestContext) =
+        processEngineCoverageProperties.inclusionPatternsForTestClasses.isEmpty()
+                || PatternMatchUtils.simpleMatch(processEngineCoverageProperties.inclusionPatternsForTestClasses.toTypedArray(),
+            testContext.testClass.name)
 
     private fun isTestMethodExcluded(testContext: TestContext) =
-        isTestClassExcluded(testContext) || testContext.testMethod.annotations.any { it is ExcludeFromProcessCoverage }
-
+        isTestClassExcluded(testContext)
+                || testContext.testMethod.annotations.any { it is ExcludeFromProcessCoverage }
 
     /**
      * Initializes the suite for all upcoming tests.
      */
     override fun beforeTestClass(testContext: TestContext) {
+        loadConfiguration(testContext)
         if (!isTestClassExcluded(testContext)) {
-            loadConfiguration(testContext)
             ProcessEngineAdapter(getProcessEngine(testContext), coverageCollector).initializeListeners()
             initializeSuite(testContext)
         }
@@ -92,12 +104,10 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
     }
 
     /**
-     * If the extension is registered on the class level, log and assert the coverage and create a
-     * graphical report. For the class coverage to work all the test method
-     * deployments have to be equal.
+     * Handles the coverage report after the test class was executed.
      */
     override fun afterTestClass(testContext: TestContext) {
-        if (!isTestClassExcluded(testContext)) {
+        if (suiteInitialized) {
             val suite = coverageCollector.activeSuite
 
             // Make sure the class coverage deals with the same deployments for

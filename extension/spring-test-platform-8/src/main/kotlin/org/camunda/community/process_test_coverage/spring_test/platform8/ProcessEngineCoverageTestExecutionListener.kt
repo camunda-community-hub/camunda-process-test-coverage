@@ -1,18 +1,21 @@
 package org.camunda.community.process_test_coverage.spring_test.platform8
 
+import io.camunda.zeebe.process.test.assertions.BpmnAssert
 import mu.KLogging
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
 import org.camunda.community.process_test_coverage.core.engine.ExcludeFromProcessCoverage
-import org.camunda.community.process_test_coverage.engine.platform8.ZeebeModelProvider
-import org.camunda.community.process_test_coverage.engine.platform8.createEvents
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.core.model.Run
 import org.camunda.community.process_test_coverage.core.model.Suite
+import org.camunda.community.process_test_coverage.engine.platform8.ZeebeModelProvider
+import org.camunda.community.process_test_coverage.engine.platform8.createEvents
 import org.camunda.community.process_test_coverage.report.CoverageReportUtil
+import org.springframework.beans.factory.NoSuchBeanDefinitionException
 import org.springframework.core.Ordered
 import org.springframework.test.context.TestContext
 import org.springframework.test.context.TestExecutionListener
+import org.springframework.util.PatternMatchUtils
 
 /**
  * Test execution listener for process test coverage.
@@ -39,7 +42,11 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
     private val methodStartTimestamp = mutableMapOf<String, Long>()
 
     private fun loadConfiguration(testContext: TestContext) {
-        processEngineCoverageProperties = testContext.applicationContext.getBean(ProcessEngineCoverageProperties::class.java)
+        processEngineCoverageProperties = try {
+            testContext.applicationContext.getBean(ProcessEngineCoverageProperties::class.java)
+        } catch (ex: NoSuchBeanDefinitionException) {
+            ProcessEngineCoverageProperties()
+        }
     }
 
     override fun getOrder() = Integer.MAX_VALUE
@@ -74,19 +81,32 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
 
     private fun isTestClassExcluded(testContext: TestContext) =
         testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage }
-                || testContext.applicationContext.getBeanNamesForType(ProcessEngineCoverageProperties::class.java).isEmpty()
+                || !matchesInclusionPattern(testContext)
+                || !isRecordStreamSet()
+
+    private fun isRecordStreamSet() =
+        try {
+            BpmnAssert.getRecordStream()
+            true
+        } catch (e: AssertionError) {
+            false
+        }
+
+    private fun matchesInclusionPattern(testContext: TestContext) =
+        processEngineCoverageProperties.inclusionPatternsForTestClasses.isEmpty()
+                || PatternMatchUtils.simpleMatch(processEngineCoverageProperties.inclusionPatternsForTestClasses.toTypedArray(),
+            testContext.testClass.name)
 
     private fun isTestMethodExcluded(testContext: TestContext) =
         isTestClassExcluded(testContext)
                 || testContext.testMethod.annotations.any { it is ExcludeFromProcessCoverage }
 
-
     /**
      * Initializes the suite for all upcoming tests.
      */
     override fun beforeTestClass(testContext: TestContext) {
+        loadConfiguration(testContext)
         if (!isTestClassExcluded(testContext)) {
-            loadConfiguration(testContext)
             initializeSuite(testContext)
         }
     }
@@ -100,13 +120,10 @@ class ProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordere
     }
 
     /**
-     * If the extension is registered on the class level, log and assert the coverage and create a
-     * graphical report. For the class coverage to work all the test method
-     * deployments have to be equal.
+     * Handles the coverage report after the test class was executed.
      */
     override fun afterTestClass(testContext: TestContext) {
-        if (!isTestClassExcluded(testContext)) {
-
+        if (suiteInitialized) {
             val suite = coverageCollector.activeSuite
 
             // Make sure the class coverage deals with the same deployments for

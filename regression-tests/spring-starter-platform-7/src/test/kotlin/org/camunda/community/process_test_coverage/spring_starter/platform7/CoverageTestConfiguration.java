@@ -11,6 +11,7 @@ public class CoverageTestConfiguration {
     public ProcessEngineCoverageProperties processEngineCoverageProperties() {
         return ProcessEngineCoverageProperties.builder()
                 .assertClassCoverageAtLeast(1.0)
+                .addInclusionPatternForTestClasses("*ProcessTest")
                 .build();
     }
 
