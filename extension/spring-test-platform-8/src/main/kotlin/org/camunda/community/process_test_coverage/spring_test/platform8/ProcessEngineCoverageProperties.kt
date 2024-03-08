@@ -22,7 +22,11 @@ data class ProcessEngineCoverageProperties(
     /**
      * Conditions to be asserted on the individual test method coverages.
      */
-    val testMethodCoverageConditions: Map<String, List<Condition<Double>>> = mapOf()
+    val testMethodCoverageConditions: Map<String, List<Condition<Double>>> = mapOf(),
+    /**
+     * Possibility to add inclusion pattern for test classes.
+     */
+    val inclusionPatternsForTestClasses: List<String> = listOf()
 
 ) {
 
@@ -49,6 +53,7 @@ data class ProcessEngineCoverageProperties(
         private var coverageAtLeast: Double? = null
         private var optionalAssertCoverageAtLeastProperty: String = DEFAULT_ASSERT_AT_LEAST_PROPERTY
         private var testMethodCoverageConditions: MutableMap<String, MutableList<Condition<Double>>> = mutableMapOf()
+        private var inclusionPatternsForTestClasses: MutableList<String> = mutableListOf()
 
         /**
          * Log class and test method coverages?
@@ -81,6 +86,12 @@ data class ProcessEngineCoverageProperties(
         fun addTestMethodCoverageCondition(methodName: String, condition: Condition<Double>) =
                 apply { this.testMethodCoverageConditions.getOrPut(methodName) { mutableListOf() }.add(condition) }
 
+        /**
+         * Add an inclusion pattern for test classes to include in process test coverage.
+         */
+        fun addInclusionPatternForTestClasses(inclusionPattern: String) = apply {
+            this.inclusionPatternsForTestClasses.add(inclusionPattern) }
+
         fun build(): ProcessEngineCoverageProperties {
             val classCoverageConditions: MutableList<Condition<Double>> = mutableListOf()
             coverageAtLeast?.let { classCoverageConditions.add(buildClassCoverageCondition(it)) }
@@ -90,7 +101,8 @@ data class ProcessEngineCoverageProperties(
                     handleTestMethodCoverage = handleTestMethodCoverage,
                     excludedProcessDefinitionKeys = excludedProcessDefinitionKeys,
                     classCoverageAssertionConditions = classCoverageConditions,
-                    testMethodCoverageConditions = testMethodCoverageConditions
+                    testMethodCoverageConditions = testMethodCoverageConditions,
+                    inclusionPatternsForTestClasses = inclusionPatternsForTestClasses
             )
         }
 
