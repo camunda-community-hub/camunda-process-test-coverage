@@ -35,7 +35,7 @@
         For backwards compatibility we pin the version to compile to Camunda 7.17.
         -->
         <camunda.compile.version>7.17.0</camunda.compile.version>
-        <zeebe.version>8.2.8</zeebe.version>
+        <zeebe.version>8.4.5</zeebe.version>
         <spring-zeebe.version>8.2.4</spring-zeebe.version>
         <spring-boot.version>2.7.17</spring-boot.version>
 
