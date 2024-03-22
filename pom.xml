@@ -231,7 +231,7 @@
                         <plugin>
                             <groupId>org.jetbrains.dokka</groupId>
                             <artifactId>dokka-maven-plugin</artifactId>
-                            <version>1.9.10</version>
+                            <version>1.9.20</version>
                             <executions>
                                 <execution>
                                     <id>attach-javadocs</id>
@@ -245,6 +245,9 @@
                                 <jdkVersion>11</jdkVersion>
                                 <reportUndocumented>false</reportUndocumented>
                                 <skipEmptyPackages>true</skipEmptyPackages>
+                                <sourceDirectories>
+                                    <dir>${project.basedir}/src/main/kotlin</dir>
+                                </sourceDirectories>
                             </configuration>
                         </plugin>
                         <plugin>
