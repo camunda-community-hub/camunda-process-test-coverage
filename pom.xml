@@ -245,6 +245,9 @@
                                 <jdkVersion>11</jdkVersion>
                                 <reportUndocumented>false</reportUndocumented>
                                 <skipEmptyPackages>true</skipEmptyPackages>
+                                <sourceDirectories>
+                                    <dir>${project.basedir}/src/main/kotlin</dir>
+                                </sourceDirectories>
                             </configuration>
                         </plugin>
                         <plugin>
