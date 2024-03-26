@@ -21,6 +21,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 11
+          maven-version: '3.9.6' # ChatGPT told me this
           gpg-private-key: ${{ secrets.MAVEN_CENTRAL_GPG_SIGNING_KEY_SEC }}
           gpg-passphrase: MAVEN_CENTRAL_GPG_PASSPHRASE
 
