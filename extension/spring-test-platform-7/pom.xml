@@ -4,7 +4,7 @@
     <parent>
         <artifactId>camunda-process-test-coverage-parent</artifactId>
         <groupId>org.camunda.community.process_test_coverage</groupId>
-        <version>2.4.1-SNAPSHOT</version>
+        <version>2.5.0</version>
     </parent>
     <name>Camunda Process Test Coverage Spring-Testing Platform 7</name>
     <artifactId>camunda-process-test-coverage-spring-test-platform-7</artifactId>
