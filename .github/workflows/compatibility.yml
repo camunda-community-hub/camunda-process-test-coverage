@@ -22,6 +22,7 @@ jobs:
           - '11'
           - '17'
         camunda-version:
+          - '7.21' # 2024
           - '7.20' # 2023
           - '7.19' # 2023
           - '7.18' # 2022
@@ -29,6 +30,8 @@ jobs:
         exclude:
           - jdk: '11'
             camunda-version: '7.20'
+          - jdk: '11'
+            camunda-version: '7.21'
         include:
           - os: 'ubuntu-latest'
             jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
