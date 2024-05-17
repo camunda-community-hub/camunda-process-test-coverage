@@ -45,6 +45,8 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
      */
     private lateinit var coverageState: Collector
     private val executionListener: ExecutionListener = ExecutionListener { execution: DelegateExecution -> execute(execution) }
+    private val eventBasedGatewayFlows: MutableSet<String> = mutableSetOf()
+    private val activityToFlow: MutableMap<String, String> = mutableMapOf()
 
     fun setCoverageState(coverageState: Collector) {
         this.coverageState = coverageState
@@ -54,6 +56,17 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
     private fun execute(execution: DelegateExecution) {
         require(this::coverageState.isInitialized) { "Coverage state must be initialized" }
         if (ExecutionListener.EVENTNAME_START == execution.eventName) {
+            if (activityToFlow.containsKey(execution.currentActivityId)) {
+                val flowEvent = Event(
+                    EventSource.SEQUENCE_FLOW,
+                    EventType.TAKE,
+                    activityToFlow[execution.currentActivityId]!!,
+                    "sequenceFlow",
+                    getProcessKey(execution),
+                    Instant.now().epochSecond
+                )
+                coverageState.addEvent(flowEvent)
+            }
             val event = createEvent(
                 execution,
                 execution.currentActivityId,
@@ -139,6 +152,9 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
 
     override fun parseEventBasedGateway(eventBasedGwElement: Element, scope: ScopeImpl, activity: ActivityImpl) {
         this.addExecutionListener(activity)
+        eventBasedGwElement.elements()
+            .filter { it.tagName == "outgoing" }
+            .forEach { eventBasedGatewayFlows.add(it.text) }
     }
 
     override fun parseExclusiveGateway(exclusiveGwElement: Element, scope: ScopeImpl, activity: ActivityImpl) {
@@ -150,6 +166,10 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
     }
 
     override fun parseIntermediateCatchEvent(intermediateEventElement: Element, scope: ScopeImpl, activity: ActivityImpl) {
+        intermediateEventElement.elements()
+            .filter { it.tagName == "incoming" }
+            .filter { eventBasedGatewayFlows.contains(it.text) }
+            .forEach { activityToFlow[intermediateEventElement.attribute("id")] = it.text }
         this.addExecutionListener(activity)
     }
 

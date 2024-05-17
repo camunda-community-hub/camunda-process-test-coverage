@@ -3,9 +3,11 @@ package org.camunda.community.process_test_coverage.junit5.platform7
 object CoverageTestProcessConstants {
 
     const val PROCESS_DEFINITION_KEY = "process-test-coverage"
+    const val PROCESS_DEFINITION_KEY_EVENT_BASED_GATEWAY = "event-based-gateway"
 
     /** where to find bpmn in classpath  */
     const val BPMN_PATH = "process.bpmn"
+    const val BPMN_PATH_EVENT_BASED_GATEWAY = "eventBasedGateway.bpmn"
 
     val ALL_ELEMENTS = arrayOf(
             "StartEvent_1",
