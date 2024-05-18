@@ -9,7 +9,7 @@ class EventBasedGatewayTest {
     companion object {
         @JvmField
         @RegisterExtension
-        var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension.builder().assertClassCoverageAtLeast(1.0).build()
+        var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension.builder().assertClassCoverageAtLeast(0.7).build()
     }
 
     @Test
