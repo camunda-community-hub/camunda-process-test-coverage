@@ -20,21 +20,17 @@ import java.util.stream.Collectors
 class ZeebeModelProvider: ModelProvider {
 
     override fun getModel(key: String): Model {
-        // find the process metatdata for the given process definition key
-        val processMetadata = getRecordStream().deploymentRecords()
-            .firstNotNullOfOrNull { it.value.processesMetadata.firstOrNull { p -> p.bpmnProcessId == key } }
-        // find the deployed resource coresponding to the process metadata
-        val resource = getRecordStream().deploymentRecords()
-            .firstNotNullOfOrNull { it.value.resources.firstOrNull { res -> res.resourceName == processMetadata?.resourceName } }
+        val process = getRecordStream().processRecords()
+                .first { it.value.bpmnProcessId == key }
 
-        return resource?.let {
-            val modelInstance = readModelFromStream(ByteArrayInputStream(resource.resource))
+        return process?.value?.let {
+            val modelInstance = readModelFromStream(ByteArrayInputStream(it.resource))
             val definitionFlowNodes = getExecutableFlowNodes(modelInstance.getModelElementsByType(FlowNode::class.java), key)
             val definitionSequenceFlows = getExecutableSequenceNodes(modelInstance.getModelElementsByType(SequenceFlow::class.java), definitionFlowNodes)
             Model(
                 key,
                 definitionFlowNodes.size + definitionSequenceFlows.size,
-                "${processMetadata!!.version}",
+                "${it.version}",
                 convertToString(modelInstance)
             )
         } ?: throw IllegalArgumentException()
