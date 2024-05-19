@@ -16,13 +16,13 @@ import java.io.ByteArrayInputStream
 /**
  * Creates events for the collector from the record stream of the zeebe process engine.
  * @param collector collector in use for events
- * @param eventCutoffTimestamp timestamp for the cut-off of events in the record stream. Only events happened afterwards are relevant.
+ * @param eventCutoffPosition position for the cut-off of events in the record stream. Only events happened afterward are relevant.
  */
-fun createEvents(collector: Collector, eventCutoffTimestamp: Long) {
+fun createEvents(collector: Collector, eventCutoffPosition: Long) {
     val events = BpmnAssert.getRecordStream().processInstanceRecords()
         .asSequence()
         .filter { it.recordType == RecordType.EVENT }
-        .filter { it.timestamp > eventCutoffTimestamp }
+        .filter { it.position > eventCutoffPosition }
         .filter { it.value.bpmnElementType != BpmnElementType.PROCESS }
         .mapNotNull { mapEvent(it) }
         .toMutableList()

@@ -1,4 +1,4 @@
-package org.camunda.community.process_test_coverage.spring_test.platform8
+package org.camunda.community.process_test_coverage.spring_test.common
 
 import org.assertj.core.api.Condition
 
