@@ -56,6 +56,7 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
     private fun execute(execution: DelegateExecution) {
         require(this::coverageState.isInitialized) { "Coverage state must be initialized" }
         if (ExecutionListener.EVENTNAME_START == execution.eventName) {
+            // if activity after an event based gateway is triggered, also create event for sequence flow
             if (activityToFlow.containsKey(execution.currentActivityId)) {
                 val flowEvent = Event(
                     EventSource.SEQUENCE_FLOW,
@@ -166,6 +167,7 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
     }
 
     override fun parseIntermediateCatchEvent(intermediateEventElement: Element, scope: ScopeImpl, activity: ActivityImpl) {
+        // check whether activity is after event based gateway
         intermediateEventElement.elements()
             .filter { it.tagName == "incoming" }
             .filter { eventBasedGatewayFlows.contains(it.text) }
@@ -203,6 +205,11 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
     }
 
     override fun parseReceiveTask(receiveTaskElement: Element, scope: ScopeImpl, activity: ActivityImpl) {
+        // check whether activity is after event based gateway
+        receiveTaskElement.elements()
+            .filter { it.tagName == "incoming" }
+            .filter { eventBasedGatewayFlows.contains(it.text) }
+            .forEach { activityToFlow[receiveTaskElement.attribute("id")] = it.text }
         this.addExecutionListener(activity)
     }
 

@@ -31,40 +31,41 @@ fun createEvents(collector: Collector, eventCutoffTimestamp: Long) {
 
     // for event based gateways we need to find out how the flow continues to get the correct sequence flow
     // and add that as an event, as sequence flows after an event based gateway are not reflected in the records
-    events.withIndex()
-        .forEach {
-            if (it.value.elementType == BpmnElementType.EVENT_BASED_GATEWAY.elementTypeName.get() && it.value.type == EventType.END) {
-                // if event based gateway is found look at the remaining sublist to find the next intermediate catch event
-                events.subList(it.index, events.size)
-                    .find { event ->
-                        event.elementType == BpmnElementType.INTERMEDIATE_CATCH_EVENT.elementTypeName.get()
-                                && event.type == EventType.START
-                    }
-                    ?.let { event ->
-                        // if found check whether the model contains a sequence flow between the event based
-                        // gateway and the intermediate catch event
-                        val model = ZeebeModelProvider().getModel(event.modelKey)
-                        val modelInstance = Bpmn.readModelFromStream(ByteArrayInputStream(model.xml.toByteArray()))
-                        modelInstance.getModelElementsByType(SequenceFlow::class.java)
-                            .find { flow -> flow.source.id == it.value.definitionKey
-                                    && flow.target.id == event.definitionKey }
-                            ?.let { flow ->
-                                // add the sequence flow as an event to be added to the list of events
-                                eventsToInsert.add(
-                                    event to Event(
-                                        EventSource.SEQUENCE_FLOW,
-                                        EventType.TAKE,
-                                        flow.id,
-                                        BpmnElementType.SEQUENCE_FLOW.elementTypeName.orElse(""),
-                                        event.modelKey,
-                                        event.timestamp
-                                    )
-                                )
-                            }
+    events.withIndex().forEach {
+        if (it.value.elementType == BpmnElementType.EVENT_BASED_GATEWAY.elementTypeName.get()
+            && it.value.type == EventType.END
+        ) {
+            // if event based gateway is found look at the remaining sublist to find the next activity
+            val model = ZeebeModelProvider().getModel(it.value.modelKey)
+            val modelInstance = Bpmn.readModelFromStream(ByteArrayInputStream(model.xml.toByteArray()))
+            // find all sequence flows leaving the event based gateway
+            val outgoingFlows = modelInstance.getModelElementsByType(SequenceFlow::class.java)
+                .filter { flow -> flow.source.id == it.value.definitionKey }
 
+            events.subList(it.index, events.size)
+                // find an event start is the start after the event based gateway
+                .find { event ->
+                    event.type == EventType.START
+                            && outgoingFlows.any { flow -> flow.target.id == event.definitionKey }
+                }
+                ?.let { event ->
+                    // if found create an event for the sequence flow
+                    outgoingFlows.find { flow -> flow.target.id == event.definitionKey }?.let { flow ->
+                        // add the sequence flow as an event to be added to the list of events
+                        eventsToInsert.add(
+                            event to Event(
+                                EventSource.SEQUENCE_FLOW,
+                                EventType.TAKE,
+                                flow.id,
+                                BpmnElementType.SEQUENCE_FLOW.elementTypeName.orElse(""),
+                                event.modelKey,
+                                event.timestamp
+                            )
+                        )
                     }
-            }
+                }
         }
+    }
 
     // add the events at the correct position
     eventsToInsert.forEach {
