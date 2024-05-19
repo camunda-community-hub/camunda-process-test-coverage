@@ -5,7 +5,7 @@ import io.camunda.zeebe.process.test.api.ZeebeTestEngine
 import io.camunda.zeebe.process.test.extension.testcontainer.ZeebeProcessTest
 import org.assertj.core.api.HamcrestCondition
 import org.camunda.community.process_test_coverage.junit5.platform8.CoverageTestProcessConstants.deploy
-import org.camunda.community.process_test_coverage.junit5.platform8.ProcessEngineCoverageExtension.Builder.Companion.DEFAULT_ASSERT_AT_LEAST_PROPERTY
+import org.camunda.community.process_test_coverage.junit5.common.ProcessEngineCoverageExtensionBuilder.Companion.DEFAULT_ASSERT_AT_LEAST_PROPERTY
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Test

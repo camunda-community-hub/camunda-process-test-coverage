@@ -2,7 +2,7 @@ package org.camunda.community.process_test_coverage.junit5.platform7
 
 import org.assertj.core.api.HamcrestCondition
 import org.camunda.bpm.engine.test.Deployment
-import org.camunda.community.process_test_coverage.junit5.platform7.ProcessEngineCoverageExtension.Builder.Companion.DEFAULT_ASSERT_AT_LEAST_PROPERTY
+import org.camunda.community.process_test_coverage.junit5.common.ProcessEngineCoverageExtensionBuilder.Companion.DEFAULT_ASSERT_AT_LEAST_PROPERTY
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Test

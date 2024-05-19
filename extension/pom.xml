@@ -17,6 +17,7 @@
         <module>engine-platform-7</module>
         <module>engine-platform-8</module>
         <module>junit4-platform-7</module>
+        <module>junit5-common</module>
         <module>junit5-platform-7</module>
         <module>junit5-platform-8</module>
         <module>spring-test-common</module>
@@ -72,6 +73,11 @@
             <dependency>
                 <groupId>org.camunda.community.process_test_coverage</groupId>
                 <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-junit5-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
