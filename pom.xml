@@ -17,6 +17,10 @@
     <description>Helper library to visualize and assert which parts of a BPMN process have been covered by a test.
     </description>
     <url>https://github.com/camunda-community-hub/camunda-process-test-coverage/</url>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/camunda-community-hub/camunda-process-test-coverage/issues</url>
+    </issueManagement>
 
     <modules>
         <module>extension</module>
@@ -345,5 +349,18 @@
         </developerConnection>
         <tag>HEAD</tag>
     </scm>
+
+    <developers>
+        <developer>
+            <name>Jan Rohwer</name>
+            <organization>Holisticon AG</organization>
+            <email>jan.rohwer@holisticon.de</email>
+        </developer>
+        <developer>
+            <name>Simon Zambrovski</name>
+            <organization>Holisticon AG</organization>
+            <email>simon.zambrovski@holisticon.de</email>
+        </developer>
+    </developers>
 
 </project>
