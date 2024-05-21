@@ -1,15 +1,13 @@
 package org.camunda.community.process_test_coverage.engine.platform7
 
 import org.camunda.bpm.engine.impl.context.Context
-import org.camunda.community.process_test_coverage.core.model.Model
 import org.camunda.bpm.model.bpmn.Bpmn
 import org.camunda.bpm.model.bpmn.instance.FlowNode
-import org.camunda.bpm.model.bpmn.instance.IntermediateThrowEvent
-import org.camunda.bpm.model.bpmn.instance.LinkEventDefinition
 import org.camunda.bpm.model.bpmn.instance.Process
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow
 import org.camunda.bpm.model.xml.instance.ModelElementInstance
 import org.camunda.community.process_test_coverage.core.engine.ModelProvider
+import org.camunda.community.process_test_coverage.core.model.Model
 import java.util.stream.Collectors
 
 /**
@@ -57,12 +55,9 @@ class ExecutionContextModelProvider: ModelProvider {
         if (node == null) {
             return false
         }
-        return if (node is Process) {
-            node.isExecutable && node.id == processId
-        } else if (node is IntermediateThrowEvent) {
-            node.eventDefinitions.none { it is LinkEventDefinition }
-        } else {
-            isExecutable(node.parentElement, processId)
+        return when (node) {
+            is Process -> node.isExecutable && node.id == processId
+            else -> isExecutable(node.parentElement, processId)
         }
     }
 }
