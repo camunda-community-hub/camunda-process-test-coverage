@@ -6,39 +6,17 @@
         <groupId>org.camunda.community.process_test_coverage</groupId>
         <version>2.5.1-SNAPSHOT</version>
     </parent>
-    <name>Camunda Process Test Coverage JUnit5 Platform 7</name>
-    <artifactId>camunda-process-test-coverage-junit5-platform-7</artifactId>
+    <name>Camunda Process Test Coverage JUnit5 Common</name>
+    <artifactId>camunda-process-test-coverage-junit5-common</artifactId>
 
     <dependencies>
-        <!-- We intentionally always compile against latest Camunda release,
-        but test against many versions *provided* by user projects.
-        Therefor the tests are in a separate module. -->
-        <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine</artifactId>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-junit5-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-engine-platform-7</artifactId>
+            <artifactId>camunda-process-test-coverage-core</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>camunda-process-test-coverage-report-generator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine-spring</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-bpm-junit5</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

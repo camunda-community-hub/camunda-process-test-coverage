@@ -1,6 +1,6 @@
 package org.camunda.community.process_test_coverage.spring_starter.platform7;
 
-import org.camunda.community.process_test_coverage.spring_test.platform7.ProcessEngineCoverageProperties;
+import org.camunda.community.process_test_coverage.spring_test.common.ProcessEngineCoverageProperties;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 

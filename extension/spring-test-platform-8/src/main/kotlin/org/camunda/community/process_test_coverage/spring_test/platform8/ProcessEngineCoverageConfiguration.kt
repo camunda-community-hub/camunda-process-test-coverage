@@ -1,5 +1,6 @@
 package org.camunda.community.process_test_coverage.spring_test.platform8
 
+import org.camunda.community.process_test_coverage.spring_test.common.ProcessEngineCoverageProperties
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
