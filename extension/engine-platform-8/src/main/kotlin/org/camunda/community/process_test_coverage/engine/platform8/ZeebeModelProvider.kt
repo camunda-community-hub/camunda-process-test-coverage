@@ -53,12 +53,9 @@ class ZeebeModelProvider: ModelProvider {
         if (node == null) {
             return false
         }
-        return if (node is Process) {
-            node.isExecutable && node.id == processId
-        } else if (node is IntermediateThrowEvent) {
-            node.eventDefinitions.none { it is LinkEventDefinition }
-        } else {
-            isExecutable(node.parentElement, processId)
+        return when (node) {
+            is Process -> node.isExecutable && node.id == processId
+            else -> isExecutable(node.parentElement, processId)
         }
     }
 

@@ -22,6 +22,8 @@ import org.camunda.bpm.engine.impl.pvm.process.ActivityImpl
 import org.camunda.bpm.engine.impl.pvm.process.ScopeImpl
 import org.camunda.bpm.engine.impl.pvm.process.TransitionImpl
 import org.camunda.bpm.engine.impl.util.xml.Element
+import org.camunda.bpm.model.bpmn.instance.IntermediateThrowEvent
+import org.camunda.bpm.model.bpmn.instance.LinkEventDefinition
 import org.camunda.community.process_test_coverage.core.model.Collector
 import org.camunda.community.process_test_coverage.core.model.Event
 import org.camunda.community.process_test_coverage.core.model.EventSource
@@ -47,6 +49,7 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
     private val executionListener: ExecutionListener = ExecutionListener { execution: DelegateExecution -> execute(execution) }
     private val eventBasedGatewayFlows: MutableSet<String> = mutableSetOf()
     private val activityToFlow: MutableMap<String, String> = mutableMapOf()
+    private val linkedEventDefinitions: MutableMap<String, String> = mutableMapOf()
 
     fun setCoverageState(coverageState: Collector) {
         this.coverageState = coverageState
@@ -67,6 +70,36 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
                     Instant.now().epochSecond
                 )
                 coverageState.addEvent(flowEvent)
+            }
+            // if activity is catch event of a linked event definition also mark the throw event
+            if (linkedEventDefinitions.containsKey(execution.currentActivityId)) {
+                val linkEventDefinition = linkedEventDefinitions[execution.currentActivityId]!!
+                val intermediateThrowEvents =
+                    execution.bpmnModelInstance.getModelElementsByType(IntermediateThrowEvent::class.java)
+                intermediateThrowEvents
+                    .find {
+                        it.eventDefinitions
+                            .filterIsInstance<LinkEventDefinition>()
+                            .any { eventDefinition -> eventDefinition.name == linkEventDefinition }
+                    }
+                    ?.let {
+                        val start = Event(
+                            EventSource.FLOW_NODE,
+                            EventType.START,
+                            it.id,
+                            it.elementType.typeName,
+                            getProcessKey(execution)
+                        )
+                        coverageState.addEvent(start)
+                        val end = Event(
+                            EventSource.FLOW_NODE,
+                            EventType.END,
+                            it.id,
+                            it.elementType.typeName,
+                            getProcessKey(execution)
+                        )
+                        coverageState.addEvent(end)
+                    }
             }
             val event = createEvent(
                 execution,
@@ -172,6 +205,10 @@ class ElementCoverageParseListener : AbstractBpmnParseListener() {
             .filter { it.tagName == "incoming" }
             .filter { eventBasedGatewayFlows.contains(it.text) }
             .forEach { activityToFlow[intermediateEventElement.attribute("id")] = it.text }
+        intermediateEventElement.elements()
+            .filter { it.tagName == "linkEventDefinition" }
+            .map { it.attribute("name") }
+            .forEach { linkedEventDefinitions[intermediateEventElement.attribute("id")] = it }
         this.addExecutionListener(activity)
     }
 

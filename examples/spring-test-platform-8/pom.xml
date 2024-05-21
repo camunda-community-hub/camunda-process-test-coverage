@@ -13,8 +13,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>io.camunda</groupId>
-            <artifactId>spring-zeebe-starter</artifactId>
+            <groupId>io.camunda.spring</groupId>
+            <artifactId>spring-boot-starter-camunda</artifactId>
             <version>${spring-zeebe.version}</version>
         </dependency>
         <dependency>
