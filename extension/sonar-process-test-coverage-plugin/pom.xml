@@ -85,9 +85,10 @@
                 <version>1.23.0.740</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <pluginKey>camundaProcessTestCoverage</pluginKey>
+                    <pluginKey>processtestcoverage</pluginKey>
                     <pluginClass>org.camunda.community.process_test_coverage.sonar.ProcessTestCoveragePlugin</pluginClass>
                     <pluginSourcesUrl>https://github.com/camunda-community-hub/camunda-process-test-coverage</pluginSourcesUrl>
+                    <pluginIssueTrackerUrl>https://github.com/camunda-community-hub/camunda-process-test-coverage/issues</pluginIssueTrackerUrl>
                     <pluginApiMinVersion>9.9</pluginApiMinVersion>
                 </configuration>
             </plugin>
@@ -103,7 +104,7 @@
                             <goal>install-node-and-npm</goal>
                         </goals>
                         <configuration>
-                            <nodeVersion>v18.14.2</nodeVersion>
+                            <nodeVersion>v20.13.1</nodeVersion>
                         </configuration>
                     </execution>
                     <execution>

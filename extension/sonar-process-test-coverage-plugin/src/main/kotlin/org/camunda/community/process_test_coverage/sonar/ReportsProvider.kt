@@ -1,8 +1,7 @@
 package org.camunda.community.process_test_coverage.sonar
 
+import org.slf4j.LoggerFactory
 import org.sonar.api.batch.sensor.SensorContext
-import org.sonar.api.utils.log.Logger
-import org.sonar.api.utils.log.Loggers
 import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.nio.file.Path
@@ -14,7 +13,7 @@ class ReportsProvider(
 ) {
 
     companion object {
-        private val LOG: Logger = Loggers.get(ReportsProvider::class.java)
+        private val LOG = LoggerFactory.getLogger(ReportsProvider::class.java)
         private val DEFAULT_PATHS = arrayOf("target/process-test-coverage/**/report.json")
         const val REPORT_PATHS_PROPERTY_KEY = "sonar.process-test-coverage.jsonReportPaths"
     }

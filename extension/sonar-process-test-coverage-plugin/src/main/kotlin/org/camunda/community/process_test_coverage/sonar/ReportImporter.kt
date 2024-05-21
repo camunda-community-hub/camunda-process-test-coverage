@@ -2,21 +2,25 @@ package org.camunda.community.process_test_coverage.sonar
 
 import org.camunda.bpm.model.bpmn.Bpmn
 import org.camunda.bpm.model.bpmn.BpmnModelInstance
-import org.camunda.bpm.model.bpmn.instance.*
+import org.camunda.bpm.model.bpmn.instance.FlowNode
+import org.camunda.bpm.model.bpmn.instance.IntermediateThrowEvent
+import org.camunda.bpm.model.bpmn.instance.LinkEventDefinition
+import org.camunda.bpm.model.bpmn.instance.Process
+import org.camunda.bpm.model.bpmn.instance.SequenceFlow
 import org.camunda.bpm.model.xml.instance.ModelElementInstance
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.createCoverageStateResult
 import org.camunda.community.process_test_coverage.core.export.CoverageStateResult
 import org.camunda.community.process_test_coverage.core.model.Model
+import org.slf4j.LoggerFactory
 import org.sonar.api.batch.fs.InputFile
 import org.sonar.api.batch.sensor.SensorContext
-import org.sonar.api.utils.log.Loggers
 import java.util.stream.Collectors
 
 
 class ReportImporter(private val ctx: SensorContext) {
 
     companion object {
-        private val LOG = Loggers.get(ReportImporter::class.java)
+        private val LOG = LoggerFactory.getLogger(ReportImporter::class.java)
     }
 
     fun importCoverage(result: CoverageStateResult) {

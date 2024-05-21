@@ -87,7 +87,7 @@ export default class ProcessTestCoverageReportApp extends React.PureComponent {
         }
 
         return (
-            <div className="page camunda-process-test-coverage-report-container" >
+            <div className="page process-test-coverage-report-container" >
                 <iframe classsandbox="allow-scripts allow-same-origin" height={this.state.height} srcDoc={html.replace('{{__REPORT_JSON_PLACEHOLDER__}}', this.state.data)} style={{border: "none"}}/>
             </div>
         );

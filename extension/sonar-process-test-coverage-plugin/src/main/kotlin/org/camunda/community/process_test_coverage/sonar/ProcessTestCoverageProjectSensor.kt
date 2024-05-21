@@ -2,17 +2,17 @@ package org.camunda.community.process_test_coverage.sonar
 
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.combineCoverageStateResults
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.readCoverageStateResult
+import org.slf4j.LoggerFactory
 import org.sonar.api.batch.sensor.SensorContext
 import org.sonar.api.batch.sensor.SensorDescriptor
 import org.sonar.api.scanner.sensor.ProjectSensor
-import org.sonar.api.utils.log.Loggers
 import java.nio.file.Files
 
 
 class ProcessTestCoverageProjectSensor : ProjectSensor {
 
     companion object {
-        private val LOG = Loggers.get(ProcessTestCoverageProjectSensor::class.java)
+        private val LOG = LoggerFactory.getLogger(ProcessTestCoverageProjectSensor::class.java)
     }
 
     override fun describe(descriptor: SensorDescriptor) {
