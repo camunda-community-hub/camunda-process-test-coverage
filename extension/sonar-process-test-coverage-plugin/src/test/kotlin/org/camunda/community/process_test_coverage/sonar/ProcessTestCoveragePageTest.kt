@@ -14,7 +14,7 @@ class ProcessTestCoveragePageTest {
         reportPage.define(context)
         val page = context.pages.iterator().next()
         assertEquals("Process Test Coverage", page.name)
-        assertEquals("camundaProcessTestCoverage/report_page", page.key)
+        assertEquals("processtestcoverage/report_page", page.key)
         assertFalse(page.isAdmin)
     }
 
