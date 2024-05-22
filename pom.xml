@@ -184,6 +184,7 @@
                     <configuration>
                         <licenseName>apache_v2</licenseName>
                         <failOnMissingHeader>true</failOnMissingHeader>
+                        <roots>src, target/processed-sources</roots>
                         <excludes>
                             <exclude>**/*.json</exclude>
                         </excludes>
