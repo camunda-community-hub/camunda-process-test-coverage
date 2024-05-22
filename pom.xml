@@ -184,6 +184,9 @@
                     <configuration>
                         <licenseName>apache_v2</licenseName>
                         <failOnMissingHeader>true</failOnMissingHeader>
+                        <excludes>
+                            <exclude>**/*.json</exclude>
+                        </excludes>
                     </configuration>
                 </plugin>
             </plugins>
