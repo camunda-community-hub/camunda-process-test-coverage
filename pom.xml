@@ -21,6 +21,7 @@
         <system>github</system>
         <url>https://github.com/camunda-community-hub/camunda-process-test-coverage/issues</url>
     </issueManagement>
+    <inceptionYear>2019</inceptionYear>
 
     <modules>
         <module>extension</module>
@@ -175,6 +176,15 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
                     <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>2.4.0</version>
+                    <configuration>
+                        <licenseName>apache_v2</licenseName>
+                        <failOnMissingHeader>true</failOnMissingHeader>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

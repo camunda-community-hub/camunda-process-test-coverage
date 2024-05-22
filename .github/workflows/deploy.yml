@@ -25,7 +25,7 @@ jobs:
           gpg-passphrase: MAVEN_CENTRAL_GPG_PASSPHRASE
 
       - name: Run Maven
-        run: ./mvnw -B clean install # com.mycila:license-maven-plugin:check # disable licence check for the moment
+        run: ./mvnw -B clean install license:check-file-header
 
       - name: Deploy SNAPSHOT / Release
         id: release
