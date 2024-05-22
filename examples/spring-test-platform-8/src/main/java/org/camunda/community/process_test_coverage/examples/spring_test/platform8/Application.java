@@ -20,14 +20,12 @@ package org.camunda.community.process_test_coverage.examples.spring_test.platfor
  * #L%
  */
 
-import io.camunda.zeebe.spring.client.EnableZeebeClient;
-import io.camunda.zeebe.spring.client.annotation.ZeebeDeployment;
+import io.camunda.zeebe.spring.client.annotation.Deployment;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@EnableZeebeClient
-@ZeebeDeployment(resources = "classpath*:*.bpmn")
+@Deployment(resources = "classpath*:*.bpmn")
 public class Application {
 
     public static void main(String[] args) {

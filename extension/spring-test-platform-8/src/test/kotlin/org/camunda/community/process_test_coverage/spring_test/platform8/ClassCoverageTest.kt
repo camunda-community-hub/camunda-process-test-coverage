@@ -20,8 +20,7 @@
 package org.camunda.community.process_test_coverage.spring_test.platform8
 
 import io.camunda.zeebe.client.ZeebeClient
-import io.camunda.zeebe.spring.client.EnableZeebeClient
-import io.camunda.zeebe.spring.client.annotation.ZeebeDeployment
+import io.camunda.zeebe.spring.client.annotation.Deployment
 import io.camunda.zeebe.spring.test.ZeebeSpringTest
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,8 +30,7 @@ import org.springframework.context.annotation.Import
 
 
 @SpringBootApplication
-@EnableZeebeClient
-@ZeebeDeployment(resources = ["classpath*:*.bpmn"])
+@Deployment(resources = ["classpath*:*.bpmn"])
 class Application
 
 @SpringBootTest
