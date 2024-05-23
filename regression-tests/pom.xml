@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <graalvm.version>23.0.3</graalvm.version>
+        <graalvm.version>24.0.1</graalvm.version>
         <camunda.version>${camunda.compile.version}</camunda.version>
 
         <jacoco.skip>true</jacoco.skip>
@@ -102,20 +102,17 @@
             </activation>
             <dependencies>
                 <dependency>
-                    <groupId>org.graalvm.sdk</groupId>
-                    <artifactId>graal-sdk</artifactId>
-                    <version>${graalvm.version}</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.graalvm.js</groupId>
+                    <groupId>org.graalvm.polyglot</groupId>
                     <artifactId>js</artifactId>
                     <version>${graalvm.version}</version>
                     <scope>runtime</scope>
+                    <type>pom</type>
                 </dependency>
                 <dependency>
                     <groupId>org.graalvm.js</groupId>
                     <artifactId>js-scriptengine</artifactId>
                     <version>${graalvm.version}</version>
+                    <scope>runtime</scope>
                 </dependency>
             </dependencies>
         </profile>
