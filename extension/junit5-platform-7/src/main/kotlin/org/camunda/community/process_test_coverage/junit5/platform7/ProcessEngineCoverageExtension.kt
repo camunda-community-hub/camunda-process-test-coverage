@@ -98,16 +98,14 @@ class ProcessEngineCoverageExtension(
      */
     override fun beforeTestExecution(context: ExtensionContext) {
         super.beforeTestExecution(context)
-        if (isRelevantTestMethod()) {
-            processEngineCoverageExtensionHelper.beforeTestExecution(context)
-        }
+        processEngineCoverageExtensionHelper.beforeTestExecution(context)
     }
 
     /**
      * Handles evaluating the test method coverage after a relevant test method is finished.
      */
     override fun afterTestExecution(context: ExtensionContext) {
-        if (isRelevantTestMethod()) {
+        if (!processEngineCoverageExtensionHelper.isTestMethodExcluded(context)) {
             processEngineCoverageExtensionHelper.afterTestExecution(context)
         }
         super.afterTestExecution(context)
@@ -127,23 +125,7 @@ class ProcessEngineCoverageExtension(
      */
     override fun afterAll(context: ExtensionContext) {
         processEngineCoverageExtensionHelper.afterAll(context)
-    }
-
-    /**
-     * Determines if the provided Description describes a method relevant for coverage metering. This is the case,
-     * if the Description is provided for an atomic test and the test has access to deployed process.
-     *
-     * @return `true` if the description is provided for the relevant method.
-     */
-    private fun isRelevantTestMethod(): Boolean {
-        return super.deploymentId != null // deployment is set
-                // the deployed process is not excluded
-                && processEngine.repositoryService
-                .createProcessDefinitionQuery()
-                .deploymentId(deploymentId)
-                .list().any {
-                    !excludedProcessDefinitionKeys.contains(it.key)
-                }
+        super.afterAll(context)
     }
 
     fun addTestMethodCoverageCondition(methodName: String, condition: Condition<Double>) =

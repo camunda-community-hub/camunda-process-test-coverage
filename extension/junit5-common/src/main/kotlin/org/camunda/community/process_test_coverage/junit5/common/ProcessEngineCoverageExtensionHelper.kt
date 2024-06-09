@@ -1,8 +1,28 @@
+/*-
+ * #%L
+ * Camunda Process Test Coverage JUnit5 Common
+ * %%
+ * Copyright (C) 2019 - 2024 Camunda
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
 package org.camunda.community.process_test_coverage.junit5.common
 
 import mu.KLogging
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
+import org.camunda.community.process_test_coverage.core.engine.ExcludeFromProcessCoverage
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.core.model.Run
 import org.camunda.community.process_test_coverage.core.model.Suite
@@ -42,65 +62,54 @@ class ProcessEngineCoverageExtensionHelper(
     private var suiteInitialized = false
 
     fun beforeAll(context: ExtensionContext) {
-        if (!suiteInitialized || (context.uniqueId != context.getActiveSuiteContextId()) && !isNested(context)) {
+        if (!isTestClassExcluded(context)
+            && (!suiteInitialized || (context.uniqueId != context.getActiveSuiteContextId()) && !isNested(context))) {
             initializeSuite(context, context.displayName)
         }
     }
 
     fun afterAll(context: ExtensionContext) {
-        if (context.uniqueId == context.getActiveSuiteContextId()) {
+        // only generate report and coverage if the current context is the one, that started the suite
+        if (!isTestClassExcluded(context) && context.uniqueId == context.getActiveSuiteContextId()) {
             val suite = coverageCollector.activeSuite
 
-            // only generate report and coverage if the current context is the one, that started the suite
-
-            // Make sure the class coverage deals with the same deployments for
-            // every test method
-            // classCoverage.assertAllDeploymentsEqual();
-
-/*-
- * #%L
- * Camunda Process Test Coverage JUnit5 Common
- * %%
- * Copyright (C) 2019 - 2024 Camunda
- * %%
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * #L%
- */
             val suiteCoveragePercentage = suite.calculateCoverage(coverageCollector.getModels())
 
-            // Log coverage percentage
-            logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
-            logCoverageDetail(suite)
+            if (suiteCoveragePercentage.isNaN()) {
+                logger.warn { "${suite.name} test class coverage could not be calculated, check configuration" }
+            } else {
 
-            // Create graphical report
-            CoverageReportUtil.createReport(coverageCollector)
-            CoverageReportUtil.createJsonReport(coverageCollector)
+                // Log coverage percentage
+                logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
+                logCoverageDetail(suite)
 
-            assertCoverage(suiteCoveragePercentage, classCoverageAssertionConditions)
+                // Create graphical report
+                CoverageReportUtil.createReport(coverageCollector)
+                CoverageReportUtil.createJsonReport(coverageCollector)
 
+                assertCoverage(suiteCoveragePercentage, classCoverageAssertionConditions)
+            }
         }
     }
 
     fun beforeTestExecution(context: ExtensionContext) {
-        if (!suiteInitialized) {
-            initializeSuite(context, context.requiredTestClass.name)
+        if (!isTestMethodExcluded(context)) {
+            if (!suiteInitialized) {
+                initializeSuite(context, context.requiredTestClass.name)
+            }
+            // method name is set only on test methods (not on classes or suites)
+            val runId: String = context.uniqueId
+            coverageCollector.createRun(Run(runId, context.displayName), coverageCollector.activeSuite.id)
+            coverageCollector.activateRun(runId)
         }
-        // method name is set only on test methods (not on classes or suites)
-        val runId: String = context.uniqueId
-        coverageCollector.createRun(Run(runId, context.displayName), coverageCollector.activeSuite.id)
-        coverageCollector.activateRun(runId)
-
     }
+
+    fun isTestMethodExcluded(context: ExtensionContext) =
+        context.requiredTestClass.annotations.any { it is ExcludeFromProcessCoverage }
+                || context.requiredTestMethod.annotations.any { it is ExcludeFromProcessCoverage }
+
+    private fun isTestClassExcluded(context: ExtensionContext) =
+        context.requiredTestClass.annotations.any { it is ExcludeFromProcessCoverage }
 
     fun afterTestExecution(context: ExtensionContext) {
         if (handleTestMethodCoverage) {
@@ -162,12 +171,16 @@ class ProcessEngineCoverageExtensionHelper(
         val run = suite.getRun(context.uniqueId) ?: return
         val coveragePercentage = run.calculateCoverage(coverageCollector.getModels())
 
-        // Log coverage percentage
-        logger.info("${run.name} test method coverage is $coveragePercentage")
-        logCoverageDetail(run)
+        if (coveragePercentage.isNaN()) {
+            logger.warn { "${run.name} test method coverage could not be calculated, check configuration" }
+        } else {
+            // Log coverage percentage
+            logger.info("${run.name} test method coverage is $coveragePercentage")
+            logCoverageDetail(run)
 
-        testMethodNameToCoverageConditions[run.name]?.let {
-            assertCoverage(coveragePercentage, it)
+            testMethodNameToCoverageConditions[run.name]?.let {
+                assertCoverage(coveragePercentage, it)
+            }
         }
     }
 
