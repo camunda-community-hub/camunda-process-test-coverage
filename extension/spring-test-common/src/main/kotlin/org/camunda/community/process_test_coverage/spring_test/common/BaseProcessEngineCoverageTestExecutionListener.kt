@@ -117,15 +117,22 @@ abstract class BaseProcessEngineCoverageTestExecutionListener : TestExecutionLis
 
             val suiteCoveragePercentage = suite.calculateCoverage(getCoverageCollector().getModels())
 
-            // Log coverage percentage
-            logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
-            logCoverageDetail(suite)
+            if (suiteCoveragePercentage.isNaN()) {
+                logger.warn { "${suite.name} test class coverage could not be calculated, check configuration" }
+            } else {
+                // Log coverage percentage
+                logger.info("${suite.name} test class coverage is: $suiteCoveragePercentage")
+                logCoverageDetail(suite)
 
-            // Create graphical report
-            CoverageReportUtil.createReport(getCoverageCollector())
-            CoverageReportUtil.createJsonReport(getCoverageCollector())
+                // Create graphical report
+                CoverageReportUtil.createReport(getCoverageCollector())
+                CoverageReportUtil.createJsonReport(getCoverageCollector())
 
-            assertCoverage(suiteCoveragePercentage, processEngineCoverageProperties.classCoverageAssertionConditions)
+                assertCoverage(
+                    suiteCoveragePercentage,
+                    processEngineCoverageProperties.classCoverageAssertionConditions
+                )
+            }
         }
     }
 
@@ -139,12 +146,16 @@ abstract class BaseProcessEngineCoverageTestExecutionListener : TestExecutionLis
         val run = suite.getRun(testContext.testMethod.name) ?: return
         val coveragePercentage = run.calculateCoverage(getCoverageCollector().getModels())
 
-        // Log coverage percentage
-        logger.info("${run.name} test method coverage is $coveragePercentage")
-        logCoverageDetail(run)
+        if (coveragePercentage.isNaN()) {
+            logger.warn { "${run.name} test method coverage could not be calculated, check configuration" }
+        } else {
+            // Log coverage percentage
+            logger.info("${run.name} test method coverage is $coveragePercentage")
+            logCoverageDetail(run)
 
-        processEngineCoverageProperties.testMethodCoverageConditions[run.name]?.let {
-            assertCoverage(coveragePercentage, it)
+            processEngineCoverageProperties.testMethodCoverageConditions[run.name]?.let {
+                assertCoverage(coveragePercentage, it)
+            }
         }
     }
 

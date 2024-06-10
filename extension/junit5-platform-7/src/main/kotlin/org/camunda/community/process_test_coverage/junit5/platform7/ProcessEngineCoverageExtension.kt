@@ -20,19 +20,15 @@
 package org.camunda.community.process_test_coverage.junit5.platform7
 
 import mu.KLogging
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
 import org.camunda.bpm.engine.ProcessEngineConfiguration
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
 import org.camunda.bpm.engine.test.junit5.ProcessEngineExtension
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
-import org.camunda.community.process_test_coverage.core.model.Run
-import org.camunda.community.process_test_coverage.core.model.Suite
 import org.camunda.community.process_test_coverage.engine.platform7.ExecutionContextModelProvider
 import org.camunda.community.process_test_coverage.engine.platform7.ProcessEngineAdapter
 import org.camunda.community.process_test_coverage.junit5.common.ProcessEngineCoverageExtensionBuilder
 import org.camunda.community.process_test_coverage.junit5.common.ProcessEngineCoverageExtensionHelper
-import org.camunda.community.process_test_coverage.report.CoverageReportUtil
 import org.junit.jupiter.api.extension.AfterAllCallback
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.ExtensionContext
@@ -90,6 +86,7 @@ class ProcessEngineCoverageExtension(
 
     override fun postProcessTestInstance(testInstance: Any?, context: ExtensionContext) {
         super.postProcessTestInstance(testInstance, context)
+        initializeServices()
         ProcessEngineAdapter(processEngine, coverageCollector).initializeListeners()
     }
 
@@ -98,16 +95,14 @@ class ProcessEngineCoverageExtension(
      */
     override fun beforeTestExecution(context: ExtensionContext) {
         super.beforeTestExecution(context)
-        if (isRelevantTestMethod()) {
-            processEngineCoverageExtensionHelper.beforeTestExecution(context)
-        }
+        processEngineCoverageExtensionHelper.beforeTestExecution(context)
     }
 
     /**
      * Handles evaluating the test method coverage after a relevant test method is finished.
      */
     override fun afterTestExecution(context: ExtensionContext) {
-        if (isRelevantTestMethod()) {
+        if (!processEngineCoverageExtensionHelper.isTestMethodExcluded(context)) {
             processEngineCoverageExtensionHelper.afterTestExecution(context)
         }
         super.afterTestExecution(context)
@@ -127,23 +122,7 @@ class ProcessEngineCoverageExtension(
      */
     override fun afterAll(context: ExtensionContext) {
         processEngineCoverageExtensionHelper.afterAll(context)
-    }
-
-    /**
-     * Determines if the provided Description describes a method relevant for coverage metering. This is the case,
-     * if the Description is provided for an atomic test and the test has access to deployed process.
-     *
-     * @return `true` if the description is provided for the relevant method.
-     */
-    private fun isRelevantTestMethod(): Boolean {
-        return super.deploymentId != null // deployment is set
-                // the deployed process is not excluded
-                && processEngine.repositoryService
-                .createProcessDefinitionQuery()
-                .deploymentId(deploymentId)
-                .list().any {
-                    !excludedProcessDefinitionKeys.contains(it.key)
-                }
+        super.afterAll(context)
     }
 
     fun addTestMethodCoverageCondition(methodName: String, condition: Condition<Double>) =

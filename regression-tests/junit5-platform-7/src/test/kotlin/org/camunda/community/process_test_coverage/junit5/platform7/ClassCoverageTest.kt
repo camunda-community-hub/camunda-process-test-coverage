@@ -17,7 +17,7 @@ class ClassCoverageTest {
     fun testPathA() {
         val variables: MutableMap<String, Any> = HashMap()
         variables["path"] = "A"
-        extension.processEngine.runtimeService.startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY, variables)
+        extension.runtimeService.startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY, variables)
     }
 
     @Test
@@ -25,7 +25,7 @@ class ClassCoverageTest {
     fun testPathB() {
         val variables: MutableMap<String, Any> = HashMap()
         variables["path"] = "B"
-        extension.processEngine.runtimeService.startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY, variables)
+        extension.runtimeService.startProcessInstanceByKey(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY, variables)
     }
 
 }

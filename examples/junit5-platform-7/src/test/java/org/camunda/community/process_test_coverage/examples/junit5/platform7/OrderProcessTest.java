@@ -24,19 +24,18 @@ import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.community.process_test_coverage.junit5.platform7.ProcessEngineCoverageExtension;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
+// you can either use @ExtendWith on the test class
 //@ExtendWith(ProcessEngineCoverageExtension.class)
 @Deployment(resources = "order-process.bpmn")
 public class OrderProcessTest {
 
+    // or register the extension as a public static field
     @RegisterExtension
     public static ProcessEngineCoverageExtension extension = ProcessEngineExtensionProvider.extension;
-//    public static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension.builder(
-//            new ProcessCoverageInMemProcessEngineConfiguration().setHistory(ProcessEngineConfiguration.HISTORY_FULL)).build();
 
     @Test
     public void shouldExecuteHappyPath() {

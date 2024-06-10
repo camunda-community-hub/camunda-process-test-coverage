@@ -89,7 +89,7 @@ class ProcessEngineCoverageExtension(
      * Handles creating the run if a relevant test method is called.
      */
     override fun beforeTestExecution(context: ExtensionContext) {
-        if (!isTestMethodExcluded(context)) {
+        if (!processEngineCoverageExtensionHelper.isTestMethodExcluded(context)) {
             processEngineCoverageExtensionHelper.beforeTestExecution(context)
             methodRecordPosition[context.requiredTestMethod.name] = BpmnAssert.getRecordStream().records().maxOfOrNull { it.position } ?: -1
         }
@@ -99,15 +99,11 @@ class ProcessEngineCoverageExtension(
      * Handles evaluating the test method coverage after a relevant test method is finished.
      */
     override fun afterTestExecution(context: ExtensionContext) {
-        if (!isTestMethodExcluded(context)) {
+        if (!processEngineCoverageExtensionHelper.isTestMethodExcluded(context)) {
             createEvents(coverageCollector, methodRecordPosition[context.requiredTestMethod.name]!!)
             processEngineCoverageExtensionHelper.afterTestExecution(context)
         }
     }
-
-    private fun isTestMethodExcluded(context: ExtensionContext) =
-        context.requiredTestClass.annotations.any { it is ExcludeFromProcessCoverage }
-                || context.requiredTestMethod.annotations.any { it is ExcludeFromProcessCoverage }
 
     /**
      * Initializes the suite for all upcoming tests.
