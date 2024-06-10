@@ -112,7 +112,7 @@ class ProcessEngineCoverageExtensionHelper(
         context.requiredTestClass.annotations.any { it is ExcludeFromProcessCoverage }
 
     fun afterTestExecution(context: ExtensionContext) {
-        if (handleTestMethodCoverage) {
+        if (!isTestMethodExcluded(context) && handleTestMethodCoverage) {
             handleTestMethodCoverage(context)
         }
     }
