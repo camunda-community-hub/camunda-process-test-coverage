@@ -22,7 +22,7 @@ package org.camunda.community.process_test_coverage.junit5.common
 import mu.KLogging
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
-import org.camunda.community.process_test_coverage.core.engine.ExcludeFromProcessCoverage
+import org.camunda.community.process_test_coverage.core.engine.isExcluded
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.core.model.Run
 import org.camunda.community.process_test_coverage.core.model.Suite
@@ -105,11 +105,10 @@ class ProcessEngineCoverageExtensionHelper(
     }
 
     fun isTestMethodExcluded(context: ExtensionContext) =
-        context.requiredTestClass.annotations.any { it is ExcludeFromProcessCoverage }
-                || context.requiredTestMethod.annotations.any { it is ExcludeFromProcessCoverage }
+        isTestClassExcluded(context) || context.requiredTestMethod.isExcluded()
 
     private fun isTestClassExcluded(context: ExtensionContext) =
-        context.requiredTestClass.annotations.any { it is ExcludeFromProcessCoverage }
+        context.requiredTestClass.isExcluded()
 
     fun afterTestExecution(context: ExtensionContext) {
         if (!isTestMethodExcluded(context) && handleTestMethodCoverage) {
