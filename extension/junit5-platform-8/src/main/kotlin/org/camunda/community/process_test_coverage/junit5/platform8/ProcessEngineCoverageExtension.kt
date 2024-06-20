@@ -22,7 +22,6 @@ package org.camunda.community.process_test_coverage.junit5.platform8
 import io.camunda.zeebe.process.test.assertions.BpmnAssert
 import mu.KLogging
 import org.assertj.core.api.Condition
-import org.camunda.community.process_test_coverage.core.engine.ExcludeFromProcessCoverage
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.engine.platform8.ZeebeModelProvider
 import org.camunda.community.process_test_coverage.engine.platform8.createEvents
