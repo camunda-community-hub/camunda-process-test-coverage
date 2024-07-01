@@ -29,7 +29,7 @@ jobs:
 
       - name: Deploy SNAPSHOT / Release
         id: release
-        uses: camunda-community-hub/community-action-maven-release@v1.1.0
+        uses: camunda-community-hub/community-action-maven-release@v1.2.1
         with:
           maven-release-options: -DskipExamples # avoid publication of examples into public repositories
           release-version: ${{ github.event.release.tag_name }}
@@ -37,8 +37,8 @@ jobs:
           central-release-profile: oss-maven-central
           nexus-usr: ${{ secrets.NEXUS_USR }}
           nexus-psw: ${{ secrets.NEXUS_PSW }}
-          maven-usr: ${{ secrets.MAVEN_CENTRAL_DEPLOYMENT_USR }}
-          maven-psw: ${{ secrets.MAVEN_CENTRAL_DEPLOYMENT_PSW }}
+          maven-usr: ${{ secrets.COMMUNITY_HUB_MAVEN_CENTRAL_OSS_USR }}
+          maven-psw: ${{ secrets.COMMUNITY_HUB_MAVEN_CENTRAL_OSS_PSW }}
           maven-url: oss.sonatype.org
           maven-gpg-passphrase: ${{ secrets.MAVEN_CENTRAL_GPG_SIGNING_KEY_PASSPHRASE }}
           maven-auto-release-after-close: true
