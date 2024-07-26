@@ -22,7 +22,7 @@ package org.camunda.community.process_test_coverage.spring_test.common
 import mu.KLogging
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
-import org.camunda.community.process_test_coverage.core.engine.ExcludeFromProcessCoverage
+import org.camunda.community.process_test_coverage.core.engine.isExcluded
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.core.model.Run
 import org.camunda.community.process_test_coverage.core.model.Suite
@@ -78,17 +78,10 @@ abstract class BaseProcessEngineCoverageTestExecutionListener : TestExecutionLis
     }
 
     protected open fun isTestClassExcluded(testContext: TestContext) =
-        testContext.testClass.annotations.any { it is ExcludeFromProcessCoverage }
-                || !matchesInclusionPattern(testContext)
-
-    private fun matchesInclusionPattern(testContext: TestContext) =
-        processEngineCoverageProperties.inclusionPatternsForTestClasses.isEmpty()
-                || PatternMatchUtils.simpleMatch(processEngineCoverageProperties.inclusionPatternsForTestClasses.toTypedArray(),
-            testContext.testClass.name)
+        testContext.testClass.isExcluded(processEngineCoverageProperties.inclusionPatternsForTestClasses)
 
     protected fun isTestMethodExcluded(testContext: TestContext) =
-        isTestClassExcluded(testContext)
-                || testContext.testMethod.annotations.any { it is ExcludeFromProcessCoverage }
+        isTestClassExcluded(testContext) || testContext.testMethod.isExcluded()
 
     /**
      * Initializes the suite for all upcoming tests.
