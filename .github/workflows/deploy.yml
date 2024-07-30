@@ -29,7 +29,7 @@ jobs:
 
       - name: Deploy SNAPSHOT / Release
         id: release
-        uses: camunda-community-hub/community-action-maven-release@v1.2.1
+        uses: camunda-community-hub/community-action-maven-release@v1.2.2
         with:
           maven-release-options: -DskipExamples # avoid publication of examples into public repositories
           release-version: ${{ github.event.release.tag_name }}
