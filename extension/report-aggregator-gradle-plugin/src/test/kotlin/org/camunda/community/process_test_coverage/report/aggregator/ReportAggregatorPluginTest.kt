@@ -73,6 +73,7 @@ class ReportAggregatorPluginTest {
         gradleRunner = GradleRunner.create()
             .withProjectDir(testProjectDir)
             .withPluginClasspath()
+            .forwardOutput()
             .withArguments("aggregateProcessTestCoverage")
     }
 
