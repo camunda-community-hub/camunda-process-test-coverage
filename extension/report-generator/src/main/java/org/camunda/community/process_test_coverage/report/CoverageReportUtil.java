@@ -59,13 +59,14 @@ public class CoverageReportUtil {
 
     public static void createReport(final DefaultCollector coverageCollector, final String reportDirectory) {
         writeReport(createCoverageStateResult(coverageCollector), true,
-                getReportDirectoryPath(ofNullable(reportDirectory).orElse(TARGET_DIR_ROOT), coverageCollector),
+                getReportDirectory(ofNullable(reportDirectory).orElse(TARGET_DIR_ROOT), coverageCollector),
                 "report.html", CoverageReportUtil::generateHtml);
     }
 
     public static void createJsonReport(final DefaultCollector coverageCollector, final String reportDirectory) {
+        System.out.println("report: " + reportDirectory);
         writeReport(createCoverageStateResult(coverageCollector), false,
-                getReportDirectoryPath(ofNullable(reportDirectory).orElse(TARGET_DIR_ROOT), coverageCollector),
+                getReportDirectory(ofNullable(reportDirectory).orElse(TARGET_DIR_ROOT), coverageCollector),
                 "report.json", result -> result);
     }
 
@@ -78,14 +79,14 @@ public class CoverageReportUtil {
     }
 
     public static void writeReport(final String coverageResult, boolean installReportDependencies,
-                                   final String reportDirectory, final String fileName, final Function<String, String> reportCreator) {
+                                   final File reportDirectory, final String fileName, final Function<String, String> reportCreator) {
 
         if (installReportDependencies) {
             installReportDependencies(reportDirectory);
         }
 
         try {
-            Files.createDirectories(FileSystems.getDefault().getPath(reportDirectory));
+            Files.createDirectories(reportDirectory.toPath());
             writeToFile(reportDirectory + "/" + fileName, reportCreator.apply(coverageResult));
         } catch (final IOException ex) {
             throw new RuntimeException("Unable to write report.", ex);
@@ -106,8 +107,8 @@ public class CoverageReportUtil {
         Files.write(FileSystems.getDefault().getPath(filePath), json.getBytes(StandardCharsets.UTF_8));
     }
 
-    private static void installReportDependencies(final String reportDirectory) {
-        final File parent = new File(reportDirectory).getParentFile();
+    private static void installReportDependencies(final File reportDirectory) {
+        final File parent = reportDirectory.getParentFile();
         final File reportResourcesDir = new File(parent, REPORT_RESOURCES);
         if (reportResourcesDir.exists()) {
             // No need to install
@@ -188,8 +189,8 @@ public class CoverageReportUtil {
      *
      * @return path for the report.
      */
-    private static String getReportDirectoryPath(final String directory, final DefaultCollector collector) {
-        return directory + collector.getActiveSuite().getId();
+    private static File getReportDirectory(final String directory, final DefaultCollector collector) {
+        return new File(directory, collector.getActiveSuite().getId());
     }
 
 }
