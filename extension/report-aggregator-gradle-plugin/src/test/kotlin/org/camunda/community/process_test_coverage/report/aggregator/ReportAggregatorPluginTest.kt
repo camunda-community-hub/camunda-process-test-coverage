@@ -80,7 +80,7 @@ class ReportAggregatorPluginTest {
     fun should_not_create_any_file_when_run_on_empty_dir() {
         val result = gradleRunner.build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":aggregateProcessTestCoverage")?.outcome)
-        assertThat(File(testProjectDir, "target/process-test-coverage/all/report.json"))
+        assertThat(File(testProjectDir, "build/process-test-coverage/all/report.json"))
             .doesNotExist()
     }
 
@@ -114,8 +114,28 @@ class ReportAggregatorPluginTest {
         assertResult()
     }
 
-    private fun assertResult() {
-        assertThat(File(testProjectDir, "target/process-test-coverage/all/report.json"))
+    @Test
+    fun should_generate_expected_result_when_run_with_different_report_directory() {
+        copyDirectory(Paths.get("src/test/resources/different_report_directory/"), testProjectDir.toPath())
+        val buildFileContent = """
+            plugins {
+                id 'org.camunda.community.process_test_coverage.report-aggregator'
+            }
+            
+            aggregateProcessTestCoverage {
+                reportDirectory = 'build/camunda-tests'
+                outputDirectory = 'aggregation'
+            }
+            
+        """
+        Files.write(buildFile.toPath(), buildFileContent.toByteArray())
+        val result = gradleRunner.build()
+        assertEquals(TaskOutcome.SUCCESS, result.task(":aggregateProcessTestCoverage")?.outcome)
+        assertResult("build/camunda-tests/aggregation/report.json")
+    }
+
+    private fun assertResult(expectedFile: String = "build/process-test-coverage/all/report.json") {
+        assertThat(File(testProjectDir, expectedFile))
             .exists().isFile
             .content()
             .satisfies(Consumer {

@@ -45,7 +45,11 @@ data class ProcessEngineCoverageProperties(
     /**
      * Possibility to add inclusion pattern for test classes.
      */
-    val inclusionPatternsForTestClasses: List<String> = listOf()
+    val inclusionPatternsForTestClasses: List<String> = listOf(),
+    /**
+     * Output directory for the reports.
+     */
+    val reportDirectory: String? = null
 
 ) {
 
@@ -73,6 +77,7 @@ data class ProcessEngineCoverageProperties(
         private var optionalAssertCoverageAtLeastProperty: String = DEFAULT_ASSERT_AT_LEAST_PROPERTY
         private var testMethodCoverageConditions: MutableMap<String, MutableList<Condition<Double>>> = mutableMapOf()
         private var inclusionPatternsForTestClasses: MutableList<String> = mutableListOf()
+        private var reportDirectory: String? = null
 
         /**
          * Log class and test method coverages?
@@ -106,6 +111,12 @@ data class ProcessEngineCoverageProperties(
                 apply { this.testMethodCoverageConditions.getOrPut(methodName) { mutableListOf() }.add(condition) }
 
         /**
+         * Specifies the output directory for the reports.
+         */
+        fun reportDirectory(reportDirectory: String) =
+            this.apply { this.reportDirectory = reportDirectory }
+
+        /**
          * Add an inclusion pattern for test classes to include in process test coverage.
          */
         fun addInclusionPatternForTestClasses(inclusionPattern: String) = apply {
@@ -121,7 +132,8 @@ data class ProcessEngineCoverageProperties(
                     excludedProcessDefinitionKeys = excludedProcessDefinitionKeys,
                     classCoverageAssertionConditions = classCoverageConditions,
                     testMethodCoverageConditions = testMethodCoverageConditions,
-                    inclusionPatternsForTestClasses = inclusionPatternsForTestClasses
+                    inclusionPatternsForTestClasses = inclusionPatternsForTestClasses,
+                    reportDirectory = reportDirectory
             )
         }
 

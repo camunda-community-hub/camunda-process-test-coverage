@@ -310,8 +310,8 @@ public class TestCoverageProcessEngineRule extends ProcessEngineRule {
         this.logCoverageDetail(suite);
 
         // Create graphical report
-        CoverageReportUtil.createReport(this.coverageCollector);
-        CoverageReportUtil.createJsonReport(this.coverageCollector);
+        CoverageReportUtil.createReport(this.coverageCollector, null);
+        CoverageReportUtil.createJsonReport(this.coverageCollector, null);
 
         this.assertCoverage(suiteCoveragePercentage, this.classCoverageAssertionMatchers);
 

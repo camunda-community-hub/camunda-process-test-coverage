@@ -53,7 +53,12 @@ class ProcessEngineCoverageExtension(
          */
         private val excludedProcessDefinitionKeys: List<String> = listOf(),
 
-        ) : BeforeAllCallback, AfterAllCallback, BeforeTestExecutionCallback, AfterTestExecutionCallback {
+        /**
+         * Output directory for the reports.
+         */
+        private val reportDirectory: String? = null
+
+) : BeforeAllCallback, AfterAllCallback, BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
     companion object : KLogging() {
         @JvmStatic
@@ -82,7 +87,7 @@ class ProcessEngineCoverageExtension(
 
     private val processEngineCoverageExtensionHelper = ProcessEngineCoverageExtensionHelper(coverageCollector,
         detailedCoverageLogging, handleTestMethodCoverage, excludedProcessDefinitionKeys,
-        classCoverageAssertionConditions, testMethodNameToCoverageConditions)
+        classCoverageAssertionConditions, testMethodNameToCoverageConditions, reportDirectory)
 
     /**
      * Handles creating the run if a relevant test method is called.
@@ -134,7 +139,8 @@ class ProcessEngineCoverageExtension(
             return ProcessEngineCoverageExtension(
                     detailedCoverageLogging = detailedCoverageLogging,
                     handleTestMethodCoverage = handleTestMethodCoverage,
-                    excludedProcessDefinitionKeys = excludedProcessDefinitionKeys
+                    excludedProcessDefinitionKeys = excludedProcessDefinitionKeys,
+                    reportDirectory = reportDirectory
             ).apply {
                 coverageFromSystemProperty(this@Builder.optionalAssertCoverageAtLeastProperty)?.let {
                     addClassCoverageAtLeast(it)

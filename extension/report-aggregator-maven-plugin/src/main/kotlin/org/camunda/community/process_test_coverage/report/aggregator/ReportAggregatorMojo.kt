@@ -36,11 +36,14 @@ import java.util.*
 class ReportAggregatorMojo : AbstractMojo(), MavenReport {
 
     companion object {
-        var TARGET_DIR_ROOT: String = System.getProperty("camunda-process-test-coverage.target-dir-root", "target/process-test-coverage/")
+        var TARGET_DIR_ROOT: String? = System.getProperty("camunda-process-test-coverage.target-dir-root")
     }
 
-    @Parameter(defaultValue = "\${project.build.directory}/process-test-coverage/all")
-    private lateinit var outputDirectory: File
+    @Parameter(defaultValue = "\${project.build.directory}/process-test-coverage")
+    private lateinit var reportDirectory: File
+
+    @Parameter(defaultValue = "all")
+    private lateinit var outputDirectory: String
 
     /**
      * The projects in the reactor.
@@ -73,14 +76,10 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
     override fun getDescription(locale: Locale) = getName(locale)
 
     override fun setReportOutputDirectory(outputDirectory: File) {
-        if (!outputDirectory.endsWith("process-test-coverage/all")) {
-            this.outputDirectory = File(outputDirectory, "process-test-coverage/all")
-        } else {
-            this.outputDirectory = outputDirectory
-        }
+        this.reportDirectory = outputDirectory
     }
 
-    override fun getReportOutputDirectory(): File = outputDirectory
+    override fun getReportOutputDirectory(): File = reportDirectory
 
     override fun isExternalReport() = true
 
@@ -106,8 +105,8 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
                 log.debug("Processing module ${it.name} with basedir ${it.basedir}")
                 it.basedir.walk()
                     .filter { file -> file.isFile && file.name == "report.json" }
-                    .filter { file -> file.toRelativeString(it.basedir).startsWith(TARGET_DIR_ROOT) }
-                    .filter { file -> !file.absolutePath.endsWith("/all/report.json") }
+                    .filter { file -> file.toRelativeString(it.basedir).startsWith(reportDirectory.toRelativeString(it.basedir)) }
+                    .filter { file -> !file.absolutePath.endsWith("/${outputDirectory}/report.json") }
             }
             .flatten()
             .map {
@@ -117,11 +116,12 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
             .reduceOrNull { result1, result2 -> combineCoverageStateResults(result1, result2) }
             ?.let {
                 val report = readCoverageStateResult(it)
+                val targetDirectory = TARGET_DIR_ROOT?.let { File(TARGET_DIR_ROOT, outputDirectory).path } ?: File(reportDirectory, outputDirectory).path
                 CoverageReportUtil.writeReport(createCoverageStateResult(report.suites, report.models), false,
-                    outputDirectory.path, "report.json"
+                    targetDirectory, "report.json"
                 ) { result -> result }
                 CoverageReportUtil.writeReport(createCoverageStateResult(report.suites, report.models), true,
-                    outputDirectory.path, "report.html", CoverageReportUtil::generateHtml)
+                    targetDirectory, "report.html", CoverageReportUtil::generateHtml)
             } ?: log.warn("No coverage results found, skipping execution")
     }
 

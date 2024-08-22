@@ -24,7 +24,8 @@ abstract class ProcessEngineCoverageExtensionBuilder<T>(
     var handleTestMethodCoverage: Boolean = true,
     var coverageAtLeast: Double? = null,
     var excludedProcessDefinitionKeys: List<String> = listOf(),
-    var optionalAssertCoverageAtLeastProperty: String = DEFAULT_ASSERT_AT_LEAST_PROPERTY
+    var optionalAssertCoverageAtLeastProperty: String = DEFAULT_ASSERT_AT_LEAST_PROPERTY,
+    var reportDirectory: String? = null
 ) {
 
     companion object {
@@ -69,6 +70,12 @@ abstract class ProcessEngineCoverageExtensionBuilder<T>(
      */
     fun optionalAssertCoverageAtLeastProperty(property: String) =
         this.apply { optionalAssertCoverageAtLeastProperty = property }
+
+    /**
+     * Specifies the output directory for the reports.
+     */
+    fun reportDirectory(reportDirectory: String) =
+        this.apply { this.reportDirectory = reportDirectory }
 
     abstract fun build() : T
 

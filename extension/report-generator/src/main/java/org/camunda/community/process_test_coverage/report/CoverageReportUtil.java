@@ -38,6 +38,8 @@ import java.util.jar.JarFile;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static java.util.Optional.ofNullable;
+
 /**
  * Utility for generating graphical class and method coverage reports.
  *
@@ -55,15 +57,15 @@ public class CoverageReportUtil {
     private static final String REPORT_TEMPLATE = "html/bpmn.report-template.html";
 
 
-    public static void createReport(final DefaultCollector coverageCollector) {
+    public static void createReport(final DefaultCollector coverageCollector, final String reportDirectory) {
         writeReport(createCoverageStateResult(coverageCollector), true,
-                getReportDirectoryPath(coverageCollector.getActiveSuite().getId()),
+                getReportDirectoryPath(ofNullable(reportDirectory).orElse(TARGET_DIR_ROOT), coverageCollector),
                 "report.html", CoverageReportUtil::generateHtml);
     }
 
-    public static void createJsonReport(final DefaultCollector coverageCollector) {
+    public static void createJsonReport(final DefaultCollector coverageCollector, final String reportDirectory) {
         writeReport(createCoverageStateResult(coverageCollector), false,
-                getReportDirectoryPath(coverageCollector.getActiveSuite().getId()),
+                getReportDirectoryPath(ofNullable(reportDirectory).orElse(TARGET_DIR_ROOT), coverageCollector),
                 "report.json", result -> result);
     }
 
@@ -72,7 +74,7 @@ public class CoverageReportUtil {
         return CoverageStateJsonExporter.createCoverageStateResult(
                 Collections.singleton(suite),
                 coverageCollector.getModels().stream().filter(
-                        it -> suite.getEvents(it.getKey()).size() > 0).collect(Collectors.toSet()));
+                        it -> !suite.getEvents(it.getKey()).isEmpty()).collect(Collectors.toSet()));
     }
 
     public static void writeReport(final String coverageResult, boolean installReportDependencies,
@@ -181,12 +183,13 @@ public class CoverageReportUtil {
     /**
      * Retrieves directory path for all coverage reports of a test class.
      *
-     * @param className class name of the class to generate report for.
+     * @param directory directory for the reports
+     * @param collector collector that was used for collecting events
      *
      * @return path for the report.
      */
-    private static String getReportDirectoryPath(final String className) {
-        return TARGET_DIR_ROOT + className;
+    private static String getReportDirectoryPath(final String directory, final DefaultCollector collector) {
+        return directory + collector.getActiveSuite().getId();
     }
 
 }
