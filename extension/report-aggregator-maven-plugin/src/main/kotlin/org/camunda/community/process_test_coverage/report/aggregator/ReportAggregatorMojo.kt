@@ -39,8 +39,8 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
         var TARGET_DIR_ROOT: String? = System.getProperty("camunda-process-test-coverage.target-dir-root")
     }
 
-    @Parameter(defaultValue = "\${project.build.directory}/process-test-coverage")
-    private lateinit var reportDirectory: File
+    @Parameter(defaultValue = "target/process-test-coverage")
+    private lateinit var reportDirectory: String
 
     @Parameter(defaultValue = "all")
     private lateinit var outputDirectory: String
@@ -76,10 +76,10 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
     override fun getDescription(locale: Locale) = getName(locale)
 
     override fun setReportOutputDirectory(outputDirectory: File) {
-        this.reportDirectory = outputDirectory
+        this.reportDirectory = outputDirectory.toRelativeString(project.basedir)
     }
 
-    override fun getReportOutputDirectory(): File = reportDirectory
+    override fun getReportOutputDirectory(): File = File(project.basedir, reportDirectory)
 
     override fun isExternalReport() = true
 
@@ -99,13 +99,14 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
         if (!canGenerateReport()) {
             return
         }
+        val targetDirectory = TARGET_DIR_ROOT ?: reportDirectory
         reactorProjects
             .asSequence()
             .map {
                 log.debug("Processing module ${it.name} with basedir ${it.basedir}")
                 it.basedir.walk()
                     .filter { file -> file.isFile && file.name == "report.json" }
-                    .filter { file -> file.toRelativeString(it.basedir).startsWith(reportDirectory.toRelativeString(it.basedir)) }
+                    .filter { file -> file.toRelativeString(it.basedir).startsWith(targetDirectory) }
                     .filter { file -> !file.absolutePath.endsWith("/${outputDirectory}/report.json") }
             }
             .flatten()
@@ -116,12 +117,12 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
             .reduceOrNull { result1, result2 -> combineCoverageStateResults(result1, result2) }
             ?.let {
                 val report = readCoverageStateResult(it)
-                val targetDirectory = TARGET_DIR_ROOT?.let { File(TARGET_DIR_ROOT, outputDirectory).path } ?: File(reportDirectory, outputDirectory).path
+                val aggregateReportDirectory = File(File(project.basedir, targetDirectory), outputDirectory).path
                 CoverageReportUtil.writeReport(createCoverageStateResult(report.suites, report.models), false,
-                    targetDirectory, "report.json"
+                    aggregateReportDirectory, "report.json"
                 ) { result -> result }
                 CoverageReportUtil.writeReport(createCoverageStateResult(report.suites, report.models), true,
-                    targetDirectory, "report.html", CoverageReportUtil::generateHtml)
+                    aggregateReportDirectory, "report.html", CoverageReportUtil::generateHtml)
             } ?: log.warn("No coverage results found, skipping execution")
     }
 

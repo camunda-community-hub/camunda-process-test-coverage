@@ -37,7 +37,7 @@ class ReportAggregatorPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         val extension = project.extensions.create("aggregateProcessTestCoverage", ReportAggregatorPluginExtension::class.java)
-        val outputDirectory = File(File(project.projectDir, extension.reportDirectory), extension.outputDirectory).absolutePath
+        val outputDirectory = File(File(project.projectDir, extension.reportDirectory), extension.outputDirectory).path
         project.task("aggregateProcessTestCoverage")
             .doLast {
                 project.allprojects
