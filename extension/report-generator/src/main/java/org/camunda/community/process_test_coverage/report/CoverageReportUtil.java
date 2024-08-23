@@ -64,7 +64,6 @@ public class CoverageReportUtil {
     }
 
     public static void createJsonReport(final DefaultCollector coverageCollector, final String reportDirectory) {
-        System.out.println("report: " + reportDirectory);
         writeReport(createCoverageStateResult(coverageCollector), false,
                 getReportDirectory(ofNullable(reportDirectory).orElse(TARGET_DIR_ROOT), coverageCollector),
                 "report.json", result -> result);

@@ -11,7 +11,7 @@ import org.springframework.test.context.TestExecutionListeners
 @SpringBootApplication
 class Application
 
-@SpringBootTest
+@SpringBootTest(classes = [Application::class])
 @Import(CoverageTestConfiguration::class, ProcessEngineCoverageConfiguration::class)
 @TestExecutionListeners(value = [ProcessEngineCoverageTestExecutionListener::class], mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
 class ClassCoverageTest {
