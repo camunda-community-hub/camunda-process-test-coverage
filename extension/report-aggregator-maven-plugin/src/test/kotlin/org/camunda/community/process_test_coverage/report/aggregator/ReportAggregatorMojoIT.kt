@@ -87,4 +87,29 @@ class ReportAggregatorMojoIT {
             })
     }
 
+    @MavenTest
+    fun different_report_directory(result: MavenExecutionResult) {
+        assertThat(result).isSuccessful
+            .project()
+            .has("build")
+
+        assertThat(result.mavenProjectResult.targetProjectDirectory
+            .resolve("build")
+            .resolve("camunda-tests/aggregation/report.json"))
+            .exists()
+            .isRegularFile()
+            .content()
+            .satisfies(Consumer {
+                val actual = Gson().fromJson(it, JsonObject::class.java)
+                val expected = Gson().fromJson(
+                    result.mavenProjectResult.targetProjectDirectory.resolve("expected_result.json").readText(),
+                    JsonObject::class.java
+                )
+                assertThat(actual.getAsJsonArray("suites")).containsExactlyInAnyOrderElementsOf(
+                    expected.getAsJsonArray("suites"))
+                assertThat(actual.getAsJsonArray("models")).containsExactlyInAnyOrderElementsOf(
+                    expected.getAsJsonArray("models"))
+            })
+    }
+
 }
