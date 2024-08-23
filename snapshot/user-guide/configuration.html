@@ -504,6 +504,52 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#junit5" class="md-nav__link">
+    <span class="md-ellipsis">
+      JUnit5
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spring-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spring Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maven-aggregation-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maven aggregation plugin
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradle-aggregation-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      Gradle aggregation plugin
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#legacy-way-via-system-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      Legacy way via system property
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Legacy way via system property">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#maven" class="md-nav__link">
     <span class="md-ellipsis">
       Maven
@@ -518,6 +564,11 @@
       Gradle (KTS)
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -673,8 +724,66 @@
   <h1>Configuration</h1>
 
 <h2 id="setup-reporting-directory">Setup reporting directory<a class="headerlink" href="#setup-reporting-directory" title="Permanent link">#</a></h2>
-<p>Optionally, you might configure output path for reports. By default the reports are written to <code>./target/process-test-coverage/</code>. To change it you can set the system property <code>camunda-process-test-coverage.target-dir-root</code>.</p>
-<h3 id="maven">Maven<a class="headerlink" href="#maven" title="Permanent link">#</a></h3>
+<p>Optionally, you might configure output path for reports. By default, the reports are written to <code>./target/process-test-coverage/</code>.
+Depending on your preference there are multiple ways to change this.</p>
+<h3 id="junit5">JUnit5<a class="headerlink" href="#junit5" title="Permanent link">#</a></h3>
+<p>When registering the extension programmatically, there is an option to change the report directory.
+See the following example, that uses the directory build which will typically be used by grade builds.</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@RegisterExtension</span>
+<span class="kd">var</span><span class="w"> </span><span class="nv">extension</span><span class="p">:</span><span class="w"> </span><span class="n">ProcessEngineCoverageExtension</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProcessEngineCoverageExtension</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">    </span><span class="p">.</span><span class="na">assertClassCoverageAtLeast</span><span class="p">(</span><span class="m">1.0</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">reportDirectory</span><span class="p">(</span><span class="s">&quot;build/process-test-coverage&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="spring-testing">Spring Testing<a class="headerlink" href="#spring-testing" title="Permanent link">#</a></h3>
+<p>For the spring test execution listener, the configuration is provided through a configuration in the application context.
+If a bean of type ProcessEngineCoverageProperties is present in the application context, it will be used for configuration
+and supports changing the report directory.</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@Bean</span>
+<span class="kd">public</span><span class="w"> </span><span class="n">ProcessEngineCoverageProperties</span><span class="w"> </span><span class="nf">processEngineCoverageProperties</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ProcessEngineCoverageProperties</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<span class="w">            </span><span class="p">.</span><span class="na">assertClassCoverageAtLeast</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="na">reportDirectory</span><span class="p">(</span><span class="s">&quot;build/process-test-coverage&quot;</span><span class="p">)</span>
+<span class="w">            </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="maven-aggregation-plugin">Maven aggregation plugin<a class="headerlink" href="#maven-aggregation-plugin" title="Permanent link">#</a></h3>
+<p>For the maven aggregation plugin the report directory can be changed via the plugin configuration. It's also
+possible to configure the output directory for the aggregation report inside the report directory (by default it's "all").</p>
+<div class="highlight"><pre><span></span><code><span class="nt">&lt;plugin&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.camunda.community.process_test_coverage<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>camunda-process-test-coverage-report-aggregator-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>@project.version@<span class="nt">&lt;/version&gt;</span>
+<span class="w">    </span><span class="nt">&lt;executions&gt;</span>
+<span class="w">        </span><span class="nt">&lt;execution&gt;</span>
+<span class="w">            </span><span class="nt">&lt;id&gt;</span>aggregate-reports<span class="nt">&lt;/id&gt;</span>
+<span class="w">            </span><span class="nt">&lt;goals&gt;</span>
+<span class="w">                </span><span class="nt">&lt;goal&gt;</span>aggregate<span class="nt">&lt;/goal&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/goals&gt;</span>
+<span class="w">            </span><span class="nt">&lt;configuration&gt;</span>
+<span class="w">                </span><span class="nt">&lt;reportDirectory&gt;</span>build/camunda-tests<span class="nt">&lt;/reportDirectory&gt;</span>
+<span class="w">                </span><span class="nt">&lt;outputDirectory&gt;</span>aggregation<span class="nt">&lt;/outputDirectory&gt;</span>
+<span class="w">            </span><span class="nt">&lt;/configuration&gt;</span>
+<span class="w">        </span><span class="nt">&lt;/execution&gt;</span>
+<span class="w">    </span><span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</code></pre></div>
+<h3 id="gradle-aggregation-plugin">Gradle aggregation plugin<a class="headerlink" href="#gradle-aggregation-plugin" title="Permanent link">#</a></h3>
+<p>For the gradle plugin it's also possible to change the report directory as well as the output directory for the 
+aggregation report.
+This can be done via an extension setting in the gradle build file.</p>
+<div class="highlight"><pre><span></span><code><span class="n">plugins</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;org.camunda.community.process_test_coverage.report-aggregator&#39;</span>
+<span class="o">}</span>
+
+<span class="n">aggregateProcessTestCoverage</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span><span class="n">reportDirectory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;build/camunda-tests&#39;</span>
+<span class="w">    </span><span class="n">outputDirectory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;aggregation&#39;</span>
+<span class="o">}</span>
+</code></pre></div>
+<h3 id="legacy-way-via-system-property">Legacy way via system property<a class="headerlink" href="#legacy-way-via-system-property" title="Permanent link">#</a></h3>
+<p>We still support the old way to configure the reporting directory via system property <code>camunda-process-test-coverage.target-dir-root</code>.</p>
+<h4 id="maven">Maven<a class="headerlink" href="#maven" title="Permanent link">#</a></h4>
 <div class="highlight"><pre><span></span><code><span class="nt">&lt;plugin&gt;</span>
 <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
 <span class="nt">&lt;artifactId&gt;</span>maven-surefire-plugin<span class="nt">&lt;/artifactId&gt;</span>
@@ -685,7 +794,7 @@
 <span class="nt">&lt;/configuration&gt;</span>
 <span class="nt">&lt;/plugin&gt;</span>
 </code></pre></div>
-<h3 id="gradle-kts">Gradle (KTS)<a class="headerlink" href="#gradle-kts" title="Permanent link">#</a></h3>
+<h4 id="gradle-kts">Gradle (KTS)<a class="headerlink" href="#gradle-kts" title="Permanent link">#</a></h4>
 <div class="highlight"><pre><span></span><code><span class="n">tasks</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="n">withType</span><span class="o">&lt;</span><span class="n">Test</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
 <span class="w">        </span><span class="n">systemProperties</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mapOf</span><span class="p">(</span>
@@ -714,7 +823,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 22, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">August 23, 2024</span>
   </span>
 
     
