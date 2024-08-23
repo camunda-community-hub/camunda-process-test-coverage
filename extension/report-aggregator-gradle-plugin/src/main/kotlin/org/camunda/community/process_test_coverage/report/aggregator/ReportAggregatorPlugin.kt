@@ -22,7 +22,6 @@ package org.camunda.community.process_test_coverage.report.aggregator
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.combineCoverageStateResults
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.createCoverageStateResult
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.readCoverageStateResult
-import org.camunda.community.process_test_coverage.core.export.CoverageStateResult
 import org.camunda.community.process_test_coverage.report.CoverageReportUtil
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -39,7 +38,7 @@ class ReportAggregatorPlugin : Plugin<Project> {
         val extension = project.extensions.create("aggregateProcessTestCoverage", ReportAggregatorPluginExtension::class.java)
         project.task("aggregateProcessTestCoverage")
             .doLast {
-                val outputDirectory = File(File(project.projectDir, extension.reportDirectory), extension.outputDirectory).path
+                val outputDirectory = File(File(project.projectDir, extension.reportDirectory), extension.outputDirectory)
                 project.allprojects
                     .asSequence()
                     .map {

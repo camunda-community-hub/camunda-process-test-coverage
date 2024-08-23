@@ -117,7 +117,7 @@ class ReportAggregatorMojo : AbstractMojo(), MavenReport {
             .reduceOrNull { result1, result2 -> combineCoverageStateResults(result1, result2) }
             ?.let {
                 val report = readCoverageStateResult(it)
-                val aggregateReportDirectory = File(File(project.basedir, targetDirectory), outputDirectory).path
+                val aggregateReportDirectory = File(File(project.basedir, targetDirectory), outputDirectory)
                 CoverageReportUtil.writeReport(createCoverageStateResult(report.suites, report.models), false,
                     aggregateReportDirectory, "report.json"
                 ) { result -> result }
