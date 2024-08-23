@@ -51,7 +51,12 @@ class ProcessEngineCoverageExtensionHelper(
     /**
      * Conditions to be asserted on the individual test method coverages.
      */
-    private val testMethodNameToCoverageConditions: MutableMap<String, MutableList<Condition<Double>>> = mutableMapOf()
+    private val testMethodNameToCoverageConditions: MutableMap<String, MutableList<Condition<Double>>> = mutableMapOf(),
+
+    /**
+     * Output directory for the reports.
+     */
+    private val reportDirectory: String? = null
 
 ) {
 
@@ -84,8 +89,8 @@ class ProcessEngineCoverageExtensionHelper(
                 logCoverageDetail(suite)
 
                 // Create graphical report
-                CoverageReportUtil.createReport(coverageCollector)
-                CoverageReportUtil.createJsonReport(coverageCollector)
+                CoverageReportUtil.createReport(coverageCollector, reportDirectory)
+                CoverageReportUtil.createJsonReport(coverageCollector, reportDirectory)
 
                 assertCoverage(suiteCoveragePercentage, classCoverageAssertionConditions)
             }

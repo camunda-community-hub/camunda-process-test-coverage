@@ -118,8 +118,8 @@ abstract class BaseProcessEngineCoverageTestExecutionListener : TestExecutionLis
                 logCoverageDetail(suite)
 
                 // Create graphical report
-                CoverageReportUtil.createReport(getCoverageCollector())
-                CoverageReportUtil.createJsonReport(getCoverageCollector())
+                CoverageReportUtil.createReport(getCoverageCollector(), processEngineCoverageProperties.reportDirectory)
+                CoverageReportUtil.createJsonReport(getCoverageCollector(), processEngineCoverageProperties.reportDirectory)
 
                 assertCoverage(
                     suiteCoveragePercentage,

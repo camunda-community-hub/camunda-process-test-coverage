@@ -38,6 +38,8 @@ import java.util.jar.JarFile;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static java.util.Optional.ofNullable;
+
 /**
  * Utility for generating graphical class and method coverage reports.
  *
@@ -55,15 +57,15 @@ public class CoverageReportUtil {
     private static final String REPORT_TEMPLATE = "html/bpmn.report-template.html";
 
 
-    public static void createReport(final DefaultCollector coverageCollector) {
+    public static void createReport(final DefaultCollector coverageCollector, final String reportDirectory) {
         writeReport(createCoverageStateResult(coverageCollector), true,
-                getReportDirectoryPath(coverageCollector.getActiveSuite().getId()),
+                getReportDirectory(ofNullable(reportDirectory).orElse(TARGET_DIR_ROOT), coverageCollector),
                 "report.html", CoverageReportUtil::generateHtml);
     }
 
-    public static void createJsonReport(final DefaultCollector coverageCollector) {
+    public static void createJsonReport(final DefaultCollector coverageCollector, final String reportDirectory) {
         writeReport(createCoverageStateResult(coverageCollector), false,
-                getReportDirectoryPath(coverageCollector.getActiveSuite().getId()),
+                getReportDirectory(ofNullable(reportDirectory).orElse(TARGET_DIR_ROOT), coverageCollector),
                 "report.json", result -> result);
     }
 
@@ -72,18 +74,18 @@ public class CoverageReportUtil {
         return CoverageStateJsonExporter.createCoverageStateResult(
                 Collections.singleton(suite),
                 coverageCollector.getModels().stream().filter(
-                        it -> suite.getEvents(it.getKey()).size() > 0).collect(Collectors.toSet()));
+                        it -> !suite.getEvents(it.getKey()).isEmpty()).collect(Collectors.toSet()));
     }
 
     public static void writeReport(final String coverageResult, boolean installReportDependencies,
-                                   final String reportDirectory, final String fileName, final Function<String, String> reportCreator) {
+                                   final File reportDirectory, final String fileName, final Function<String, String> reportCreator) {
 
         if (installReportDependencies) {
             installReportDependencies(reportDirectory);
         }
 
         try {
-            Files.createDirectories(FileSystems.getDefault().getPath(reportDirectory));
+            Files.createDirectories(reportDirectory.toPath());
             writeToFile(reportDirectory + "/" + fileName, reportCreator.apply(coverageResult));
         } catch (final IOException ex) {
             throw new RuntimeException("Unable to write report.", ex);
@@ -104,8 +106,8 @@ public class CoverageReportUtil {
         Files.write(FileSystems.getDefault().getPath(filePath), json.getBytes(StandardCharsets.UTF_8));
     }
 
-    private static void installReportDependencies(final String reportDirectory) {
-        final File parent = new File(reportDirectory).getParentFile();
+    private static void installReportDependencies(final File reportDirectory) {
+        final File parent = reportDirectory.getParentFile();
         final File reportResourcesDir = new File(parent, REPORT_RESOURCES);
         if (reportResourcesDir.exists()) {
             // No need to install
@@ -181,12 +183,13 @@ public class CoverageReportUtil {
     /**
      * Retrieves directory path for all coverage reports of a test class.
      *
-     * @param className class name of the class to generate report for.
+     * @param directory directory for the reports
+     * @param collector collector that was used for collecting events
      *
      * @return path for the report.
      */
-    private static String getReportDirectoryPath(final String className) {
-        return TARGET_DIR_ROOT + className;
+    private static File getReportDirectory(final String directory, final DefaultCollector collector) {
+        return new File(directory, collector.getActiveSuite().getId());
     }
 
 }

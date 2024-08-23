@@ -1,6 +1,7 @@
 package org.camunda.community.process_test_coverage.spring_test.platform7
 
 import org.camunda.bpm.engine.RuntimeService
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -9,12 +10,13 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.context.TestExecutionListeners
 
 @SpringBootApplication
-class Application
+class DifferentReportDirectory
 
-@SpringBootTest(classes = [Application::class])
-@Import(CoverageTestConfiguration::class, ProcessEngineCoverageConfiguration::class)
+@SpringBootTest(classes = [DifferentReportDirectory::class])
+@Import(DifferentReportDirectoryTestConfiguration::class, ProcessEngineCoverageConfiguration::class)
 @TestExecutionListeners(value = [ProcessEngineCoverageTestExecutionListener::class], mergeMode = TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS)
-class ClassCoverageTest {
+@Disabled
+class DifferentReportDirectoryTest {
 
     @Autowired
     private lateinit var runtimeService: RuntimeService

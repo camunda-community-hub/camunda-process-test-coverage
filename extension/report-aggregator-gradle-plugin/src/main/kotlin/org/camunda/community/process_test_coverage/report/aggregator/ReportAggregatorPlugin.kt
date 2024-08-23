@@ -22,31 +22,31 @@ package org.camunda.community.process_test_coverage.report.aggregator
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.combineCoverageStateResults
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.createCoverageStateResult
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.readCoverageStateResult
-import org.camunda.community.process_test_coverage.core.export.CoverageStateResult
 import org.camunda.community.process_test_coverage.report.CoverageReportUtil
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import java.io.File
 
 abstract class ReportAggregatorPluginExtension {
-    var outputDirectory: String? = null
+    var reportDirectory: String = "build/process-test-coverage"
+    var outputDirectory: String = "all"
 }
 
 class ReportAggregatorPlugin : Plugin<Project> {
 
-    companion object {
-        var TARGET_DIR_ROOT: String = System.getProperty("camunda-process-test-coverage.target-dir-root", "target/process-test-coverage/")
-    }
-
     override fun apply(project: Project) {
-        val outputDirectory = calcOutputDirectory(project)
+        val extension = project.extensions.create("aggregateProcessTestCoverage", ReportAggregatorPluginExtension::class.java)
         project.task("aggregateProcessTestCoverage")
             .doLast {
+                val outputDirectory = File(File(project.projectDir, extension.reportDirectory), extension.outputDirectory)
                 project.allprojects
                     .asSequence()
                     .map {
                         project.logger.debug("Processing module ${it.name}")
-                        it.fileTree(".").apply { this.include("$TARGET_DIR_ROOT/**/report.json", "**/all/report.json") }.files
+                        it.fileTree(it.projectDir).apply {
+                            this.include("${extension.reportDirectory}/**/report.json")
+                            this.exclude("**/${extension.outputDirectory}/report.json")
+                        }.files
                     }
                     .flatten()
                     .map {
@@ -65,11 +65,6 @@ class ReportAggregatorPlugin : Plugin<Project> {
                             outputDirectory, "report.html", CoverageReportUtil::generateHtml)
                     } ?: project.logger.warn("No coverage results found, skipping execution")
             }
-    }
-
-    private fun calcOutputDirectory(project: Project): String {
-        val extension = project.extensions.create("aggregateProcessTestCoverage", ReportAggregatorPluginExtension::class.java)
-        return extension.outputDirectory ?: File(project.projectDir, TARGET_DIR_ROOT + "all").absolutePath
     }
 
 }
