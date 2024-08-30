@@ -20,11 +20,14 @@
 package org.camunda.community.process_test_coverage.junit5.platform8
 
 import io.camunda.zeebe.client.ZeebeClient
-import org.junit.jupiter.api.Nested
+import io.camunda.zeebe.process.test.api.ZeebeTestEngine
+import io.camunda.zeebe.process.test.extension.testcontainer.ZeebeProcessTest
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
+import java.time.Duration
 
-class NestedInnerClassCoverageTest {
+@ZeebeProcessTest
+class EventBasedGatewayTest {
 
     companion object {
         @JvmField
@@ -32,30 +35,23 @@ class NestedInnerClassCoverageTest {
         var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension.builder().assertClassCoverageAtLeast(1.0).build()
     }
 
-    @Nested
-    inner class PathA {
+    private lateinit var client: ZeebeClient
+    private lateinit var engine: ZeebeTestEngine
 
-        private lateinit var client: ZeebeClient
-        @Test
-        fun testPathA() {
-            CoverageTestProcessConstants.deploy(client)
-            val variables: MutableMap<String, Any> = HashMap()
-            variables["path"] = "A"
-            client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()
-        }
+    @Test
+    fun testPathSignal() {
+        CoverageTestProcessConstants.deploy(client, resourcePath = "eventBasedGateway.bpmn")
+        client.newCreateInstanceCommand().bpmnProcessId("event_based_gateway").latestVersion().send().join()
+        engine.waitForIdleState(Duration.ofSeconds(5))
+        client.newBroadcastSignalCommand().signalName("Signal_1").send().join()
     }
 
-    @Nested
-    inner class PathB {
-
-        private lateinit var client: ZeebeClient
-        @Test
-        fun testPathB() {
-            CoverageTestProcessConstants.deploy(client)
-            val variables: MutableMap<String, Any> = HashMap()
-            variables["path"] = "B"
-            client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()
-        }
+    @Test
+    fun testPathMessage() {
+        CoverageTestProcessConstants.deploy(client, resourcePath = "eventBasedGateway.bpmn")
+        client.newCreateInstanceCommand().bpmnProcessId("event_based_gateway").latestVersion().send().join()
+        engine.waitForIdleState(Duration.ofSeconds(5))
+        client.newPublishMessageCommand().messageName("Message_1").correlationKey("1").send().join()
     }
 
 }
