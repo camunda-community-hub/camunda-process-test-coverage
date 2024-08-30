@@ -20,11 +20,15 @@
 package org.camunda.community.process_test_coverage.junit5.platform8
 
 import io.camunda.zeebe.client.ZeebeClient
+import io.camunda.zeebe.process.test.api.ZeebeTestEngine
+import io.camunda.zeebe.process.test.extension.testcontainer.ZeebeProcessTest
 import org.assertj.core.api.HamcrestCondition
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
+import java.time.Duration
 
+@ZeebeProcessTest
 class MethodCoverageTest {
 
     companion object {
@@ -36,6 +40,7 @@ class MethodCoverageTest {
     }
 
     private lateinit var client: ZeebeClient
+    private lateinit var engine: ZeebeTestEngine
 
     @Test
     fun testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered() {
@@ -51,6 +56,7 @@ class MethodCoverageTest {
                 "testCoverageWhenRunningPathAShouldReportSevenOutOfElevenElementsCovered",
                 HamcrestCondition(Matchers.lessThan(7.1 / 11.0))
         )
+        engine.waitForIdleState(Duration.ofSeconds(5))
     }
 
     @Test
@@ -67,6 +73,7 @@ class MethodCoverageTest {
                 "testCoverageWhenRunningPathBShouldReportSevenOutOfElevenElementsCovered",
                 HamcrestCondition(Matchers.lessThan(7.1 / 11.0))
         )
+        engine.waitForIdleState(Duration.ofSeconds(5))
     }
 
 

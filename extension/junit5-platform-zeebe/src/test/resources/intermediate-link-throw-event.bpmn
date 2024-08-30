@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1ll84yq" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:collaboration id="Collaboration_0jx27kr">
+    <bpmn:participant id="Participant_Testprocess" name="Testprocess" processRef="Testprocess" />
+  </bpmn:collaboration>
+  <bpmn:process id="Testprocess" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0vlbint">
+      <bpmn:lane id="Lane_1yrc6zf">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_ThrowLinkEvent</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1dngsvi">
+        <bpmn:flowNodeRef>Event_03n57hz</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0rssftv</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1o2r0ds</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:intermediateThrowEvent id="Event_ThrowLinkEvent" name="Link Event">
+      <bpmn:incoming>Flow_1o2r0ds</bpmn:incoming>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_0epq7zx" name="Link Event" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_1o2r0ds" sourceRef="StartEvent_1" targetRef="Event_ThrowLinkEvent" />
+    <bpmn:sequenceFlow id="Flow_1sxrbob" sourceRef="Event_03n57hz" targetRef="Event_0rssftv" />
+    <bpmn:intermediateCatchEvent id="Event_03n57hz" name="Link Event">
+      <bpmn:outgoing>Flow_1sxrbob</bpmn:outgoing>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_00vge5z" name="Link Event" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_0rssftv">
+      <bpmn:incoming>Flow_1sxrbob</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0jx27kr">
+      <bpmndi:BPMNShape id="Participant_0w7zg56_di" bpmnElement="Participant_Testprocess" isHorizontal="true">
+        <dc:Bounds x="129" y="80" width="331" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1yrc6zf_di" bpmnElement="Lane_1yrc6zf" isHorizontal="true">
+        <dc:Bounds x="159" y="80" width="301" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1dngsvi_di" bpmnElement="Lane_1dngsvi" isHorizontal="true">
+        <dc:Bounds x="159" y="205" width="301" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1o2r0ds_di" bpmnElement="Flow_1o2r0ds">
+        <di:waypoint x="225" y="140" />
+        <di:waypoint x="372" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sxrbob_di" bpmnElement="Flow_1sxrbob">
+        <di:waypoint x="225" y="260" />
+        <di:waypoint x="372" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="189" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_10f5yk9_di" bpmnElement="Event_ThrowLinkEvent">
+        <dc:Bounds x="372" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="370" y="165" width="53" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_040m0z7_di" bpmnElement="Event_03n57hz">
+        <dc:Bounds x="189" y="242" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="181" y="285" width="53" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0rssftv_di" bpmnElement="Event_0rssftv">
+        <dc:Bounds x="372" y="242" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

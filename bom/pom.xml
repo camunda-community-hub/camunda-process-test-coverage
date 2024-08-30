@@ -27,7 +27,7 @@
             </dependency>
             <dependency>
                 <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-engine-platform-8</artifactId>
+                <artifactId>camunda-process-test-coverage-engine-platform-zeebe</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

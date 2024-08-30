@@ -15,10 +15,12 @@
     <modules>
         <module>core</module>
         <module>engine-platform-7</module>
+        <module>engine-platform-zeebe</module>
         <module>engine-platform-8</module>
         <module>junit4-platform-7</module>
         <module>junit5-common</module>
         <module>junit5-platform-7</module>
+        <module>junit5-platform-zeebe</module>
         <module>junit5-platform-8</module>
         <module>spring-test-common</module>
         <module>spring-test-platform-7</module>

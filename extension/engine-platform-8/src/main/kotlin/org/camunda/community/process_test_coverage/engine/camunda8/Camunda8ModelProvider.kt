@@ -17,39 +17,47 @@
  * limitations under the License.
  * #L%
  */
-package org.camunda.community.process_test_coverage.engine.platform8
+package org.camunda.community.process_test_coverage.engine.camunda8
 
-import io.camunda.zeebe.model.bpmn.Bpmn.*
+import io.camunda.operate.search.ProcessDefinitionFilter
+import io.camunda.operate.search.SearchQuery
+import io.camunda.process.test.impl.runtime.CamundaContainerRuntime
+import io.camunda.zeebe.model.bpmn.Bpmn.convertToString
 import io.camunda.zeebe.model.bpmn.instance.FlowNode
-import io.camunda.zeebe.model.bpmn.instance.IntermediateThrowEvent
-import io.camunda.zeebe.model.bpmn.instance.LinkEventDefinition
 import io.camunda.zeebe.model.bpmn.instance.Process
 import io.camunda.zeebe.model.bpmn.instance.SequenceFlow
-import io.camunda.zeebe.process.test.assertions.BpmnAssert.getRecordStream
-import org.camunda.community.process_test_coverage.core.model.Model
 import org.camunda.bpm.model.xml.instance.ModelElementInstance
 import org.camunda.community.process_test_coverage.core.engine.ModelProvider
-import java.io.ByteArrayInputStream
+import org.camunda.community.process_test_coverage.core.model.Model
 import java.util.stream.Collectors
 
 /**
- * Provider that is used to load processes from the engine.
- * The record stream from zeebe is used for this.
+ * Provider that is used to load process models from the engine.
+ * The operate rest api is used for this.
  */
-class ZeebeModelProvider: ModelProvider {
+class Camunda8ModelProvider(
+    private val containerRuntime: () -> CamundaContainerRuntime
+): ModelProvider {
 
     override fun getModel(key: String): Model {
-        val process = getRecordStream().processRecords()
-                .first { it.value.bpmnProcessId == key }
 
-        return process?.value?.let {
-            val modelInstance = readModelFromStream(ByteArrayInputStream(it.resource))
+        val operateClient = getOperateClient(containerRuntime.invoke())
+
+        val filter = ProcessDefinitionFilter.builder().bpmnProcessId(key).build()
+        val result = operateClient.searchDecisionDefinitions(SearchQuery.Builder().filter(filter).build())
+        if (result.size != 1) {
+            throw IllegalStateException()
+        }
+        val processDefinition = result[0]
+        val modelInstance = operateClient.getProcessDefinitionModel(processDefinition.key)
+
+        return modelInstance?.let {
             val definitionFlowNodes = getExecutableFlowNodes(modelInstance.getModelElementsByType(FlowNode::class.java), key)
             val definitionSequenceFlows = getExecutableSequenceNodes(modelInstance.getModelElementsByType(SequenceFlow::class.java), definitionFlowNodes)
             Model(
                 key,
                 definitionFlowNodes.size + definitionSequenceFlows.size,
-                "${it.version}",
+                "${processDefinition.version}",
                 convertToString(modelInstance)
             )
         } ?: throw IllegalArgumentException()
