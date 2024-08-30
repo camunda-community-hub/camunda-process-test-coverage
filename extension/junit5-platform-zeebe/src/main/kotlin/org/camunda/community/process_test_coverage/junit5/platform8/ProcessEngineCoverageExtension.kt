@@ -19,8 +19,7 @@
  */
 package org.camunda.community.process_test_coverage.junit5.platform8
 
-import io.camunda.process.test.api.CamundaProcessTestExtension
-import io.camunda.process.test.impl.runtime.CamundaContainerRuntime
+import io.camunda.zeebe.process.test.assertions.BpmnAssert
 import mu.KLogging
 import org.assertj.core.api.Condition
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
@@ -59,21 +58,17 @@ class ProcessEngineCoverageExtension(
          */
         private val reportDirectory: String? = null
 
-) : CamundaProcessTestExtension(), BeforeAllCallback, AfterAllCallback, BeforeTestExecutionCallback, AfterTestExecutionCallback {
+) : BeforeAllCallback, AfterAllCallback, BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
-    companion object {
+    companion object : KLogging() {
         @JvmStatic
         fun builder() = Builder()
     }
 
-    private var camundaContainerRuntime: CamundaContainerRuntime? = null
-
     /**
      * The state of the current run (class and current method).
      */
-    private val coverageCollector = DefaultCollector(
-        Camunda8ModelProvider { camundaContainerRuntime ?: throw IllegalStateException() }
-    )
+    private val coverageCollector = DefaultCollector(Camunda8ModelProvider())
 
     /**
      * Conditions to be asserted on the class coverage percentage.
@@ -85,6 +80,11 @@ class ProcessEngineCoverageExtension(
      */
     private val testMethodNameToCoverageConditions: MutableMap<String, MutableList<Condition<Double>>> = mutableMapOf()
 
+    /**
+     * Map of test method to last event time, when test method was started.
+     */
+    private val methodRecordPosition = mutableMapOf<String, Long>()
+
     private val processEngineCoverageExtensionHelper = ProcessEngineCoverageExtensionHelper(coverageCollector,
         detailedCoverageLogging, handleTestMethodCoverage, excludedProcessDefinitionKeys,
         classCoverageAssertionConditions, testMethodNameToCoverageConditions, reportDirectory)
@@ -93,11 +93,9 @@ class ProcessEngineCoverageExtension(
      * Handles creating the run if a relevant test method is called.
      */
     override fun beforeTestExecution(context: ExtensionContext) {
-        // get runtime from store
-        val store = context.getStore(NAMESPACE)
-        camundaContainerRuntime = store.get(STORE_KEY_RUNTIME) as CamundaContainerRuntime
         if (!processEngineCoverageExtensionHelper.isTestMethodExcluded(context)) {
             processEngineCoverageExtensionHelper.beforeTestExecution(context)
+            methodRecordPosition[context.requiredTestMethod.name] = BpmnAssert.getRecordStream().records().maxOfOrNull { it.position } ?: -1
         }
     }
 
@@ -106,10 +104,9 @@ class ProcessEngineCoverageExtension(
      */
     override fun afterTestExecution(context: ExtensionContext) {
         if (!processEngineCoverageExtensionHelper.isTestMethodExcluded(context)) {
-            createEvents(camundaContainerRuntime ?: throw IllegalStateException(), coverageCollector)
+            createEvents(coverageCollector, methodRecordPosition[context.requiredTestMethod.name]!!)
             processEngineCoverageExtensionHelper.afterTestExecution(context)
         }
-        camundaContainerRuntime = null
     }
 
     /**
