@@ -20,15 +20,19 @@
 package org.camunda.community.process_test_coverage.junit5.platform8
 
 import io.camunda.zeebe.client.ZeebeClient
+import io.camunda.zeebe.process.test.api.ZeebeTestEngine
+import io.camunda.zeebe.process.test.extension.testcontainer.ZeebeProcessTest
 import org.assertj.core.api.HamcrestCondition
-import org.camunda.community.process_test_coverage.junit5.common.ProcessEngineCoverageExtensionBuilder.Companion.DEFAULT_ASSERT_AT_LEAST_PROPERTY
 import org.camunda.community.process_test_coverage.junit5.platform8.CoverageTestProcessConstants.deploy
+import org.camunda.community.process_test_coverage.junit5.common.ProcessEngineCoverageExtensionBuilder.Companion.DEFAULT_ASSERT_AT_LEAST_PROPERTY
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 import java.time.Duration
 
+
+@ZeebeProcessTest
 class ClassCoverageSystemPropertyTest {
 
     companion object {
@@ -55,6 +59,7 @@ class ClassCoverageSystemPropertyTest {
     }
 
     private lateinit var client: ZeebeClient
+    private lateinit var engine: ZeebeTestEngine
 
     @Test
     fun testPathB() {
@@ -63,6 +68,7 @@ class ClassCoverageSystemPropertyTest {
         variables["path"] = "B"
         client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()
         extension.addTestMethodCoverageCondition("testPathB", HamcrestCondition(Matchers.lessThan(EXPECTED_COVERAGE + 0.0001)))
+        engine.waitForIdleState(Duration.ofSeconds(5))
     }
 
 

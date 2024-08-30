@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package org.camunda.community.process_test_coverage.engine.platform8
+package org.camunda.community.process_test_coverage.engine.zeebe
 
 import io.camunda.zeebe.model.bpmn.Bpmn
 import io.camunda.zeebe.model.bpmn.instance.SequenceFlow
