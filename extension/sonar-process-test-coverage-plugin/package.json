@@ -17,7 +17,7 @@
     "react-router": "6.23.1",
     "react-transform-hmr": "1.0.4",
     "style-loader": "^4.0.0",
-    "webpack": "^5.91.0",
+    "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4",
     "webpack-merge": "^5.10.0"
