@@ -80,17 +80,10 @@
 
     <profiles>
         <profile>
-            <id>camunda-bpm-engine-7.20</id>
+            <id>cibseven-bpm-engine-1.1.0</id>
             <properties>
-                <camunda.version>7.20.0</camunda.version>
-                <spring-boot.version>3.1.4</spring-boot.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>camunda-bpm-engine-7.21</id>
-            <properties>
-                <camunda.version>7.21.0</camunda.version>
-                <spring-boot.version>3.2.5</spring-boot.version>
+                <cibseven.version>1.1.0</cibseven.version>
+                <spring-boot.version>3.3.5</spring-boot.version>
             </properties>
         </profile>
     </profiles>

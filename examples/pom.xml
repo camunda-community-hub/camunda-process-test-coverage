@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
 
     <properties>
-<!--        <camunda.version>${camunda.compile.version}</camunda.version>-->
         <cibseven.version>${cibseven.compile.version}</cibseven.version>
         <jacoco.skip>true</jacoco.skip>
         <dokka.skip>true</dokka.skip>
