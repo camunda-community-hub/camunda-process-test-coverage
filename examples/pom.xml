@@ -109,7 +109,7 @@
                 <jdk>[11,)</jdk>
             </activation>
             <modules>
-                <module>jgiven-platform-7</module>
+<!--                <module>jgiven-platform-7</module>-->
 <!--                <module>junit5-platform-8</module>-->
 <!--                <module>spring-test-platform-8</module>-->
 <!--                <module>spring-starter-platform-8</module>-->
