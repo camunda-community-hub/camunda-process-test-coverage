@@ -1,7 +1,7 @@
 package org.camunda.community.process_test_coverage.junit5.platform7;
 
 import org.assertj.core.api.Condition;
-import org.camunda.bpm.engine.test.Deployment;
+import org.cibseven.bpm.engine.test.Deployment;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 

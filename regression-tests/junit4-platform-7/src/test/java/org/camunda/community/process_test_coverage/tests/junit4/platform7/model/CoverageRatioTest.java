@@ -1,9 +1,9 @@
 package org.camunda.community.process_test_coverage.tests.junit4.platform7.model;
 
-import org.camunda.bpm.engine.TaskService;
-import org.camunda.bpm.engine.task.Task;
-import org.camunda.bpm.engine.test.Deployment;
-import org.camunda.bpm.engine.variable.Variables;
+import org.cibseven.bpm.engine.TaskService;
+import org.cibseven.bpm.engine.task.Task;
+import org.cibseven.bpm.engine.test.Deployment;
+import org.cibseven.bpm.engine.variable.Variables;
 import org.camunda.community.process_test_coverage.junit4.platform7.rules.TestCoverageProcessEngineRule;
 import org.camunda.community.process_test_coverage.junit4.platform7.rules.TestCoverageProcessEngineRuleBuilder;
 import org.junit.ClassRule;

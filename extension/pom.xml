@@ -15,14 +15,14 @@
     <modules>
         <module>core</module>
         <module>engine-platform-7</module>
-        <module>engine-platform-8</module>
+<!--        <module>engine-platform-8</module>-->
         <module>junit4-platform-7</module>
         <module>junit5-common</module>
         <module>junit5-platform-7</module>
-        <module>junit5-platform-8</module>
+<!--        <module>junit5-platform-8</module>-->
         <module>spring-test-common</module>
         <module>spring-test-platform-7</module>
-        <module>spring-test-platform-8</module>
+<!--        <module>spring-test-platform-8</module>-->
         <module>report-generator</module>
     </modules>
 
@@ -39,20 +39,22 @@
 
             <!-- Camunda -->
             <dependency>
-                <groupId>org.camunda.bpm</groupId>
-                <artifactId>camunda-bom</artifactId>
-                <version>${camunda.compile.version}</version>
+                <groupId>org.cibseven.bpm</groupId>
+                <artifactId>cibseven-bom</artifactId>
+                <version>${cibseven.compile.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
 
             <!-- Zeebe -->
+<!--
             <dependency>
                 <groupId>io.camunda</groupId>
                 <artifactId>zeebe-process-test-assertions</artifactId>
                 <scope>provided</scope>
                 <version>${zeebe.version}</version>
             </dependency>
+-->
 
             <!-- Own modules -->
             <dependency>
@@ -63,11 +65,6 @@
             <dependency>
                 <groupId>org.camunda.community.process_test_coverage</groupId>
                 <artifactId>camunda-process-test-coverage-engine-platform-7</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-engine-platform-8</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -107,7 +104,7 @@
             <modules>
                 <module>report-aggregator-maven-plugin</module>
                 <module>report-aggregator-gradle-plugin</module>
-                <module>sonar-process-test-coverage-plugin</module>
+<!--                <module>sonar-process-test-coverage-plugin</module>-->
             </modules>
         </profile>
     </profiles>

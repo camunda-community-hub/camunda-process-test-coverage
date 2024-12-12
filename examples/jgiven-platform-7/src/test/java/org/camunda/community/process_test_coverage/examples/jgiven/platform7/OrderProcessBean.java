@@ -20,8 +20,8 @@ package org.camunda.community.process_test_coverage.examples.jgiven.platform7;
  * #L%
  */
 
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.cibseven.bpm.engine.ProcessEngine;
+import org.cibseven.bpm.engine.runtime.ProcessInstance;
 
 import java.util.function.Supplier;
 

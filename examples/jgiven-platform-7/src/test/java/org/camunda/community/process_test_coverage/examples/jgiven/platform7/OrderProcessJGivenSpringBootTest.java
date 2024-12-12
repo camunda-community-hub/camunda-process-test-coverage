@@ -22,10 +22,10 @@ package org.camunda.community.process_test_coverage.examples.jgiven.platform7;
 
 import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.junit.ScenarioTest;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions;
-import org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
-import org.camunda.bpm.engine.variable.impl.VariableMapImpl;
+import org.cibseven.bpm.engine.ProcessEngine;
+import org.cibseven.bpm.engine.test.assertions.bpmn.AbstractAssertions;
+import org.cibseven.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
+import org.cibseven.bpm.engine.variable.impl.VariableMapImpl;
 import org.camunda.community.process_test_coverage.spring_test.platform7.ProcessEngineCoverageConfiguration;
 import org.camunda.community.process_test_coverage.spring_test.platform7.ProcessEngineCoverageTestExecutionListener;
 import org.junit.BeforeClass;

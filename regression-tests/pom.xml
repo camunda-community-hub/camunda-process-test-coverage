@@ -46,9 +46,9 @@
 
             <!-- Re-define Camunda -->
             <dependency>
-                <groupId>org.camunda.bpm</groupId>
-                <artifactId>camunda-bom</artifactId>
-                <version>${camunda.version}</version>
+                <groupId>org.cibseven.bpm</groupId>
+                <artifactId>cibseven-bom</artifactId>
+                <version>${cibseven.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>

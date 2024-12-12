@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="processEngineConfiguration"
-          class="org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+          class="org.cibseven.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
         <property name="historyTimeToLive" value="P1D"/>
 
         <property name="customEventHandlers">

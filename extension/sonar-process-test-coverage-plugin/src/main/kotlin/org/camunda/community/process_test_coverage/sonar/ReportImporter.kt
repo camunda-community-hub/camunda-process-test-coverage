@@ -19,14 +19,14 @@
  */
 package org.camunda.community.process_test_coverage.sonar
 
-import org.camunda.bpm.model.bpmn.Bpmn
-import org.camunda.bpm.model.bpmn.BpmnModelInstance
-import org.camunda.bpm.model.bpmn.instance.FlowNode
-import org.camunda.bpm.model.bpmn.instance.IntermediateThrowEvent
-import org.camunda.bpm.model.bpmn.instance.LinkEventDefinition
-import org.camunda.bpm.model.bpmn.instance.Process
-import org.camunda.bpm.model.bpmn.instance.SequenceFlow
-import org.camunda.bpm.model.xml.instance.ModelElementInstance
+import org.cibseven.bpm.model.bpmn.Bpmn
+import org.cibseven.bpm.model.bpmn.BpmnModelInstance
+import org.cibseven.bpm.model.bpmn.instance.FlowNode
+import org.cibseven.bpm.model.bpmn.instance.IntermediateThrowEvent
+import org.cibseven.bpm.model.bpmn.instance.LinkEventDefinition
+import org.cibseven.bpm.model.bpmn.instance.Process
+import org.cibseven.bpm.model.bpmn.instance.SequenceFlow
+import org.cibseven.bpm.model.xml.instance.ModelElementInstance
 import org.camunda.community.process_test_coverage.core.export.CoverageStateJsonExporter.createCoverageStateResult
 import org.camunda.community.process_test_coverage.core.export.CoverageStateResult
 import org.camunda.community.process_test_coverage.core.model.Model

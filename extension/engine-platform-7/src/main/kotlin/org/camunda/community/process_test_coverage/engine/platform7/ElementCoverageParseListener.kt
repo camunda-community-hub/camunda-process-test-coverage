@@ -15,15 +15,15 @@
  */
 package org.camunda.community.process_test_coverage.engine.platform7
 
-import org.camunda.bpm.engine.delegate.DelegateExecution
-import org.camunda.bpm.engine.delegate.ExecutionListener
-import org.camunda.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener
-import org.camunda.bpm.engine.impl.pvm.process.ActivityImpl
-import org.camunda.bpm.engine.impl.pvm.process.ScopeImpl
-import org.camunda.bpm.engine.impl.pvm.process.TransitionImpl
-import org.camunda.bpm.engine.impl.util.xml.Element
-import org.camunda.bpm.model.bpmn.instance.IntermediateThrowEvent
-import org.camunda.bpm.model.bpmn.instance.LinkEventDefinition
+import org.cibseven.bpm.engine.delegate.DelegateExecution
+import org.cibseven.bpm.engine.delegate.ExecutionListener
+import org.cibseven.bpm.engine.impl.bpmn.parser.AbstractBpmnParseListener
+import org.cibseven.bpm.engine.impl.pvm.process.ActivityImpl
+import org.cibseven.bpm.engine.impl.pvm.process.ScopeImpl
+import org.cibseven.bpm.engine.impl.pvm.process.TransitionImpl
+import org.cibseven.bpm.engine.impl.util.xml.Element
+import org.cibseven.bpm.model.bpmn.instance.IntermediateThrowEvent
+import org.cibseven.bpm.model.bpmn.instance.LinkEventDefinition
 import org.camunda.community.process_test_coverage.core.model.Collector
 import org.camunda.community.process_test_coverage.core.model.Event
 import org.camunda.community.process_test_coverage.core.model.EventSource

@@ -20,7 +20,7 @@
 package org.camunda.community.process_test_coverage.engine.platform7
 
 import org.camunda.community.process_test_coverage.engine.platform7.ProcessCoverageConfigurator.initializeProcessCoverageExtensions
-import org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration
+import org.cibseven.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration
 
 /**
  * Standalone in memory process engine configuration additionally configuring

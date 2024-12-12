@@ -20,9 +20,9 @@
 package org.camunda.community.process_test_coverage.engine.platform7
 
 import mu.KLogging
-import org.camunda.bpm.engine.ProcessEngine
-import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener
-import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
+import org.cibseven.bpm.engine.ProcessEngine
+import org.cibseven.bpm.engine.impl.bpmn.parser.BpmnParseListener
+import org.cibseven.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
 import org.camunda.community.process_test_coverage.core.model.Collector
 
 class ProcessEngineAdapter(

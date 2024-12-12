@@ -16,18 +16,18 @@
             <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine</artifactId>
+            <groupId>org.cibseven.bpm</groupId>
+            <artifactId>cibseven-engine</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine-spring</artifactId>
+            <groupId>org.cibseven.bpm</groupId>
+            <artifactId>cibseven-engine-spring</artifactId>
         </dependency>
 
         <!-- Test Dependencies -->
         <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-bpm-assert</artifactId>
+            <groupId>org.cibseven.bpm</groupId>
+            <artifactId>cibseven-bpm-assert</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

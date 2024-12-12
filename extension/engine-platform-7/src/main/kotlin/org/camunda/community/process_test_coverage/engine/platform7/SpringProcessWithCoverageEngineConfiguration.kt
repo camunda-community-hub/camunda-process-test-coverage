@@ -20,7 +20,7 @@
 package org.camunda.community.process_test_coverage.engine.platform7
 
 import org.camunda.community.process_test_coverage.engine.platform7.ProcessCoverageConfigurator.initializeProcessCoverageExtensions
-import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration
+import org.cibseven.bpm.engine.spring.SpringProcessEngineConfiguration
 
 /**
  * Spring process engine configuration additionally configuring

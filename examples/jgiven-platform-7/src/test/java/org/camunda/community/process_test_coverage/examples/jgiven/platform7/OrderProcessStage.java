@@ -23,7 +23,7 @@ package org.camunda.community.process_test_coverage.examples.jgiven.platform7;
 import io.holunda.camunda.bpm.extension.jgiven.JGivenProcessStage;
 import io.holunda.camunda.bpm.extension.jgiven.ProcessStage;
 
-import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
+import static org.cibseven.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 
 @JGivenProcessStage
 public class OrderProcessStage extends ProcessStage<OrderProcessStage, OrderProcessBean> {

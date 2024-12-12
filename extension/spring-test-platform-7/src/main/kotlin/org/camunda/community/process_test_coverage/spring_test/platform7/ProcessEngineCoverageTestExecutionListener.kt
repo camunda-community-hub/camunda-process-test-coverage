@@ -19,7 +19,7 @@
  */
 package org.camunda.community.process_test_coverage.spring_test.platform7
 
-import org.camunda.bpm.engine.ProcessEngine
+import org.cibseven.bpm.engine.ProcessEngine
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.engine.platform7.ExecutionContextModelProvider
 import org.camunda.community.process_test_coverage.engine.platform7.ProcessEngineAdapter

@@ -13,7 +13,8 @@
     <packaging>pom</packaging>
 
     <properties>
-        <camunda.version>${camunda.compile.version}</camunda.version>
+<!--        <camunda.version>${camunda.compile.version}</camunda.version>-->
+        <cibseven.version>${cibseven.compile.version}</cibseven.version>
         <jacoco.skip>true</jacoco.skip>
         <dokka.skip>true</dokka.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
@@ -41,11 +42,11 @@
                 <type>pom</type>
             </dependency>
 
-            <!-- Camunda -->
+            <!-- CIB Seven -->
             <dependency>
-                <groupId>org.camunda.bpm</groupId>
-                <artifactId>camunda-bom</artifactId>
-                <version>${camunda.version}</version>
+                <groupId>org.cibseven.bpm</groupId>
+                <artifactId>cibseven-bom</artifactId>
+                <version>${cibseven.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -110,9 +111,9 @@
             </activation>
             <modules>
                 <module>jgiven-platform-7</module>
-                <module>junit5-platform-8</module>
-                <module>spring-test-platform-8</module>
-                <module>spring-starter-platform-8</module>
+<!--                <module>junit5-platform-8</module>-->
+<!--                <module>spring-test-platform-8</module>-->
+<!--                <module>spring-starter-platform-8</module>-->
             </modules>
         </profile>
     </profiles>

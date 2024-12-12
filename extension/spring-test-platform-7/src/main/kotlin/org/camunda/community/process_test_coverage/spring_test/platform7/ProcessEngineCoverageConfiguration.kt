@@ -19,10 +19,10 @@
  */
 package org.camunda.community.process_test_coverage.spring_test.platform7
 
-import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration
+import org.cibseven.bpm.engine.spring.SpringProcessEngineConfiguration
 import org.camunda.community.process_test_coverage.engine.platform7.ProcessCoverageConfigurator
-import org.camunda.bpm.spring.boot.starter.configuration.Ordering
-import org.camunda.bpm.spring.boot.starter.configuration.impl.AbstractCamundaConfiguration
+import org.cibseven.bpm.spring.boot.starter.configuration.Ordering
+import org.cibseven.bpm.spring.boot.starter.configuration.impl.AbstractCamundaConfiguration
 import org.camunda.community.process_test_coverage.spring_test.common.ProcessEngineCoverageProperties
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean

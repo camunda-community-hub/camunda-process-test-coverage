@@ -21,9 +21,9 @@ package org.camunda.community.process_test_coverage.junit5.platform7
 
 import mu.KLogging
 import org.assertj.core.api.Condition
-import org.camunda.bpm.engine.ProcessEngineConfiguration
-import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
-import org.camunda.bpm.engine.test.junit5.ProcessEngineExtension
+import org.cibseven.bpm.engine.ProcessEngineConfiguration
+import org.cibseven.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
+import org.cibseven.bpm.engine.test.junit5.ProcessEngineExtension
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.engine.platform7.ExecutionContextModelProvider
 import org.camunda.community.process_test_coverage.engine.platform7.ProcessEngineAdapter

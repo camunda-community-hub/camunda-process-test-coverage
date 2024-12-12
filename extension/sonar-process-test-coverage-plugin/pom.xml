@@ -25,8 +25,8 @@
             <artifactId>camunda-process-test-coverage-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm.model</groupId>
-            <artifactId>camunda-bpmn-model</artifactId>
+            <groupId>org.cibseven.bpm.model</groupId>
+            <artifactId>cibseven-bpmn-model</artifactId>
         </dependency>
 
         <dependency>

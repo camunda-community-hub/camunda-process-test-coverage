@@ -20,7 +20,7 @@ package org.camunda.community.process_test_coverage.junit4.platform7.rules;
  * #L%
  */
 
-import org.camunda.bpm.engine.ProcessEngine;
+import org.cibseven.bpm.engine.ProcessEngine;
 
 import java.util.Arrays;
 

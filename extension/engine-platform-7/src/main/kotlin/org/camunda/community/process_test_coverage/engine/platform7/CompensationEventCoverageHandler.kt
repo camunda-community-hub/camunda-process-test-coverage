@@ -34,12 +34,12 @@
  */
 package org.camunda.community.process_test_coverage.engine.platform7
 
-import org.camunda.bpm.engine.impl.bpmn.helper.BpmnProperties
-import org.camunda.bpm.engine.impl.event.CompensationEventHandler
-import org.camunda.bpm.engine.impl.interceptor.CommandContext
-import org.camunda.bpm.engine.impl.persistence.entity.EventSubscriptionEntity
-import org.camunda.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity
-import org.camunda.bpm.engine.impl.pvm.process.ActivityImpl
+import org.cibseven.bpm.engine.impl.bpmn.helper.BpmnProperties
+import org.cibseven.bpm.engine.impl.event.CompensationEventHandler
+import org.cibseven.bpm.engine.impl.interceptor.CommandContext
+import org.cibseven.bpm.engine.impl.persistence.entity.EventSubscriptionEntity
+import org.cibseven.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity
+import org.cibseven.bpm.engine.impl.pvm.process.ActivityImpl
 import org.camunda.community.process_test_coverage.core.model.Collector
 import org.camunda.community.process_test_coverage.core.model.Event
 import org.camunda.community.process_test_coverage.core.model.EventSource
@@ -61,10 +61,10 @@ class CompensationEventCoverageHandler : CompensationEventHandler() {
 
     override fun handleEvent(
         eventSubscription: EventSubscriptionEntity, payload: Any?, localPayload: Any?,
-        businessKey: String?, commandContext: CommandContext
+        payloadToTriggeredScope: Any?, businessKey: String?, commandContext: CommandContext
     ) {
         addCompensationEventCoverage(eventSubscription)
-        super.handleEvent(eventSubscription, payload, localPayload, businessKey, commandContext)
+        super.handleEvent(eventSubscription, payload, localPayload, payloadToTriggeredScope, businessKey, commandContext)
     }
 
     private fun addCompensationEventCoverage(eventSubscription: EventSubscriptionEntity) {

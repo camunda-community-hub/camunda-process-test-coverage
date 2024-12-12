@@ -20,9 +20,9 @@ package org.camunda.community.process_test_coverage.junit4.platform7.rules;
  * #L%
  */
 
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.cibseven.bpm.engine.ProcessEngine;
+import org.cibseven.bpm.engine.repository.ProcessDefinition;
+import org.cibseven.bpm.engine.test.ProcessEngineRule;
 import org.camunda.community.process_test_coverage.engine.platform7.ExecutionContextModelProvider;
 import org.camunda.community.process_test_coverage.engine.platform7.ProcessEngineAdapter;
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector;

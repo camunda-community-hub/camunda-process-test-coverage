@@ -1,6 +1,6 @@
 package org.camunda.community.process_test_coverage.spring_starter.platform7
 
-import org.camunda.bpm.engine.RuntimeService
+import org.cibseven.bpm.engine.RuntimeService
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication

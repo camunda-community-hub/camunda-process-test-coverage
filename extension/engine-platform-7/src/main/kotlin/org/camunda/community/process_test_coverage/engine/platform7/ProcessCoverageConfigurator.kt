@@ -34,7 +34,7 @@
  */
 package org.camunda.community.process_test_coverage.engine.platform7
 
-import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
+import org.cibseven.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
 import java.util.*
 
 /**

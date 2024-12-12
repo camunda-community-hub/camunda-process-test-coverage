@@ -4,12 +4,12 @@ import java.lang.reflect.Method;
 
 import javax.sql.DataSource;
 
-import org.camunda.bpm.engine.ProcessEngineConfiguration;
-import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.camunda.bpm.engine.impl.el.ExpressionManager;
-import org.camunda.bpm.engine.spring.ProcessEngineFactoryBean;
-import org.camunda.bpm.engine.spring.SpringExpressionManager;
-import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
+import org.cibseven.bpm.engine.ProcessEngineConfiguration;
+import org.cibseven.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.cibseven.bpm.engine.impl.el.ExpressionManager;
+import org.cibseven.bpm.engine.spring.ProcessEngineFactoryBean;
+import org.cibseven.bpm.engine.spring.SpringExpressionManager;
+import org.cibseven.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.camunda.community.process_test_coverage.junit4.platform7.spring.SpringProcessWithCoverageEngineConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

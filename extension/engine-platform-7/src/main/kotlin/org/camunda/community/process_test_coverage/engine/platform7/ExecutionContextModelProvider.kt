@@ -19,12 +19,12 @@
  */
 package org.camunda.community.process_test_coverage.engine.platform7
 
-import org.camunda.bpm.engine.impl.context.Context
-import org.camunda.bpm.model.bpmn.Bpmn
-import org.camunda.bpm.model.bpmn.instance.FlowNode
-import org.camunda.bpm.model.bpmn.instance.Process
-import org.camunda.bpm.model.bpmn.instance.SequenceFlow
-import org.camunda.bpm.model.xml.instance.ModelElementInstance
+import org.cibseven.bpm.engine.impl.context.Context
+import org.cibseven.bpm.model.bpmn.Bpmn
+import org.cibseven.bpm.model.bpmn.instance.FlowNode
+import org.cibseven.bpm.model.bpmn.instance.Process
+import org.cibseven.bpm.model.bpmn.instance.SequenceFlow
+import org.cibseven.bpm.model.xml.instance.ModelElementInstance
 import org.camunda.community.process_test_coverage.core.engine.ModelProvider
 import org.camunda.community.process_test_coverage.core.model.Model
 import java.util.stream.Collectors
