@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>camunda-process-test-coverage-parent</artifactId>
-        <groupId>org.camunda.community.process_test_coverage</groupId>
-        <version>2.7.1-SNAPSHOT</version>
+        <artifactId>cibseven-process-test-coverage-parent</artifactId>
+        <groupId>org.cibseven.community.process_test_coverage</groupId>
+        <version>1.0.0</version>
     </parent>
 
-    <name>Camunda Process Test Coverage Core</name>
-    <artifactId>camunda-process-test-coverage-core</artifactId>
+    <name>CIB seven Process Test Coverage Core</name>
+    <artifactId>cibseven-process-test-coverage-core</artifactId>
 
     <properties>
         <dokka.skip>true</dokka.skip>

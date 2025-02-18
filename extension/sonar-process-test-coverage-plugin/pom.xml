@@ -2,17 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>camunda-process-test-coverage-parent</artifactId>
-        <groupId>org.camunda.community.process_test_coverage</groupId>
-        <version>2.7.1-SNAPSHOT</version>
+        <artifactId>cibseven-process-test-coverage-parent</artifactId>
+        <groupId>org.cibseven.community.process_test_coverage</groupId>
+        <version>1.0.0</version>
     </parent>
-    <name>Camunda Process Test Coverage Sonar Plugin</name>
-    <artifactId>sonar-camunda-process-test-coverage-plugin</artifactId>
+
+    <name>CIB seven Process Test Coverage Sonar Plugin</name>
+    <artifactId>sonar-cibseven-process-test-coverage-plugin</artifactId>
     <packaging>sonar-plugin</packaging>
+
     <properties>
         <sonar-plugin-api.version>10.7.0.2191</sonar-plugin-api.version>
         <sonar.api.impl.version>10.3.0.82913</sonar.api.impl.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.sonarsource.api.plugin</groupId>
@@ -21,12 +24,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.camunda.community.process_test_coverage</groupId>
-            <artifactId>camunda-process-test-coverage-core</artifactId>
+            <groupId>org.cibseven.community.process_test_coverage</groupId>
+            <artifactId>cibseven-process-test-coverage-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm.model</groupId>
-            <artifactId>camunda-bpmn-model</artifactId>
+            <groupId>org.cibseven.bpm.model</groupId>
+            <artifactId>cibseven-bpmn-model</artifactId>
         </dependency>
 
         <dependency>
@@ -61,8 +65,8 @@
                 <configuration>
                     <artifactItems>
                         <artifactItem>
-                            <groupId>org.camunda.community.process_test_coverage</groupId>
-                            <artifactId>camunda-process-test-coverage-report-generator</artifactId>
+                            <groupId>org.cibseven.community.process_test_coverage</groupId>
+                            <artifactId>cibseven-process-test-coverage-report-generator</artifactId>
                             <version>${project.version}</version>
                             <outputDirectory>target/classes</outputDirectory>
                             <includes>**/*.js,**/*.css,**/*.html</includes>
@@ -86,9 +90,9 @@
                 <extensions>true</extensions>
                 <configuration>
                     <pluginKey>processtestcoverage</pluginKey>
-                    <pluginClass>org.camunda.community.process_test_coverage.sonar.ProcessTestCoveragePlugin</pluginClass>
-                    <pluginSourcesUrl>https://github.com/camunda-community-hub/camunda-process-test-coverage</pluginSourcesUrl>
-                    <pluginIssueTrackerUrl>https://github.com/camunda-community-hub/camunda-process-test-coverage/issues</pluginIssueTrackerUrl>
+                    <pluginClass>org.cibseven.community.process_test_coverage.sonar.ProcessTestCoveragePlugin</pluginClass>
+                    <pluginSourcesUrl>https://github.com/cibseven-community-hub/process-test-coverage</pluginSourcesUrl>
+                    <pluginIssueTrackerUrl>https://github.com/cibseven-community-hub/process-test-coverage/issues</pluginIssueTrackerUrl>
                     <pluginApiMinVersion>9.9</pluginApiMinVersion>
                 </configuration>
             </plugin>
@@ -99,7 +103,7 @@
                 <executions>
                     <execution>
                         <phase>initialize</phase>
-                        <id>install node and npm </id>
+                        <id>install node and npm</id>
                         <goals>
                             <goal>install-node-and-npm</goal>
                         </goals>

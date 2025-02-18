@@ -3,76 +3,56 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.camunda.community.process_test_coverage</groupId>
-        <artifactId>camunda-process-test-coverage-root</artifactId>
-        <version>2.7.1-SNAPSHOT</version>
+        <groupId>org.cibseven.community.process_test_coverage</groupId>
+        <artifactId>cibseven-process-test-coverage-root</artifactId>
+        <version>1.0.0</version>
     </parent>
 
-    <name>Camunda Process Test Coverage BOM</name>
-    <artifactId>camunda-process-test-coverage-bom</artifactId>
+    <name>CIB seven Process Test Coverage BOM</name>
+    <artifactId>cibseven-process-test-coverage-bom</artifactId>
     <packaging>pom</packaging>
 
     <dependencyManagement>
         <dependencies>
             <!-- Own modules -->
             <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-core</artifactId>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-engine-platform-7</artifactId>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-engine-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-engine-platform-8</artifactId>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-junit4-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-junit5-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-junit5-platform-7</artifactId>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-spring-test-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-junit5-platform-8</artifactId>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-starter-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-spring-test-platform-7</artifactId>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-report-generator</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-spring-test-platform-8</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-starter-platform-7</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-starter-platform-8</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-report-generator</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-report-aggregator-maven-plugin</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

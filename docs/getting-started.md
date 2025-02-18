@@ -6,53 +6,50 @@ Please define the version of the library using properties like this:
 
 ```xml
 <properties>
-  <camunda-process-test-coverage.version>{{ POM_VERSION }}</camunda-process-test-coverage.version>
+  <cibseven-process-test-coverage.version>{{ POM_VERSION }}</cibseven-process-test-coverage.version>
 </properties>
 ```
 
-### JUnit4 (only Platform 7)
+### JUnit4
 
 ```xml
 <dependency>
-  <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
-  <version>${camunda-process-test-coverage.version}</version>
+  <groupId>org.cibseven.community.process_test_coverage</groupId>
+  <artifactId>cibseven-process-test-coverage-junit4-platform-7</artifactId>
+  <version>${cibseven-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
 
-### JUnit5 (Platform 7 or Platform 8)
+### JUnit5
 
 ```xml
 <dependency>
-  <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit5-platform-7</artifactId>
-  <!-- <artifactId>camunda-process-test-coverage-junit5-platform-8</artifactId> -->
-  <version>${camunda-process-test-coverage.version}</version>
+  <groupId>org.cibseven.community.process_test_coverage</groupId>
+  <artifactId>cibseven-process-test-coverage-junit5-platform-7</artifactId>
+  <version>${cibseven-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
 
-### Spring-Testing (Platform 7 or Platform 8)
+### Spring-Testing
 
 ```xml
 <dependency>
-  <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-spring-test-platform-7</artifactId>
-  <!-- <artifactId>camunda-process-test-coverage-spring-test-platform-8</artifactId> -->
-  <version>${camunda-process-test-coverage.version}</version>
+  <groupId>org.cibseven.community.process_test_coverage</groupId>
+  <artifactId>cibseven-process-test-coverage-spring-test-platform-7</artifactId>
+  <version>${cibseven-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
 
-### Spring-Testing with starter (Platform 7 or Platform 8)
+### Spring-Testing with starter
 
 ```xml
 <dependency>
-  <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-starter-platform-7</artifactId>
-  <!-- <artifactId>camunda-process-test-coverage-starter-platform-8</artifactId> -->
-  <version>${camunda-process-test-coverage.version}</version>
+  <groupId>org.cibseven.community.process_test_coverage</groupId>
+  <artifactId>cibseven-process-test-coverage-starter-platform-7</artifactId>
+  <version>${cibseven-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -62,13 +59,13 @@ that should not be included in the test coverage.
 
 ## Configuration
 
-Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml` (only needed for Platform 7)
+Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camunda.cfg.xml`
 
 ### JUnit4 and JUnit5
 
 ```xml
 <bean id="processEngineConfiguration"
-   class="org.camunda.community.process_test_coverage.engine.platform7.ProcessCoverageInMemProcessEngineConfiguration">
+   class="org.cibseven.community.process_test_coverage.engine.platform7.ProcessCoverageInMemProcessEngineConfiguration">
    ...
 </bean>
 ```
@@ -95,7 +92,7 @@ public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.crea
 ```
 ### JUnit5
 
-Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension (available for Platform 7 and Platform 8)
+Use the **ProcessEngineCoverageExtension** as your process engine JUnit extension
 
 Either use `@ExtendWith`
 
@@ -162,8 +159,8 @@ If you just want to aggregate all reports in one maven module, the plugin can be
     <build>
         <plugins>
             <plugin>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-report-aggregator-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>aggregate-reports</id>
@@ -191,16 +188,16 @@ You can still configure the plugin in the pluginManagement section.
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <groupId>org.camunda.community.process_test_coverage</groupId>
-                    <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
-                    <version>${camunda-process-test-coverage.version}</version>
+                    <groupId>org.cibseven.community.process_test_coverage</groupId>
+                    <artifactId>cibseven-process-test-coverage-report-aggregator-maven-plugin</artifactId>
+                    <version>${cibseven-process-test-coverage.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
 ```
 
-It can then be invoked by calling *mvn camunda-process-test-coverage-report-aggregator:aggregate*.
+It can then be invoked by calling *mvn cibseven-process-test-coverage-report-aggregator:aggregate*.
 
 ### Usage as a reporting plugin
 
@@ -211,9 +208,9 @@ The configuration for this use case looks like this:
     <reporting>
         <plugins>
             <plugin>
-                <groupId>org.camunda.community.process_test_coverage</groupId>
-                <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
-                <version>${camunda-process-test-coverage.version}</version>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-report-aggregator-maven-plugin</artifactId>
+                <version>${cibseven-process-test-coverage.version}</version>
             </plugin>
         </plugins>
     </reporting>
@@ -230,11 +227,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.camunda.community.process_test_coverage:camunda-process-test-coverage-report-aggregator-gradle-plugin:{{ POM_VERSION }}")
+        classpath("org.cibseven.community.process_test_coverage:cibseven-process-test-coverage-report-aggregator-gradle-plugin:{{ POM_VERSION }}")
     }
 }
 
-apply(plugin = "org.camunda.community.process_test_coverage.report-aggregator")
+apply(plugin = "org.cibseven.community.process_test_coverage.report-aggregator")
 ```
 
 Afterwards the reports can be aggregated by calling `gradle aggregateProcessTestCoverage`.
@@ -246,9 +243,9 @@ This functionality is provided by the artifact:
 
 ```xml
 <dependency>
-  <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>sonar-camunda-process-test-coverage-plugin</artifactId>
-  <version>${camunda-process-test-coverage.version}</version>
+  <groupId>org.cibseven.community.process_test_coverage</groupId>
+  <artifactId>sonar-cibseven-process-test-coverage-plugin</artifactId>
+  <version>${cibseven-process-test-coverage.version}</version>
 </dependency>
 ```
 

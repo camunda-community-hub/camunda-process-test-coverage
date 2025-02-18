@@ -5,8 +5,8 @@ If you are interested in developing and building the project please read the fol
 To get sources of the project, please execute:
 
 ```sh
-git clone https://github.com/camunda-community-hub/camunda-process-test-coverage.git
-cd camunda-process-test-coverage
+git clone https://github.com/cibseven-community-hub/cibseven-process-test-coverage.git
+cd cibseven-process-test-coverage
 ```
 
 We are using gitflow in our git SCM for naming branches. That means that you should start from `develop` branch,
@@ -32,10 +32,10 @@ call from your command line:
 
 ## Project build modes and profiles
 
-### Camunda Version
+### CIB seven Version
 
-The library is compiled against an older version of Camunda (see camunda.compile.version property in parent POM).
-To select a Camunda version for the tests you can start with a designated profile e.g. camunda-bpm-engine-7.18.
+The library is compiled against an older version of CIB seven (see cibseven.compile.version property in parent POM).
+To select a CIB seven version for the tests you can start with a designated profile e.g. cibseven-bpm-engine-1.1.0.
 
 ### Documentation
 

@@ -1,15 +1,10 @@
-[![](https://img.shields.io/badge/Lifecycle-Stable-brightgreen)](https://github.com/Camunda-Community-Hub/community/blob/main/extension-lifecycle.md#stable-)
-[![](https://img.shields.io/badge/Community%20Extension-An%20open%20source%20community%20maintained%20project-FF4700)](https://github.com/camunda-community-hub/community)
+[![](https://img.shields.io/badge/Community%20Extension-An%20open%20source%20community%20maintained%20project-FF4700)](https://github.com/cibseven-community-hub/community)
 ![Compatible with: Camunda Platform 7](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%207-26d07c)
-![Compatible with: Camunda Platform 8](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%208-26d07c)
-![Supported Camunda versions](https://img.shields.io/badge/Camunda%20Version-%207.17%20to%207.20%20and%208-orange.svg)
 
 
-![Camunda Logo](docs/assets/img/Favicons-Circle-Colour.png)
+# CIB seven Process Test Coverage
 
-# Camunda Process Test Coverage
-
-This Camunda Platform 7 and Platform 8 community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
+This CIB seven community extension **visualises** test process **paths** and **checks** your process model **coverage** ratio. Running  typical JUnit tests now leaves **html** files in your build output. Just open one and check yourself what your test did:
 
 ![Coverage report](docs/assets/img/flowcov_coverage_report.png)
 
@@ -21,29 +16,23 @@ This Camunda Platform 7 and Platform 8 community extension **visualises** test p
 
 ## Just use it
 
-* Integrates with all versions of Camunda Platform 7 starting with 7.17.0 and upwards as well as Camunda Platform 8
-* Is continuously checked against the latest Camunda Platform 7 releases (check out our compatibility CI/CD pipeline)
+* Integrates with all versions of CIB seven
+* Is continuously checked against the latest CIB seven releases (check out our compatibility CI/CD pipeline)
 * Tested with JDKs 11 and 17
-* Works with Java starting with 1.8 and following (depending on support by version of used Camunda Platform)
 * Supports **JUnit 4.13.1+** (4.11 does not work) or **JUnit 5**
 * Can be used inside Spring Tests
 
-## Documentation
-
-If you are interested in further documentation, please check our [Documentation Page](https://camunda-community-hub.github.io/camunda-process-test-coverage/snapshot/index.html)
-
 ## Installation
 
- Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage-bom"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage-bom/badge.svg" align="right" /></a>
+ Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.cibseven.community.process_test_coverage/process-test-coverage-bom"><img src="https://maven-badges.herokuapp.com/maven-central/org.cibseven.community.process_test_coverage/process-test-coverage-bom/badge.svg" align="right" /></a>
 0
-### JUnit5 (Platform 7 or Platform 8)
+### JUnit5
 
 ```xml
 <dependency>
-  <groupId>org.camunda.community.process_test_coverage</groupId>
-  <artifactId>camunda-process-test-coverage-junit5-platform-7</artifactId>
-  <!-- <artifactId>camunda-process-test-coverage-junit5-platform-8</artifactId> -->
-  <version>${camunda-process-test-coverage.version}</version>
+  <groupId>org.cibseven.community.process_test_coverage</groupId>
+  <artifactId>cibseven-process-test-coverage-junit5-platform-7</artifactId>
+  <version>${cibseven-process-test-coverage.version}</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -54,7 +43,7 @@ Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camund
 
 ```xml
 <bean id="processEngineConfiguration"
-   class="org.camunda.community.process_test_coverage.engine.platform7.ProcessCoverageInMemProcessEngineConfiguration">
+   class="org.cibseven.community.process_test_coverage.engine.platform7.ProcessCoverageInMemProcessEngineConfiguration">
    ...
 </bean>
 ```
@@ -112,7 +101,7 @@ but then the project has been abandoned for some time and received a full rewrit
 of flowcov.io squad and BPM craftsmen from Holisticon AG. We appreciate any help and effort you put into maintenance
 discussion and further development.
 
-Please check the release notes of [individual releases](https://github.com/camunda-community-hub/camunda-process-test-coverage/releases) for the changes and involved contributors.
+Please check the release notes of [individual releases](https://github.com/cibseven-community-hub/process-test-coverage/releases) for the changes and involved contributors.
 
 ## License
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0). See [LICENSE](LICENSE.md) file.

@@ -1,48 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <groupId>org.camunda.community</groupId>
-        <artifactId>community-hub-release-parent</artifactId>
-        <version>1.4.4</version>
+        <groupId>org.cibseven.community</groupId>
+        <artifactId>release-parent</artifactId>
+        <version>1.0.0</version>
         <relativePath />
     </parent>
 
-    <groupId>org.camunda.community.process_test_coverage</groupId>
-    <artifactId>camunda-process-test-coverage-root</artifactId>
+    <groupId>org.cibseven.community.process_test_coverage</groupId>
+    <artifactId>cibseven-process-test-coverage-root</artifactId>
     <packaging>pom</packaging>
-    <version>2.7.1-SNAPSHOT</version>
+    <version>1.0.0</version>
 
-    <name>Camunda Process Test Coverage Root</name>
+    <name>CIB seven Process Test Coverage Root</name>
     <description>Helper library to visualize and assert which parts of a BPMN process have been covered by a test.
     </description>
-    <url>https://github.com/camunda-community-hub/camunda-process-test-coverage/</url>
+    <url>https://github.com/cibseven-community-hub/process-test-coverage/</url>
     <issueManagement>
         <system>github</system>
-        <url>https://github.com/camunda-community-hub/camunda-process-test-coverage/issues</url>
+        <url>https://github.com/cibseven-community-hub/process-test-coverage/issues</url>
     </issueManagement>
     <inceptionYear>2019</inceptionYear>
 
     <modules>
         <module>extension</module>
         <module>starter-platform-7</module>
-        <module>starter-platform-8</module>
         <module>bom</module>
     </modules>
 
     <properties>
-        <version.java>1.8</version.java>
+        <version.java>17</version.java>
         <kotlin.version>2.0.21</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin-logging.version>3.0.5</kotlin-logging.version>
 
-        <!--
-        For backwards compatibility we pin the version to compile to Camunda 7.17.
-        -->
-        <camunda.compile.version>7.17.0</camunda.compile.version>
-        <zeebe.version>8.4.5</zeebe.version>
-        <spring-zeebe.version>8.3.6</spring-zeebe.version>
-        <spring-boot.version>2.7.18</spring-boot.version>
+        <cibseven.compile.version>1.1.0</cibseven.compile.version>
+<!--        <zeebe.version>8.4.5</zeebe.version>-->
+<!--        <spring-zeebe.version>8.3.6</spring-zeebe.version>-->
+<!--        <spring-boot.version>2.7.18</spring-boot.version>-->
+        <spring-boot.version>3.3.5</spring-boot.version>
 
     </properties>
 
@@ -357,9 +355,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:camunda-community-hub/camunda-process-test-coverage.git</connection>
-        <url>scm:git:git@github.com:camunda-community-hub/camunda-process-test-coverage.git</url>
-        <developerConnection>scm:git:git@github.com:camunda-community-hub/camunda-process-test-coverage.git
+        <connection>scm:git:git@github.com:cibseven-community-hub/process-test-coverage.git</connection>
+        <url>scm:git:git@github.com:cibseven-community-hub/process-test-coverage.git</url>
+        <developerConnection>scm:git:git@github.com:cibseven-community-hub/process-test-coverage.git
         </developerConnection>
         <tag>HEAD</tag>
     </scm>

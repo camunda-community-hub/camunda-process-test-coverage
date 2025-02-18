@@ -1,11 +1,11 @@
 {
   "suites": [
     {
-      "id": "[engine:junit-jupiter]/[class:org.camunda.community.process_test_coverage.report.aggregator.SecondTest]",
-      "name": "org.camunda.community.process_test_coverage.report.aggregator.SecondTest",
+      "id": "[engine:junit-jupiter]/[class:org.cibseven.community.process_test_coverage.report.aggregator.SecondTest]",
+      "name": "org.cibseven.community.process_test_coverage.report.aggregator.SecondTest",
       "runs": [
         {
-          "id": "[engine:junit-jupiter]/[class:org.camunda.community.process_test_coverage.report.aggregator.SecondTest]/[method:should_have_100_percent_coverage]",
+          "id": "[engine:junit-jupiter]/[class:org.cibseven.community.process_test_coverage.report.aggregator.SecondTest]/[method:should_have_100_percent_coverage]",
           "name": "should_have_100_percent_coverage",
           "events": [
             {

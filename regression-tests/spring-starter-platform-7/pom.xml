@@ -4,39 +4,39 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.camunda.community.process_test_coverage</groupId>
-        <artifactId>camunda-process-test-coverage-regression-tests-parent</artifactId>
+        <groupId>org.cibseven.community.process_test_coverage</groupId>
+        <artifactId>cibseven-process-test-coverage-regression-tests-parent</artifactId>
         <version>2.7.0</version>
     </parent>
 
-    <artifactId>camunda-process-test-coverage-regression-tests-spring-starter-platform-7</artifactId>
-    <name>Camunda Process Test Coverage Regression Test Spring Starter Platform 7</name>
+    <artifactId>cibseven-process-test-coverage-regression-tests-spring-starter-platform-7</artifactId>
+    <name>CIB seven Process Test Coverage Regression Test Spring Starter Platform 7</name>
     <description>
-        All library tests are here in order to allow compiling against Camunda Platform 7 release and regression testing against different versions.
+        All library tests are here in order to allow compiling against CIB seven release and regression testing against different versions.
     </description>
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-core</artifactId>
+            <groupId>org.cibseven.community.process_test_coverage</groupId>
+            <artifactId>cibseven-process-test-coverage-core</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-starter-platform-7</artifactId>
+            <groupId>org.cibseven.community.process_test_coverage</groupId>
+            <artifactId>cibseven-process-test-coverage-starter-platform-7</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine</artifactId>
+            <groupId>org.cibseven.bpm</groupId>
+            <artifactId>cibseven-engine</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine-spring</artifactId>
+            <groupId>org.cibseven.bpm</groupId>
+            <artifactId>cibseven-engine-spring</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -45,13 +45,13 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm.springboot</groupId>
-            <artifactId>camunda-bpm-spring-boot-starter-test</artifactId>
+            <groupId>org.cibseven.bpm.springboot</groupId>
+            <artifactId>cibseven-bpm-spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm.springboot</groupId>
-            <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
+            <groupId>org.cibseven.bpm.springboot</groupId>
+            <artifactId>cibseven-bpm-spring-boot-starter-rest</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -75,17 +75,10 @@
 
     <profiles>
         <profile>
-            <id>camunda-bpm-engine-7.20</id>
+            <id>cibseven-bpm-engine-1.1.0</id>
             <properties>
-                <camunda.version>7.20.0</camunda.version>
-                <spring-boot.version>3.1.4</spring-boot.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>camunda-bpm-engine-7.21</id>
-            <properties>
-                <camunda.version>7.21.0</camunda.version>
-                <spring-boot.version>3.2.5</spring-boot.version>
+                <cibseven.version>1.1.0</cibseven.version>
+                <spring-boot.version>3.3.5</spring-boot.version>
             </properties>
         </profile>
     </profiles>

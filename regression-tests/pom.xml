@@ -4,18 +4,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.camunda.community.process_test_coverage</groupId>
-        <artifactId>camunda-process-test-coverage-root</artifactId>
+        <groupId>org.cibseven.community.process_test_coverage</groupId>
+        <artifactId>cibseven-process-test-coverage-root</artifactId>
         <version>2.7.0</version>
     </parent>
 
-    <name>Camunda Process Test Coverage Regression Tests Parent</name>
-    <artifactId>camunda-process-test-coverage-regression-tests-parent</artifactId>
+    <name>CIB seven Process Test Coverage Regression Tests Parent</name>
+    <artifactId>cibseven-process-test-coverage-regression-tests-parent</artifactId>
     <packaging>pom</packaging>
 
     <properties>
         <graalvm.version>24.0.2</graalvm.version>
-        <camunda.version>${camunda.compile.version}</camunda.version>
+        <cibseven.version>${cibseven.compile.version}</cibseven.version>
 
         <jacoco.skip>true</jacoco.skip>
         <dokka.skip>true</dokka.skip>
@@ -44,11 +44,11 @@
                 <type>pom</type>
             </dependency>
 
-            <!-- Re-define Camunda -->
+            <!-- Re-define CIB seven -->
             <dependency>
-                <groupId>org.camunda.bpm</groupId>
-                <artifactId>camunda-bom</artifactId>
-                <version>${camunda.version}</version>
+                <groupId>org.cibseven.bpm</groupId>
+                <artifactId>cibseven-bom</artifactId>
+                <version>${cibseven.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -58,39 +58,15 @@
     <profiles>
         <!-- Profiles just here to ease testing in IDEs -->
         <profile>
-            <id>camunda-bpm-engine-LATEST</id>
+            <id>cibseven-bpm-engine-LATEST</id>
             <properties>
-                <camunda.version>LATEST</camunda.version>
+                <cibseven.version>LATEST</cibseven.version>
             </properties>
         </profile>
         <profile>
-            <id>camunda-bpm-engine-7.21</id>
+            <id>cibseven-bpm-engine-1.1.0</id>
             <properties>
-                <camunda.version>7.21.0</camunda.version>
-            </properties>
-        </profile>             
-        <profile>
-            <id>camunda-bpm-engine-7.20</id>
-            <properties>
-                <camunda.version>7.20.0</camunda.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>camunda-bpm-engine-7.19</id>
-            <properties>
-                <camunda.version>7.19.0</camunda.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>camunda-bpm-engine-7.18</id>
-            <properties>
-                <camunda.version>7.18.0</camunda.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>camunda-bpm-engine-7.17</id>
-            <properties>
-                <camunda.version>7.17.0</camunda.version>
+                <cibseven.version>1.1.0</cibseven.version>
             </properties>
         </profile>
 

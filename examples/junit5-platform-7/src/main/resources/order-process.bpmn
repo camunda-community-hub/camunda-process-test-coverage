@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0sng1lw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
-  <bpmn:process id="order-process" isExecutable="true">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0sng1lw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0">
+  <bpmn:process id="order-process" isExecutable="true" camunda:historyTimeToLive="1">
     <bpmn:startEvent id="StartEvent_OrderReceived" name="Order received">
       <bpmn:outgoing>Flow_1fdptq6</bpmn:outgoing>
     </bpmn:startEvent>
@@ -33,33 +33,6 @@
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-process">
-      <bpmndi:BPMNEdge id="Flow_1fdptq6_di" bpmnElement="Flow_1fdptq6">
-        <di:waypoint x="215" y="97" />
-        <di:waypoint x="290" y="97" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_09pto53_di" bpmnElement="Flow_09pto53">
-        <di:waypoint x="390" y="97" />
-        <di:waypoint x="455" y="97" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1ybm98q_di" bpmnElement="Flow_1ybm98q">
-        <di:waypoint x="505" y="97" />
-        <di:waypoint x="570" y="97" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="529" y="79" width="18" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_09zvyuj_di" bpmnElement="Flow_09zvyuj">
-        <di:waypoint x="480" y="122" />
-        <di:waypoint x="480" y="210" />
-        <di:waypoint x="602" y="210" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="489" y="163" width="13" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1jkr8bo_di" bpmnElement="Flow_1jkr8bo">
-        <di:waypoint x="670" y="97" />
-        <di:waypoint x="752" y="97" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_OrderReceived">
         <dc:Bounds x="179" y="79" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -90,6 +63,33 @@
       <bpmndi:BPMNShape id="Activity_0kfzmil_di" bpmnElement="Task_DeliverOrder">
         <dc:Bounds x="570" y="57" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1fdptq6_di" bpmnElement="Flow_1fdptq6">
+        <di:waypoint x="215" y="97" />
+        <di:waypoint x="290" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09pto53_di" bpmnElement="Flow_09pto53">
+        <di:waypoint x="390" y="97" />
+        <di:waypoint x="455" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ybm98q_di" bpmnElement="Flow_1ybm98q">
+        <di:waypoint x="505" y="97" />
+        <di:waypoint x="570" y="97" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="529" y="79" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09zvyuj_di" bpmnElement="Flow_09zvyuj">
+        <di:waypoint x="480" y="122" />
+        <di:waypoint x="480" y="210" />
+        <di:waypoint x="602" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="489" y="163" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jkr8bo_di" bpmnElement="Flow_1jkr8bo">
+        <di:waypoint x="670" y="97" />
+        <di:waypoint x="752" y="97" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

@@ -4,13 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.camunda.community.process_test_coverage</groupId>
-        <artifactId>camunda-process-test-coverage-parent</artifactId>
-        <version>2.7.1-SNAPSHOT</version>
+        <groupId>org.cibseven.community.process_test_coverage</groupId>
+        <artifactId>cibseven-process-test-coverage-parent</artifactId>
+        <version>1.0.0</version>
     </parent>
 
-    <name>Camunda Process Test Coverage Engine Platform 7</name>
-    <artifactId>camunda-process-test-coverage-engine-platform-7</artifactId>
+    <name>CIB seven Process Test Coverage Engine Platform 7</name>
+    <artifactId>cibseven-process-test-coverage-engine-platform-7</artifactId>
 
     <properties>
         <dokka.skip>true</dokka.skip>
@@ -19,19 +19,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-core</artifactId>
+            <groupId>org.cibseven.community.process_test_coverage</groupId>
+            <artifactId>cibseven-process-test-coverage-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine</artifactId>
-            <version>${camunda.compile.version}</version>
+            <groupId>org.cibseven.bpm</groupId>
+            <artifactId>cibseven-engine</artifactId>
+            <version>${cibseven.compile.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine-spring</artifactId>
-            <version>${camunda.compile.version}</version>
+            <groupId>org.cibseven.bpm</groupId>
+            <artifactId>cibseven-engine-spring</artifactId>
+            <version>${cibseven.compile.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

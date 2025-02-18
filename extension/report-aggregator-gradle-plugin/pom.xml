@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.camunda.community.process_test_coverage</groupId>
-        <artifactId>camunda-process-test-coverage-parent</artifactId>
-        <version>2.7.1-SNAPSHOT</version>
+        <groupId>org.cibseven.community.process_test_coverage</groupId>
+        <artifactId>cibseven-process-test-coverage-parent</artifactId>
+        <version>1.0.0</version>
     </parent>
 
-    <name>Camunda Process Test Coverage Report Aggregator Gradle Plugin</name>
-    <artifactId>camunda-process-test-coverage-report-aggregator-gradle-plugin</artifactId>
+    <name>CIB seven Process Test Coverage Report Aggregator Gradle Plugin</name>
+    <artifactId>cibseven-process-test-coverage-report-aggregator-gradle-plugin</artifactId>
 
     <!--
         This subproject is built by Gradle as the Gradle plugin API requires a Gradle build. This POM
@@ -27,8 +27,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-report-generator</artifactId>
+            <groupId>org.cibseven.community.process_test_coverage</groupId>
+            <artifactId>cibseven-process-test-coverage-report-generator</artifactId>
         </dependency>
     </dependencies>
 
@@ -61,14 +61,6 @@
                         <phase>none</phase>
                     </execution>
                 </executions>
-            </plugin>
-            <!-- Gradle is also responsible for creating javadoc such that this task is skipped here. -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
             </plugin>
             <!-- copy all dependencies to target/dependencies -->
             <plugin>
@@ -159,6 +151,7 @@
             <!-- copy generated JARs -->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>copy-gradle-jars</id>
@@ -196,11 +189,6 @@
                         </goals>
                         <configuration>
                             <artifacts>
-                                <artifact>
-                                    <file>target/${project.artifactId}-${project.version}-javadoc.jar</file>
-                                    <type>jar</type>
-                                    <classifier>javadoc</classifier>
-                                </artifact>
                                 <artifact>
                                     <file>target/${project.artifactId}-${project.version}-sources.jar</file>
                                     <type>jar</type>

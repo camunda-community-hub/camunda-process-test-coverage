@@ -2,14 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.camunda.community.process_test_coverage</groupId>
-        <artifactId>camunda-process-test-coverage-parent</artifactId>
-        <version>2.7.1-SNAPSHOT</version>
+        <groupId>org.cibseven.community.process_test_coverage</groupId>
+        <artifactId>cibseven-process-test-coverage-parent</artifactId>
+        <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <name>Camunda Process Test Coverage JUnit4 Platform 7</name>
-    <artifactId>camunda-process-test-coverage-junit4-platform-7</artifactId>
+    <name>CIB seven Process Test Coverage JUnit4 Platform 7</name>
+    <artifactId>cibseven-process-test-coverage-junit4-platform-7</artifactId>
 
     <properties>
         <dokka.skip>true</dokka.skip>
@@ -17,12 +17,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-engine-platform-7</artifactId>
+            <groupId>org.cibseven.community.process_test_coverage</groupId>
+            <artifactId>cibseven-process-test-coverage-engine-platform-7</artifactId>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-report-generator</artifactId>
+            <groupId>org.cibseven.community.process_test_coverage</groupId>
+            <artifactId>cibseven-process-test-coverage-report-generator</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -33,17 +33,17 @@
             <artifactId>junit</artifactId>
         </dependency>
 
-        <!-- We intentionally always compile against latest Camunda release,
+        <!-- We intentionally always compile against latest CIB seven release,
         but test against many versions *provided* by user projects.
         Therefore the tests are in a separate module. -->
         <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine</artifactId>
+            <groupId>org.cibseven.bpm</groupId>
+            <artifactId>cibseven-engine</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine-spring</artifactId>
+            <groupId>org.cibseven.bpm</groupId>
+            <artifactId>cibseven-engine-spring</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
