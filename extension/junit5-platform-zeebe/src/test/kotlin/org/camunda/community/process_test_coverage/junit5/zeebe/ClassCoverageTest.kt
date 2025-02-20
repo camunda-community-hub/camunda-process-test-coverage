@@ -17,26 +17,31 @@
  * limitations under the License.
  * #L%
  */
-package org.camunda.community.process_test_coverage.junit5.platform8
+package org.camunda.community.process_test_coverage.junit5.zeebe
 
 import io.camunda.zeebe.client.ZeebeClient
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine
 import io.camunda.zeebe.process.test.extension.testcontainer.ZeebeProcessTest
-import org.camunda.community.process_test_coverage.junit5.platform8.CoverageTestProcessConstants.deploy
+import org.camunda.community.process_test_coverage.junit5.zeebe.ProcessEngineCoverageExtension
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.extension.RegisterExtension
 import java.time.Duration
 
 @ZeebeProcessTest
-@ExtendWith(ProcessEngineCoverageExtension::class)
-class ExtendWithTest {
+class ClassCoverageTest {
+
+    companion object {
+        @JvmField
+        @RegisterExtension
+        var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension.builder().assertClassCoverageAtLeast(1.0).build()
+    }
 
     private lateinit var client: ZeebeClient
     private lateinit var engine: ZeebeTestEngine
 
     @Test
     fun testPathA() {
-        deploy(client)
+        CoverageTestProcessConstants.deploy(client)
         val variables: MutableMap<String, Any> = HashMap()
         variables["path"] = "A"
         client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()
@@ -45,7 +50,7 @@ class ExtendWithTest {
 
     @Test
     fun testPathB() {
-        deploy(client)
+        CoverageTestProcessConstants.deploy(client)
         val variables: MutableMap<String, Any> = HashMap()
         variables["path"] = "B"
         client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()

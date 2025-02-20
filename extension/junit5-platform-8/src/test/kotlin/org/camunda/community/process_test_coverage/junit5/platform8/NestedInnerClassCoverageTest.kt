@@ -19,7 +19,7 @@
  */
 package org.camunda.community.process_test_coverage.junit5.platform8
 
-import io.camunda.zeebe.client.ZeebeClient
+import io.camunda.client.CamundaClient
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
@@ -35,7 +35,7 @@ class NestedInnerClassCoverageTest {
     @Nested
     inner class PathA {
 
-        private lateinit var client: ZeebeClient
+        private lateinit var client: CamundaClient
         @Test
         fun testPathA() {
             CoverageTestProcessConstants.deploy(client)
@@ -48,7 +48,7 @@ class NestedInnerClassCoverageTest {
     @Nested
     inner class PathB {
 
-        private lateinit var client: ZeebeClient
+        private lateinit var client: CamundaClient
         @Test
         fun testPathB() {
             CoverageTestProcessConstants.deploy(client)
