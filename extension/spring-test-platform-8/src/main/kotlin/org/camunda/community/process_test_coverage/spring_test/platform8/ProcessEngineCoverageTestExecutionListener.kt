@@ -20,7 +20,6 @@
 package org.camunda.community.process_test_coverage.spring_test.platform8
 
 import io.camunda.zeebe.process.test.assertions.BpmnAssert
-import mu.KLogging
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.engine.platform8.ZeebeModelProvider
 import org.camunda.community.process_test_coverage.engine.platform8.createEvents
@@ -34,8 +33,6 @@ import org.springframework.test.context.TestContext
  * @author Jan Rohwer
  */
 class ProcessEngineCoverageTestExecutionListener : BaseProcessEngineCoverageTestExecutionListener() {
-
-    companion object : KLogging()
 
     /**
      * The state of the current run (class and current method).

@@ -19,7 +19,7 @@
  */
 package org.camunda.community.process_test_coverage.engine.platform7
 
-import mu.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.camunda.bpm.engine.ProcessEngine
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
@@ -30,7 +30,7 @@ class ProcessEngineAdapter(
     private val coverageCollector: Collector
 ) {
 
-    companion object : KLogging()
+    private val logger = KotlinLogging.logger {}
 
     /**
      * Sets the test run state for the coverage listeners. logging.

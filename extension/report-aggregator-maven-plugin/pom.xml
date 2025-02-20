@@ -50,7 +50,7 @@
             <scope>provided</scope> <!-- annotations are not used at runtime because @Retention(value=CLASS), they are needed only to build the plugin -->
         </dependency>
         <dependency>
-            <groupId>io.github.microutils</groupId>
+            <groupId>io.github.oshai</groupId>
             <artifactId>kotlin-logging-jvm</artifactId>
         </dependency>
         <dependency>

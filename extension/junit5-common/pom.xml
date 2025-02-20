@@ -24,7 +24,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>io.github.microutils</groupId>
+            <groupId>io.github.oshai</groupId>
             <artifactId>kotlin-logging-jvm</artifactId>
         </dependency>
         <dependency>
