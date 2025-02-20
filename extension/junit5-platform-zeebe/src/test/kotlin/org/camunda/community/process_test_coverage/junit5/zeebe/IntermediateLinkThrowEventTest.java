@@ -1,4 +1,4 @@
-package org.camunda.community.process_test_coverage.junit5.platform8;
+package org.camunda.community.process_test_coverage.junit5.zeebe;
 
 /*-
  * #%L
@@ -25,6 +25,7 @@ import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine;
 import io.camunda.zeebe.process.test.extension.testcontainer.ZeebeProcessTest;
 import org.assertj.core.api.Condition;
+import org.camunda.community.process_test_coverage.junit5.zeebe.ProcessEngineCoverageExtension;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;

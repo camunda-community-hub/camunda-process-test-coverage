@@ -20,8 +20,8 @@ package org.camunda.community.process_test_coverage.junit5.platform8;
  * #L%
  */
 
-import io.camunda.zeebe.client.ZeebeClient;
-import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
+import io.camunda.client.CamundaClient;
+import io.camunda.client.api.response.ProcessInstanceEvent;
 import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,7 @@ public class IntermediateLinkThrowEventTest {
     @RegisterExtension
     public static ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension.builder().build();
 
-    private ZeebeClient zeebe;
+    private CamundaClient zeebe;
 
     @BeforeEach
     public void setup() {

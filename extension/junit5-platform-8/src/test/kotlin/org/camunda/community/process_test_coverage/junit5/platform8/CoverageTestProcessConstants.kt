@@ -19,7 +19,7 @@
  */
 package org.camunda.community.process_test_coverage.junit5.platform8
 
-import io.camunda.zeebe.client.ZeebeClient
+import io.camunda.client.CamundaClient
 
 object CoverageTestProcessConstants {
 
@@ -52,7 +52,7 @@ object CoverageTestProcessConstants {
             "EndEvent_3"
     )
 
-    fun deploy(client: ZeebeClient, resourcePath: String = BPMN_PATH) {
+    fun deploy(client: CamundaClient, resourcePath: String = BPMN_PATH) {
         client.newDeployResourceCommand()
             .addResourceFromClasspath(resourcePath)
             .send()

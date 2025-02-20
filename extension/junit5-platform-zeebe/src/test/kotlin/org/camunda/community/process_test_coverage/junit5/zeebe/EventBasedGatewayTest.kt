@@ -17,17 +17,18 @@
  * limitations under the License.
  * #L%
  */
-package org.camunda.community.process_test_coverage.junit5.platform8
+package org.camunda.community.process_test_coverage.junit5.zeebe
 
 import io.camunda.zeebe.client.ZeebeClient
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine
 import io.camunda.zeebe.process.test.extension.testcontainer.ZeebeProcessTest
+import org.camunda.community.process_test_coverage.junit5.zeebe.ProcessEngineCoverageExtension
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 import java.time.Duration
 
 @ZeebeProcessTest
-class ClassCoverageTest {
+class EventBasedGatewayTest {
 
     companion object {
         @JvmField
@@ -39,21 +40,19 @@ class ClassCoverageTest {
     private lateinit var engine: ZeebeTestEngine
 
     @Test
-    fun testPathA() {
-        CoverageTestProcessConstants.deploy(client)
-        val variables: MutableMap<String, Any> = HashMap()
-        variables["path"] = "A"
-        client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()
+    fun testPathSignal() {
+        CoverageTestProcessConstants.deploy(client, resourcePath = "eventBasedGateway.bpmn")
+        client.newCreateInstanceCommand().bpmnProcessId("event_based_gateway").latestVersion().send().join()
         engine.waitForIdleState(Duration.ofSeconds(5))
+        client.newBroadcastSignalCommand().signalName("Signal_1").send().join()
     }
 
     @Test
-    fun testPathB() {
-        CoverageTestProcessConstants.deploy(client)
-        val variables: MutableMap<String, Any> = HashMap()
-        variables["path"] = "B"
-        client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()
+    fun testPathMessage() {
+        CoverageTestProcessConstants.deploy(client, resourcePath = "eventBasedGateway.bpmn")
+        client.newCreateInstanceCommand().bpmnProcessId("event_based_gateway").latestVersion().send().join()
         engine.waitForIdleState(Duration.ofSeconds(5))
+        client.newPublishMessageCommand().messageName("Message_1").correlationKey("1").send().join()
     }
 
 }
