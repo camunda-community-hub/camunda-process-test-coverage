@@ -19,7 +19,7 @@
  */
 package org.cibseven.community.process_test_coverage.engine.platform7
 
-import mu.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.cibseven.bpm.engine.ProcessEngine
 import org.cibseven.bpm.engine.impl.bpmn.parser.BpmnParseListener
 import org.cibseven.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
@@ -30,7 +30,7 @@ class ProcessEngineAdapter(
     private val coverageCollector: Collector
 ) {
 
-    companion object : KLogging()
+    private val logger = KotlinLogging.logger {}
 
     /**
      * Sets the test run state for the coverage listeners. logging.

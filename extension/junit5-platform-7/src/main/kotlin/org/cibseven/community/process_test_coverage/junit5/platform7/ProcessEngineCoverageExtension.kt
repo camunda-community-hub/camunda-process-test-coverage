@@ -19,7 +19,7 @@
  */
 package org.cibseven.community.process_test_coverage.junit5.platform7
 
-import mu.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.assertj.core.api.Condition
 import org.cibseven.bpm.engine.ProcessEngineConfiguration
 import org.cibseven.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
@@ -61,7 +61,7 @@ class ProcessEngineCoverageExtension(
 
         ) : ProcessEngineExtension(), BeforeAllCallback, AfterAllCallback {
 
-    companion object : KLogging() {
+    companion object {
         @JvmStatic
         fun builder() = Builder()
         @JvmStatic
@@ -142,6 +142,8 @@ class ProcessEngineCoverageExtension(
         var configurationResource: String? = null,
         val processEngineConfiguration: ProcessEngineConfiguration? = null,
     ) : ProcessEngineCoverageExtensionBuilder<ProcessEngineCoverageExtension>() {
+
+        private val logger = KotlinLogging.logger {}
 
         /**
          * Set the configuration resource for initializing the process engine.

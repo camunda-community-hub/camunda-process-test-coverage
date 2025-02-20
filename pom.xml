@@ -34,7 +34,7 @@
         <version.java>17</version.java>
         <kotlin.version>2.0.21</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <kotlin-logging.version>3.0.5</kotlin-logging.version>
+        <kotlin-logging.version>7.0.4</kotlin-logging.version>
 
         <cibseven.compile.version>2.0.0-SNAPSHOT</cibseven.compile.version>
 <!--        <zeebe.version>8.4.5</zeebe.version>-->
@@ -56,7 +56,7 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>io.github.microutils</groupId>
+                <groupId>io.github.oshai</groupId>
                 <artifactId>kotlin-logging-jvm</artifactId>
                 <version>${kotlin-logging.version}</version>
             </dependency>
