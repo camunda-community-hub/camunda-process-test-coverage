@@ -17,7 +17,7 @@
  * limitations under the License.
  * #L%
  */
-package org.camunda.community.process_test_coverage.junit5.platform8
+package org.camunda.community.process_test_coverage.junit5.zeebe
 
 import io.camunda.zeebe.client.ZeebeClient
 

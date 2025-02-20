@@ -19,7 +19,7 @@
  */
 package org.camunda.community.process_test_coverage.junit5.platform8
 
-import io.camunda.zeebe.client.ZeebeClient
+import io.camunda.client.CamundaClient
 import org.camunda.community.process_test_coverage.junit5.platform8.CoverageTestProcessConstants.deploy
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -27,7 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(ProcessEngineCoverageExtension::class)
 class ExtendWithTest {
 
-    private lateinit var client: ZeebeClient
+    private lateinit var client: CamundaClient
 
     @Test
     fun testPathA() {

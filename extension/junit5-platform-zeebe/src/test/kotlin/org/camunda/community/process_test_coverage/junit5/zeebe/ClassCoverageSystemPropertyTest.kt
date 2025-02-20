@@ -17,14 +17,15 @@
  * limitations under the License.
  * #L%
  */
-package org.camunda.community.process_test_coverage.junit5.platform8
+package org.camunda.community.process_test_coverage.junit5.zeebe
 
 import io.camunda.zeebe.client.ZeebeClient
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine
 import io.camunda.zeebe.process.test.extension.testcontainer.ZeebeProcessTest
 import org.assertj.core.api.HamcrestCondition
-import org.camunda.community.process_test_coverage.junit5.platform8.CoverageTestProcessConstants.deploy
+import org.camunda.community.process_test_coverage.junit5.zeebe.CoverageTestProcessConstants.deploy
 import org.camunda.community.process_test_coverage.junit5.common.ProcessEngineCoverageExtensionBuilder.Companion.DEFAULT_ASSERT_AT_LEAST_PROPERTY
+import org.camunda.community.process_test_coverage.junit5.zeebe.ProcessEngineCoverageExtension
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Test
