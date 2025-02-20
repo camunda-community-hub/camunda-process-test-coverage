@@ -37,13 +37,13 @@
         <kotlin-logging.version>3.0.5</kotlin-logging.version>
 
         <!--
-        For backwards compatibility we pin the version to compile to Camunda 7.17.
+        For backwards compatibility we pin the version to compile to Camunda 7.20.
         -->
-        <camunda.compile.version>7.17.0</camunda.compile.version>
+        <camunda.compile.version>7.20.0</camunda.compile.version>
         <zeebe.version>8.4.5</zeebe.version>
-        <camunda8.process.test.version>8.6.0-alpha4</camunda8.process.test.version>
+        <camunda8.process.test.version>8.8.0-SNAPSHOT</camunda8.process.test.version>
         <spring-zeebe.version>8.3.6</spring-zeebe.version>
-        <spring-boot.version>2.7.18</spring-boot.version>
+        <spring-boot.version>3.1.12</spring-boot.version>
 
     </properties>
 

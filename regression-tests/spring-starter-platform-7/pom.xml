@@ -73,21 +73,4 @@
 
     </dependencies>
 
-    <profiles>
-        <profile>
-            <id>camunda-bpm-engine-7.20</id>
-            <properties>
-                <camunda.version>7.20.0</camunda.version>
-                <spring-boot.version>3.1.4</spring-boot.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>camunda-bpm-engine-7.21</id>
-            <properties>
-                <camunda.version>7.21.0</camunda.version>
-                <spring-boot.version>3.2.5</spring-boot.version>
-            </properties>
-        </profile>
-    </profiles>
-
 </project>

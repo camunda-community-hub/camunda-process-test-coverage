@@ -17,41 +17,40 @@
  * limitations under the License.
  * #L%
  */
-package org.camunda.community.process_test_coverage.junit5.platform8
+package org.camunda.community.process_test_coverage.junit5.zeebe
 
 import io.camunda.zeebe.client.ZeebeClient
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine
 import io.camunda.zeebe.process.test.extension.testcontainer.ZeebeProcessTest
+import org.camunda.community.process_test_coverage.junit5.zeebe.CoverageTestProcessConstants.deploy
+import org.camunda.community.process_test_coverage.junit5.zeebe.ProcessEngineCoverageExtension
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.RegisterExtension
+import org.junit.jupiter.api.extension.ExtendWith
 import java.time.Duration
 
 @ZeebeProcessTest
-class EventBasedGatewayTest {
-
-    companion object {
-        @JvmField
-        @RegisterExtension
-        var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension.builder().assertClassCoverageAtLeast(1.0).build()
-    }
+@ExtendWith(ProcessEngineCoverageExtension::class)
+class ExtendWithTest {
 
     private lateinit var client: ZeebeClient
     private lateinit var engine: ZeebeTestEngine
 
     @Test
-    fun testPathSignal() {
-        CoverageTestProcessConstants.deploy(client, resourcePath = "eventBasedGateway.bpmn")
-        client.newCreateInstanceCommand().bpmnProcessId("event_based_gateway").latestVersion().send().join()
+    fun testPathA() {
+        deploy(client)
+        val variables: MutableMap<String, Any> = HashMap()
+        variables["path"] = "A"
+        client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()
         engine.waitForIdleState(Duration.ofSeconds(5))
-        client.newBroadcastSignalCommand().signalName("Signal_1").send().join()
     }
 
     @Test
-    fun testPathMessage() {
-        CoverageTestProcessConstants.deploy(client, resourcePath = "eventBasedGateway.bpmn")
-        client.newCreateInstanceCommand().bpmnProcessId("event_based_gateway").latestVersion().send().join()
+    fun testPathB() {
+        deploy(client)
+        val variables: MutableMap<String, Any> = HashMap()
+        variables["path"] = "B"
+        client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()
         engine.waitForIdleState(Duration.ofSeconds(5))
-        client.newPublishMessageCommand().messageName("Message_1").correlationKey("1").send().join()
     }
 
 }

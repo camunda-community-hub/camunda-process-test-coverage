@@ -19,7 +19,7 @@
  */
 package org.camunda.community.process_test_coverage.junit5.platform8
 
-import io.camunda.zeebe.client.ZeebeClient
+import io.camunda.client.CamundaClient
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 
@@ -31,7 +31,7 @@ class EventBasedGatewayTest {
         var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension.builder().assertClassCoverageAtLeast(1.0).build()
     }
 
-    private lateinit var client: ZeebeClient
+    private lateinit var client: CamundaClient
 
     @Test
     fun testPathSignal() {

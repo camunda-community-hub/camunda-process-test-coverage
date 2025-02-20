@@ -14,7 +14,6 @@
 
     <properties>
         <dokka.skip>true</dokka.skip>
-        <operate.client.version>8.5.10</operate.client.version>
     </properties>
 
 
@@ -28,12 +27,6 @@
             <groupId>io.camunda</groupId>
             <artifactId>camunda-process-test-java</artifactId>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>io.camunda.spring</groupId>
-            <artifactId>java-client-operate</artifactId>
-            <version>${operate.client.version}</version>
         </dependency>
 
         <dependency>

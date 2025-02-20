@@ -19,9 +19,8 @@
  */
 package org.camunda.community.process_test_coverage.engine.camunda8
 
-import io.camunda.operate.search.ProcessDefinitionFilter
-import io.camunda.operate.search.SearchQuery
 import io.camunda.process.test.impl.runtime.CamundaContainerRuntime
+import io.camunda.zeebe.model.bpmn.Bpmn
 import io.camunda.zeebe.model.bpmn.Bpmn.convertToString
 import io.camunda.zeebe.model.bpmn.instance.FlowNode
 import io.camunda.zeebe.model.bpmn.instance.Process
@@ -36,20 +35,15 @@ import java.util.stream.Collectors
  * The operate rest api is used for this.
  */
 class Camunda8ModelProvider(
-    private val containerRuntime: () -> CamundaContainerRuntime
+    private val camundaContainerRuntime: () -> CamundaContainerRuntime
 ): ModelProvider {
 
     override fun getModel(key: String): Model {
 
-        val operateClient = getOperateClient(containerRuntime.invoke())
+        val client = createDataSource(camundaContainerRuntime.invoke())
 
-        val filter = ProcessDefinitionFilter.builder().bpmnProcessId(key).build()
-        val result = operateClient.searchDecisionDefinitions(SearchQuery.Builder().filter(filter).build())
-        if (result.size != 1) {
-            throw IllegalStateException()
-        }
-        val processDefinition = result[0]
-        val modelInstance = operateClient.getProcessDefinitionModel(processDefinition.key)
+        val processDefinition = client.getProcessDefinitionByBpmnProcessId(key)
+        val modelInstance = Bpmn.readModelFromStream(client.getProcessDefinitionXml(processDefinition.key).byteInputStream())
 
         return modelInstance?.let {
             val definitionFlowNodes = getExecutableFlowNodes(modelInstance.getModelElementsByType(FlowNode::class.java), key)
