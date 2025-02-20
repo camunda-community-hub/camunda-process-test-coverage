@@ -17,14 +17,14 @@
  * limitations under the License.
  * #L%
  */
-package org.camunda.community.process_test_coverage.junit5.platform8
+package org.camunda.community.process_test_coverage.junit5.zeebe
 
 import io.camunda.zeebe.process.test.assertions.BpmnAssert
 import mu.KLogging
 import org.assertj.core.api.Condition
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
-import org.camunda.community.process_test_coverage.engine.camunda8.Camunda8ModelProvider
-import org.camunda.community.process_test_coverage.engine.camunda8.createEvents
+import org.camunda.community.process_test_coverage.engine.zeebe.ZeebeModelProvider
+import org.camunda.community.process_test_coverage.engine.zeebe.createEvents
 import org.camunda.community.process_test_coverage.junit5.common.ProcessEngineCoverageExtensionBuilder
 import org.camunda.community.process_test_coverage.junit5.common.ProcessEngineCoverageExtensionHelper
 import org.junit.jupiter.api.extension.AfterAllCallback
@@ -68,7 +68,7 @@ class ProcessEngineCoverageExtension(
     /**
      * The state of the current run (class and current method).
      */
-    private val coverageCollector = DefaultCollector(Camunda8ModelProvider())
+    private val coverageCollector = DefaultCollector(ZeebeModelProvider())
 
     /**
      * Conditions to be asserted on the class coverage percentage.

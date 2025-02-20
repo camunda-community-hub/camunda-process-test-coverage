@@ -9,6 +9,9 @@
     <name>Camunda Process Test Coverage JUnit5 Platform 8</name>
     <artifactId>camunda-process-test-coverage-junit5-platform-8</artifactId>
 
+    <properties>
+        <testcontainers.version>1.20.4</testcontainers.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -28,6 +31,18 @@
             <artifactId>camunda-process-test-java</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>${testcontainers.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <scope>provided</scope>
@@ -43,6 +58,11 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>

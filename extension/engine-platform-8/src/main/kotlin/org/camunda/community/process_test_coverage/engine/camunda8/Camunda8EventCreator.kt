@@ -19,58 +19,50 @@
  */
 package org.camunda.community.process_test_coverage.engine.camunda8
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import io.camunda.operate.CamundaOperateClient
-import io.camunda.operate.CamundaOperateClientConfiguration
-import io.camunda.operate.auth.SimpleAuthentication
-import io.camunda.operate.auth.SimpleCredential
-import io.camunda.operate.model.FlowNodeInstance
-import io.camunda.operate.model.FlowNodeInstanceState
-import io.camunda.operate.search.FlowNodeInstanceFilter
-import io.camunda.operate.search.SearchQuery
+import io.camunda.client.api.search.response.FlowNodeInstance
+import io.camunda.client.api.search.response.FlowNodeInstanceState
+import io.camunda.client.api.search.response.FlowNodeInstanceType
+import io.camunda.process.test.impl.assertions.CamundaDataSource
+import io.camunda.process.test.impl.client.FlowNodeInstanceDto
 import io.camunda.process.test.impl.runtime.CamundaContainerRuntime
 import io.camunda.zeebe.model.bpmn.Bpmn
 import io.camunda.zeebe.model.bpmn.instance.SequenceFlow
-import org.apache.hc.client5.http.impl.classic.HttpClients
 import org.camunda.community.process_test_coverage.core.model.Collector
 import org.camunda.community.process_test_coverage.core.model.Event
 import org.camunda.community.process_test_coverage.core.model.EventSource
 import org.camunda.community.process_test_coverage.core.model.EventType
 import java.io.ByteArrayInputStream
-import java.net.URI
-import java.net.URL
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.toJavaDuration
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 
 /**
  * Creates events for all process instances in the current Camunda 8 engine.
- * @param containerRuntime runtime for the test containers
+ * @param camundaContainerRuntime camunda container runtime
  * @param collector collector in use for events
  */
-fun createEvents(containerRuntime: CamundaContainerRuntime, collector: Collector) {
+fun createEvents(camundaContainerRuntime: CamundaContainerRuntime, collector: Collector) {
 
-    val operateClient = getOperateClient(containerRuntime)
+    val client = createDataSource(camundaContainerRuntime)
 
-    val flowNodes = operateClient.searchProcessInstances(SearchQuery())
+    val events = client.findProcessInstances()
         .asSequence()
         .flatMap {
-            val filter = FlowNodeInstanceFilter.builder().processInstanceKey(it.key).build()
-            operateClient.searchFlowNodeInstances(SearchQuery.Builder().filter(filter).build())
+            val flowNodes = client.getFlowNodeInstancesByProcessInstanceKey(it.processInstanceKey)
+            val filteredFlowNodes = flowNodes
+                .filter { node -> node.type != FlowNodeInstanceType.PROCESS }
+                .map {
+                    node -> Pair(node, it.processDefinitionId)
+                }
+            val sequenceFlows = client.getSequenceFlowsByProcessInstanceKey(it.processInstanceKey)
+            filteredFlowNodes.plus(
+                sequenceFlows.map { sequenceFlow -> Pair(FlowNodeInstanceDto().apply {
+                    this.type = FlowNodeInstanceType.SEQUENCE_FLOW
+                    this.flowNodeName = sequenceFlow
+                }, it.processDefinitionId) }
+            )
         }
-        .filter {
-            it.type != "PROCESS"
-        }
-
-    val processDefinitions = flowNodes
-        .map { it.processDefinitionKey }
-        .distinct()
-        .associateWith {
-            operateClient.getProcessDefinition(it).bpmnProcessId
-        }
-
-    val events = flowNodes
         .flatMap {
-            mapEvent(it, processDefinitions)
+            mapEvent(it.first, it.second)
         }
         .toMutableList()
 
@@ -82,7 +74,7 @@ fun createEvents(containerRuntime: CamundaContainerRuntime, collector: Collector
         if (it.value.elementType == "EVENT_BASED_GATEWAY" && it.value.type == EventType.END
         ) {
             // if event based gateway is found look at the remaining sublist to find the next activity
-            val model = Camunda8ModelProvider { containerRuntime }.getModel(it.value.modelKey)
+            val model = Camunda8ModelProvider { camundaContainerRuntime }.getModel(it.value.modelKey)
             val modelInstance = Bpmn.readModelFromStream(ByteArrayInputStream(model.xml.toByteArray()))
             // find all sequence flows leaving the event based gateway
             val outgoingFlows = modelInstance.getModelElementsByType(SequenceFlow::class.java)
@@ -121,33 +113,26 @@ fun createEvents(containerRuntime: CamundaContainerRuntime, collector: Collector
     events.forEach { collector.addEvent(it) }
 }
 
-fun getOperateClient(containerRuntime: CamundaContainerRuntime): CamundaOperateClient {
-    val operateContainer = containerRuntime.operateContainer
-    val operateUrl: URL = URI.create("http://" + operateContainer.host + ":" + operateContainer.restApiPort).toURL()
-    val credentials = SimpleCredential("demo", "demo", operateUrl, 10.minutes.toJavaDuration())
-
-    // bootstrapping
-    val authentication = SimpleAuthentication(credentials)
-    val objectMapper = ObjectMapper()
-    val configuration = CamundaOperateClientConfiguration(authentication, operateUrl, objectMapper, HttpClients.createDefault())
-    return CamundaOperateClient(configuration)
-
+fun createDataSource(containerRuntime: CamundaContainerRuntime): CamundaDataSource {
+    val camundaContainer = containerRuntime.camundaContainer
+    return CamundaDataSource(camundaContainer.restApiAddress.toString())
 }
 
 /**
  * Maps a flow node instance to an event or null, if the record is not of importance for the coverage.
  */
-fun mapEvent(flowNodeInstance: FlowNodeInstance, processDefinitions: Map<Long, String>): List<Event> {
+fun mapEvent(flowNodeInstance: FlowNodeInstance, bpmnProcessId: String): List<Event> {
     val eventSource =
-        if (flowNodeInstance.type == "SEQUENCE_FLOW") EventSource.SEQUENCE_FLOW
+        if (flowNodeInstance.type == FlowNodeInstanceType.SEQUENCE_FLOW) EventSource.SEQUENCE_FLOW
         else EventSource.FLOW_NODE
     val eventTypes =
-        if (flowNodeInstance.type == "SEQUENCE_FLOW") setOf(EventType.TAKE)
+        if (flowNodeInstance.type == FlowNodeInstanceType.SEQUENCE_FLOW) setOf(EventType.TAKE)
         else if (flowNodeInstance.state == FlowNodeInstanceState.COMPLETED
             || flowNodeInstance.state == FlowNodeInstanceState.TERMINATED) setOf(EventType.START, EventType.END)
         else setOf(EventType.START)
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     return eventTypes.map { Event(eventSource, it, flowNodeInstance.flowNodeId,
-        flowNodeInstance.type,
-        processDefinitions[flowNodeInstance.processDefinitionKey] ?: "",
-        flowNodeInstance.startDate.time) }
+        flowNodeInstance.type.name,
+        bpmnProcessId,
+        OffsetDateTime.parse(flowNodeInstance.startDate, formatter).toInstant().toEpochMilli()) }
 }

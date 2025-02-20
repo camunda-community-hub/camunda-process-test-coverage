@@ -19,7 +19,8 @@
  */
 package org.camunda.community.process_test_coverage.junit5.platform8
 
-import io.camunda.zeebe.client.ZeebeClient
+import io.camunda.client.CamundaClient
+import io.camunda.process.test.api.CamundaAssert
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
 
@@ -28,17 +29,24 @@ class ClassCoverageTest {
     companion object {
         @JvmField
         @RegisterExtension
-        var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension.builder().assertClassCoverageAtLeast(1.0).build()
+        var extension: ProcessEngineCoverageExtension = ProcessEngineCoverageExtension.builder()
+            .assertClassCoverageAtLeast(1.0)
+            .build()
     }
 
-    private lateinit var client: ZeebeClient
+    private lateinit var client: CamundaClient
 
     @Test
     fun testPathA() {
         CoverageTestProcessConstants.deploy(client)
         val variables: MutableMap<String, Any> = HashMap()
         variables["path"] = "A"
-        client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()
+        val processInstanceEvent = client.newCreateInstanceCommand()
+            .bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY)
+            .latestVersion()
+            .variables(variables)
+            .send().join()
+        CamundaAssert.assertThat(processInstanceEvent).isCompleted
     }
 
     @Test
@@ -46,7 +54,12 @@ class ClassCoverageTest {
         CoverageTestProcessConstants.deploy(client)
         val variables: MutableMap<String, Any> = HashMap()
         variables["path"] = "B"
-        client.newCreateInstanceCommand().bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY).latestVersion().variables(variables).send().join()
+        val processInstanceEvent = client.newCreateInstanceCommand()
+            .bpmnProcessId(CoverageTestProcessConstants.PROCESS_DEFINITION_KEY)
+            .latestVersion()
+            .variables(variables)
+            .send().join()
+        CamundaAssert.assertThat(processInstanceEvent).isCompleted
     }
 
 }
