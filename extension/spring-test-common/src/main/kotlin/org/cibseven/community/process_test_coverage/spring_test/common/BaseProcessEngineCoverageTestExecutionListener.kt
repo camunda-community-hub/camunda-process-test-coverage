@@ -32,13 +32,13 @@ import org.springframework.core.Ordered
 import org.springframework.test.context.TestContext
 import org.springframework.test.context.TestExecutionListener
 
+private val logger = KotlinLogging.logger {}
+
 abstract class BaseProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordered {
 
     private lateinit var processEngineCoverageProperties: ProcessEngineCoverageProperties
 
     private var suiteInitialized = false
-
-    private val logger = KotlinLogging.logger {}
 
     private fun loadConfiguration(testContext: TestContext) {
         processEngineCoverageProperties = try {
