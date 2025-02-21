@@ -33,6 +33,8 @@ import org.junit.jupiter.api.extension.AfterAllCallback
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 
+private val logger = KotlinLogging.logger {}
+
 /**
  * Extension for JUnit 5 which allows the tracking of coverage information for Camunda process tests.
  * Based on the ProcessEngineExtension from the camunda-bpm-junit5 from the camunda community.
@@ -142,8 +144,6 @@ class ProcessEngineCoverageExtension(
         var configurationResource: String? = null,
         val processEngineConfiguration: ProcessEngineConfiguration? = null,
     ) : ProcessEngineCoverageExtensionBuilder<ProcessEngineCoverageExtension>() {
-
-        private val logger = KotlinLogging.logger {}
 
         /**
          * Set the configuration resource for initializing the process engine.

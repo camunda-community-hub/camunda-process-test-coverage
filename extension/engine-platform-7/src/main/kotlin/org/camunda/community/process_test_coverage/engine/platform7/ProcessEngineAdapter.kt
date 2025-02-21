@@ -25,12 +25,12 @@ import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
 import org.camunda.community.process_test_coverage.core.model.Collector
 
+private val logger = KotlinLogging.logger {}
+
 class ProcessEngineAdapter(
     private val processEngine: ProcessEngine,
     private val coverageCollector: Collector
 ) {
-
-    private val logger = KotlinLogging.logger {}
 
     /**
      * Sets the test run state for the coverage listeners. logging.

@@ -29,6 +29,8 @@ import org.camunda.community.process_test_coverage.core.model.Suite
 import org.camunda.community.process_test_coverage.report.CoverageReportUtil
 import org.junit.jupiter.api.extension.ExtensionContext
 
+private val logger = KotlinLogging.logger {}
+
 class ProcessEngineCoverageExtensionHelper(
     private val coverageCollector: DefaultCollector,
     /**
@@ -63,8 +65,6 @@ class ProcessEngineCoverageExtensionHelper(
     companion object {
         private const val KEY_SUITE_CONTEXT_ID = "SUITE_CONTEXT_ID"
     }
-
-    private val logger = KotlinLogging.logger {}
 
     private var suiteInitialized = false
 
