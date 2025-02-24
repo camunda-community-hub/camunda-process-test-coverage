@@ -17,7 +17,7 @@ dependencies {
     testImplementation(gradleTestKit())
     testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.10.3")
     testRuntimeOnly(group = "org.junit.platform", name = "junit-platform-launcher")
-    testImplementation(group = "org.assertj", name = "assertj-core", version = "3.26.3")
+    testImplementation(group = "org.assertj", name = "assertj-core", version = "3.27.3")
 }
 
 tasks.test {
