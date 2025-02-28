@@ -20,7 +20,7 @@ import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
- * Adapted from: https://github.com/camunda/camunda-bpm-platform/blob/master/engine-spring/src/test/java/org/camunda/bpm/engine/spring/test/configuration/InMemProcessEngineConfiguration.java
+ * Adapted from: https://github.com/cibseven/cibseven/blob/main/engine-spring/core/src/test/java/org/cibseven/bpm/engine/spring/test/configuration/InMemProcessEngineConfiguration.java
  */
 @Configuration
 public class InMemProcessEngineConfiguration {
@@ -34,7 +34,7 @@ public class InMemProcessEngineConfiguration {
     SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
 
     dataSource.setDriverClass(org.h2.Driver.class);
-    dataSource.setUrl("jdbc:h2:mem:camunda-test;DB_CLOSE_DELAY=-1");
+    dataSource.setUrl("jdbc:h2:mem:cibseven-test;DB_CLOSE_DELAY=-1");
     dataSource.setUsername("sa");
     dataSource.setPassword("");
 

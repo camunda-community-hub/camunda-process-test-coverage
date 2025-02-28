@@ -124,7 +124,7 @@ class ReportAggregatorPluginTest {
             }
             
             aggregateProcessTestCoverage {
-                reportDirectory = 'build/camunda-tests'
+                reportDirectory = 'build/cibseven-tests'
                 outputDirectory = 'aggregation'
             }
             
@@ -132,7 +132,7 @@ class ReportAggregatorPluginTest {
         Files.write(buildFile.toPath(), buildFileContent.toByteArray())
         val result = gradleRunner.build()
         assertEquals(TaskOutcome.SUCCESS, result.task(":aggregateProcessTestCoverage")?.outcome)
-        assertResult("build/camunda-tests/aggregation/report.json")
+        assertResult("build/cibseven-tests/aggregation/report.json")
     }
 
     private fun assertResult(expectedFile: String = "build/process-test-coverage/all/report.json") {

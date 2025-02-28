@@ -1,5 +1,5 @@
-[![](https://img.shields.io/badge/Community%20Extension-An%20open%20source%20community%20maintained%20project-FF4700)](https://github.com/cibseven-community-hub/community)
-![Compatible with: Camunda Platform 7](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%207-26d07c)
+[![](https://img.shields.io/badge/Community%20Extension-An%20open%20source%20community%20maintained%20project-E11E19)](https://github.com/cibseven-community-hub)
+[![Compatible with: CIB seven](https://img.shields.io/badge/Compatible%20with-CIB%20seven-26d07c)](https://github.com/cibseven/cibseven)
 
 
 # CIB seven Process Test Coverage
@@ -24,7 +24,7 @@ This CIB seven community extension **visualises** test process **paths** and **c
 
 ## Installation
 
- Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.cibseven.community.process_test_coverage/process-test-coverage-bom"><img src="https://maven-badges.herokuapp.com/maven-central/org.cibseven.community.process_test_coverage/process-test-coverage-bom/badge.svg" align="right" /></a>
+ Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.cibseven.community.process_test_coverage/process-test-coverage-bom"><img src="https://maven-badges.herokuapp.com/maven-central/org.cibseven.community.process_test_coverage/cibseven-process-test-coverage-bom/badge.svg" align="right" /></a>
 0
 ### JUnit5
 

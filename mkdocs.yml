@@ -5,22 +5,22 @@
 # To run: mkdocs serve
 # ###############################
 
-site_name: Camunda Process Test Coverage
-site_url: https://camunda-community-hub.github.io/camunda-process-test-coverage/
-site_author: Camunda OSS Developers
+site_name: CIB seven Process Test Coverage
+site_url: https://cibseven-community-hub.github.io/cibseven-process-test-coverage/
+site_author: CIB Seven OSS Developers
 site_description: >-
-  This Camunda Platform 7 and Platform 8 ommunity extension visualises test process
+  This CIB seven Community extension visualises test process
   paths and checks your process model coverage ratio. Running  typical
   tests now leaves html files in your build output.
 
-copyright: Copyright &copy; 2022
+copyright: Copyright &copy; 2025
 
 use_directory_urls: false
 
 # Repository
-repo_name: camunda-community-hub/camunda-process-test-coverage
-repo_url: https://github.com/camunda-community-hub/camunda-process-test-coverage/
-edit_uri: edit/develop/docs/
+repo_name: cibseven-community-hub/cibseven-process-test-coverage
+repo_url: https://github.com/cibseven-community-hub/cibseven-process-test-coverage/
+edit_uri: edit/main/docs/
 
 markdown_extensions:
     - attr_list
@@ -40,7 +40,7 @@ theme:
     - navigation.sections
     - navigation.top # add "navigate to top" page icon on bottom left
     - toc.integrate # integrate site TOC into the menu on the left
-  logo: assets/img/camunda-logo.png
+  logo: assets/img/cibseven-logo.png
   icon:
     repo: fontawesome/brands/github
   font:

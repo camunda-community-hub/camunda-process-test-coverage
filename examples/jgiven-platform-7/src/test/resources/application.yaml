@@ -1,5 +1,5 @@
 spring:
-  # spring.datasource.url: jdbc:h2:file:./camunda-h2-database
+  # spring.datasource.url: jdbc:h2:file:./cibseven-h2-database
   datasource:
     url: jdbc:h2:mem:camunda;DB_CLOSE_ON_EXIT=FALSE
 

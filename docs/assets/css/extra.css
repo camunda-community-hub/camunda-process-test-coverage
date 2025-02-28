@@ -9,11 +9,10 @@
 
 [data-md-color-scheme="default"] {
   /*
-   Camunda colors
+   CIB colors
    */
-   --camunda-orange-1: #f38a07;
-   --camunda-orange-2: #f27d06;
-   --camunda-orange-3: #f04609;
+   --primary: #E11E19;
+   --secondary: #4D6278;
    --monochrome-50: #7f7f7f;
 
 
@@ -21,23 +20,22 @@
    Default colors adjustments
    */
    --md-primary-fg-color: var(--monochrome-50);
-   --md-accent-fg-color: var(--camunda-orange-3);
-   --md-footer-bg-color: var(--camunda-orange-1);
+   --md-accent-fg-color: var(--primary);
+   --md-footer-bg-color: var(--secondary);
 }
 
 [data-md-color-scheme="slate"] {
   /*
-   Camunda colors
+   CIB colors
    */
-  --camunda-orange-1: #f38a07;
-  --camunda-orange-2: #f27d06;
-  --camunda-orange-3: #f04609;
+   --primary: #E11E19;
+   --secondary: #4D6278;
 
 
   /*
    Default colors adjustments
    */
   --md-primary-fg-color: var(--monochrome-50);
-  --md-accent-fg-color: var(--camunda-orange-3);
-  --md-footer-bg-color: var(--camunda-orange-1);
+  --md-accent-fg-color: var(--primary);
+  --md-footer-bg-color: var(--secondary);
 }

@@ -49,7 +49,7 @@ possible to configure the output directory for the aggregation report inside the
                 <goal>aggregate</goal>
             </goals>
             <configuration>
-                <reportDirectory>build/camunda-tests</reportDirectory>
+                <reportDirectory>build/cibseven-tests</reportDirectory>
                 <outputDirectory>aggregation</outputDirectory>
             </configuration>
         </execution>
@@ -69,14 +69,14 @@ plugins {
 }
 
 aggregateProcessTestCoverage {
-    reportDirectory = 'build/camunda-tests'
+    reportDirectory = 'build/cibseven-tests'
     outputDirectory = 'aggregation'
 }
 ```
 
 ### Legacy way via system property
 
-We still support the old way to configure the reporting directory via system property `camunda-process-test-coverage.target-dir-root`.
+We still support the old way to configure the reporting directory via system property `cibseven-process-test-coverage.target-dir-root`.
 
 #### Maven
 ```xml
@@ -85,7 +85,7 @@ We still support the old way to configure the reporting directory via system pro
 <artifactId>maven-surefire-plugin</artifactId>
 <configuration>
   <systemPropertyVariables>
-    <camunda-process-test-coverage.target-dir-root>${project.build.directory}/my-coverage-reports/</camunda-process-test-coverage.target-dir-root>
+    <cibseven-process-test-coverage.target-dir-root>${project.build.directory}/my-coverage-reports/</cibseven-process-test-coverage.target-dir-root>
   </systemPropertyVariables>
 </configuration>
 </plugin>
@@ -96,7 +96,7 @@ We still support the old way to configure the reporting directory via system pro
 tasks {
     withType<Test> {
         systemProperties = mapOf(
-            "camunda-process-test-coverage.target-dir-root" to "$buildDir/my-coverage-reports/"
+            "cibseven-process-test-coverage.target-dir-root" to "$buildDir/my-coverage-reports/"
         )
     }
 }

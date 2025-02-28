@@ -36,7 +36,7 @@ import java.util.*
 class ReportAggregatorMojo : AbstractMojo(), MavenReport {
 
     companion object {
-        var TARGET_DIR_ROOT: String? = System.getProperty("camunda-process-test-coverage.target-dir-root")
+        var TARGET_DIR_ROOT: String? = System.getProperty("cibseven-process-test-coverage.target-dir-root")
     }
 
     @Parameter(defaultValue = "target/process-test-coverage")

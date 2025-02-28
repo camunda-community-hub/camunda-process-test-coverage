@@ -95,7 +95,7 @@
 //
 //        assertThat(result.mavenProjectResult.targetProjectDirectory
 //            .resolve("build")
-//            .resolve("camunda-tests/aggregation/report.json"))
+//            .resolve("cibseven-tests/aggregation/report.json"))
 //            .exists()
 //            .isRegularFile()
 //            .content()

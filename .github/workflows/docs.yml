@@ -3,7 +3,8 @@ name: Build the docs
 on:
   push:
     branches:
-      - master
+      - main
+      - documentation
     tags:
       - '*'
   release:
@@ -69,9 +70,14 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         run: mike set-default stable --push
 
-      # This is for master branch
+      # This is for main branch
       - name: Deploy latest develop snapshot docs to GH pages.
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
+        run: mike deploy snapshot -u --push
+      
+      # This is for documentation branch
+      - name: Deploy latest develop snapshot docs to GH pages.
+        if: github.ref == 'refs/heads/documentation'
         run: mike deploy snapshot -u --push
 
       # This is for release close

@@ -41,7 +41,7 @@
                             <goal>aggregate</goal>
                         </goals>
                         <configuration>
-                            <reportDirectory>build/camunda-tests</reportDirectory>
+                            <reportDirectory>build/cibseven-tests</reportDirectory>
                             <outputDirectory>aggregation</outputDirectory>
                         </configuration>
                     </execution>
