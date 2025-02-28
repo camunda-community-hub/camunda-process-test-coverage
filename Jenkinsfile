@@ -36,14 +36,14 @@ pipeline {
             description: 'Build and test'
         )
         booleanParam(
-            name: 'DEPLOY',
+            name: 'DEPLOY_TO_ARTIFACTS',
             defaultValue: false,
             description: 'Deploy artifacts to artifacts.cibseven.org'
         )
-        password(
-            name: 'DEPLOY_MAVEN_CENTRAL_PASSWORD',
-            defaultValue: '',
-            description: 'Enter a password for deployment to Maven Central (no need to activate DEPLOY parameter above if you want just to deploy to Maven Central). SNAPSHOT version will not be deployed into Maven Central. If you will not change this value - you will not run deploy to Maven Central.'
+        booleanParam(
+            name: 'DEPLOY_TO_MAVEN_CENTRAL',
+            defaultValue: false,
+            description: 'Deploy artifacts to Maven Central'
         )
     }
 
@@ -95,51 +95,66 @@ pipeline {
 
         stage('Maven install') {
             when {
-                expression { params.INSTALL == true }
+                expression { params.INSTALL }
             }
             steps {
                 script {
                     withMaven(options: [junitPublisher(disabled: false), jacocoPublisher(disabled: false)]) {
-                        sh "mvn -T4 -Dbuild.number=${BUILD_NUMBER} install"
+                        sh "mvn -T4 -Dbuild.number=${BUILD_NUMBER} install license:check-file-header"
                     }
-
-                    junit allowEmptyResults: true, testResults: ConstantsInternal.MAVEN_TEST_RESULTS
+                    if (!params.DEPLOY_TO_ARTIFACTS && !params.DEPLOY_TO_MAVEN_CENTRAL) {
+                        junit allowEmptyResults: true, testResults: ConstantsInternal.MAVEN_TEST_RESULTS
+                    }
                 }
             }
         }
 
         stage('Deploy to artifacts.cibseven.org') {
             when {
-                expression { params.DEPLOY == true }
+                allOf {
+                    expression { params.DEPLOY_TO_ARTIFACTS }
+                    expression { !params.DEPLOY_TO_MAVEN_CENTRAL }
+                }
             }
             steps {
                 script {
                     withMaven(options: []) {
-                        sh "mvn -T4 -U -DskipTests clean deploy"
+                        sh "mvn -T4 -U clean deploy"
                     }
+                  
+                    junit allowEmptyResults: true, testResults: ConstantsInternal.MAVEN_TEST_RESULTS
                 }
             }
         }
-
+        
         stage('Deploy to Maven Central') {
             when {
                 allOf {
-                    expression { params.DEPLOY_MAVEN_CENTRAL_PASSWORD.toString().isEmpty() == false } // "" is default value
+                    expression { params.DEPLOY_TO_MAVEN_CENTRAL }
                     expression { mavenProjectInformation.version.endsWith("-SNAPSHOT") == false }
                 }
             }
             steps {
                 script {
                     withMaven(options: []) {
-                        sh """
-                            mvn -T4 -U \
-                                clean deploy \
-                                -Psonatype-oss-release \
-                                -Dskip.cibseven.release=false \
-                                -DskipTests \
-                                -Dgpg.passphrase=${params.DEPLOY_MAVEN_CENTRAL_PASSWORD}
-                        """
+                        withCredentials([file(credentialsId: 'credential-cibseven-community-gpg-private-key', variable: 'GPG_KEY_FILE'), string(credentialsId: 'credential-cibseven-community-gpg-passphrase', variable: 'GPG_KEY_PASS')]) {
+                            sh "gpg --batch --import ${GPG_KEY_FILE}"
+    
+                            def GPG_KEYNAME = sh(script: "gpg --list-keys --with-colons | grep pub | cut -d: -f5", returnStdout: true).trim()
+
+                            sh """
+                                mvn -T4 -U \
+                                    -Dgpg.keyname="${GPG_KEYNAME}" \
+                                    -Dgpg.passphrase="${GPG_KEY_PASS}" \
+                                    clean deploy \
+                                    -Psonatype-oss-release \
+                                    -B -ntp -DskipExamples \
+                                    -Dskip.cibseven.release="${!params.DEPLOY_TO_ARTIFACTS}"
+                            """
+                        }
                     }
+
+                    junit allowEmptyResults: true, testResults: ConstantsInternal.MAVEN_TEST_RESULTS
                 }
             }
         }

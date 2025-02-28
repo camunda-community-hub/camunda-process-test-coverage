@@ -364,6 +364,14 @@
 
     <developers>
         <developer>
+            <id>cibseven.org</id>
+            <name>CIB seven Community</name>
+            <email>community@cibseven.org</email>
+            <url>http://cibseven.org</url>
+            <organization>cibseven.org</organization>
+            <organizationUrl>http://cibseven.org</organizationUrl>
+        </developer>
+        <developer>
             <name>Jan Rohwer</name>
             <organization>Holisticon AG</organization>
             <email>jan.rohwer@holisticon.de</email>
@@ -375,4 +383,14 @@
         </developer>
     </developers>
 
+  <repositories>
+    
+    <repository>
+      <id>mvn-cibseven-public</id>
+      <name>CIB seven Public Repository</name>
+      <url>https://artifacts.cibseven.org/repository/public</url>
+    </repository>
+
+  </repositories>
+  
 </project>
