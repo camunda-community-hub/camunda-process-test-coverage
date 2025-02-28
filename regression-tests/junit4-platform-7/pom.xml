@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.cibseven.community.process_test_coverage</groupId>
         <artifactId>cibseven-process-test-coverage-regression-tests-parent</artifactId>
-        <version>2.7.0</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>cibseven-process-test-coverage-regression-tests-junit4-platform-7</artifactId>
@@ -64,8 +64,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
             <scope>test</scope>
         </dependency>
 

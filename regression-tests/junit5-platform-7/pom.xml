@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.cibseven.community.process_test_coverage</groupId>
         <artifactId>cibseven-process-test-coverage-regression-tests-parent</artifactId>
-        <version>2.7.0</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>cibseven-process-test-coverage-regression-tests-junit5-platform-7</artifactId>
@@ -37,7 +37,7 @@
         </dependency>
         <dependency>
             <groupId>org.cibseven.bpm</groupId>
-            <artifactId>camunda-engine-spring</artifactId>
+            <artifactId>cibseven-engine-spring</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

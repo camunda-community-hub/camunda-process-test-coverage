@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.cibseven.community.process_test_coverage</groupId>
         <artifactId>cibseven-process-test-coverage-regression-tests-parent</artifactId>
-        <version>2.7.0</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>cibseven-process-test-coverage-regression-tests-spring-test-platform-7</artifactId>
