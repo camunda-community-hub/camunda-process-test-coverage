@@ -15,8 +15,8 @@
     </prerequisites>
 
     <properties>
-        <maven.version>3.8.1</maven.version>
-        <maven-plugin-tools.version>3.13.1</maven-plugin-tools.version>
+        <maven.version>3.9.9</maven.version>
+        <maven-plugin-tools.version>3.15.1</maven-plugin-tools.version>
         <maven-reporting.version>3.1.1</maven-reporting.version>
         <itf.version>0.13.1</itf.version>
     </properties>
@@ -126,7 +126,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>3.3.1</version>
+                <version>3.5.2</version>
                 <configuration>
                     <systemPropertyVariables>
                         <maven.version>${maven.version}</maven.version>
