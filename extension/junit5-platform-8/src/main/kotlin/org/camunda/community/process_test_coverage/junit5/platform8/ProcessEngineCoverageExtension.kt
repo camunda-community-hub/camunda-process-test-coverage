@@ -20,7 +20,6 @@
 package org.camunda.community.process_test_coverage.junit5.platform8
 
 import io.camunda.zeebe.process.test.assertions.BpmnAssert
-import mu.KLogging
 import org.assertj.core.api.Condition
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.engine.platform8.ZeebeModelProvider
@@ -60,7 +59,7 @@ class ProcessEngineCoverageExtension(
 
 ) : BeforeAllCallback, AfterAllCallback, BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
-    companion object : KLogging() {
+    companion object {
         @JvmStatic
         fun builder() = Builder()
     }

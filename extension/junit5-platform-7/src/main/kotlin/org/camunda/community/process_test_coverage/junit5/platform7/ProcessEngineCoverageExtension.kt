@@ -19,7 +19,7 @@
  */
 package org.camunda.community.process_test_coverage.junit5.platform7
 
-import mu.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.assertj.core.api.Condition
 import org.camunda.bpm.engine.ProcessEngineConfiguration
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl
@@ -32,6 +32,8 @@ import org.camunda.community.process_test_coverage.junit5.common.ProcessEngineCo
 import org.junit.jupiter.api.extension.AfterAllCallback
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.ExtensionContext
+
+private val logger = KotlinLogging.logger {}
 
 /**
  * Extension for JUnit 5 which allows the tracking of coverage information for Camunda process tests.
@@ -61,7 +63,7 @@ class ProcessEngineCoverageExtension(
 
         ) : ProcessEngineExtension(), BeforeAllCallback, AfterAllCallback {
 
-    companion object : KLogging() {
+    companion object {
         @JvmStatic
         fun builder() = Builder()
         @JvmStatic

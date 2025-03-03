@@ -19,7 +19,7 @@
  */
 package org.camunda.community.process_test_coverage.junit5.common
 
-import mu.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
 import org.camunda.community.process_test_coverage.core.engine.isExcluded
@@ -28,6 +28,8 @@ import org.camunda.community.process_test_coverage.core.model.Run
 import org.camunda.community.process_test_coverage.core.model.Suite
 import org.camunda.community.process_test_coverage.report.CoverageReportUtil
 import org.junit.jupiter.api.extension.ExtensionContext
+
+private val logger = KotlinLogging.logger {}
 
 class ProcessEngineCoverageExtensionHelper(
     private val coverageCollector: DefaultCollector,
@@ -60,7 +62,7 @@ class ProcessEngineCoverageExtensionHelper(
 
 ) {
 
-    companion object : KLogging() {
+    companion object {
         private const val KEY_SUITE_CONTEXT_ID = "SUITE_CONTEXT_ID"
     }
 

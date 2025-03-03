@@ -19,7 +19,7 @@
  */
 package org.camunda.community.process_test_coverage.spring_test.common
 
-import mu.KLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Condition
 import org.camunda.community.process_test_coverage.core.engine.isExcluded
@@ -31,11 +31,10 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException
 import org.springframework.core.Ordered
 import org.springframework.test.context.TestContext
 import org.springframework.test.context.TestExecutionListener
-import org.springframework.util.PatternMatchUtils
+
+private val logger = KotlinLogging.logger {}
 
 abstract class BaseProcessEngineCoverageTestExecutionListener : TestExecutionListener, Ordered {
-
-    companion object : KLogging()
 
     private lateinit var processEngineCoverageProperties: ProcessEngineCoverageProperties
 
