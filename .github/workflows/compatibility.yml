@@ -11,35 +11,19 @@ jobs:
   build:
     strategy:
       fail-fast: false
-      # Build for three operating systems, currently JVMs 11, 17 and latest four Camunda versions (last two years)
-      # We run Legacy support test on Ubuntu, JDK 1.8 until 7.17 (Release 2022).
+      # Build for three operating systems, currently JVMs 17,21 and latest three Camunda versions (last two years)
       matrix:
         os:
           - 'ubuntu-latest'
           - 'windows-latest'
           - 'macos-latest'
         jdk:
-          - '11'
           - '17'
           - '21'
         camunda-version:
+          - '7.22' # 2024
           - '7.21' # 2024
           - '7.20' # 2023
-          - '7.19' # 2023
-          - '7.18' # 2022
-          - '7.17' # 2022
-        exclude:
-          - jdk: '11'
-            camunda-version: '7.20'
-          - jdk: '11'
-            camunda-version: '7.21'
-        include:
-          - os: 'ubuntu-latest'
-            jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
-            camunda-version: '7.18'
-          - os: 'ubuntu-latest'
-            jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
-            camunda-version: '7.17' # 2022
 
     runs-on: ${{ matrix.os }}
     steps:
