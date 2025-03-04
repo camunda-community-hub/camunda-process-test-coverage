@@ -11,8 +11,7 @@ jobs:
   build:
     strategy:
       fail-fast: false
-      # Build for three operating systems, currently JVMs 11, 17 and latest four Camunda versions (last two years)
-      # We run Legacy support test on Ubuntu, JDK 1.8 until 7.17 (Release 2022).
+      # Build for three operating systems, currently JVMs 17,21 and latest three Camunda versions (last two years)
       matrix:
         os:
           - 'ubuntu-latest'

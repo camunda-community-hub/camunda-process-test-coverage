@@ -34,6 +34,7 @@ public class ProcessEngineConfiguration {
 
     static {
         ProcessEngineConfigurationImpl configuration = new StandaloneInMemoryTestConfiguration();
+        configuration.setEnforceHistoryTimeToLive(false);
         ProcessCoverageConfigurator.initializeProcessCoverageExtensions(configuration);
         processEngine = configuration.buildProcessEngine();
     }
