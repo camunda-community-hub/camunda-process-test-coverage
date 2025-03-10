@@ -1,6 +1,5 @@
-[![](https://img.shields.io/badge/Community%20Extension-An%20open%20source%20community%20maintained%20project-E11E19)](https://github.com/cibseven-community-hub)
-[![Compatible with: CIB seven](https://img.shields.io/badge/Compatible%20with-CIB%20seven-26d07c)](https://github.com/cibseven/cibseven)
-
+[![CIB seven 1.1.0](https://img.shields.io/badge/CIB%20seven-1.1.0-orange.svg)](https://docs.cibseven.org/manual/1.1/)
+[![Maven Central](https://img.shields.io/maven-central/v/org.cibseven.community.process_test_coverage/cibseven-process-test-coverage-starter-platform-7?label=Maven%20Central)](https://central.sonatype.com/artifact/org.cibseven.community.process_test_coverage/cibseven-process-test-coverage-starter-platform-7)
 
 # CIB seven Process Test Coverage
 
