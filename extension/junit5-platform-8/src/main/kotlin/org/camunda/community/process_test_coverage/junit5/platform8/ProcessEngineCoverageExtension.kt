@@ -19,8 +19,8 @@
  */
 package org.camunda.community.process_test_coverage.junit5.platform8
 
+import io.camunda.process.test.api.CamundaProcessTestContext
 import io.camunda.process.test.api.CamundaProcessTestExtension
-import io.camunda.process.test.impl.runtime.CamundaContainerRuntime
 import mu.KLogging
 import org.assertj.core.api.Condition
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
@@ -66,13 +66,13 @@ class ProcessEngineCoverageExtension(
         fun builder() = Builder()
     }
 
-    private var camundaContainerRuntime: CamundaContainerRuntime? = null
+    private var camundaProcessTestContext: CamundaProcessTestContext? = null
 
     /**
      * The state of the current run (class and current method).
      */
     private val coverageCollector = DefaultCollector(
-        Camunda8ModelProvider { camundaContainerRuntime ?: throw IllegalStateException() }
+        Camunda8ModelProvider { camundaProcessTestContext ?: throw IllegalStateException() }
     )
 
     /**
@@ -95,7 +95,7 @@ class ProcessEngineCoverageExtension(
     override fun beforeTestExecution(context: ExtensionContext) {
         // get runtime from store
         val store = context.getStore(NAMESPACE)
-        camundaContainerRuntime = store.get(STORE_KEY_RUNTIME) as CamundaContainerRuntime
+        camundaProcessTestContext = store.get(STORE_KEY_CONTEXT) as CamundaProcessTestContext
         if (!processEngineCoverageExtensionHelper.isTestMethodExcluded(context)) {
             processEngineCoverageExtensionHelper.beforeTestExecution(context)
         }
@@ -106,16 +106,17 @@ class ProcessEngineCoverageExtension(
      */
     override fun afterTestExecution(context: ExtensionContext) {
         if (!processEngineCoverageExtensionHelper.isTestMethodExcluded(context)) {
-            createEvents(camundaContainerRuntime ?: throw IllegalStateException(), coverageCollector)
+            createEvents(camundaProcessTestContext ?: throw IllegalStateException(), coverageCollector)
             processEngineCoverageExtensionHelper.afterTestExecution(context)
         }
-        camundaContainerRuntime = null
+        camundaProcessTestContext = null
     }
 
     /**
      * Initializes the suite for all upcoming tests.
      */
     override fun beforeAll(context: ExtensionContext) {
+        super.beforeAll(context)
         processEngineCoverageExtensionHelper.beforeAll(context)
     }
 
@@ -126,6 +127,7 @@ class ProcessEngineCoverageExtension(
      */
     override fun afterAll(context: ExtensionContext) {
         processEngineCoverageExtensionHelper.afterAll(context)
+        super.afterAll(context)
     }
 
     fun addTestMethodCoverageCondition(methodName: String, condition: Condition<Double>) =
