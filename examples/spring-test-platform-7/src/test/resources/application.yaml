@@ -8,3 +8,6 @@ camunda:
     admin-user:
       id: demo
       password: demo
+    generic-properties:
+      properties:
+        enforceHistoryTimeToLive: false

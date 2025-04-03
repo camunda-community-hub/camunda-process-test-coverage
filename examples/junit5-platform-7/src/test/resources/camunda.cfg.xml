@@ -26,6 +26,6 @@
 
     <bean id="processEngineConfiguration"
           class="org.camunda.community.process_test_coverage.engine.platform7.ProcessCoverageInMemProcessEngineConfiguration">
-
+        <property name="historyTimeToLive" value="P1D"/>
     </bean>
 </beans>
