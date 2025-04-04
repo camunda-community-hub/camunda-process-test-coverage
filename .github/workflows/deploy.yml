@@ -53,3 +53,13 @@ jobs:
           asset_path: ${{ steps.release.outputs.artifacts_archive_path }}
           asset_name: ${{ steps.release.outputs.artifacts_archive_path }}
           asset_content_type: application/zip
+
+      - name: Update Version in regression tests
+        run: |
+          ./mvnw -B versions:update-child-modules -DgenerateBackupPoms=false
+          ./mvnw -B versions:update-child-modules -DgenerateBackupPoms=false
+          git add ./**pom.xml
+          git commit -am "release(v${RELEASE_VERSION}): prepare for next development iteration"
+          git push
+        env:
+          RELEASE_VERSION: ${{ github.event.release.tag_name }}

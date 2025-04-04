@@ -54,7 +54,7 @@ Either use `@ExtendWith`
 Java
 ```java
 @ExtendWith(ProcessEngineCoverageExtension.class)
-public class MyProcessTest
+public class MyProcessTest {}
 ```
 
 Kotlin

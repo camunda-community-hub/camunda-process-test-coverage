@@ -75,6 +75,7 @@ Use the **ProcessCoverageInMemProcessEngineConfiguration**, e.g. in your `camund
 Import test configuration to enable coverage in process engine.
 ```java
 @Import(ProcessEngineCoverageConfiguration.class)
+public class MySpringConfiguration {}
 ```
 
 ## Usage
@@ -99,7 +100,7 @@ Either use `@ExtendWith`
 Java
 ```java
 @ExtendWith(ProcessEngineCoverageExtension.class)
-public class MyProcessTest
+public class MyProcessTest {}
 ```
 
 Kotlin
