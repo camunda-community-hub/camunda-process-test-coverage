@@ -50,6 +50,9 @@ jobs:
       - name: Prepare Maven Wrapper
         run: chmod +x ./mvnw
 
+      - name: Install BOM
+        run: ./mvnw install -f bom
+
       - name: Check for valid camunda profile
         run: ./mvnw enforcer:enforce -f regression-tests -Drules=requireProfileIdsExist "-Pcamunda-bpm-engine-${{ matrix.camunda-version }}"
 
