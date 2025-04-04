@@ -305,7 +305,7 @@
                                 </execution>
                             </executions>
                             <configuration>
-                                <jdkVersion>11</jdkVersion>
+                                <jdkVersion>${version.java}</jdkVersion>
                                 <reportUndocumented>false</reportUndocumented>
                                 <skipEmptyPackages>true</skipEmptyPackages>
                                 <sourceDirectories>
