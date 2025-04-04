@@ -51,7 +51,7 @@ jobs:
         run: chmod +x ./mvnw
 
       - name: Install BOM
-        run: ./mvnw install -f bom
+        run: ./mvnw install -N; ./mvnw install -f bom
 
       - name: Check for valid camunda profile
         run: ./mvnw enforcer:enforce -f regression-tests -Drules=requireProfileIdsExist "-Pcamunda-bpm-engine-${{ matrix.camunda-version }}"
