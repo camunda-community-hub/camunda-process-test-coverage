@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
 
     <properties>
-        <camunda.version>${camunda.compile.version}</camunda.version>
         <jacoco.skip>true</jacoco.skip>
         <dokka.skip>true</dokka.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
@@ -25,51 +24,27 @@
     <modules>
         <module>junit4-platform-7</module>
         <module>junit5-platform-7</module>
+        <module>junit5-platform-8</module>
+        <module>jgiven-platform-7</module>
         <module>spring-test-platform-7</module>
         <module>spring-starter-platform-7</module>
+        <module>spring-test-platform-8</module>
+        <module>spring-starter-platform-8</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
-
-            <!-- Kotlin -->
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-bom</artifactId>
-                <version>${kotlin.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- Spring Boot import -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-
-            <!-- Camunda -->
-            <dependency>
-                <groupId>org.camunda.bpm</groupId>
-                <artifactId>camunda-bom</artifactId>
-                <version>${camunda.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-
             <!-- Own BOM -->
             <dependency>
                 <groupId>org.camunda.community.process_test_coverage</groupId>
                 <artifactId>camunda-process-test-coverage-bom</artifactId>
-                <version>${project.parent.version}</version>
+                <version>${project.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
+
     <build>
         <pluginManagement>
             <plugins>
@@ -111,19 +86,5 @@
             </plugin>
         </plugins>
     </reporting>
-    <profiles>
-        <profile>
-            <id>jdk11</id>
-            <activation>
-                <jdk>[11,)</jdk>
-            </activation>
-            <modules>
-                <module>jgiven-platform-7</module>
-                <module>junit5-platform-8</module>
-                <module>spring-test-platform-8</module>
-                <module>spring-starter-platform-8</module>
-            </modules>
-        </profile>
-    </profiles>
 </project>
 

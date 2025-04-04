@@ -26,7 +26,6 @@
             <groupId>io.camunda</groupId>
             <artifactId>zeebe-process-test-assertions</artifactId>
             <scope>provided</scope>
-            <version>${zeebe.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

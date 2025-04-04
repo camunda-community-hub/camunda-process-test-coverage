@@ -37,12 +37,22 @@
             </dependency>
             <dependency>
                 <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-junit5-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
                 <artifactId>camunda-process-test-coverage-junit5-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.camunda.community.process_test_coverage</groupId>
                 <artifactId>camunda-process-test-coverage-junit5-platform-8</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-spring-test-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

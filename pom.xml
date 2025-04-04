@@ -24,10 +24,8 @@
     <inceptionYear>2019</inceptionYear>
 
     <modules>
-        <module>extension</module>
-        <module>starter-platform-7</module>
-        <module>starter-platform-8</module>
         <module>bom</module>
+        <module>extension</module>
     </modules>
 
     <properties>
@@ -40,7 +38,7 @@
         For backwards compatibility we pin the version to compile to Camunda 7.20.
         -->
         <camunda.compile.version>7.20.0</camunda.compile.version>
-        <zeebe.version>8.4.5</zeebe.version>
+        <zeebe-process-test.version>8.4.5</zeebe-process-test.version>
         <spring-zeebe.version>8.3.6</spring-zeebe.version>
         <spring-boot.version>3.1.12</spring-boot.version>
 
@@ -62,12 +60,54 @@
                 <artifactId>kotlin-logging-jvm</artifactId>
                 <version>${kotlin-logging.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.mockito.kotlin</groupId>
                 <artifactId>mockito-kotlin</artifactId>
                 <version>${mockito-kotlin.version}</version>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- Spring Boot import -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- Camunda 7 -->
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>${camunda.compile.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+
+            <!-- Camunda 8: Zeebe Process Test -->
+            <dependency>
+                <groupId>io.camunda</groupId>
+                <artifactId>zeebe-process-test-assertions</artifactId>
+                <scope>provided</scope>
+                <version>${zeebe-process-test.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.camunda</groupId>
+                <artifactId>zeebe-process-test-extension-testcontainer</artifactId>
+                <version>${zeebe-process-test.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- Camunda 8: Spring Zeebe -->
+            <dependency>
+                <groupId>io.camunda.spring</groupId>
+                <artifactId>spring-boot-starter-camunda</artifactId>
+                <version>${spring-zeebe.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.camunda.spring</groupId>
+                <artifactId>spring-boot-starter-camunda-test-testcontainer</artifactId>
+                <version>${spring-zeebe.version}</version>
             </dependency>
 
         </dependencies>
