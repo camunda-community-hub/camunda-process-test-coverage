@@ -10,18 +10,17 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.annotation.PostConstruct;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { InMemProcessEngineConfiguration.class })
-public class SpringProcessWithCoverageTest {
+public class SpringProcessWithCoverageTest implements InitializingBean {
 
   @Autowired
   ProcessEngine processEngine;
@@ -29,8 +28,8 @@ public class SpringProcessWithCoverageTest {
   @Rule @ClassRule
   public static ProcessEngineRule rule;
 
-  @PostConstruct
-  void initRule() {
+  @Override
+  public void afterPropertiesSet() throws Exception {
     rule = TestCoverageProcessEngineRuleBuilder.create(processEngine).build();
   }
 
