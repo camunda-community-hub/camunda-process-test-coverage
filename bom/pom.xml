@@ -32,6 +32,11 @@
             </dependency>
             <dependency>
                 <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-junit5-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
                 <artifactId>cibseven-process-test-coverage-junit5-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -45,7 +50,7 @@
                 <artifactId>cibseven-process-test-coverage-starter-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
+              <dependency>
                 <groupId>org.cibseven.community.process_test_coverage</groupId>
                 <artifactId>cibseven-process-test-coverage-report-generator</artifactId>
                 <version>${project.version}</version>

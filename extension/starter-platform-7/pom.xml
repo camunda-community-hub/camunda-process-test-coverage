@@ -9,7 +9,6 @@
     <name>CIB seven Process Test Coverage Starter Platform 7</name>
     <artifactId>cibseven-process-test-coverage-starter-platform-7</artifactId>
 
-
     <dependencies>
         <dependency>
             <groupId>org.cibseven.community.process_test_coverage</groupId>

@@ -34,17 +34,6 @@
 
     <dependencyManagement>
         <dependencies>
-
-            <!-- Spring Boot import -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-
-            <!-- Re-define CIB seven -->
             <dependency>
                 <groupId>org.cibseven.bpm</groupId>
                 <artifactId>cibseven-bom</artifactId>
@@ -52,8 +41,33 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
+
+            <!-- Own BOM -->
+            <dependency>
+                <groupId>org.cibseven.community.process_test_coverage</groupId>
+                <artifactId>cibseven-process-test-coverage-bom</artifactId>
+                <version>${project.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.graalvm.polyglot</groupId>
+            <artifactId>js</artifactId>
+            <version>${graalvm.version}</version>
+            <scope>runtime</scope>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>js-scriptengine</artifactId>
+            <version>${graalvm.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
 
     <profiles>
         <!-- Profiles just here to ease testing in IDEs -->
@@ -70,28 +84,6 @@
             </properties>
         </profile>
 
-        <profile>
-            <!-- Starting from JDK 12+, Nashorn is not part of JDK -->
-            <id>jdk12</id>
-            <activation>
-                <jdk>[12,</jdk>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>org.graalvm.polyglot</groupId>
-                    <artifactId>js</artifactId>
-                    <version>${graalvm.version}</version>
-                    <scope>runtime</scope>
-                    <type>pom</type>
-                </dependency>
-                <dependency>
-                    <groupId>org.graalvm.js</groupId>
-                    <artifactId>js-scriptengine</artifactId>
-                    <version>${graalvm.version}</version>
-                    <scope>runtime</scope>
-                </dependency>
-            </dependencies>
-        </profile>
     </profiles>
 
 </project>

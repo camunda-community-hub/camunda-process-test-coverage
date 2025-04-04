@@ -26,13 +26,16 @@
         <module>jgiven-platform-7</module>
         <module>junit4-platform-7</module>
         <module>junit5-platform-7</module>
+        <module>junit5-platform-8</module>
+        <module>jgiven-platform-7</module>
         <module>spring-test-platform-7</module>
         <module>spring-starter-platform-7</module>
+        <module>spring-test-platform-8</module>
+        <module>spring-starter-platform-8</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
-
             <!-- Kotlin -->
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -68,9 +71,9 @@
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
+
     <build>
         <pluginManagement>
             <plugins>
