@@ -63,11 +63,6 @@
             <artifactId>spring-orm</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>jakarta.annotation</groupId>
-            <artifactId>jakarta.annotation-api</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <dependency>
             <!-- Needed for InMemoryH2Test -->
