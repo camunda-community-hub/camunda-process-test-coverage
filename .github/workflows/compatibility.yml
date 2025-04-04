@@ -48,6 +48,9 @@ jobs:
       - name: Prepare Maven Wrapper
         run: chmod +x ./mvnw
 
+      - name: Install BOM
+        run: ./mvnw install -f bom
+
       - name: Check for valid cibseven profile
         run: ./mvnw enforcer:enforce -f regression-tests -Drules=requireProfileIdsExist "-Pcibseven-bpm-engine-${{ matrix.cibseven-version }}"
 
