@@ -11,7 +11,7 @@ jobs:
   build:
     strategy:
       fail-fast: false
-      # Build for three operating systems, currently JVMs 17,21 and latest three Camunda versions (last two years)
+      # Build for three operating systems, currently JVMs 17,21 and latest four Camunda versions (last two years)
       matrix:
         os:
           - 'ubuntu-latest'
@@ -21,6 +21,7 @@ jobs:
           - '17'
           - '21'
         camunda-version:
+          - '7.23' # 2025
           - '7.22' # 2024
           - '7.21' # 2024
           - '7.20' # 2023

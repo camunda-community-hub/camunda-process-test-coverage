@@ -97,6 +97,13 @@
             </properties>
         </profile>
         <profile>
+            <id>camunda-bpm-engine-7.23</id>
+            <properties>
+                <camunda.version>7.23.0</camunda.version>
+                <spring-boot.version>3.4.4</spring-boot.version>
+            </properties>
+        </profile>
+        <profile>
             <id>camunda-bpm-engine-7.22</id>
             <properties>
                 <camunda.version>7.22.0</camunda.version>
@@ -109,7 +116,7 @@
                 <camunda.version>7.21.0</camunda.version>
                 <spring-boot.version>3.2.12</spring-boot.version>
             </properties>
-        </profile>             
+        </profile>
         <profile>
             <id>camunda-bpm-engine-7.20</id>
             <properties>
