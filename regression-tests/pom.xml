@@ -35,6 +35,15 @@
     <dependencyManagement>
         <dependencies>
 
+            <!-- Kotlin -->
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-bom</artifactId>
+                <version>${kotlin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <!-- Spring Boot import -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -64,6 +73,18 @@
             </properties>
         </profile>
         <profile>
+            <id>camunda-bpm-engine-7.23</id>
+            <properties>
+                <camunda.version>7.23.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>camunda-bpm-engine-7.22</id>
+            <properties>
+                <camunda.version>7.22.0</camunda.version>
+            </properties>
+        </profile>
+        <profile>
             <id>camunda-bpm-engine-7.21</id>
             <properties>
                 <camunda.version>7.21.0</camunda.version>
@@ -85,12 +106,6 @@
             <id>camunda-bpm-engine-7.18</id>
             <properties>
                 <camunda.version>7.18.0</camunda.version>
-            </properties>
-        </profile>
-        <profile>
-            <id>camunda-bpm-engine-7.17</id>
-            <properties>
-                <camunda.version>7.17.0</camunda.version>
             </properties>
         </profile>
 
