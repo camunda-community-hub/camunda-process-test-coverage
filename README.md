@@ -21,12 +21,15 @@ This Camunda Platform 7 and Platform 8 community extension **visualises** test p
 
 ## Just use it
 
-* Integrates with all versions of Camunda Platform 7 starting with 7.17.0 and upwards as well as Camunda Platform 8
+* Integrates with all versions of Camunda Platform 7 starting with 7.20.0 and upwards as well as Camunda Platform 8
 * Is continuously checked against the latest Camunda Platform 7 releases (check out our compatibility CI/CD pipeline)
-* Tested with JDKs 11 and 17
-* Works with Java starting with 1.8 and following (depending on support by version of used Camunda Platform)
-* Supports **JUnit 4.13.1+** (4.11 does not work) or **JUnit 5**
+* Tested with JDKs 17 and 21 and different operating systems (Windows, Mac and Linux).
+* Supports **JUnit 4.13.1+** (4.11 does not work) or **JUnit 5** for Camunda 7
+* Supports **JUnit 5** for Camunda 8 (uses Zeebe Process Test)
 * Can be used inside Spring Tests
+
+> [!IMPORTANT]
+> If you're running with a Java version prior to 17 you have to use the old version 2.x (latest 2.8.0)
 
 ## Documentation
 
@@ -34,8 +37,8 @@ If you are interested in further documentation, please check our [Documentation 
 
 ## Installation
 
- Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage-bom"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage-bom/badge.svg" align="right" /></a>
-0
+Add a **Maven test dependency** to your project <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage-bom"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.community.process_test_coverage/camunda-process-test-coverage-bom/badge.svg" align="right" /></a>
+
 ### JUnit5 (Platform 7 or Platform 8)
 
 ```xml
@@ -66,7 +69,7 @@ Either use `@ExtendWith`
 Java
 ```java
 @ExtendWith(ProcessEngineCoverageExtension.class)
-public class MyProcessTest
+public class MyProcessTest {}
 ```
 
 Kotlin

@@ -11,8 +11,7 @@ jobs:
   build:
     strategy:
       fail-fast: false
-      # Build for three operating systems, currently JVMs 11, 17 and latest four Camunda versions (last two years)
-      # We run Legacy support test on Ubuntu, JDK 1.8 until 7.17 (Release 2022).
+      # Build for three operating systems, currently JVMs 17,21 and latest four Camunda versions (last two years)
       matrix:
         os:
           - 'ubuntu-latest'
@@ -26,16 +25,6 @@ jobs:
           - '7.22' # 2024
           - '7.21' # 2024
           - '7.20' # 2023
-        include:
-          - os: 'ubuntu-latest'
-            jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
-            camunda-version: '7.18'
-          - os: 'ubuntu-latest'
-            jdk: '11'
-            camunda-version: '7.18'
-          - os: 'ubuntu-latest'
-            jdk: '11'
-            camunda-version: '7.19'
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -61,6 +50,9 @@ jobs:
 
       - name: Prepare Maven Wrapper
         run: chmod +x ./mvnw
+
+      - name: Install BOM
+        run: ./mvnw install -N; ./mvnw install -f bom
 
       - name: Check for valid camunda profile
         run: ./mvnw enforcer:enforce -f regression-tests -Drules=requireProfileIdsExist "-Pcamunda-bpm-engine-${{ matrix.camunda-version }}"

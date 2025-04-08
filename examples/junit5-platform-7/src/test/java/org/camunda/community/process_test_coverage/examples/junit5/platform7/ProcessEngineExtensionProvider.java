@@ -27,7 +27,9 @@ import org.camunda.community.process_test_coverage.junit5.platform7.ProcessEngin
 public class ProcessEngineExtensionProvider {
 
     public static final ProcessEngineCoverageExtension extension = ProcessEngineCoverageExtension.builder(
-            new ProcessCoverageInMemProcessEngineConfiguration().setHistory(ProcessEngineConfiguration.HISTORY_FULL)
+            new ProcessCoverageInMemProcessEngineConfiguration()
+                    .setHistory(ProcessEngineConfiguration.HISTORY_FULL)
+                    .setEnforceHistoryTimeToLive(false)
     ).build();
 
 }

@@ -9,3 +9,6 @@ camunda:
       id: demo
       password: demo
     history-level: full
+    generic-properties:
+      properties:
+        enforceHistoryTimeToLive: false
