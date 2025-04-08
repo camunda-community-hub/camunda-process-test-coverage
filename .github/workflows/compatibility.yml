@@ -19,27 +19,23 @@ jobs:
           - 'windows-latest'
           - 'macos-latest'
         jdk:
-          - '11'
           - '17'
           - '21'
         camunda-version:
+          - '7.23' # 2025
+          - '7.22' # 2024
           - '7.21' # 2024
           - '7.20' # 2023
-          - '7.19' # 2023
-          - '7.18' # 2022
-          - '7.17' # 2022
-        exclude:
-          - jdk: '11'
-            camunda-version: '7.20'
-          - jdk: '11'
-            camunda-version: '7.21'
         include:
           - os: 'ubuntu-latest'
             jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
             camunda-version: '7.18'
           - os: 'ubuntu-latest'
-            jdk: '8' # Checking legacy JDK 8 support with old Camunda versions
-            camunda-version: '7.17' # 2022
+            jdk: '11'
+            camunda-version: '7.18'
+          - os: 'ubuntu-latest'
+            jdk: '11'
+            camunda-version: '7.19'
 
     runs-on: ${{ matrix.os }}
     steps:

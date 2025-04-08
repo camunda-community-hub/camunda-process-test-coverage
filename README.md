@@ -2,7 +2,7 @@
 [![](https://img.shields.io/badge/Community%20Extension-An%20open%20source%20community%20maintained%20project-FF4700)](https://github.com/camunda-community-hub/community)
 ![Compatible with: Camunda Platform 7](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%207-26d07c)
 ![Compatible with: Camunda Platform 8](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%208-26d07c)
-![Supported Camunda versions](https://img.shields.io/badge/Camunda%20Version-%207.17%20to%207.20%20and%208-orange.svg)
+![Supported Camunda versions](https://img.shields.io/badge/Camunda%20Version-%207.18%20to%207.23%20and%208-orange.svg)
 
 
 ![Camunda Logo](docs/assets/img/Favicons-Circle-Colour.png)
