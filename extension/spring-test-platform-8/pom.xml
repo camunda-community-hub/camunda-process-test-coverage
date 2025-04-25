@@ -49,13 +49,11 @@
         <dependency>
             <groupId>io.camunda.spring</groupId>
             <artifactId>spring-boot-starter-camunda-test-testcontainer</artifactId>
-            <version>${spring-zeebe.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.camunda.spring</groupId>
             <artifactId>spring-boot-starter-camunda</artifactId>
-            <version>${spring-zeebe.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -76,15 +74,6 @@
                 <os>
                     <name>!linux</name>
                 </os>
-            </activation>
-        </profile>
-        <profile>
-            <id>skip-tests-java-8</id>
-            <properties>
-                <maven.test.skip>true</maven.test.skip>
-            </properties>
-            <activation>
-                <jdk>(,11)</jdk>
             </activation>
         </profile>
     </profiles>

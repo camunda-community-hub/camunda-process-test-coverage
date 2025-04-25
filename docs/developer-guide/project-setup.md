@@ -35,7 +35,7 @@ call from your command line:
 ### Camunda Version
 
 The library is compiled against an older version of Camunda (see camunda.compile.version property in parent POM).
-To select a Camunda version for the tests you can start with a designated profile e.g. camunda-bpm-engine-7.18.
+To select a Camunda version for the tests you can start with a designated profile e.g. camunda-bpm-engine-7.20.
 
 ### Documentation
 
