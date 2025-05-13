@@ -21,7 +21,6 @@ package org.camunda.community.process_test_coverage.junit5.platform8
 
 import io.camunda.process.test.api.CamundaProcessTestContext
 import io.camunda.process.test.api.CamundaProcessTestExtension
-import mu.KLogging
 import org.assertj.core.api.Condition
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.engine.camunda8.Camunda8ModelProvider
@@ -33,7 +32,6 @@ import org.junit.jupiter.api.extension.AfterTestExecutionCallback
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback
 import org.junit.jupiter.api.extension.ExtensionContext
-
 
 /**
  * Extension for JUnit 5 which allows the tracking of coverage information for Camunda Platform 8 (Zeebe) process tests.

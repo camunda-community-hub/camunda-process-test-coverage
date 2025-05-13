@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.camunda.community.process_test_coverage</groupId>
         <artifactId>camunda-process-test-coverage-parent</artifactId>
-        <version>2.7.1-SNAPSHOT</version>
+        <version>2.8.2-SNAPSHOT</version>
     </parent>
 
     <name>Camunda Process Test Coverage Engine Platform Zeebe</name>
@@ -26,7 +26,6 @@
             <groupId>io.camunda</groupId>
             <artifactId>zeebe-process-test-assertions</artifactId>
             <scope>provided</scope>
-            <version>${zeebe.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
