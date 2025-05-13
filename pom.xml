@@ -111,6 +111,13 @@
                 <version>${spring-zeebe.version}</version>
             </dependency>
 
+            <!-- Camunda 8 CPT -->
+            <dependency>
+                <groupId>io.camunda</groupId>
+                <artifactId>camunda-process-test-java</artifactId>
+                <version>8.8.0-SNAPSHOT</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
