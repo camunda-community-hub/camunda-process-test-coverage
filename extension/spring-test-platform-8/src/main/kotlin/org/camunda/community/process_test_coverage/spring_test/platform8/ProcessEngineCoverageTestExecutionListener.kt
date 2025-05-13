@@ -21,8 +21,8 @@ package org.camunda.community.process_test_coverage.spring_test.platform8
 
 import io.camunda.zeebe.process.test.assertions.BpmnAssert
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
-import org.camunda.community.process_test_coverage.engine.platform8.ZeebeModelProvider
-import org.camunda.community.process_test_coverage.engine.platform8.createEvents
+import org.camunda.community.process_test_coverage.engine.zeebe.ZeebeModelProvider
+import org.camunda.community.process_test_coverage.engine.zeebe.createEvents
 import org.camunda.community.process_test_coverage.spring_test.common.BaseProcessEngineCoverageTestExecutionListener
 import org.springframework.test.context.TestContext
 

@@ -20,7 +20,6 @@
 package org.camunda.community.process_test_coverage.junit5.zeebe
 
 import io.camunda.zeebe.process.test.assertions.BpmnAssert
-import mu.KLogging
 import org.assertj.core.api.Condition
 import org.camunda.community.process_test_coverage.core.model.DefaultCollector
 import org.camunda.community.process_test_coverage.engine.zeebe.ZeebeModelProvider
@@ -32,7 +31,6 @@ import org.junit.jupiter.api.extension.AfterTestExecutionCallback
 import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback
 import org.junit.jupiter.api.extension.ExtensionContext
-
 
 /**
  * Extension for JUnit 5 which allows the tracking of coverage information for Camunda Platform 8 (Zeebe) process tests.
@@ -60,7 +58,7 @@ class ProcessEngineCoverageExtension(
 
 ) : BeforeAllCallback, AfterAllCallback, BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
-    companion object : KLogging() {
+    companion object {
         @JvmStatic
         fun builder() = Builder()
     }
