@@ -16,7 +16,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-process-test-coverage-engine-platform-8</artifactId>
+            <artifactId>camunda-process-test-coverage-engine-platform-zeebe</artifactId>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>

@@ -43,8 +43,8 @@ class Camunda8ModelProvider(
 
         val client = createDataSource(camundaProcessTestContext.invoke())
 
-        val processDefinition = client.findProcessDefinitionByBpmnProcessId(key)
-        val modelInstance = Bpmn.readModelFromStream(client.findProcessDefinitionXml(
+        val processDefinition = client.findProcessDefinitionsByProcessDefinitionId(key).first()
+        val modelInstance = Bpmn.readModelFromStream(client.getProcessDefinitionXml(
             processDefinition.processDefinitionKey).byteInputStream())
 
         return modelInstance?.let {

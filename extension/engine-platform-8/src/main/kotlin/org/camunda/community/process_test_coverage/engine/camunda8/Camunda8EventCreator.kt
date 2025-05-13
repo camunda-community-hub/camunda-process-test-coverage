@@ -19,9 +19,9 @@
  */
 package org.camunda.community.process_test_coverage.engine.camunda8
 
-import io.camunda.client.api.search.enums.FlowNodeInstanceState
-import io.camunda.client.api.search.enums.FlowNodeInstanceType
-import io.camunda.client.api.search.response.FlowNodeInstance
+import io.camunda.client.api.search.enums.ElementInstanceState
+import io.camunda.client.api.search.enums.ElementInstanceType
+import io.camunda.client.api.search.response.ElementInstance
 import io.camunda.process.test.api.CamundaProcessTestContext
 import io.camunda.process.test.impl.assertions.CamundaDataSource
 import io.camunda.zeebe.model.bpmn.Bpmn
@@ -45,9 +45,9 @@ fun createEvents(camundaProcessTestContext: CamundaProcessTestContext, collector
     val events = client.findProcessInstances()
         .asSequence()
         .flatMap {
-            val flowNodes = client.findFlowNodeInstancesByProcessInstanceKey(it.processInstanceKey)
+            val flowNodes = client.findElementInstancesByProcessInstanceKey(it.processInstanceKey)
             val filteredFlowNodes = flowNodes
-                .filter { node -> node.type != FlowNodeInstanceType.PROCESS }
+                .filter { node -> node.type != ElementInstanceType.PROCESS }
                 .map {
                     node -> Pair(node, it.processDefinitionId)
                 }
@@ -119,16 +119,16 @@ fun createDataSource(camundaProcessTestContext: CamundaProcessTestContext): Camu
 /**
  * Maps a flow node instance to an event or null, if the record is not of importance for the coverage.
  */
-fun mapEvent(flowNodeInstance: FlowNodeInstance, bpmnProcessId: String): List<Event> {
+fun mapEvent(flowNodeInstance: ElementInstance, bpmnProcessId: String): List<Event> {
     val eventSource =
-        if (flowNodeInstance.type == FlowNodeInstanceType.SEQUENCE_FLOW) EventSource.SEQUENCE_FLOW
+        if (flowNodeInstance.type == ElementInstanceType.SEQUENCE_FLOW) EventSource.SEQUENCE_FLOW
         else EventSource.FLOW_NODE
     val eventTypes =
-        if (flowNodeInstance.type == FlowNodeInstanceType.SEQUENCE_FLOW) setOf(EventType.TAKE)
-        else if (flowNodeInstance.state == FlowNodeInstanceState.COMPLETED
-            || flowNodeInstance.state == FlowNodeInstanceState.TERMINATED) setOf(EventType.START, EventType.END)
+        if (flowNodeInstance.type == ElementInstanceType.SEQUENCE_FLOW) setOf(EventType.TAKE)
+        else if (flowNodeInstance.state == ElementInstanceState.COMPLETED
+            || flowNodeInstance.state == ElementInstanceState.TERMINATED) setOf(EventType.START, EventType.END)
         else setOf(EventType.START)
-    return eventTypes.map { Event(eventSource, it, flowNodeInstance.flowNodeId,
+    return eventTypes.map { Event(eventSource, it, flowNodeInstance.elementId,
         flowNodeInstance.type.name,
         bpmnProcessId,
         OffsetDateTime.parse(flowNodeInstance.startDate).toInstant().toEpochMilli()) }
