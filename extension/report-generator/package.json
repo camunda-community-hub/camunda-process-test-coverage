@@ -1,0 +1,57 @@
+{
+    "name": "@flowsquad/flowcov-viewer",
+    "version": "1.0.1",
+    "description": "Contains the viewer for the flowcov.io frontend",
+    "author": "FlowSquad GmbH <info@flowsquad.io>",
+    "homepage": "..",
+    "private": false,
+    "scripts": {
+        "start": "cross-env BROWSER=none react-scripts start",
+        "dev": "vite",
+        "build": "vite build && node src/main/frontend/fix-paths.js",
+        "preview": "vite preview",
+        "lint": "npx eslint src/main/frontend --ext .js,.jsx,.ts,.tsx"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "dependencies": {
+        "@material-ui/core": "^4.12.3",
+        "@material-ui/icons": "^4.11.2",
+        "@material-ui/lab": "^4.0.0-alpha.60",
+        "bpmn-js": "13.1.0",
+        "camunda-bpmn-moddle": "^6.1.1",
+        "clsx": "^1.1.1",
+        "jquery": "3.6.2",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2"
+    },
+    "devDependencies": {
+        "@types/jquery": "^3.5.8",
+        "@types/react": "^17.0.33",
+        "@types/react-dom": "^17.0.10",
+        "@typescript-eslint/eslint-plugin": "^4.9.1",
+        "@typescript-eslint/parser": "^4.9.1",
+        "@vitejs/plugin-react": "^4.4.1",
+        "cross-env": "^7.0.3",
+        "eslint": "^7.15.0",
+        "eslint-config-airbnb-typescript": "^12.0.0",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-react": "^7.21.5",
+        "eslint-plugin-react-hooks": "^4.2.0",
+        "typescript": "^4.4.4",
+        "vite": "^6.3.5"
+    }
+}
