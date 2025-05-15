@@ -22,6 +22,8 @@ package org.camunda.community.process_test_coverage.engine.camunda8
 import io.camunda.client.api.search.enums.ElementInstanceState
 import io.camunda.client.api.search.enums.ElementInstanceType
 import io.camunda.client.api.search.response.ElementInstance
+import io.camunda.client.api.search.response.ProcessInstanceSequenceFlow
+import io.camunda.client.impl.search.response.ElementInstanceImpl
 import io.camunda.process.test.api.CamundaProcessTestContext
 import io.camunda.process.test.impl.assertions.CamundaDataSource
 import io.camunda.zeebe.model.bpmn.Bpmn
@@ -46,22 +48,17 @@ fun createEvents(camundaProcessTestContext: CamundaProcessTestContext, collector
         .asSequence()
         .flatMap {
             val flowNodes = client.findElementInstancesByProcessInstanceKey(it.processInstanceKey)
-            val filteredFlowNodes = flowNodes
+            val events = flowNodes
                 .filter { node -> node.type != ElementInstanceType.PROCESS }
                 .map {
                     node -> Pair(node, it.processDefinitionId)
                 }
-//            val sequenceFlows = client.getSequenceFlowsByProcessInstanceKey(it.processInstanceKey)
-//            filteredFlowNodes.plus(
-//                sequenceFlows.map { sequenceFlow -> Pair(FlowNodeInstanceDto().apply {
-//                    this.type = FlowNodeInstanceType.SEQUENCE_FLOW
-//                    this.flowNodeName = sequenceFlow
-//                }, it.processDefinitionId) }
-//            )
-            filteredFlowNodes
-        }
-        .flatMap {
-            mapEvent(it.first, it.second)
+                .flatMap { mapEvent(it.first, it.second) }
+
+            val sequenceFlowEvents = client.findSequenceFlowsByProcessInstanceKey(it.processInstanceKey)
+                .map { sequenceFlow -> mapEvent(sequenceFlow, it.processDefinitionId ) }
+
+            events.plus(sequenceFlowEvents)
         }
         .toMutableList()
 
@@ -132,4 +129,13 @@ fun mapEvent(flowNodeInstance: ElementInstance, bpmnProcessId: String): List<Eve
         flowNodeInstance.type.name,
         bpmnProcessId,
         OffsetDateTime.parse(flowNodeInstance.startDate).toInstant().toEpochMilli()) }
+}
+
+/**
+ * Maps a flow node instance to an event or null, if the record is not of importance for the coverage.
+ */
+fun mapEvent(sequenceFlow: ProcessInstanceSequenceFlow, bpmnProcessId: String): Event {
+    return Event(EventSource.SEQUENCE_FLOW, EventType.TAKE, sequenceFlow.elementId,
+        ElementInstanceType.SEQUENCE_FLOW.name, bpmnProcessId,
+        OffsetDateTime.now().toInstant().toEpochMilli())
 }
