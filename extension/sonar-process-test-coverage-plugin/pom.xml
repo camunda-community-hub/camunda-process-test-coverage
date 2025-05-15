@@ -57,7 +57,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.8.1</version>
                 <configuration>
                     <artifactItems>
                         <artifactItem>
@@ -95,7 +94,6 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.15.1</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
