@@ -19,13 +19,13 @@
  */
 package org.camunda.community.process_test_coverage.engine.camunda8
 
+import io.camunda.client.CamundaClient
 import io.camunda.client.api.search.enums.ElementInstanceState
 import io.camunda.client.api.search.enums.ElementInstanceType
 import io.camunda.client.api.search.response.ElementInstance
+import io.camunda.client.api.search.response.ProcessInstance
 import io.camunda.client.api.search.response.ProcessInstanceSequenceFlow
-import io.camunda.client.impl.search.response.ElementInstanceImpl
 import io.camunda.process.test.api.CamundaProcessTestContext
-import io.camunda.process.test.impl.assertions.CamundaDataSource
 import io.camunda.zeebe.model.bpmn.Bpmn
 import io.camunda.zeebe.model.bpmn.instance.SequenceFlow
 import org.camunda.community.process_test_coverage.core.model.Collector
@@ -35,6 +35,8 @@ import org.camunda.community.process_test_coverage.core.model.EventType
 import java.io.ByteArrayInputStream
 import java.time.OffsetDateTime
 
+const val DEFAULT_PAGE_REQUEST = 100
+
 /**
  * Creates events for all process instances in the current Camunda 8 engine.
  * @param camundaProcessTestContext camunda process test context
@@ -42,7 +44,7 @@ import java.time.OffsetDateTime
  */
 fun createEvents(camundaProcessTestContext: CamundaProcessTestContext, collector: Collector) {
 
-    val client = createDataSource(camundaProcessTestContext)
+    val client = camundaProcessTestContext.createClient()
 
     val events = client.findProcessInstances()
         .asSequence()
@@ -109,10 +111,6 @@ fun createEvents(camundaProcessTestContext: CamundaProcessTestContext, collector
     events.forEach { collector.addEvent(it) }
 }
 
-fun createDataSource(camundaProcessTestContext: CamundaProcessTestContext): CamundaDataSource {
-    return CamundaDataSource(camundaProcessTestContext.createClient())
-}
-
 /**
  * Maps a flow node instance to an event or null, if the record is not of importance for the coverage.
  */
@@ -138,4 +136,27 @@ fun mapEvent(sequenceFlow: ProcessInstanceSequenceFlow, bpmnProcessId: String): 
     return Event(EventSource.SEQUENCE_FLOW, EventType.TAKE, sequenceFlow.elementId,
         ElementInstanceType.SEQUENCE_FLOW.name, bpmnProcessId,
         OffsetDateTime.now().toInstant().toEpochMilli())
+}
+
+fun CamundaClient.findProcessInstances(): List<ProcessInstance> {
+    return this.newProcessInstanceSearchRequest()
+        .filter {}
+        .sort { it.startDate().asc() }
+        .page { it.limit(DEFAULT_PAGE_REQUEST) }
+        .send().join()
+        .items()
+}
+
+fun CamundaClient.findElementInstancesByProcessInstanceKey(processInstanceKey: Long): List<ElementInstance> {
+    return this.newElementInstanceSearchRequest()
+        .filter { it.processInstanceKey(processInstanceKey) }
+        .sort { it.startDate().asc() }
+        .page { it.limit(DEFAULT_PAGE_REQUEST) }
+        .send().join()
+        .items()
+}
+
+fun CamundaClient.findSequenceFlowsByProcessInstanceKey(processInstanceKey: Long): List<ProcessInstanceSequenceFlow> {
+    return this.newProcessInstanceSequenceFlowsRequest(processInstanceKey)
+        .send().join()
 }
