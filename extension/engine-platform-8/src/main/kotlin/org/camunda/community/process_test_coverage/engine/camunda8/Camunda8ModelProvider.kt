@@ -19,8 +19,11 @@
  */
 package org.camunda.community.process_test_coverage.engine.camunda8
 
+import io.camunda.client.CamundaClient
+import io.camunda.client.api.search.filter.ProcessDefinitionFilter
+import io.camunda.client.api.search.response.ProcessDefinition
 import io.camunda.process.test.api.CamundaProcessTestContext
-import io.camunda.process.test.impl.runtime.CamundaContainerRuntime
+import io.camunda.process.test.impl.assertions.CamundaDataSource
 import io.camunda.zeebe.model.bpmn.Bpmn
 import io.camunda.zeebe.model.bpmn.Bpmn.convertToString
 import io.camunda.zeebe.model.bpmn.instance.FlowNode
@@ -29,6 +32,7 @@ import io.camunda.zeebe.model.bpmn.instance.SequenceFlow
 import org.camunda.bpm.model.xml.instance.ModelElementInstance
 import org.camunda.community.process_test_coverage.core.engine.ModelProvider
 import org.camunda.community.process_test_coverage.core.model.Model
+import java.util.function.Consumer
 import java.util.stream.Collectors
 
 /**
@@ -41,9 +45,9 @@ class Camunda8ModelProvider(
 
     override fun getModel(key: String): Model {
 
-        val client = createDataSource(camundaProcessTestContext.invoke())
+        val client = camundaProcessTestContext.invoke().createClient()
 
-        val processDefinition = client.findProcessDefinitionsByProcessDefinitionId(key).first()
+        val processDefinition = client.getProcessDefinitionByProcessDefinitionId(key)
         val modelInstance = Bpmn.readModelFromStream(client.getProcessDefinitionXml(
             processDefinition.processDefinitionKey).byteInputStream())
 
@@ -82,4 +86,18 @@ class Camunda8ModelProvider(
         }
     }
 
+}
+
+fun CamundaClient.getProcessDefinitionByProcessDefinitionId(processDefinitionId: String): ProcessDefinition {
+    return this.newProcessDefinitionSearchRequest()
+        .filter { it.processDefinitionId(processDefinitionId) }
+        .page { it.limit(DEFAULT_PAGE_REQUEST) }
+        .sort { it.version().desc() }
+        .send().join()
+        .items().first()
+}
+
+fun CamundaClient.getProcessDefinitionXml(processDefinitionKey: Long): String {
+    return this.newProcessDefinitionGetXmlRequest(processDefinitionKey)
+        .send().join()
 }
