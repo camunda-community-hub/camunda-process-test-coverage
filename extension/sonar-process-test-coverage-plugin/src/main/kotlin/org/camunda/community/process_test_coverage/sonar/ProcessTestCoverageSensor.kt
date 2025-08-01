@@ -61,10 +61,12 @@ class ProcessTestCoverageSensor : Sensor {
                         Files.readAllBytes(it).decodeToString()
                     }
                     .reduceOrNull { result1, result2 -> combineCoverageStateResults(result1, result2) }
-                    ?.let { importer.importCoverage(readCoverageStateResult(it)) }
+                    ?.let {
+                        importer.importCoverage(readCoverageStateResult(it))
+                    }
                     ?: LOG.warn("No coverage results found, skipping analysis")
         } catch (e: Exception) {
-            LOG.error("Coverage reports could not be read/imported. Error: {}", e)
+            LOG.error("Coverage reports could not be read/imported. Error: {}", e.message, e)
         }
     }
 

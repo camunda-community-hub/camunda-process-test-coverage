@@ -64,7 +64,7 @@ class ProcessTestCoverageProjectSensor : ProjectSensor {
                     ?.let { importer.importProjectCoverage(readCoverageStateResult(it)) }
                     ?: LOG.warn("No coverage results found, skipping analysis")
         } catch (e: Exception) {
-            LOG.error("Coverage reports could not be read/imported. Error: {}", e)
+            LOG.error("Coverage reports could not be read/imported. Error: {}", e.message, e)
         }
     }
 

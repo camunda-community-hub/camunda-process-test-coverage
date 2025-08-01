@@ -39,21 +39,23 @@ import java.util.stream.Collectors
 class ReportImporter(private val ctx: SensorContext) {
 
     companion object {
-        private val LOG = LoggerFactory.getLogger(ReportImporter::class.java)
+        private val LOG = LoggerFactory.getLogger(ProcessTestCoverageSensor::class.java)
     }
 
     fun importCoverage(result: CoverageStateResult) {
-        val resultsMap = result.models.associateBy {
-                Bpmn.readModelFromStream(it.xml.byteInputStream()).processDefinitionKey()
-        }
-        ctx.fileSystem().inputFiles(ctx.fileSystem().predicates().hasLanguage(BpmnLanguage.KEY))
+        val resultsMap = result.models.filter { it.totalElementCount > 0 }.associateBy { it.key }
+        val fs = ctx.fileSystem()
+        fs.inputFiles(fs.predicates().and(
+                    fs.predicates().hasLanguage(BpmnLanguage.KEY),
+                    fs.predicates().hasType(InputFile.Type.MAIN))
+                )
                 .associateBy {
                     Bpmn.readModelFromStream(it.inputStream()).processDefinitionKey()
                 }
                 .forEach {
-                    LOG.info("Calculating coverage for process {} in file {}", it.key, it.value.filename())
+                    LOG.debug("Calculating coverage for process {} in file {}", it.key, it.value.filename())
                     val coverage = resultsMap[it.key]?.let { model -> result.calculateCoverage(model) } ?: 0.0
-                    LOG.info("Coverage for process {} is {}", it.key, coverage)
+                    LOG.debug("Coverage for process {} is {}", it.key, coverage)
                     ctx.newMeasure<Double>()
                             .on(it.value)
                             .forMetric(ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE)
@@ -67,16 +69,22 @@ class ReportImporter(private val ctx: SensorContext) {
                 .map { readModel(it) }
         val totalElementCount = models.sumOf { it.totalElementCount }
         val coveredElementCount = models.sumOf { result.getEventsDistinct(modelKey = it.key).size }
-        ctx.newMeasure<Double>()
+        if (totalElementCount == 0) {
+            LOG.warn("No BPMN models found, not able to calculate coverage")
+        } else {
+            val percentage = (coveredElementCount.toDouble() / totalElementCount.toDouble()).asPercent()
+            LOG.debug("Importing project coverage for $coveredElementCount/$totalElementCount with percentage $percentage")
+            ctx.newMeasure<Double>()
                 .on(ctx.project())
                 .forMetric(ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE)
-                .withValue((coveredElementCount.toDouble() / totalElementCount.toDouble()).asPercent())
+                .withValue(percentage)
                 .save()
-        ctx.newMeasure<String>()
+            ctx.newMeasure<String>()
                 .on(ctx.project())
                 .forMetric(ProcessTestCoverageMetrics.PROCESS_TEST_COVERAGE_REPORT)
                 .withValue(createCoverageStateResult(result.suites, result.models))
                 .save()
+        }
     }
 
     private fun readModel(file: InputFile): Model {
@@ -109,12 +117,10 @@ class ReportImporter(private val ctx: SensorContext) {
         if (node == null) {
             return false
         }
-        return if (node is Process) {
-            node.isExecutable && node.id == processId
-        } else if (node is IntermediateThrowEvent) {
-            node.eventDefinitions.none { it is LinkEventDefinition }
-        } else {
-            isExecutable(node.parentElement, processId)
+        return when (node) {
+            is Process -> node.isExecutable && node.id == processId
+            is IntermediateThrowEvent -> node.eventDefinitions.none { it is LinkEventDefinition }
+            else -> isExecutable(node.parentElement, processId)
         }
     }
 
