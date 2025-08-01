@@ -37,7 +37,7 @@ class ProcessTestCoveragePluginTest {
         val context = PluginContextImpl.Builder().setSonarRuntime(runtime).build()
         val plugin = ProcessTestCoveragePlugin()
         plugin.define(context)
-        assertEquals(7, context.extensions.size)
+        assertEquals(8, context.extensions.size)
     }
 
 }
