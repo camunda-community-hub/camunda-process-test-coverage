@@ -62,7 +62,7 @@ jobs:
           ./mvnw -B versions:update-child-modules -DgenerateBackupPoms=false
           ./mvnw -B versions:update-child-modules -DgenerateBackupPoms=false
           git add ./**pom.xml
-          git commit -am "release(v${RELEASE_VERSION}): prepare for next development iteration"
+          git diff-index --quiet HEAD || git commit -am "release(v${RELEASE_VERSION}): prepare for next development iteration"
           git push
         env:
           RELEASE_VERSION: ${{ github.event.release.tag_name }}
