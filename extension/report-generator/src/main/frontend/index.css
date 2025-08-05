@@ -1,18 +1,1 @@
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-html,
-body {
-    height: 100vh;
-}
-
-body {
-    overflow-y: scroll;
-}
-
-.tjs-container {
-    margin-top: 2em;
-    justify-content: center;
-}
+@import "tailwindcss";

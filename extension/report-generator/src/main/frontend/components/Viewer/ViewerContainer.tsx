@@ -1,99 +1,13 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
-import React, { useEffect, useMemo, useState } from "react";
-import { parseSuites } from "../../util/ParsingUtils";
-import CoverageViewer from "./CoverageViewer";
-import RunSummary from "./RunSummary";
+import { h } from 'preact';
+import { useEffect, useMemo, useState } from 'preact/hooks';
+import { parseSuites } from '../../util/ParsingUtils';
+import CoverageViewer from './CoverageViewer';
+import RunSummary from './RunSummary';
 
-const useStyles = makeStyles(() => ({
-    title: {
-        fontSize: "2rem",
-        marginBottom: 0
-    },
-    subtitle: {
-        marginTop: "0.25rem",
-        paddingBottom: "0.5rem",
-        marginBottom: "1.5rem",
-        borderBottom: "2px solid #666"
-    },
-    selectorTitle: {
-        fontWeight: "bold",
-        fontSize: "1rem",
-        marginTop: "0.5rem"
-    },
-    page: {
-        display: "flex",
-        flexDirection: "column",
-        width: "960px",
-        maxWidth: "960px",
-        margin: "2rem auto 1rem auto"
-    },
-    selector: {
-        display: "flex",
-        flexWrap: "wrap",
-        padding: "0.5rem 0",
-        flexDirection: "row"
-    },
-    item: {
-        flex: "0 0 calc((100% - 2.25rem)/4)",
-        marginBottom: "0.75rem",
-        marginRight: "0.75rem",
-        borderRadius: "0.25rem",
-        color: "black",
-        border: "2px solid darkgreen",
-        display: "flex",
-        padding: "0.5rem",
-        flexDirection: "column",
-        cursor: "pointer",
-        "&>span": {
-            whiteSpace: "nowrap"
-        },
-        "&:nth-child(4n)": {
-            marginRight: 0
-        }
-    },
-    itemSelected: {
-        backgroundColor: "darkgreen",
-        color: "white"
-    },
-    itemTitle: {
-        fontWeight: "bold",
-        marginBottom: "0.25rem"
-    },
-    itemSubtitle: {
-        fontSize: "0.75rem"
-    },
-    selectWrapper: {
-        display: "flex",
-        marginTop: "0.5rem",
-        marginBottom: "2rem"
-    },
-    select: {
-        width: "calc((100% - 1rem) / 3)",
-        marginRight: "0.5rem",
-        "&:last-child": {
-            marginRight: 0
-        }
-    },
-    hint: {
-        fontSize: "1.5rem",
-        textAlign: "center",
-        marginTop: "1rem",
-        marginBottom: "1rem",
-        fontWeight: "bold"
-    },
-    paper: {
-        backgroundColor: "white"
-    }
-}));
-
-const ViewerContainer: React.FC = () => {
-    const classes = useStyles();
-
-    const [selectedModelKey, setSelectedModelKey] = useState<string | undefined>(undefined);
-    const [selectedSuiteId, setSelectedSuiteId] = useState<string | undefined>(undefined);
-    const [selectedRunId, setSelectedRunId] = useState<string | undefined>(undefined);
+const ViewerContainer = () => {
+    const [selectedModelKey, setSelectedModelKey] = useState<string | undefined>();
+    const [selectedSuiteId, setSelectedSuiteId] = useState<string | undefined>();
+    const [selectedRunId, setSelectedRunId] = useState<string | undefined>();
 
     const parsedSuites = useMemo(
         () => parseSuites(window.COVERAGE_DATA.suites, window.COVERAGE_DATA.models),
@@ -115,115 +29,67 @@ const ViewerContainer: React.FC = () => {
         [selectedModel, selectedRunId]
     );
 
-    // Reset model and run id on suite changed
     useEffect(() => {
         setSelectedModelKey(undefined);
         setSelectedRunId(undefined);
     }, [selectedSuiteId]);
 
-    // Reset run id on model changed
     useEffect(() => {
         setSelectedRunId(undefined);
     }, [selectedModelKey]);
 
     return (
-        <div className={classes.page}>
-
-            <h1 className={classes.title}>Test Coverage Report</h1>
-
-            <span className={classes.subtitle}>
-                {`${window.COVERAGE_DATA.suites.length} Suites, ${window.COVERAGE_DATA.models.length} Models processed.`}
-            </span>
+        <div class="flex flex-col w-[960px] max-w-[960px] mx-auto mt-8 mb-4">
+            <h1 class="text-2xl font-bold mb-0">Test Coverage Report</h1>
+            <span class="mt-1 pb-2 mb-6 border-b-2 border-gray-600 text-gray-800">
+        {`${window.COVERAGE_DATA.suites.length} Suites, ${window.COVERAGE_DATA.models.length} Models processed.`}
+      </span>
 
             {selectedSuite && (
-                <div className={classes.selectWrapper}>
-                    <FormControl
-                        className={classes.select}
-                        size="small"
-                        color="primary"
-                        variant="outlined">
-
-                        <InputLabel id="test-suite">
-                            Test Suite
-                        </InputLabel>
-
-                        <Select
-                            label="Test Suite"
-                            value={selectedSuiteId}
-                            labelId="test-suite"
-                            MenuProps={{ classes: { paper: classes.paper } }}
-                            onChange={e => setSelectedSuiteId(e.target.value as string)}>
-
-                            {parsedSuites.map(suite => (
-                                <MenuItem
-                                    key={suite.id}
-                                    value={suite.id}>
-                                    {suite.name.substr(suite.name.lastIndexOf(".") + 1)}
-                                </MenuItem>
-                            ))}
-
-                        </Select>
-                    </FormControl>
+                <div class="flex flex-wrap mt-2 mb-8 gap-2">
+                    <select
+                        class="w-[32%] border border-gray-400 px-3 py-2 rounded"
+                        value={selectedSuiteId}
+                        onChange={e => setSelectedSuiteId((e.target as HTMLSelectElement).value)}
+                    >
+                        <option disabled selected>Select Test Suite</option>
+                        {parsedSuites.map(suite => (
+                            <option key={suite.id} value={suite.id}>
+                                {suite.name.split('.').pop()}
+                            </option>
+                        ))}
+                    </select>
 
                     {selectedModel && (
                         <>
+                            <select
+                                class="w-[32%] border border-gray-400 px-3 py-2 rounded"
+                                value={selectedModelKey}
+                                onChange={e => setSelectedModelKey((e.target as HTMLSelectElement).value)}
+                            >
+                                <option disabled selected>Select Model</option>
+                                {selectedSuite.models.map(model => (
+                                    <option key={model.key} value={model.key}>
+                                        {model.key}
+                                    </option>
+                                ))}
+                            </select>
 
-                            <FormControl
-                                className={classes.select}
-                                size="small"
-                                color="primary"
-                                variant="outlined">
-
-                                <InputLabel id="model">
-                                    Model
-                                </InputLabel>
-
-                                <Select
-                                    label="Model"
-                                    value={selectedModelKey}
-                                    labelId="model"
-                                    MenuProps={{ classes: { paper: classes.paper } }}
-                                    onChange={e => setSelectedModelKey(e.target.value as string)}>
-
-                                    {selectedSuite.models.map(model => (
-                                        <MenuItem
-                                            key={model.key}
-                                            value={model.key}>
-                                            {model.key}
-                                        </MenuItem>
-                                    ))}
-
-                                </Select>
-                            </FormControl>
-
-                            <FormControl
-                                className={classes.select}
-                                size="small"
-                                color="primary"
-                                variant="outlined">
-
-                                <InputLabel id="run">
-                                    Run
-                                </InputLabel>
-
-                                <Select
-                                    label="Run"
-                                    value={selectedRunId === undefined ? "" : selectedRunId}
-                                    labelId="run"
-                                    MenuProps={{ classes: { paper: classes.paper } }}
-                                    onChange={e => setSelectedRunId(e.target.value === "" ? undefined : e.target.value as string)}>
-
-                                    <MenuItem value=""><em>None</em></MenuItem>
-                                    {selectedModel.runs.map(run => (
-                                        <MenuItem
-                                            key={run.id}
-                                            value={run.id}>
-                                            {run.name}
-                                        </MenuItem>
-                                    ))}
-
-                                </Select>
-                            </FormControl>
+                            <select
+                                class="w-[32%] border border-gray-400 px-3 py-2 rounded"
+                                value={selectedRunId ?? ''}
+                                onChange={e => {
+                                    const val = (e.target as HTMLSelectElement).value;
+                                    setSelectedRunId(val === '' ? undefined : val);
+                                }}
+                            >
+                                <option value="">None</option>
+                                {selectedModel.runs.map(run => (
+                                    <option key={run.id} value={run.id}>
+                                        {run.name}
+                                    </option>
+                                ))}
+                            </select>
                         </>
                     )}
                 </div>
@@ -231,25 +97,21 @@ const ViewerContainer: React.FC = () => {
 
             {!selectedSuite && (
                 <>
-                    <div className={classes.selector}>
+                    <div class="flex flex-wrap gap-3 mb-4">
                         {parsedSuites.map(suite => (
                             <div
-                                onClick={() => setSelectedSuiteId(suite.id)}
                                 key={suite.id}
-                                className={clsx(
-                                    classes.item,
-                                    selectedSuiteId === suite.id && classes.itemSelected
-                                )}>
-                                <span className={classes.itemTitle}>
-                                    {suite.name.substr(suite.name.lastIndexOf(".") + 1)}
-                                </span>
-                                <span className={classes.itemSubtitle}>
-                                    {`${(suite.coverage * 100).toFixed(2)}% Coverage`}
-                                </span>
+                                onClick={() => setSelectedSuiteId(suite.id)}
+                                class={`flex flex-col px-4 py-2 border-2 border-green-800 rounded cursor-pointer w-[23%] ${
+                                    selectedSuiteId === suite.id ? 'bg-green-800 text-white' : 'text-black'
+                                }`}
+                            >
+                                <span class="font-bold truncate">{suite.name.split('.').pop()}</span>
+                                <span class="text-sm">{(suite.coverage * 100).toFixed(2)}% Coverage</span>
                             </div>
                         ))}
                     </div>
-                    <div className={classes.hint}>
+                    <div class="text-center text-xl font-bold mt-4 mb-4">
                         Please select a test suite to see details.
                     </div>
                 </>
@@ -257,25 +119,21 @@ const ViewerContainer: React.FC = () => {
 
             {selectedSuite && !selectedModel && (
                 <>
-                    <div className={classes.selector}>
+                    <div class="flex flex-wrap gap-3 mb-4">
                         {selectedSuite.models.map(model => (
                             <div
-                                onClick={() => setSelectedModelKey(model.key)}
                                 key={model.key}
-                                className={clsx(
-                                    classes.item,
-                                    selectedModelKey === model.key && classes.itemSelected
-                                )}>
-                                <span className={classes.itemTitle}>
-                                    {model.key}
-                                </span>
-                                <span className={classes.itemSubtitle}>
-                                    {`Coverage: ${(model.coverage * 100).toFixed(2)}%`}
-                                </span>
+                                onClick={() => setSelectedModelKey(model.key)}
+                                class={`flex flex-col px-4 py-2 border-2 border-green-800 rounded cursor-pointer w-[23%] ${
+                                    selectedModelKey === model.key ? 'bg-green-800 text-white' : 'text-black'
+                                }`}
+                            >
+                                <span class="font-bold truncate">{model.key}</span>
+                                <span class="text-sm">{`Coverage: ${(model.coverage * 100).toFixed(2)}%`}</span>
                             </div>
                         ))}
                     </div>
-                    <div className={classes.hint}>
+                    <div class="text-center text-xl font-bold mt-4 mb-4">
                         Please select a model to see details.
                     </div>
                 </>
@@ -283,24 +141,18 @@ const ViewerContainer: React.FC = () => {
 
             {selectedSuite && selectedModel && !selectedRun && (
                 <>
-                    <div className={classes.selectorTitle}>
-                        Select a run to see details for that run.
-                    </div>
-                    <div className={classes.selector}>
+                    <div class="font-bold text-base mb-2">Select a run to see details for that run.</div>
+                    <div class="flex flex-wrap gap-3 mb-4">
                         {selectedModel.runs.map(run => (
                             <div
-                                onClick={() => setSelectedRunId(run.id)}
                                 key={run.id}
-                                className={clsx(
-                                    classes.item,
-                                    selectedRunId === run.id && classes.itemSelected
-                                )}>
-                                <span className={classes.itemTitle}>
-                                    {run.name}
-                                </span>
-                                <span className={classes.itemSubtitle}>
-                                    {`Coverage: ${(run.coverage * 100).toFixed(2)}%`}
-                                </span>
+                                onClick={() => setSelectedRunId(run.id)}
+                                class={`flex flex-col px-4 py-2 border-2 border-green-800 rounded cursor-pointer w-[23%] ${
+                                    selectedRunId === run.id ? 'bg-green-800 text-white' : 'text-black'
+                                }`}
+                            >
+                                <span class="font-bold truncate">{run.name}</span>
+                                <span class="text-sm">{`Coverage: ${(run.coverage * 100).toFixed(2)}%`}</span>
                             </div>
                         ))}
                     </div>
@@ -308,9 +160,7 @@ const ViewerContainer: React.FC = () => {
             )}
 
             {selectedSuite && selectedModel && (
-                <CoverageViewer
-                    selectedModel={selectedModel}
-                    selectedRun={selectedRun} />
+                <CoverageViewer selectedModel={selectedModel} selectedRun={selectedRun} />
             )}
 
             {selectedSuite && (
@@ -319,7 +169,8 @@ const ViewerContainer: React.FC = () => {
                     selectedModel={selectedModel}
                     selectedRun={selectedRun}
                     onModelSelected={model => setSelectedModelKey(model.key)}
-                    onRunSelected={run => setSelectedRunId(run.id)} />
+                    onRunSelected={run => setSelectedRunId(run.id)}
+                />
             )}
         </div>
     );

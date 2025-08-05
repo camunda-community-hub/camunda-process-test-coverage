@@ -1,10 +1,7 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { h } from "preact";
+import { useEffect, useMemo, useRef } from "preact/hooks";
 import Viewer from "bpmn-js/lib/NavigatedViewer";
-import clsx from "clsx";
-import $ from "jquery";
-import React, { useEffect, useMemo } from "react";
 import camundaModdleDescriptor from "camunda-bpmn-moddle/resources/camunda.json";
-import { ModdleElement } from "bpmn-js/lib/model/Types";
 
 export interface BpmnViewerData {
     highlightSequenceFlows: string[];
@@ -24,231 +21,170 @@ interface Props {
     setListener?: (listener: BpmnViewerListener) => void;
 }
 
-const useStyles = makeStyles(() => ({
-    root: {
-        height: "640px",
-        overflow: "hidden"
-    },
-    modeler: {
-        height: "640px"
-    },
-    highlight: {
-        "&:not(.djs-connection) .djs-visual > :nth-child(1)": {
-            fill: "rgba(50, 205, 50, 0.50) !important"
-        }
-    },
-    highlightSequenceFlow: {
-        stroke: "rgba(20, 125, 20, 1) !important",
-        strokeWidth: "2px !important"
-    },
-    transactionBoundary: {
-        backgroundColor: "rgba(180, 21, 21, 0.7)",
-        borderRadius: "1px",
-        minHeight: "50px",
-        width: "4px"
-    },
-    transactionBoundarySmall: {
-        backgroundColor: "rgba(180, 21, 21, 0.7)",
-        borderRadius: "1px",
-        minHeight: "32px",
-        width: "4px"
-    },
-    executionListener: {
-        backgroundColor: "rgba(21, 66, 180, 0.7)",
-        color: "white",
-        borderRadius: "4px",
-        fontFamily: "Arial",
-        fontSize: "12px",
-        padding: "5px",
-        minHeight: "16px",
-        minWidth: "16px",
-        textAlign: "center",
-        whiteSpace: "nowrap"
-    }
-}));
-
-// @see
-// https://github.com/bpmn-io/camunda-transaction-boundaries/blob/master/lib/TransactionBoundaries.js#L63
-const getTransactionBoundaries = (element: any): {
-    before: boolean;
-    after: boolean;
-} => {
+const getTransactionBoundaries = (element: any) => {
     const { businessObject, loopCharacteristics } = element;
     const eventDefinitions = businessObject.eventDefinitions || [];
     const eventDefinitionType = eventDefinitions.length && eventDefinitions[0].$type;
 
-    const isWaitStateTask = element.type === "bpmn:ReceiveTask"
-        || element.type === "bpmn:UserTask"
-        || (element.type === "bpmn:ServiceTask" && businessObject.type === "external");
+    const isWaitStateTask =
+        element.type === "bpmn:ReceiveTask" ||
+        element.type === "bpmn:UserTask" ||
+        (element.type === "bpmn:ServiceTask" && businessObject.type === "external");
 
-    // TODO: Parallel/Inclusive Gateway with multiple incoming sequence flows
     const isWaitStateGateway = false;
 
-    const isWaitStateEvent = element.type === "bpmn:IntermediateCatchEvent" && (
-        eventDefinitionType === "bpmn:MessageEventDefinition"
-        || eventDefinitionType === "bpmn:TimerEventDefinition"
-        || eventDefinitionType === "bpmn:SignalEventDefinition"
-        || eventDefinitionType === "bpmn:ConditionalEventDefinition"
-    );
+    const isWaitStateEvent =
+        element.type === "bpmn:IntermediateCatchEvent" &&
+        (eventDefinitionType === "bpmn:MessageEventDefinition" ||
+            eventDefinitionType === "bpmn:TimerEventDefinition" ||
+            eventDefinitionType === "bpmn:SignalEventDefinition" ||
+            eventDefinitionType === "bpmn:ConditionalEventDefinition");
 
-    const isAsyncAfter = businessObject.asyncAfter
-        || (loopCharacteristics && loopCharacteristics.asyncAfter);
+    const isAsyncAfter = businessObject.asyncAfter || (loopCharacteristics && loopCharacteristics.asyncAfter);
+    const isAsyncBefore = businessObject.asyncBefore || (loopCharacteristics && loopCharacteristics.asyncBefore);
 
-    const isAsyncBefore = businessObject.asyncBefore
-        || (loopCharacteristics && loopCharacteristics.asyncBefore);
-
-    const boundariesBefore = isWaitStateTask
-        || isWaitStateEvent
-        || isWaitStateGateway
-        || isAsyncBefore;
+    const boundariesBefore = isWaitStateTask || isWaitStateEvent || isWaitStateGateway || isAsyncBefore;
 
     return { before: !!boundariesBefore, after: !!isAsyncAfter };
 };
 
 let viewer: Viewer | undefined;
 
-const BpmnViewer: React.FC<Props> = props => {
-    const classes = useStyles();
+const BpmnViewer = (props: Props) => {
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    const { data, setListener } = props;
     const listener: BpmnViewerListener = useMemo(() => ({
-        send: async (event: BpmnViewerEvent) => {
+        send: (event: BpmnViewerEvent) => {
             switch (event) {
-                case "RESET_ZOOM": {
+                case "RESET_ZOOM":
                     viewer?.get("canvas").zoom("fit-viewport", true);
                     break;
-                }
-                case "ZOOM_IN": {
+                case "ZOOM_IN":
                     viewer?.get("zoomScroll").zoom(1);
                     break;
-                }
-                case "ZOOM_OUT": {
+                case "ZOOM_OUT":
                     viewer?.get("zoomScroll").zoom(-1);
                     break;
-                }
-                default: {
-                    // Do nothing
-                }
             }
         }
     }), []);
 
     useEffect(() => {
-        setListener && setListener(listener);
-    }, [setListener, listener]);
+        if (props.setListener) props.setListener(listener);
+    }, [listener, props.setListener]);
 
     useEffect(() => {
+        if (!containerRef.current) return;
+
         viewer = new Viewer({
-            container: "#bpmn-canvas",
+            container: containerRef.current,
             moddleExtensions: {
-                camunda: camundaModdleDescriptor
+                camunda: camundaModdleDescriptor,
             }
         });
+
         viewer.get("zoomScroll").toggle(false);
+
+        return () => {
+            viewer = undefined;
+        };
     }, []);
 
     useEffect(() => {
         (async () => {
-            if (viewer && data) {
+            if (viewer && props.data) {
                 const canvas = viewer.get("canvas");
                 const overlays = viewer.get("overlays");
                 const elementRegistry = viewer.get("elementRegistry");
 
-                await viewer.importXML(data.xml);
+                await viewer.importXML(props.data.xml);
 
-                // zoom to fit full viewport
+                // Fit viewport
                 canvas.zoom("fit-viewport", true);
 
+                // Clear previous markers and overlays if needed
+                elementRegistry.getAll().forEach(el => {
+                    canvas.removeMarker(el.id, "highlight");
+                    canvas.removeMarker(el.id, "highlightSequenceFlow");
+                    overlays.remove({elementId: el.id});
+                });
+
                 if (props.showCoverage) {
-                    data.highlightFlowNodes?.forEach(node => {
-                        canvas.addMarker(node, classes.highlight);
+                    props.data.highlightFlowNodes.forEach(nodeId => {
+                        canvas.addMarker(nodeId, "highlight");
                     });
 
-                    data.highlightSequenceFlows?.forEach(flow => {
-                        $(`g[data-element-id='${flow}']`)
-                            .find("path")
-                            .addClass(classes.highlightSequenceFlow);
+                    props.data.highlightSequenceFlows.forEach(flowId => {
+                        // bpmn-js setzt die SVG, hier setzen wir direkt per DOM:
+                        const el = containerRef.current?.querySelector(`g[data-element-id='${flowId}'] path`);
+                        if (el) {
+                            el.classList.add("stroke-green-700", "stroke-2");
+                        }
                     });
                 }
 
-                // visualizations
+                // Add transaction boundaries and expressions overlays
                 const elements = elementRegistry.getAll();
-                for (let i = 0; i < elements.length; i++) {
-                    const element = elements[i];
+                for (const element of elements) {
                     if (element.type !== "label") {
                         if (props.showTransactionBoundaries) {
-                            const transactionBoundaries = getTransactionBoundaries(element);
-                            if (transactionBoundaries.before) {
+                            const boundaries = getTransactionBoundaries(element);
+                            if (boundaries.before) {
                                 overlays.add(element.id, "note", {
                                     position: {
-                                        bottom: (element.type === "bpmn:IntermediateCatchEvent" ? 34 : 64),
-                                        left: (element.type === "bpmn:IntermediateCatchEvent" ? -3 : -5)
+                                        bottom: element.type === "bpmn:IntermediateCatchEvent" ? 34 : 64,
+                                        left: element.type === "bpmn:IntermediateCatchEvent" ? -3 : -5,
                                     },
-                                    html: `<div class='${element.type === "bpmn:IntermediateCatchEvent" ? classes.transactionBoundarySmall : classes.transactionBoundary}' />`
+                                    html: `<div class="bg-red-700 rounded-sm min-h-[50px] w-[4px] ${
+                                        element.type === "bpmn:IntermediateCatchEvent" ? "min-h-[32px]" : ""
+                                    }"></div>`
                                 });
                             }
-                            if (transactionBoundaries.after) {
+                            if (boundaries.after) {
                                 overlays.add(element.id, "note", {
-                                    position: {
-                                        bottom: 64,
-                                        right: -1
-                                    },
-                                    html: `<div class='${classes.transactionBoundary}' />`
+                                    position: { bottom: 64, right: -1 },
+                                    html: `<div class="bg-red-700 rounded-sm min-h-[50px] w-[4px]"></div>`
                                 });
                             }
                         }
 
                         if (props.showExpressions) {
-                            if (element.businessObject.extensionElements?.values) {
-                                const extensionElements: ModdleElement[] = element
-                                    .businessObject.extensionElements.values;
-                                extensionElements.forEach(extensionElement => {
-                                    const { $type, event, fields } = extensionElement;
+                            const extElements = element.businessObject.extensionElements?.values || [];
+                            extElements.forEach((ext: any) => {
+                                if (
+                                    ext.$type?.toLowerCase() === "camunda:executionlistener" &&
+                                    (ext.event === "end" || ext.event === "start") &&
+                                    ext.fields
+                                ) {
+                                    ext.fields.forEach((field: any) => {
+                                        const position = {
+                                            bottom: 0,
+                                            [ext.event === "end" ? "right" : "left"]: 0
+                                        };
+                                        const html = `<div class="bg-blue-700 text-white rounded px-1 text-xs font-sans whitespace-nowrap">${field.expression}</div>`;
+                                        overlays.add(element.id, "note", { position, html });
+                                    });
+                                }
+                            });
 
-                                    const executionListener = "camunda:executionListener";
-                                    if ($type.toLowerCase() === executionListener.toLowerCase() && (event === "end" || event === "start") && fields) {
-                                        fields.forEach((field: { expression: any; }) => {
-                                            const position = {
-                                                bottom: 0,
-                                                [event === "end" ? "right" : "left"]: 0
-                                            };
-
-                                            const html = `<div class='${classes.executionListener}'>${field.expression}</div>`;
-
-                                            overlays.add(element.id, "note", { position, html });
-                                        });
-                                    }
-                                });
-                            }
-
-                            if (element.type === "bpmn:SequenceFlow"
-                                && element.businessObject.conditionExpression) {
-                                const position = {
-                                    left: 0
-                                } as {
-                                    left: number,
-                                    top: number | undefined,
-                                    bottom: number | undefined
-                                };
-                                if (element.waypoints[0].y
-                                    > element.waypoints[element.waypoints.length - 1].y) {
+                            if (element.type === "bpmn:SequenceFlow" && element.businessObject.conditionExpression) {
+                                const waypoints = element.waypoints;
+                                const position: any = { left: 0 };
+                                if (waypoints[0].y > waypoints[waypoints.length - 1].y) {
                                     position.top = -29;
                                 } else {
                                     position.bottom = -3;
                                 }
                                 overlays.add(element.id, "note", {
-                                    position: position,
-                                    html: `<div class='${classes.executionListener}'>${element.businessObject.conditionExpression.body}</div>`
+                                    position,
+                                    html: `<div class="bg-blue-700 text-white rounded px-1 text-xs font-sans whitespace-nowrap">${element.businessObject.conditionExpression.body}</div>`
                                 });
                             }
 
-                            if (element.businessObject.$attrs["camunda:delegateExpression"]) {
+                            if (element.businessObject.$attrs?.["camunda:delegateExpression"]) {
                                 overlays.add(element.id, "note", {
-                                    position: {
-                                        bottom: -3,
-                                        left: 0
-                                    },
-                                    html: `<div class='${classes.executionListener}'>${element.businessObject.$attrs["camunda:delegateExpression"]}</div>`
+                                    position: { bottom: -3, left: 0 },
+                                    html: `<div class="bg-blue-700 text-white rounded px-1 text-xs font-sans whitespace-nowrap">${element.businessObject.$attrs["camunda:delegateExpression"]}</div>`
                                 });
                             }
                         }
@@ -256,11 +192,16 @@ const BpmnViewer: React.FC<Props> = props => {
                 }
             }
         })();
-    }, [data, classes, props.showCoverage, props.showExpressions, props.showTransactionBoundaries]);
+    }, [
+        props.data,
+        props.showCoverage,
+        props.showExpressions,
+        props.showTransactionBoundaries
+    ]);
 
     return (
-        <div className={clsx(classes.root, props.className)}>
-            <div className={classes.modeler} id="bpmn-canvas" />
+        <div className={`h-[640px] overflow-hidden ${props.className || ""}`}>
+            <div ref={containerRef} className="h-[640px]" />
         </div>
     );
 };

@@ -1,19 +1,14 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import preact from "@preact/preset-vite";
 import path from 'path'
 import { viteSingleFile } from "vite-plugin-singlefile";
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
     root: 'src/main/frontend',
     base: './',
     plugins: [
-        react({
-            jsxImportSource: 'react',
-            babel: {
-                plugins: ['@babel/plugin-transform-react-constant-elements']
-            }
-        }),
-        viteSingleFile()
+        preact(), tailwindcss(), viteSingleFile()
     ],
     resolve: {
         alias: {
@@ -21,8 +16,8 @@ export default defineConfig({
         },
     },
     build: {
-        outDir: '../../../target/classes',
-        emptyOutDir: false,
+       outDir: '../../../target/classes',
+       emptyOutDir: false,
         minify: 'terser',
         cssCodeSplit: false,
         assetsInlineLimit: Infinity,

@@ -1,50 +1,19 @@
-import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import { h, FunctionalComponent, ComponentChildren } from 'preact';
 
 interface Props {
     title: string;
+    children?: ComponentChildren;
 }
 
-const useStyles = makeStyles(() => ({
-    sectionContainer: {
-        border: "2px solid rgba(34, 36, 38, 0.1)",
-        backgroundColor: "rgba(255, 255, 255, 0.54)",
-        borderRadius: "4px",
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: "960px",
-        width: "100%",
-        margin: "1rem auto 0rem auto"
-    },
-    sectionTitle: {
-        height: "36px",
-        padding: "0.5rem",
-        backgroundColor: "rgba(34, 36, 38, 0.1)",
-        display: "block",
-        width: "100%",
-        fontWeight: 500
-    },
-    sectionContent: {
-        display: "flex",
-        flexDirection: "column",
-        padding: "1rem"
-    }
-}));
-
-const Section: React.FC<Props> = props => {
-    const classes = useStyles();
-
+const Section: FunctionalComponent<Props> = ({ title, children }) => {
     return (
-        <div className={classes.sectionContainer}>
-
-            <span className={classes.sectionTitle}>
-                {props.title}
+        <div class="border-2 border-gray-300 bg-white bg-opacity-50 rounded-md flex flex-col max-w-4xl w-full mx-auto mt-4">
+            <span class="h-9 px-2.5 bg-gray-200 w-full block font-medium flex items-center">
+                {title}
             </span>
-
-            <div className={classes.sectionContent}>
-                {props.children}
+            <div class="flex flex-col p-4">
+                {children}
             </div>
-
         </div>
     );
 };
