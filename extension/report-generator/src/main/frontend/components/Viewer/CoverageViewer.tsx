@@ -46,7 +46,7 @@ const CoverageViewer = ({ selectedModel, selectedRun }: Props) => {
     if (!selectedModel) return null;
 
     return (
-        <div class="max-w-screen-md w-full mt-8 mx-auto border-2 border-gray-200 bg-white/70 rounded">
+        <div class="max-w-(--breakpoint-md) w-full mt-8 mx-auto border-2 border-gray-200 bg-white/70 rounded-sm">
             <div class="h-9 px-2 py-1 bg-gray-100 font-medium">
                 Model Viewer
             </div>
@@ -82,12 +82,12 @@ const CoverageViewer = ({ selectedModel, selectedRun }: Props) => {
                     <span>Show Expressions</span>
                 </label>
 
-                <div class="flex-grow" />
+                <div class="grow" />
 
                 <button
                     title="Zoom In"
                     onClick={() => bpmnListener?.send('ZOOM_IN')}
-                    class="p-1 hover:bg-gray-200 rounded"
+                    class="p-1 hover:bg-gray-200 rounded-sm"
                 >
                     <ZoomIn size={18} />
                 </button>
@@ -95,7 +95,7 @@ const CoverageViewer = ({ selectedModel, selectedRun }: Props) => {
                 <button
                     title="Zoom Out"
                     onClick={() => bpmnListener?.send('ZOOM_OUT')}
-                    class="p-1 hover:bg-gray-200 rounded"
+                    class="p-1 hover:bg-gray-200 rounded-sm"
                 >
                     <ZoomOut size={18} />
                 </button>
@@ -103,7 +103,7 @@ const CoverageViewer = ({ selectedModel, selectedRun }: Props) => {
                 <button
                     title="Reset Zoom"
                     onClick={() => bpmnListener?.send('RESET_ZOOM')}
-                    class="p-1 hover:bg-gray-200 rounded"
+                    class="p-1 hover:bg-gray-200 rounded-sm"
                 >
                     <Focus size={18} />
                 </button>
@@ -111,7 +111,7 @@ const CoverageViewer = ({ selectedModel, selectedRun }: Props) => {
                 <button
                     title="Download BPMN"
                     onClick={download}
-                    class="p-1 hover:bg-gray-200 rounded disabled:opacity-50"
+                    class="p-1 hover:bg-gray-200 rounded-sm disabled:opacity-50"
                     disabled={!selectedModel}
                 >
                     <Download size={18} />

@@ -68,7 +68,7 @@ const Tooltip: FunctionalComponent<Props> = ({ title, placement = 'top', childre
             {visible && (
                 <div
                     ref={tooltipRef}
-                    class="z-50 px-2 py-1 text-sm text-white bg-black bg-opacity-90 rounded select-none pointer-events-none fixed"
+                    class="z-50 px-2 py-1 text-sm text-white bg-black bg-opacity-90 rounded-sm select-none pointer-events-none fixed"
                     style={{ top: styles.top ?? 0, left: styles.left ?? 0, position: 'fixed' }}
                     role="tooltip"
                 >

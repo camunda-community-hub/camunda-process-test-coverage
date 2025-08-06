@@ -135,7 +135,7 @@ const BpmnViewer = (props: Props) => {
                                         bottom: element.type === "bpmn:IntermediateCatchEvent" ? 34 : 64,
                                         left: element.type === "bpmn:IntermediateCatchEvent" ? -3 : -5,
                                     },
-                                    html: `<div class="bg-red-700 rounded-sm min-h-[50px] w-[4px] ${
+                                    html: `<div class="bg-red-700 rounded-xs min-h-[50px] w-[4px] ${
                                         element.type === "bpmn:IntermediateCatchEvent" ? "min-h-[32px]" : ""
                                     }"></div>`
                                 });
@@ -143,7 +143,7 @@ const BpmnViewer = (props: Props) => {
                             if (boundaries.after) {
                                 overlays.add(element.id, "note", {
                                     position: { bottom: 64, right: -1 },
-                                    html: `<div class="bg-red-700 rounded-sm min-h-[50px] w-[4px]"></div>`
+                                    html: `<div class="bg-red-700 rounded-xs min-h-[50px] w-[4px]"></div>`
                                 });
                             }
                         }
@@ -161,7 +161,7 @@ const BpmnViewer = (props: Props) => {
                                             bottom: 0,
                                             [ext.event === "end" ? "right" : "left"]: 0
                                         };
-                                        const html = `<div class="bg-blue-700 text-white rounded px-1 text-xs font-sans whitespace-nowrap">${field.expression}</div>`;
+                                        const html = `<div class="bg-blue-700 text-white rounded-sm px-1 text-xs font-sans whitespace-nowrap">${field.expression}</div>`;
                                         overlays.add(element.id, "note", { position, html });
                                     });
                                 }
@@ -177,14 +177,14 @@ const BpmnViewer = (props: Props) => {
                                 }
                                 overlays.add(element.id, "note", {
                                     position,
-                                    html: `<div class="bg-blue-700 text-white rounded px-1 text-xs font-sans whitespace-nowrap">${element.businessObject.conditionExpression.body}</div>`
+                                    html: `<div class="bg-blue-700 text-white rounded-sm px-1 text-xs font-sans whitespace-nowrap">${element.businessObject.conditionExpression.body}</div>`
                                 });
                             }
 
                             if (element.businessObject.$attrs?.["camunda:delegateExpression"]) {
                                 overlays.add(element.id, "note", {
                                     position: { bottom: -3, left: 0 },
-                                    html: `<div class="bg-blue-700 text-white rounded px-1 text-xs font-sans whitespace-nowrap">${element.businessObject.$attrs["camunda:delegateExpression"]}</div>`
+                                    html: `<div class="bg-blue-700 text-white rounded-sm px-1 text-xs font-sans whitespace-nowrap">${element.businessObject.$attrs["camunda:delegateExpression"]}</div>`
                                 });
                             }
                         }

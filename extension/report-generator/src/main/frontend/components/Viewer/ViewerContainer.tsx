@@ -48,7 +48,7 @@ const ViewerContainer = () => {
             {/* Suite selection */}
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                 <select
-                    class="border border-divider rounded px-3 py-2 bg-white text-sm"
+                    class="border border-divider rounded-sm px-3 py-2 bg-white text-sm"
                     value={selectedSuiteId ?? ''}
                     onChange={e => setSelectedSuiteId((e.target as HTMLSelectElement).value)}
                 >
@@ -63,7 +63,7 @@ const ViewerContainer = () => {
                 {selectedSuite && (
                     <>
                         <select
-                            class="border border-divider rounded px-3 py-2 bg-white text-sm"
+                            class="border border-divider rounded-sm px-3 py-2 bg-white text-sm"
                             value={selectedModelKey ?? ''}
                             onChange={e => setSelectedModelKey((e.target as HTMLSelectElement).value)}
                         >
@@ -76,7 +76,7 @@ const ViewerContainer = () => {
                         </select>
 
                         <select
-                            class="border border-divider rounded px-3 py-2 bg-white text-sm"
+                            class="border border-divider rounded-sm px-3 py-2 bg-white text-sm"
                             value={selectedRunId ?? ''}
                             onChange={e => {
                                 const val = (e.target as HTMLSelectElement).value;
@@ -159,14 +159,14 @@ const ViewerContainer = () => {
 
             {/* Viewer */}
             {selectedSuite && selectedModel && (
-                <div class="bg-background-paper rounded border border-divider shadow-sm p-4 mb-6 overflow-x-auto">
+                <div class="bg-background-paper rounded-sm border border-divider shadow-xs p-4 mb-6 overflow-x-auto">
                     <CoverageViewer selectedModel={selectedModel} selectedRun={selectedRun} />
                 </div>
             )}
 
             {/* Summary */}
             {selectedSuite && (
-                <div class="bg-background-paper rounded border border-divider shadow-sm p-4">
+                <div class="bg-background-paper rounded-sm border border-divider shadow-xs p-4">
                     <RunSummary
                         selectedSuite={selectedSuite}
                         selectedModel={selectedModel}
