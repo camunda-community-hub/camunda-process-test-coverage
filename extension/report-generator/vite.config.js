@@ -16,8 +16,8 @@ export default defineConfig({
         },
     },
     build: {
-       outDir: '../../../target/classes',
-       emptyOutDir: false,
+        outDir: '../../../target/classes',
+        emptyOutDir: false,
         minify: 'terser',
         cssCodeSplit: false,
         assetsInlineLimit: Infinity,

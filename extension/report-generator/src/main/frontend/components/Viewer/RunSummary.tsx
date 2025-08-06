@@ -15,9 +15,9 @@ interface Props {
 const RunSummary = (props: Props) => {
     return (
         <Section title="Build Summary">
-            <table className="table-auto w-full border-separate border-spacing-0">
+            <table className="table-auto w-full border border-divider rounded-md overflow-hidden">
                 <thead>
-                <tr className="bg-gray-100">
+                <tr className="bg-divider">
                     <th aria-hidden />
                     <th className="text-right py-4 pl-4">
                         <Tooltip title="Covered Flow Nodes & Sequence Flows">
