@@ -22,16 +22,16 @@ const App = () => {
     });
     const selectedModel = useMemo(() => coverage.find((c) => c.key === selectedModelKey) || null, [coverage, selectedModelKey]);
 
-    const [selectedRunId, setSelectedRunId] = useState<string | undefined>();
-    const selectedRun = useMemo(
-        () => selectedModel?.suites.flatMap(suite => suite.runs).find(r => r.id === selectedRunId),
-        [selectedModel, selectedRunId]
-    );
-
     const [selectedSuiteId, setSelectedSuiteId] = useState<string | undefined>();
     const selectedSuite = useMemo(
-        () => selectedModel?.suites.find(s => s.id === selectedSuiteId),
+        () => selectedModel?.suites.find(suite => suite.id === selectedSuiteId),
         [selectedModel, selectedSuiteId]
+    );
+
+    const [selectedRunId, setSelectedRunId] = useState<string | undefined>();
+    const selectedRun = useMemo(
+        () => selectedSuite?.runs.find(run => run.id === selectedRunId),
+        [selectedSuite, selectedRunId]
     );
 
     useEffect(() => {
@@ -69,8 +69,14 @@ const App = () => {
                             ) : null}
                         </header>
                         <CoverageViewer selectedModel={selectedModel} selectedSuite={selectedSuite} selectedRun={selectedRun} />
-                        <RunSummary selectedModel={selectedModel} selectedSuite={selectedSuite} selectedRun={selectedRun}
-                                        onSuiteSelected={suite => setSelectedSuiteId(suite.id)} onRunSelected={run => setSelectedRunId(run.id)} />
+                        <RunSummary selectedModel={selectedModel} selectedSuiteId={selectedSuiteId} selectedRunId={selectedRunId}
+                                        onSuiteSelected={suiteId => {
+                                            if (suiteId === selectedSuiteId) {
+                                                setSelectedRunId(undefined);
+                                            } else {
+                                                setSelectedSuiteId(suiteId);
+                                            }
+                                        }} onRunSelected={runId => setSelectedRunId(runId)} />
                     </>
                     ) : null
                 }

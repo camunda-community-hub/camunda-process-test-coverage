@@ -1,13 +1,13 @@
 import { h } from 'preact';
-import { ParsedModel, ParsedRun, ParsedSuite } from '../../api/api';
+import { ParsedModel } from '../../api/api';
 import RunSummaryRow from './RunSummaryRow';
 
 interface Props {
     selectedModel: ParsedModel;
-    selectedSuite: ParsedSuite | undefined;
-    selectedRun: ParsedRun | undefined;
-    onSuiteSelected: (suite: ParsedSuite) => void;
-    onRunSelected: (run: ParsedRun) => void;
+    selectedSuiteId: string | undefined;
+    selectedRunId: string | undefined;
+    onSuiteSelected: (suiteId: string) => void;
+    onRunSelected: (runId: string) => void;
 }
 
 const RunSummary = (props: Props) => {
@@ -56,16 +56,16 @@ const RunSummary = (props: Props) => {
                     <>
                     <RunSummaryRow
                         type="suite"
-                        selected={props.selectedSuite === suite}
+                        selected={props.selectedSuiteId === suite.id && !props.selectedRunId}
                         model={suite}
-                        onClick={() => props.onSuiteSelected(suite)}
+                        onClick={() => props.onSuiteSelected(suite.id)}
                     />
-                    {props.selectedSuite === suite && suite.runs.map(run => (
+                    {props.selectedSuiteId === suite.id && suite.runs.map(run => (
                         <RunSummaryRow
                             type="run"
-                            selected={props.selectedRun === run}
+                            selected={props.selectedRunId === run.id}
                             model={run}
-                            onClick={() => props.onRunSelected(run)}
+                            onClick={() => props.onRunSelected(run.id)}
                         />
                     ))}
                     </>
