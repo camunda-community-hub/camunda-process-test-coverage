@@ -30,6 +30,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.camunda.community.process_test_coverage</groupId>
+            <artifactId>camunda-process-test-coverage-report-generator</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.sonarsource.sonarqube</groupId>
             <artifactId>sonar-plugin-api-impl</artifactId>
             <version>${sonar.api.impl.version}</version>
@@ -64,7 +70,7 @@
                             <artifactId>camunda-process-test-coverage-report-generator</artifactId>
                             <version>${project.version}</version>
                             <outputDirectory>target/classes</outputDirectory>
-                            <includes>**/*.js,**/*.css,**/*.html</includes>
+                            <includes>**/*.html,**/*.png</includes>
                         </artifactItem>
                     </artifactItems>
                 </configuration>

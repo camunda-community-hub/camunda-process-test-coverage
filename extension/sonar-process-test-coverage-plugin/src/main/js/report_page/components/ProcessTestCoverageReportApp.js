@@ -20,7 +20,7 @@
 
 import React from "react";
 import { getJSON } from "sonar-request";
-import html from '../../../../../target/classes/html/bpmn.report-template.html';
+import html from '../../../../../target/classes/index.html';
 
 export function isBranch(branchLike) {
     return branchLike !== undefined && branchLike.isMain !== undefined;
