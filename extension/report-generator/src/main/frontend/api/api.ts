@@ -47,13 +47,13 @@ export interface CoverageContainer {
 export interface ParsedSuite extends CoverageContainer {
     id: string;
     name: string;
-    models: ParsedModel[];
+    runs: ParsedRun[];
 }
 
 export interface ParsedModel extends CoverageContainer {
     id: string;
     key: string;
-    runs: ParsedRun[];
+    suites: ParsedSuite[];
     xml: string;
 }
 

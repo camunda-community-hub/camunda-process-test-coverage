@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
+.djs-element.highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
+    fill: rgba(50, 205, 50, 0.5) !important;
+}
+
+.djs-element .highlight-sequence-flow {
+    stroke: rgba(20, 125, 20, 1) !important;
+    stroke-width: 2px !important;
+}
+
 @theme {
   --color-primary-light: #32d35c;
   --color-primary: #26b44b;

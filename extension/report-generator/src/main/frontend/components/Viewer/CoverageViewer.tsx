@@ -4,15 +4,16 @@ import {
     ZoomIn, ZoomOut, Focus, Download,
 } from 'lucide-preact';
 import BpmnViewer, { BpmnViewerData, BpmnViewerListener } from './BpmnViewer';
-import type { ParsedModel, ParsedRun } from '../../api/api';
+import type {ParsedModel, ParsedRun, ParsedSuite} from '../../api/api';
 import { downloadFile } from '../../util/FileUtils';
 
 interface Props {
     selectedModel?: ParsedModel;
+    selectedSuite?: ParsedSuite;
     selectedRun?: ParsedRun;
 }
 
-const CoverageViewer = ({ selectedModel, selectedRun }: Props) => {
+const CoverageViewer = ({ selectedModel, selectedSuite, selectedRun }: Props) => {
     const [data, setData] = useState<BpmnViewerData | undefined>(undefined);
     const [bpmnListener, setBpmnListener] = useState<BpmnViewerListener | undefined>(undefined);
     const [showCoverage, setShowCoverage] = useState(true);
@@ -32,6 +33,12 @@ const CoverageViewer = ({ selectedModel, selectedRun }: Props) => {
                 highlightFlowNodes: selectedRun.coveredNodes.map(node => node.id),
                 highlightSequenceFlows: selectedRun.coveredSequenceFlows,
             });
+        } else if (selectedSuite && selectedModel) {
+            setData({
+                xml: selectedModel.xml,
+                highlightFlowNodes: selectedSuite.runs.flatMap(run => run.coveredNodes).map(node => node.id),
+                highlightSequenceFlows: selectedSuite.runs.flatMap(run => run.coveredSequenceFlows),
+            });
         } else if (selectedModel) {
             setData({
                 xml: selectedModel.xml,
@@ -41,16 +48,15 @@ const CoverageViewer = ({ selectedModel, selectedRun }: Props) => {
         } else {
             setData(undefined);
         }
-    }, [selectedModel, selectedRun]);
+    }, [selectedModel, selectedSuite, selectedRun]);
 
     if (!selectedModel) return null;
 
     return (
-        <div class="max-w-(--breakpoint-md) w-full mt-8 mx-auto border-2 border-gray-200 bg-white/70 rounded-sm">
-            <div class="h-9 px-2 py-1 bg-gray-100 font-medium">
-                Model Viewer
-            </div>
-
+        <fieldset class="border border-gray-300 rounded-md p-4">
+            <legend class="px-2 text-sm font-medium text-gray-700">
+                BPMN Coverage Viewer
+            </legend>
             <div class="flex items-center px-4 py-2 space-x-3 text-sm">
                 <label class="flex items-center space-x-1 text-gray-600">
                     <input
@@ -128,7 +134,7 @@ const CoverageViewer = ({ selectedModel, selectedRun }: Props) => {
                     data={data}
                 />
             </div>
-        </div>
+        </fieldset>
     );
 };
 

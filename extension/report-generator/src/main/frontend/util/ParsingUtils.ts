@@ -17,23 +17,15 @@ export const getDistinctIds = (events: Event[], type: EventType): string[] => (
         .filter(distinct())
 );
 
-export const parseSuites = (suites: Suite[], models: Model[]): ParsedSuite[] => (
-    suites.map(suite => {
-        const modelKeys = suite.runs
-            .flatMap(run => run.events)
-            .map(event => event.modelKey)
-            .filter(distinct());
+export const computeCoverage = (suites: Suite[], models: Model[]): ParsedModel[] => (
+    models.map(model => {
 
-        const parsedModels: ParsedModel[] = modelKeys
-            .map(modelKey => {
-                const model = models.find(m => m.key === modelKey);
-
-                if (!model) {
-                    throw new Error(`Could not find required model with key ${modelKey}`);
-                }
+        const parsedSuites: ParsedSuite[] = suites
+            .filter(suite => suite.runs.some(run => run.events.some(event => event.modelKey === model.key)))
+            .map(suite => {
 
                 const runs: ParsedRun[] = suite.runs.map(run => {
-                    const events = run.events.filter(event => event.modelKey === modelKey);
+                    const events = run.events.filter(event => event.modelKey === model.key);
                     const coveredFlows = getDistinctIds(events, "TAKE");
                     const startedNodes = getDistinctIds(events, "START");
                     const endedNodes = getDistinctIds(events, "END");
@@ -63,9 +55,8 @@ export const parseSuites = (suites: Suite[], models: Model[]): ParsedSuite[] => 
                     .filter(distinct((item: CoveredNode) => item.id));
 
                 return {
-                    id: model.id,
-                    key: model.key,
-                    xml: model.xml,
+                    id: suite.id,
+                    name: suite.name,
                     runs: runs,
                     coveredSequenceFlows: coveredFlows,
                     coveredSequenceFlowCount: coveredFlows.length,
@@ -76,20 +67,19 @@ export const parseSuites = (suites: Suite[], models: Model[]): ParsedSuite[] => 
                 };
             });
 
-        const coveredFlows = parsedModels
+        const coveredFlows = parsedSuites
             .flatMap(run => run.coveredSequenceFlows)
             .filter(distinct());
-        const coveredNodes = parsedModels
+        const coveredNodes = parsedSuites
             .flatMap(run => run.coveredNodes)
             .filter(distinct((item: CoveredNode) => item.id));
-        const totalElementCount = parsedModels.reduce(
-            (prev, cur) => prev + cur.totalElementCount, 0
-        );
+        const totalElementCount = model.totalElementCount;
 
         return {
-            id: suite.id,
-            name: suite.name,
-            models: parsedModels,
+            id: model.id,
+            key: model.key,
+            xml: model.xml,
+            suites: parsedSuites,
             coveredSequenceFlows: coveredFlows,
             coveredSequenceFlowCount: coveredFlows.length,
             coveredNodes: coveredNodes,

@@ -102,23 +102,17 @@ const BpmnViewer = (props: Props) => {
                 // Fit viewport
                 canvas.zoom("fit-viewport", true);
 
-                // Clear previous markers and overlays if needed
-                elementRegistry.getAll().forEach(el => {
-                    canvas.removeMarker(el.id, "highlight");
-                    canvas.removeMarker(el.id, "highlightSequenceFlow");
-                    overlays.remove({elementId: el.id});
-                });
-
                 if (props.showCoverage) {
                     props.data.highlightFlowNodes.forEach(nodeId => {
                         canvas.addMarker(nodeId, "highlight");
                     });
 
                     props.data.highlightSequenceFlows.forEach(flowId => {
-                        // bpmn-js setzt die SVG, hier setzen wir direkt per DOM:
-                        const el = containerRef.current?.querySelector(`g[data-element-id='${flowId}'] path`);
-                        if (el) {
-                            el.classList.add("stroke-green-700", "stroke-2");
+                        const element = document.querySelector(`g[data-element-id='${flowId}']`);
+                        const path = element?.querySelector('path');
+
+                        if (path) {
+                            path.classList.add("highlight-sequence-flow");
                         }
                     });
                 }
