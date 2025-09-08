@@ -6,11 +6,19 @@ interface Props {
     coverage: ParsedModel[];
     onModelSelected: (model: Model) => void;
     allModels: Model[];
+    colors: { green: number, yellow: number };
 }
 
-const ModelSelection = ({ coverage, onModelSelected, allModels }: Props) => {
+const ModelSelection = ({ coverage, onModelSelected, allModels, colors }: Props) => {
 
     const thumbs = generateThumbnails(allModels, 260, 180);
+    const coverageColor = (percent) => {
+        let coverageColor: string;
+        if (percent >= colors.green) coverageColor = 'bg-green-200';
+        else if (percent >= colors.yellow) coverageColor = 'bg-yellow-200';
+        else coverageColor = 'bg-red-200';
+        return coverageColor;
+    }
 
     return (<fieldset class="border border-gray-300 rounded-md p-4">
         <legend class="px-2 text-sm font-medium text-gray-700">
@@ -34,7 +42,7 @@ const ModelSelection = ({ coverage, onModelSelected, allModels }: Props) => {
                     <div class="text-xs opacity-70 mb-2">{c.coveredNodeCount + c.coveredSequenceFlowCount} / {c.totalElementCount} elements</div>
                     <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
                         <div
-                            class="bg-blue-500 h-2"
+                            class={ coverageColor(c.coverage) + ' h-2' }
                             style={{ width: `${Math.min(100, Math.max(0, c.coverage * 100)).toFixed(2)}%` }}
                         />
                     </div>

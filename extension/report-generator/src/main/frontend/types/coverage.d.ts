@@ -6,5 +6,9 @@ declare global {
             suites: Suite[];
             models: Model[];
         };
+        COLORS: {
+            green: number,
+            yellow: number
+        };
     }
 }

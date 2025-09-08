@@ -8,6 +8,7 @@ interface Props {
     selectedRunId: string | undefined;
     onSuiteSelected: (suiteId: string) => void;
     onRunSelected: (runId: string) => void;
+    colors: { green: number, yellow: number };
 }
 
 const RunSummary = (props: Props) => {
@@ -59,6 +60,7 @@ const RunSummary = (props: Props) => {
                         selected={props.selectedSuiteId === suite.id && !props.selectedRunId}
                         model={suite}
                         onClick={() => props.onSuiteSelected(suite.id)}
+                        colors={props.colors}
                     />
                     {props.selectedSuiteId === suite.id && suite.runs.map(run => (
                         <RunSummaryRow
@@ -66,6 +68,7 @@ const RunSummary = (props: Props) => {
                             selected={props.selectedRunId === run.id}
                             model={run}
                             onClick={() => props.onRunSelected(run.id)}
+                            colors={props.colors}
                         />
                     ))}
                     </>

@@ -14,6 +14,12 @@ module.exports = {
         filename: "[name].js"
     },
     resolve: {
+        alias: {
+            "@coverage-viewer": path.resolve(
+                __dirname,
+                "../target/coverage-viewer/coverage-report.js"
+            )
+        },
         modules: [
             path.join(__dirname, "src/main/js"),
             "node_modules"

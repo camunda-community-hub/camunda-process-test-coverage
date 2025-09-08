@@ -7,9 +7,10 @@ interface Props {
     type: 'suite' | 'run';
     model: ParsedSuite | ParsedRun;
     onClick: () => void;
+    colors: { green: number, yellow: number };
 }
 
-const RunSummaryRow = ({ selected, type, model, onClick }: Props) => {
+const RunSummaryRow = ({ selected, type, model, onClick, colors }: Props) => {
     const coverage = model.coverage;
     const covered = model.coveredNodeCount + model.coveredSequenceFlowCount;
     const total = model.totalElementCount;
@@ -18,8 +19,8 @@ const RunSummaryRow = ({ selected, type, model, onClick }: Props) => {
     const Icon = type === 'suite' ? (selected ? ChevronDown : ChevronRight) : CheckSquare;
 
     let coverageColor: string;
-    if (coverage >= 0.9) coverageColor = 'bg-green-200';
-    else if (coverage >= 0.5) coverageColor = 'bg-yellow-200';
+    if (coverage >= colors.green) coverageColor = 'bg-green-200';
+    else if (coverage >= colors.yellow) coverageColor = 'bg-yellow-200';
     else coverageColor = 'bg-red-200';
 
     return (

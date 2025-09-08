@@ -11,7 +11,7 @@ export function generateThumbnails(models: Model[], width = 300, height = 200) {
         async function run() {
             if (typeof document === 'undefined' || !models?.length) return;
 
-            // Offscreen-Container anlegen (nicht display:none!)
+            // create offscreen container
             const container = document.createElement('div');
             Object.assign(container.style, {
                 position: 'fixed',
@@ -20,7 +20,7 @@ export function generateThumbnails(models: Model[], width = 300, height = 200) {
                 width: width + 'px',
                 height: height + 'px',
                 overflow: 'hidden',
-                visibility: 'hidden', // bleibt im Layoutfluss
+                visibility: 'hidden',
                 pointerEvents: 'none',
                 background: 'white'
             } as CSSStyleDeclaration);
@@ -34,19 +34,19 @@ export function generateThumbnails(models: Model[], width = 300, height = 200) {
                     try {
                         await viewer.importXML(m.xml);
                         const canvas = (viewer as any).get('canvas');
-                        // In die Box einpassen
+                        // adjust to box
                         canvas.zoom('fit-viewport', 'auto');
-                        // kurz warten bis gerendert
+                        // wait for rendering
                         await new Promise((r) => requestAnimationFrame(() => r(null)));
 
                         const { svg } = await (viewer as any).saveSVG({ format: true });
-                        // robuste DataURL (kein base64 nötig, vermeidet Unicode-Probleme)
+                        // data url without need for base64 encoding
                         map[m.key] = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
                         if (cancelled) break;
                     } catch (e) {
-                        // Fallback: kein Thumbnail
+                        // fallback: no thumbnail
                         map[m.key] = '';
-                        console.warn('Thumbnail-Fehler für', m.key, e);
+                        console.warn('Not able to create thumbnail for ', m.key, e);
                     }
                 }
             } finally {

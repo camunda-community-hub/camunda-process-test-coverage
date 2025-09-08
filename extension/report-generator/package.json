@@ -9,7 +9,9 @@
     "scripts": {
         "start": "cross-env BROWSER=none react-scripts start",
         "dev": "vite",
-        "build": "vite build && node src/main/frontend/fix-paths.js",
+        "build:standalone": "vite build --config vite.singlefile.config.js",
+        "build:lib": "vite build --config vite.lib.config.js",
+        "build": "npm run build:standalone && npm run build:lib",
         "preview": "vite preview",
         "lint": "npx eslint src/main/frontend --ext .js,.jsx,.ts,.tsx"
     },
