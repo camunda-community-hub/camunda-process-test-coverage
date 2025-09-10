@@ -11,7 +11,9 @@ interface Props {
 
 const ModelSelection = ({ coverage, onModelSelected, allModels, colors }: Props) => {
 
-    const thumbs = generateThumbnails(allModels, 260, 180);
+    const width = allModels.length > 10 ? 130 : 260;
+    const height = allModels.length > 10 ? 90 : 180;
+    const thumbs = generateThumbnails(allModels, width, height);
     const coverageColor = (percent) => {
         let coverageColor: string;
         if (percent >= colors.green) coverageColor = 'bg-green-200';
@@ -34,11 +36,13 @@ const ModelSelection = ({ coverage, onModelSelected, allModels, colors }: Props)
                     }
                 >
                     <div class="text-sm font-semibold mb-1">{c.key}</div>
-                    <img
-                        src={thumbs[c.key]}
-                        alt={c.key}
-                        class="w-full h-32 object-contain bg-white rounded-xl mb-2"
-                    />
+                    {thumbs[c.key] && (
+                        <img
+                            src={thumbs[c.key]}
+                            alt={c.key}
+                            class="w-full h-32 object-contain bg-white rounded-xl mb-2"
+                        />
+                    )}
                     <div class="text-xs opacity-70 mb-2">{c.coveredNodeCount + c.coveredSequenceFlowCount} / {c.totalElementCount} elements</div>
                     <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
                         <div

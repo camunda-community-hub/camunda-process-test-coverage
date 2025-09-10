@@ -19,13 +19,9 @@ const CoverageReport = (props: Props) => {
         () => computeCoverage(props.coverageData.suites, props.coverageData.models),
         [props.coverageData]
     );
-    const [allModels] = useState<Model[]>(props.coverageData.models);
+    const allModels = props.coverageData.models;
 
-    const [selectedModelKey, setSelectedModelKey] = useState<string | null>(() => {
-        if (modelParam && allModels.some((m) => m.key === modelParam)) return modelParam;
-        if (allModels.length === 1) return allModels[0].key;
-        return null;
-    });
+    const [selectedModelKey, setSelectedModelKey] = useState<string | null>(null);
     const selectedModel = useMemo(() => coverage.find((c) => c.key === selectedModelKey) || null, [coverage, selectedModelKey]);
 
     const [selectedSuiteId, setSelectedSuiteId] = useState<string | undefined>();
@@ -44,7 +40,10 @@ const CoverageReport = (props: Props) => {
         if (modelParam && allModels.some((m) => m.key === modelParam)) {
             setSelectedModelKey(modelParam);
         }
-    }, [modelParam, allModels]);
+        if (allModels.length === 1) {
+            setSelectedModelKey(allModels[0].key)
+        }
+    }, [allModels, modelParam]);
     useEffect(() => {
         setSelectedRunId(undefined);
     }, [selectedSuiteId]);
