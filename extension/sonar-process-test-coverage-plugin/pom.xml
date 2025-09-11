@@ -30,6 +30,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.camunda.community.process_test_coverage</groupId>
+            <artifactId>camunda-process-test-coverage-report-generator</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.sonarsource.sonarqube</groupId>
             <artifactId>sonar-plugin-api-impl</artifactId>
             <version>${sonar.api.impl.version}</version>
@@ -57,15 +63,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.8.1</version>
                 <configuration>
                     <artifactItems>
                         <artifactItem>
                             <groupId>org.camunda.community.process_test_coverage</groupId>
                             <artifactId>camunda-process-test-coverage-report-generator</artifactId>
                             <version>${project.version}</version>
-                            <outputDirectory>target/classes</outputDirectory>
-                            <includes>**/*.js,**/*.css,**/*.html</includes>
+                            <outputDirectory>target/coverage-viewer</outputDirectory>
+                            <includes>**/*.js</includes>
                         </artifactItem>
                     </artifactItems>
                 </configuration>
@@ -95,7 +100,6 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.15.1</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>

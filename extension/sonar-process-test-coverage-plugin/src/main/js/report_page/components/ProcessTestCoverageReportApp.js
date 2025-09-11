@@ -20,7 +20,7 @@
 
 import React from "react";
 import { getJSON } from "sonar-request";
-import html from '../../../../../target/classes/html/bpmn.report-template.html';
+import "@coverage-viewer";
 
 export function isBranch(branchLike) {
     return branchLike !== undefined && branchLike.isMain !== undefined;
@@ -44,23 +44,21 @@ export function loadProcessTestCoverageReport(options) {
     }
 
     return getJSON("/api/measures/component", request).then(function(response) {
-        var report = response.component.measures.find((measure) => {
-            return measure.metric === "process_test_coverage_report";
-        });
-        if (typeof report  === "undefined") {
-            return "<div style='text-align: center'><h2>No JSON-Report found for process test coverage</h2></div>";
-        } else {
-            return report.value;
-        }
+        let report = response.component.measures
+            .find((measure) => measure.metric === "process_test_coverage_report");
+        return JSON.parse(report?.value || '{ suites: [], models: [] }');
     });
 }
 
 export default class ProcessTestCoverageReportApp extends React.PureComponent {
+
+    coverageRef = React.createRef();
+
     constructor() {
         super();
         this.state = {
             loading: true,
-            data: "",
+            data: { suites: [], models: [] },
             height: 0,
         };
     }
@@ -72,13 +70,19 @@ export default class ProcessTestCoverageReportApp extends React.PureComponent {
             this.setState({
                 loading: false,
                 data
-            });
+            }, () =>  { if (this.coverageRef.current) this.coverageRef.current.data = data });
         });
         /**
          * Add event listener
          */
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions.bind(this));
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.coverageRef.current && prevState.data !== this.state.data) {
+            this.coverageRef.current.data = this.state.data;
+        }
     }
 
     /**
@@ -106,9 +110,7 @@ export default class ProcessTestCoverageReportApp extends React.PureComponent {
         }
 
         return (
-            <div className="page process-test-coverage-report-container" >
-                <iframe classsandbox="allow-scripts allow-same-origin" height={this.state.height} srcDoc={html.replace('{{__REPORT_JSON_PLACEHOLDER__}}', this.state.data)} style={{border: "none"}}/>
-            </div>
+            <coverage-report style={{ display: "block", width: "100%", height: `${this.state.height}px`, overflow: "auto" }} ref={this.coverageRef}></coverage-report>
         );
     }
 }

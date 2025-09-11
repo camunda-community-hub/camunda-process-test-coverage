@@ -1,0 +1,13 @@
+@import "../index.css";
+
+fieldset {
+    border: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 1em;
+    border-radius: 4px;
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 0.5em;
+}

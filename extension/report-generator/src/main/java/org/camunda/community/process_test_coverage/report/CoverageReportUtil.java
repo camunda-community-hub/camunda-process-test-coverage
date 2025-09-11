@@ -28,7 +28,6 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Objects;
@@ -53,8 +52,8 @@ public class CoverageReportUtil {
      * Root directory for all coverage reports.
      */
     public static String TARGET_DIR_ROOT = System.getProperty("camunda-process-test-coverage.target-dir-root", "target/process-test-coverage/");
-    public static final String REPORT_RESOURCES = "static";
-    private static final String REPORT_TEMPLATE = "html/bpmn.report-template.html";
+    private static final String REPORT_RESOURCES = ".*\\.png";
+    private static final String REPORT_TEMPLATE = "index.html";
 
 
     public static void createReport(final DefaultCollector coverageCollector, final String reportDirectory) {
@@ -80,12 +79,11 @@ public class CoverageReportUtil {
     public static void writeReport(final String coverageResult, boolean installReportDependencies,
                                    final File reportDirectory, final String fileName, final Function<String, String> reportCreator) {
 
-        if (installReportDependencies) {
-            installReportDependencies(reportDirectory);
-        }
-
         try {
             Files.createDirectories(reportDirectory.toPath());
+            if (installReportDependencies) {
+                installReportDependencies(reportDirectory);
+            }
             writeToFile(reportDirectory + "/" + fileName, reportCreator.apply(coverageResult));
         } catch (final IOException ex) {
             throw new RuntimeException("Unable to write report.", ex);
@@ -107,13 +105,6 @@ public class CoverageReportUtil {
     }
 
     private static void installReportDependencies(final File reportDirectory) {
-        final File parent = reportDirectory.getParentFile();
-        final File reportResourcesDir = new File(parent, REPORT_RESOURCES);
-        if (reportResourcesDir.exists()) {
-            // No need to install
-            return;
-        }
-
         try {
 
             final File resourcesRoot = ClassLocationURL.fileFor(CoverageReportUtil.class);
@@ -126,58 +117,29 @@ public class CoverageReportUtil {
 
                 while (entries.hasMoreElements()) {
                     final String resourcePath = entries.nextElement().getName();
-                    if (resourcePath.startsWith(REPORT_RESOURCES)) {
-                        final File resource = new File(parent, resourcePath);
+                    if (resourcePath.matches(REPORT_RESOURCES)) {
+                        final File resource = new File(reportDirectory, resourcePath);
                         final InputStream source = CoverageReportUtil.class.getResourceAsStream("/" + resourcePath);
-                        Objects.requireNonNull(source);
-                        if (resourcePath.endsWith("/")) {
-                            logger.info("Creating directory " + resource.getAbsolutePath());
-                            if (!resource.exists() && !resource.mkdirs()) {
-                                throw new IllegalStateException("Could not create report directory " + resource.getAbsolutePath());
-                            }
-                        } else {
-                            if (!resource.getParentFile().exists() && !resource.getParentFile().mkdirs()) {
-                                throw new IllegalStateException("Could not create report directory " + resource.getParentFile().getAbsolutePath());
-                            }
-                            Files.copy(source, resource.toPath());
-                        }
+                        Files.copy(source, resource.toPath());
                     }
                 }
                 coverageJar.close();
             } else {
                 // Tests executed in the IDE use directories
-                URL reportResources = CoverageReportUtil.class.getResource("/" + REPORT_RESOURCES);
+                URL reportResources = CoverageReportUtil.class.getResource("/");
                 Objects.requireNonNull(reportResources);
                 final File reportResourcesSrc = new File(reportResources.toURI());
-                if (!reportResourcesDir.getParentFile().exists() && !reportResourcesDir.getParentFile().mkdirs()) {
-                    throw new IllegalStateException("Could not create report directory " + reportResourcesDir.getParentFile().getAbsolutePath());
+                for (File file : reportResourcesSrc.listFiles()) {
+                    if (file.getName().matches(REPORT_RESOURCES)) {
+                        final File resource = new File(reportDirectory, file.getName());
+                        Files.copy(file.toPath(), resource.toPath());
+                    }
                 }
-                copyFolder(reportResourcesSrc.toPath(), reportResourcesDir.toPath());
             }
 
         } catch (final Exception e) {
             throw new RuntimeException("Unable to copy report resources", e);
         }
-    }
-
-    private static void copyFolder(Path source, Path target)
-            throws IOException {
-        Files.walkFileTree(source, new SimpleFileVisitor<Path>() {
-
-            @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
-                    throws IOException {
-                Files.createDirectories(target.resolve(source.relativize(dir)));
-                return FileVisitResult.CONTINUE;
-            }
-
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
-                    throws IOException {
-                Files.copy(file, target.resolve(source.relativize(file)));
-                return FileVisitResult.CONTINUE;
-            }
-        });
     }
 
     /**

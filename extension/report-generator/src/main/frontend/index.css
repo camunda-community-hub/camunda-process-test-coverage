@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+
+.djs-element.highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
+    fill: rgba(50, 205, 50, 0.5) !important;
+}
+
+.djs-element .highlight-sequence-flow {
+    stroke: rgba(20, 125, 20, 1) !important;
+    stroke-width: 2px !important;
+}
+
+@theme {
+  --color-primary-light: #32d35c;
+  --color-primary: #26b44b;
+  --color-primary-dark: #3d9a4c;
+  --color-primary-contrast: #ffffff;
+
+  --color-secondary-light: #455a64;
+  --color-secondary: #37474f;
+  --color-secondary-dark: #263238;
+  --color-secondary-contrast: #ffffff;
+
+  --color-text-primary: rgba(0, 0, 0, 0.87);
+  --color-text-secondary: rgba(0, 0, 0, 0.6);
+  --color-text-hint: rgba(0, 0, 0, 0.38);
+  --color-text-disabled: rgba(0, 0, 0, 0.38);
+
+  --color-divider: rgba(34, 36, 38, 0.1);
+
+  --color-background-paper: rgba(34, 36, 38, 0.1);
+  --color-background: #ffffff;
+
+  --font-sans: Helvetica, Arial, sans-serif;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
