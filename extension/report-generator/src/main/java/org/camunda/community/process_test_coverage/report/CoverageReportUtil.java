@@ -120,7 +120,7 @@ public class CoverageReportUtil {
                     if (resourcePath.matches(REPORT_RESOURCES)) {
                         final File resource = new File(reportDirectory, resourcePath);
                         final InputStream source = CoverageReportUtil.class.getResourceAsStream("/" + resourcePath);
-                        Files.copy(source, resource.toPath());
+                        Files.copy(source, resource.toPath(), StandardCopyOption.REPLACE_EXISTING);
                     }
                 }
                 coverageJar.close();
@@ -132,7 +132,7 @@ public class CoverageReportUtil {
                 for (File file : reportResourcesSrc.listFiles()) {
                     if (file.getName().matches(REPORT_RESOURCES)) {
                         final File resource = new File(reportDirectory, file.getName());
-                        Files.copy(file.toPath(), resource.toPath());
+                        Files.copy(file.toPath(), resource.toPath(), StandardCopyOption.REPLACE_EXISTING);
                     }
                 }
             }
