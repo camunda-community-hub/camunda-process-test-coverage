@@ -62,6 +62,7 @@ jobs:
           git clean -f
           ./mvnw -B versions:update-child-modules -DgenerateBackupPoms=false
           ./mvnw -B versions:update-child-modules -DgenerateBackupPoms=false
+          git diff-index HEAD
           git diff-index --quiet HEAD || git commit -am "release(v${RELEASE_VERSION}): prepare for next development iteration"
           git push
         env:
