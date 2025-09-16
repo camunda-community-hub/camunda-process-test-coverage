@@ -59,6 +59,7 @@ jobs:
 
       - name: Update Version in regression tests
         run: |
+          git clean -f
           ./mvnw -B versions:update-child-modules -DgenerateBackupPoms=false
           ./mvnw -B versions:update-child-modules -DgenerateBackupPoms=false
           git diff-index --quiet HEAD || git commit -am "release(v${RELEASE_VERSION}): prepare for next development iteration"
