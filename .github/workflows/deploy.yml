@@ -62,10 +62,7 @@ jobs:
           git clean -f
           ./mvnw -B versions:update-child-modules -DgenerateBackupPoms=false
           ./mvnw -B versions:update-child-modules -DgenerateBackupPoms=false
-          git diff-index HEAD
-          git status
-          git ls-files -v | grep package
-          git check-attr -a -- extension/sonar-process-test-coverage-plugin/package-lock.json
+          git update-index --refresh
           git diff-index --quiet HEAD || git commit -am "release(v${RELEASE_VERSION}): prepare for next development iteration"
           git push
         env:
