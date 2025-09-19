@@ -15,7 +15,7 @@ dependencies {
     implementation(gradleApi())
     implementation(group = "org.camunda.community.process_test_coverage", name = "camunda-process-test-coverage-report-generator", version = "$version")
     testImplementation(gradleTestKit())
-    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.12.0")
+    testImplementation(group = "org.junit.jupiter", name = "junit-jupiter", version = "5.13.4")
     testRuntimeOnly(group = "org.junit.platform", name = "junit-platform-launcher")
     testImplementation(group = "org.assertj", name = "assertj-core", version = "3.27.5")
 }
