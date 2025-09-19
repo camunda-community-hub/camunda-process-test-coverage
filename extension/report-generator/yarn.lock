@@ -1072,13 +1072,13 @@ boolbase@^1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
 
-bpmn-js@13.1.0:
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/bpmn-js/-/bpmn-js-13.1.0.tgz#a946c1c6da2bdaabe1e62d38cd1324ad7d8426cb"
-  integrity sha512-tnINF2cUyprOXTZmOsj9dNysW7Se4rAYxSuC+VCcXwHU0Vn+9+147vihg5hi4gbQaIoriRhiNSlCivxXS3FikA==
+bpmn-js@13.2.2:
+  version "13.2.2"
+  resolved "https://registry.yarnpkg.com/bpmn-js/-/bpmn-js-13.2.2.tgz#5cd4c64e8e459306e8f16d85895a20d6d098d790"
+  integrity sha512-zH8uyfizZxEq2w1Z+AzDUuKkRyBml4KbnKLQH4XtgbQajhnMeyT6k9bcqag/dQL9s1CplCTv8N7EZFGvfMMsTA==
   dependencies:
     bpmn-moddle "^8.0.0"
-    diagram-js "^12.1.0"
+    diagram-js "^12.2.0"
     diagram-js-direct-editing "^2.0.0"
     ids "^1.0.0"
     inherits-browser "^0.1.0"
@@ -1378,7 +1378,7 @@ diagram-js-direct-editing@^2.0.0:
     min-dash "^4.0.0"
     min-dom "^4.0.2"
 
-diagram-js@^12.1.0:
+diagram-js@^12.2.0:
   version "12.8.1"
   resolved "https://registry.yarnpkg.com/diagram-js/-/diagram-js-12.8.1.tgz#b4f0875a7b5f204894c6cea7dace65d6b3b4e7af"
   integrity sha512-LF9BiwjbOPpZd0ez5VSlYRbdbEA59YQX43bWvNDp1rLMv0xwZ5yIg4oaYDK82nIQ0kH1tjvoQRpNevMTCgQVyw==
