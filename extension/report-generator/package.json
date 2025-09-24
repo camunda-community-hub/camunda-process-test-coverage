@@ -31,7 +31,7 @@
         ]
     },
     "dependencies": {
-        "bpmn-js": "13.2.2",
+        "bpmn-js": "18.7.0",
         "camunda-bpmn-moddle": "^7.0.1",
         "clsx": "^2.1.1",
         "lucide-preact": "^0.544.0",
