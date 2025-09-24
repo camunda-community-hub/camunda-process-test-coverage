@@ -19,17 +19,21 @@
         <maven.source.skip>true</maven.source.skip>
         <maven.install.skip>true</maven.install.skip>
         <gpg.skip>true</gpg.skip>
+        <plugin.version>${project.version}</plugin.version>
     </properties>
 
     <modules>
         <module>junit4-platform-7</module>
         <module>junit5-platform-7</module>
         <module>junit5-platform-8-zpt</module>
+        <module>junit5-platform-8-cpt</module>
         <module>jgiven-platform-7</module>
         <module>spring-test-platform-7</module>
         <module>spring-starter-platform-7</module>
         <module>spring-test-platform-8-zpt</module>
+        <module>spring-test-platform-8-cpt</module>
         <module>spring-starter-platform-8-zpt</module>
+        <module>spring-starter-platform-8-cpt</module>
     </modules>
 
     <dependencyManagement>
@@ -56,7 +60,7 @@
                 <plugin>
                     <groupId>org.camunda.community.process_test_coverage</groupId>
                     <artifactId>camunda-process-test-coverage-report-aggregator-maven-plugin</artifactId>
-                    <version>2.7.0</version>
+                    <version>${plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>

@@ -77,12 +77,22 @@
             </dependency>
             <dependency>
                 <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-spring-test-platform-8-cpt</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
                 <artifactId>camunda-process-test-coverage-starter-platform-7</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.camunda.community.process_test_coverage</groupId>
                 <artifactId>camunda-process-test-coverage-starter-platform-8-zpt</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.camunda.community.process_test_coverage</groupId>
+                <artifactId>camunda-process-test-coverage-starter-platform-8-cpt</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -1,4 +1,4 @@
-package org.camunda.community.process_test_coverage.examples.spring_test.platform8;
+package org.camunda.community.process_test_coverage.examples.spring_test.platform8.cpt;
 
 /*-
  * #%L
@@ -20,15 +20,18 @@ package org.camunda.community.process_test_coverage.examples.spring_test.platfor
  * #L%
  */
 
-import io.camunda.zeebe.spring.client.annotation.Deployment;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.camunda.community.process_test_coverage.spring_test.common.ProcessEngineCoverageProperties;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
-@Deployment(resources = "classpath*:*.bpmn")
-public class Application {
+@TestConfiguration
+public class CoverageTestConfiguration {
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class);
+    @Bean
+    public ProcessEngineCoverageProperties processEngineCoverageProperties() {
+        return ProcessEngineCoverageProperties.builder()
+                .assertClassCoverageAtLeast(0.9)
+                .build();
     }
+
 }
