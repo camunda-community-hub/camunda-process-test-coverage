@@ -117,6 +117,16 @@
                 <artifactId>camunda-process-test-java</artifactId>
                 <version>${camunda8.process.test.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.camunda</groupId>
+                <artifactId>camunda-process-test-spring</artifactId>
+                <version>${camunda8.process.test.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.camunda</groupId>
+                <artifactId>spring-boot-starter-camunda-sdk</artifactId>
+                <version>${camunda8.process.test.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

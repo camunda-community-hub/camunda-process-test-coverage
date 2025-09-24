@@ -1,8 +1,8 @@
-package org.camunda.community.process_test_coverage.examples.spring_test.platform8;
+package org.camunda.community.process_test_coverage.examples.spring_starter.platform8.zpt;
 
 /*-
  * #%L
- * Camunda Process Test Coverage Example Spring-Testing Platform 8
+ * Camunda Process Test Coverage Example Spring-Testing with starter Platform 8
  * %%
  * Copyright (C) 2019 - 2024 Camunda
  * %%
@@ -26,12 +26,11 @@ import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.process.test.api.ZeebeTestEngine;
 import io.camunda.zeebe.spring.test.ZeebeSpringTest;
 import org.camunda.community.process_test_coverage.core.engine.ExcludeFromProcessCoverage;
-import org.camunda.community.process_test_coverage.spring_test.platform8.zpt.ProcessEngineCoverageConfiguration;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -46,9 +45,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ZeebeSpringTest
-// needed to shut down the spring context after the test, so that it doesn't interfere with the other tests
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@Import({CoverageTestConfiguration.class, ProcessEngineCoverageConfiguration.class})
+@Import(CoverageTestConfiguration.class)
 public class OrderProcessTest {
 
     @Autowired
@@ -86,7 +83,7 @@ public class OrderProcessTest {
     @Test
     @ExcludeFromProcessCoverage
     public void testSomethingElse() {
-        assertTrue(true);
+        Assertions.assertTrue(true);
     }
 
     private void waitForUserTaskAndComplete(String userTaskId, Map<String, Object> variables) throws InterruptedException, TimeoutException {
@@ -112,6 +109,7 @@ public class OrderProcessTest {
         }
         // Let the workflow engine do whatever it needs to do
         zeebeTestEngine.waitForIdleState(Duration.ofSeconds(10));
+
     }
 
     private ProcessInstanceEvent startProcess() {

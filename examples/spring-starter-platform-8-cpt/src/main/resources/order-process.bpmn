@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0sng1lw" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+  <bpmn:process id="order-process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_OrderReceived" name="Order received">
+      <bpmn:outgoing>Flow_1fdptq6</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1fdptq6" sourceRef="StartEvent_OrderReceived" targetRef="Task_ProcessOrder" />
+    <bpmn:userTask id="Task_ProcessOrder" name="Process order">
+      <bpmn:incoming>Flow_1fdptq6</bpmn:incoming>
+      <bpmn:outgoing>Flow_09pto53</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0yblx89" name="Order ok?" default="Flow_09zvyuj">
+      <bpmn:incoming>Flow_09pto53</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ybm98q</bpmn:outgoing>
+      <bpmn:outgoing>Flow_09zvyuj</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_09pto53" sourceRef="Task_ProcessOrder" targetRef="Gateway_0yblx89" />
+    <bpmn:sequenceFlow id="Flow_1ybm98q" name="yes" sourceRef="Gateway_0yblx89" targetRef="Task_DeliverOrder">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">= orderOk</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="Event_OrderCancelled" name="Order cancelled">
+      <bpmn:incoming>Flow_09zvyuj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_09zvyuj" name="no" sourceRef="Gateway_0yblx89" targetRef="Event_OrderCancelled" />
+    <bpmn:endEvent id="Event_OrderProcessed" name="Order processed">
+      <bpmn:incoming>Flow_1jkr8bo</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1jkr8bo" sourceRef="Task_DeliverOrder" targetRef="Event_OrderProcessed" />
+    <bpmn:userTask id="Task_DeliverOrder" name="Deliver order">
+      <bpmn:incoming>Flow_1ybm98q</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jkr8bo</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-process">
+      <bpmndi:BPMNEdge id="Flow_1fdptq6_di" bpmnElement="Flow_1fdptq6">
+        <di:waypoint x="215" y="97" />
+        <di:waypoint x="290" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09pto53_di" bpmnElement="Flow_09pto53">
+        <di:waypoint x="390" y="97" />
+        <di:waypoint x="455" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ybm98q_di" bpmnElement="Flow_1ybm98q">
+        <di:waypoint x="505" y="97" />
+        <di:waypoint x="570" y="97" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="529" y="79" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09zvyuj_di" bpmnElement="Flow_09zvyuj">
+        <di:waypoint x="480" y="122" />
+        <di:waypoint x="480" y="210" />
+        <di:waypoint x="602" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="489" y="163" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jkr8bo_di" bpmnElement="Flow_1jkr8bo">
+        <di:waypoint x="670" y="97" />
+        <di:waypoint x="752" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_OrderReceived">
+        <dc:Bounds x="179" y="79" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="161" y="122" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0r7w6pi_di" bpmnElement="Task_ProcessOrder">
+        <dc:Bounds x="290" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0yblx89_di" bpmnElement="Gateway_0yblx89" isMarkerVisible="true">
+        <dc:Bounds x="455" y="72" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="455" y="53" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1i76pzx_di" bpmnElement="Event_OrderCancelled">
+        <dc:Bounds x="602" y="192" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="581" y="235" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0sddday_di" bpmnElement="Event_OrderProcessed">
+        <dc:Bounds x="752" y="79" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="729" y="122" width="82" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kfzmil_di" bpmnElement="Task_DeliverOrder">
+        <dc:Bounds x="570" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
