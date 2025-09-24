@@ -10,7 +10,7 @@
     <artifactId>sonar-camunda-process-test-coverage-plugin</artifactId>
     <packaging>sonar-plugin</packaging>
     <properties>
-        <sonar-plugin-api.version>10.14.0.2599</sonar-plugin-api.version>
+        <sonar-plugin-api.version>13.2.0.3137</sonar-plugin-api.version>
         <sonar.api.impl.version>25.9.0.112764</sonar.api.impl.version>
     </properties>
     <dependencies>
