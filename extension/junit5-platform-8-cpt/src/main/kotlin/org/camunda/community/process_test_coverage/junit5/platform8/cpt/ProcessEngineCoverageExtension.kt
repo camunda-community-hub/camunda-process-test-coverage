@@ -40,6 +40,10 @@ class ProcessEngineCoverageExtension(
 
 ) : CamundaProcessTestExtension(), BeforeAllCallback, AfterAllCallback, BeforeTestExecutionCallback, AfterTestExecutionCallback {
 
+    init {
+        withCoverageReportDirectory("target/cpt-process-test-coverage")
+    }
+
     companion object {
         @JvmStatic
         fun builder() = Builder()

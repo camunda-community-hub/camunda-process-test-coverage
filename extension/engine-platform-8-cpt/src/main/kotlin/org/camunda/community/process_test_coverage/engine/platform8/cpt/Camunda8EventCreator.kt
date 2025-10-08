@@ -126,7 +126,7 @@ fun mapEvent(flowNodeInstance: ElementInstance, bpmnProcessId: String): List<Eve
     return eventTypes.map { Event(eventSource, it, flowNodeInstance.elementId,
         flowNodeInstance.type.name,
         bpmnProcessId,
-        OffsetDateTime.parse(flowNodeInstance.startDate).toInstant().toEpochMilli()) }
+        flowNodeInstance.startDate.toInstant().toEpochMilli()) }
 }
 
 /**
