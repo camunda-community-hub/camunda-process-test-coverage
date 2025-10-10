@@ -2701,10 +2701,10 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
-lucide-preact@^0.544.0:
-  version "0.544.0"
-  resolved "https://registry.yarnpkg.com/lucide-preact/-/lucide-preact-0.544.0.tgz#74a10fea1d01d13223669bccdf4c15fa48605192"
-  integrity sha512-1OYqlRfxlQ6fQ8/e39kiY1btdKGCljwDmYKgF/GnB0ytVYV+PZE5EXmKdA3/Pknqs5A5QQKX+sK9TD7knUzwuw==
+lucide-preact@^0.545.0:
+  version "0.545.0"
+  resolved "https://registry.yarnpkg.com/lucide-preact/-/lucide-preact-0.545.0.tgz#2998e29337ddd4e6722ebee69b36e9614f851576"
+  integrity sha512-IUa8ZxrxzkG2VGUDWz1rvRLqoTVGFBL7JjTfIdrYy2l/ZAoI+O7zFmiuDQaqQjL3bel8x8uGEaa28OuIjeWYtw==
 
 "magic-string@0.x >= 0.26.0":
   version "0.30.17"
