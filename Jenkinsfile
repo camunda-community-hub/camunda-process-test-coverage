@@ -1,6 +1,6 @@
 #!groovy
 
-@Library('cib-pipeline-library@DEVOPS-146_high-resources') _
+@Library('cib-pipeline-library') _
 
 import de.cib.pipeline.library.Constants
 import de.cib.pipeline.library.kubernetes.BuildPodCreator
@@ -15,14 +15,23 @@ import groovy.transform.Field
     pom: ConstantsInternal.DEFAULT_MAVEN_POM_PATH,
     mvnContainerName: Constants.MAVEN_JDK_17_CONTAINER,
     uiParamPresets: [:],
-    testMode: false
+    testMode: false,
+    buildPodConfig: [
+        (Constants.MAVEN_JDK_17_CONTAINER): [
+            resources: [
+                // cpu: '4',
+                memory: '4Gi',
+                ephemeralStorage: '4Gi'
+            ]
+        ]
+    ]
 ]
 
 pipeline {
     agent {
         kubernetes {
-            yaml BuildPodCreator.cibStandardPod()
-                    .withContainerFromName(pipelineParams.mvnContainerName, [memory: ConstantsInternal.RESOURCE_MEMORY_XLARGE])
+            yaml BuildPodCreator.cibStandardPod(nodepool: Constants.NODEPOOL_STABLE)
+                    .withContainerFromName(pipelineParams.mvnContainerName, pipelineParams.buildPodConfig[pipelineParams.mvnContainerName])
                     .asYaml()
             defaultContainer pipelineParams.mvnContainerName
         }
@@ -60,8 +69,8 @@ pipeline {
                 artifactNumToKeepStr: '5'
             )
         )
-        // Stop build after 240 minutes
-        timeout(time: 240, unit: 'MINUTES')
+        // Stop build after 20 minutes
+        timeout(time: 20, unit: 'MINUTES')
         disableConcurrentBuilds()
     }
 
