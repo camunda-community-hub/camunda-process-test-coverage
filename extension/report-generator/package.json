@@ -56,7 +56,7 @@
         "terser": "^5.43.1",
         "tw-animate-css": "^1.3.6",
         "typescript": "^5.0.0",
-        "vite": "^7.0.0",
+        "vite": "^7.1.11",
         "vite-plugin-singlefile": "^2.3.0"
     }
 }
