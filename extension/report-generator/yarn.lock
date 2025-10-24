@@ -1198,10 +1198,10 @@ boolbase@^1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
 
-bpmn-js@18.7.0:
-  version "18.7.0"
-  resolved "https://registry.yarnpkg.com/bpmn-js/-/bpmn-js-18.7.0.tgz#6d6c460d23e2ef63534f16197ae72d5abdef5b31"
-  integrity sha512-i4Xkcc5oJajTvsZv6Tmam3Tu4iB1AI4ARq4jGx5KaoJpDl11Qw8O5IurCw3u86Vrhe+a8EmXs1ibs4/oIwlAfg==
+bpmn-js@18.8.0:
+  version "18.8.0"
+  resolved "https://registry.yarnpkg.com/bpmn-js/-/bpmn-js-18.8.0.tgz#fa83114abf71266c3cb9435883df2c55f13f11f1"
+  integrity sha512-mihpkEQGQG9Bj+TNELCxd2r1VO2jlCVsqRQTLZGfERdqMR0lGzu/VmHOpoZqKv6zyXaUHekbdsrdE5VJgOKkMQ==
   dependencies:
     bpmn-moddle "^9.0.4"
     diagram-js "^15.4.0"
