@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.cibseven.community</groupId>
         <artifactId>release-parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.1.0-SNAPSHOT</version>
         <relativePath />
     </parent>
 
     <groupId>org.cibseven.community.process_test_coverage</groupId>
     <artifactId>cibseven-process-test-coverage-root</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
 
     <name>CIB seven Process Test Coverage Root</name>
     <description>Helper library to visualize and assert which parts of a BPMN process have been covered by a test.
@@ -36,11 +36,12 @@
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <kotlin-logging.version>3.0.5</kotlin-logging.version>
 
-        <cibseven.compile.version>1.1.0</cibseven.compile.version>
+        <cibseven.compile.version>2.0.0-SNAPSHOT</cibseven.compile.version>
 <!--        <zeebe.version>8.4.5</zeebe.version>-->
 <!--        <spring-zeebe.version>8.3.6</spring-zeebe.version>-->
 <!--        <spring-boot.version>2.7.18</spring-boot.version>-->
         <spring-boot.version>3.3.5</spring-boot.version>
+        <cibseven.bom.version>2.0.0</cibseven.bom.version>
 
     </properties>
 
@@ -384,13 +385,16 @@
     </developers>
 
   <repositories>
-    
     <repository>
-      <id>mvn-cibseven-public</id>
-      <name>CIB seven Public Repository</name>
-      <url>https://artifacts.cibseven.org/repository/public</url>
+      <id>mvn-cibseven-community</id>
+      <name>CIB seven Community Repository</name>
+      <url>https://artifacts.cibseven.org/repository/community</url>
     </repository>
-
+    <repository>
+      <id>mvn-cibseven-community-snapshots</id>
+      <name>CIB seven Community Snapshots Repository</name>
+      <url>https://artifacts.cibseven.org/repository/community-snapshots</url>
+    </repository>
   </repositories>
   
 </project>
