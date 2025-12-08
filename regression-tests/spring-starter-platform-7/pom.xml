@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.cibseven.community.process_test_coverage</groupId>
         <artifactId>cibseven-process-test-coverage-regression-tests-parent</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>cibseven-process-test-coverage-regression-tests-spring-starter-platform-7</artifactId>
@@ -75,9 +75,9 @@
 
     <profiles>
         <profile>
-            <id>cibseven-bpm-engine-1.1.0</id>
+            <id>cibseven-bpm-engine-2.0.0-SNAPSHOT</id>
             <properties>
-                <cibseven.version>1.1.0</cibseven.version>
+                <cibseven.version>2.0.0-SNAPSHOT</cibseven.version>
                 <spring-boot.version>3.3.5</spring-boot.version>
             </properties>
         </profile>
