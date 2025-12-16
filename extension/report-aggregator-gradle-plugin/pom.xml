@@ -36,10 +36,6 @@
             <type>pom</type>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>cibseven-process-test-coverage-report-generator</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

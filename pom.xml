@@ -26,9 +26,7 @@
 
     <modules>
         <module>extension</module>
-        <module>starter-platform-7</module>
         <module>bom</module>
-        <module>extension</module>
     </modules>
 
     <properties>
@@ -38,6 +36,7 @@
         <kotlin-logging.version>7.0.4</kotlin-logging.version>
 
         <cibseven.compile.version>2.0.0-SNAPSHOT</cibseven.compile.version>
+        <cibseven.bom.version>2.0.0</cibseven.bom.version>
 <!--        <zeebe.version>8.4.5</zeebe.version>-->
 <!--        <spring-zeebe.version>8.3.6</spring-zeebe.version>-->
 <!--        <spring-boot.version>2.7.18</spring-boot.version>-->
@@ -80,38 +79,12 @@
 
             <!-- Camunda 7 -->
             <dependency>
-                <groupId>org.camunda.bpm</groupId>
-                <artifactId>camunda-bom</artifactId>
-                <version>${camunda.compile.version}</version>
+                <groupId>org.cibseven.bpm</groupId>
+                <artifactId>cibseven-bom</artifactId>
+                <version>${cibseven.bom.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
-
-            <!-- Camunda 8: Zeebe Process Test -->
-            <dependency>
-                <groupId>io.camunda</groupId>
-                <artifactId>zeebe-process-test-assertions</artifactId>
-                <scope>provided</scope>
-                <version>${zeebe-process-test.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.camunda</groupId>
-                <artifactId>zeebe-process-test-extension-testcontainer</artifactId>
-                <version>${zeebe-process-test.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- Camunda 8: Spring Zeebe -->
-            <dependency>
-                <groupId>io.camunda.spring</groupId>
-                <artifactId>spring-boot-starter-camunda</artifactId>
-                <version>${spring-zeebe.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.camunda.spring</groupId>
-                <artifactId>spring-boot-starter-camunda-test-testcontainer</artifactId>
-                <version>${spring-zeebe.version}</version>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
 

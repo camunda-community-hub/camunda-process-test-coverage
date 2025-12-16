@@ -1,12 +1,13 @@
 {
   "name": "sonar-process-test-coverage-plugin",
   "license": "LGPL-3.0",
-  "version": "1.0.0",
+  "version": "2.0.0-SNAPSHOT",
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@babel/preset-react": "^7.24.1",
     "autoprefixer": "^10.4.19",
     "babel-loader": "^10.0.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^7.1.1",
     "detect-port": "^1.6.1",
     "html-loader": "^5.0.0",
