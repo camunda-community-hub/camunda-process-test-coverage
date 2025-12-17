@@ -20,7 +20,7 @@ import groovy.transform.Field
         (Constants.MAVEN_JDK_17_CONTAINER): [
             resources: [
                 // cpu: '4',
-                memory: '4Gi',
+                memory: '6Gi',
                 ephemeralStorage: '4Gi'
             ]
         ]
