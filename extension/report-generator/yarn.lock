@@ -1198,19 +1198,19 @@ boolbase@^1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==
 
-bpmn-js@18.7.0:
-  version "18.7.0"
-  resolved "https://registry.yarnpkg.com/bpmn-js/-/bpmn-js-18.7.0.tgz#6d6c460d23e2ef63534f16197ae72d5abdef5b31"
-  integrity sha512-i4Xkcc5oJajTvsZv6Tmam3Tu4iB1AI4ARq4jGx5KaoJpDl11Qw8O5IurCw3u86Vrhe+a8EmXs1ibs4/oIwlAfg==
+bpmn-js@18.10.1:
+  version "18.10.1"
+  resolved "https://registry.yarnpkg.com/bpmn-js/-/bpmn-js-18.10.1.tgz#c38aae1f871fd43c21dbadea3b8d0f4f3c63bad1"
+  integrity sha512-4AdTtn2V3YqyYGbNeHiUBm3sl9vkZkhDaLyXRkhKo9bSepKe94EqFn6AIaXcKijMX2tj1qxz5ZcobmrxymU/SA==
   dependencies:
     bpmn-moddle "^9.0.4"
-    diagram-js "^15.4.0"
+    diagram-js "^15.5.0"
     diagram-js-direct-editing "^3.2.0"
     ids "^1.0.5"
     inherits-browser "^0.1.0"
-    min-dash "^4.1.1"
+    min-dash "^4.2.3"
     min-dom "^4.2.1"
-    tiny-svg "^3.1.2"
+    tiny-svg "^3.1.3"
 
 bpmn-moddle@^9.0.4:
   version "9.0.4"
@@ -1490,10 +1490,10 @@ diagram-js-direct-editing@^3.2.0:
     min-dash "^4.0.0"
     min-dom "^4.2.1"
 
-diagram-js@^15.4.0:
-  version "15.4.0"
-  resolved "https://registry.yarnpkg.com/diagram-js/-/diagram-js-15.4.0.tgz#e1a333d78c7a04f79fac9768ec2c51037c504dec"
-  integrity sha512-rpwDLA/w55wPfiZgp/z2T6cFdCXU3bARGdjhUpEOoh673K18OJ4ruEu3+/94ALRIIyEvJ0XHUk9sgZrzzE79ng==
+diagram-js@^15.5.0:
+  version "15.5.0"
+  resolved "https://registry.yarnpkg.com/diagram-js/-/diagram-js-15.5.0.tgz#9e5b515bf0bdd88faf45bf2b68a476046eecb51c"
+  integrity sha512-PivyFzbJGEgSULU0+Mq/01GEDx4ZcaSn/Dnk4DbcB+MKe8sx2wibsYNwGHV8Mm+a/YhciXYXFFGVA5BclO1eEA==
   dependencies:
     "@bpmn-io/diagram-js-ui" "^0.2.3"
     clsx "^2.1.0"
@@ -1502,7 +1502,7 @@ diagram-js@^15.4.0:
     min-dash "^4.1.0"
     min-dom "^4.2.1"
     object-refs "^0.4.0"
-    path-intersection "^3.0.0"
+    path-intersection "^4.0.0"
     tiny-svg "^3.1.2"
 
 didi@^10.2.2:
@@ -2751,7 +2751,7 @@ micromatch@^4.0.8:
     braces "^3.0.3"
     picomatch "^2.3.1"
 
-min-dash@^4.0.0, min-dash@^4.1.0, min-dash@^4.1.1, min-dash@^4.2.1:
+min-dash@^4.0.0, min-dash@^4.1.0, min-dash@^4.2.1, min-dash@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/min-dash/-/min-dash-4.2.3.tgz#936f73a5e00036799134d48d807ff8a09af2835b"
   integrity sha512-VLMYQI5+FcD9Ad24VcB08uA83B07OhueAlZ88jBK6PyupTvEJwllTMUqMy0wPGYs7pZUEtEEMWdHB63m3LtEcg==
@@ -2998,10 +2998,10 @@ path-exists@^4.0.0:
   resolved "https://registry.yarnpkg.com/path-exists/-/path-exists-4.0.0.tgz#513bdbe2d3b95d7762e8c1137efa195c6c61b5b3"
   integrity sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==
 
-path-intersection@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/path-intersection/-/path-intersection-3.1.0.tgz#a983d9fbce161a3b03d94c1deadbf979b6364ad5"
-  integrity sha512-3xS3lvv/vuwm5aH2BVvNRvnvwR2Drde7jQClKpCXTYXIMMjcw/EnMhzCgeHwqbCpzi760PEfAkU53vSIlrNr9A==
+path-intersection@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/path-intersection/-/path-intersection-4.0.1.tgz#fcbe045ad7c23109d022536cff735166e5db9ad8"
+  integrity sha512-sqOaCWp4iOZvsDXITVJiGeJrKSJWQEiFdpzlATnXbKkzfDf2ALB4n80hh0vXHWkWp6hIHPqb06zc5ZDyDuzwMg==
 
 path-is-absolute@^1.0.0:
   version "1.0.1"
@@ -3513,7 +3513,7 @@ terser@^5.43.1:
     commander "^2.20.0"
     source-map-support "~0.5.20"
 
-tiny-svg@^3.1.2:
+tiny-svg@^3.1.2, tiny-svg@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/tiny-svg/-/tiny-svg-3.1.3.tgz#c1cc029908bb1473f41c35b6c305117a51bad668"
   integrity sha512-9mwnPqXInRsBmH/DO6NMxBE++9LsqpVXQSSTZGc5bomoKKvL5OX/Hlotw7XVXP6XLRcHWIzZpxfovGqWKgCypQ==
