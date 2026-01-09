@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/3.0.1/index.html</loc>
+         <lastmod>2026-01-09</lastmod>
+    </url>
+    <url>
+         <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/3.0.1/getting-started.html</loc>
+         <lastmod>2026-01-09</lastmod>
+    </url>
+    <url>
+         <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/3.0.1/developer-guide/contribution.html</loc>
+         <lastmod>2026-01-09</lastmod>
+    </url>
+    <url>
+         <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/3.0.1/developer-guide/project-setup.html</loc>
+         <lastmod>2026-01-09</lastmod>
+    </url>
+    <url>
+         <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/3.0.1/user-guide/index.html</loc>
+         <lastmod>2026-01-09</lastmod>
+    </url>
+    <url>
+         <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/3.0.1/user-guide/configuration.html</loc>
+         <lastmod>2026-01-09</lastmod>
+    </url>
+    <url>
+         <loc>https://camunda-community-hub.github.io/camunda-process-test-coverage/3.0.1/user-guide/sonarqube.html</loc>
+         <lastmod>2026-01-09</lastmod>
+    </url>
+</urlset>
