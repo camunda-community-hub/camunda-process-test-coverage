@@ -7,14 +7,14 @@
   {
     "version": "3.0.1-Final",
     "title": "3.0.1-Final",
-    "aliases": []
+    "aliases": [
+      "stable"
+    ]
   },
   {
     "version": "3.0.1",
     "title": "3.0.1",
-    "aliases": [
-      "stable"
-    ]
+    "aliases": []
   },
   {
     "version": "3.0.0",
