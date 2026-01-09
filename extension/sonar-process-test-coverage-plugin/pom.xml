@@ -9,6 +9,21 @@
     <name>Camunda Process Test Coverage Sonar Plugin</name>
     <artifactId>sonar-camunda-process-test-coverage-plugin</artifactId>
     <packaging>sonar-plugin</packaging>
+
+    <!-- Inform users that this artifact has been relocated to new Maven coordinates. -->
+    <distributionManagement>
+        <relocation>
+            <groupId>io.holunda.c7</groupId>
+            <artifactId>sonar-camunda-process-test-coverage-plugin</artifactId>
+            <version>2025.12.2</version>
+            <message>
+                This artifact has moved: please use io.holunda.c7:sonar-camunda-process-test-coverage-plugin.
+                The org.camunda.community.process_test_coverage:camunda-process-test-coverage-report-aggregator-maven-plugin 3.0.x line is final; update your dependency coordinates.
+                See https://github.com/holunda-io/c7 for the new location.
+            </message>
+        </relocation>
+    </distributionManagement>
+
     <properties>
         <sonar-plugin-api.version>13.2.0.3137</sonar-plugin-api.version>
         <sonar.api.impl.version>25.10.0.114319</sonar.api.impl.version>
