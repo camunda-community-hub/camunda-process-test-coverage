@@ -20,9 +20,6 @@ jobs:
           gpg-private-key: ${{ secrets.MAVEN_CENTRAL_GPG_SIGNING_KEY_SEC }}
           gpg-passphrase: MAVEN_CENTRAL_GPG_PASSPHRASE
 
-      - name: Run Maven
-        run: ./mvnw -B clean install license:check-file-header
-
       - name: Deploy SNAPSHOT / Release
         id: release
         uses: camunda-community-hub/community-action-maven-release@v2
