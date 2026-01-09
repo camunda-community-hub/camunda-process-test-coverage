@@ -12,10 +12,23 @@
     <name>Camunda Process Test Coverage Engine Platform 7</name>
     <artifactId>camunda-process-test-coverage-engine-platform-7</artifactId>
 
+    <!-- Inform users that this artifact has been relocated to new Maven coordinates. -->
+    <distributionManagement>
+        <relocation>
+            <groupId>io.holunda.c7</groupId>
+            <artifactId>c7-process-test-coverage-engine</artifactId>
+            <version>2025.12.2</version>
+            <message>
+                This artifact has moved: please use io.holunda.c7:c7-process-test-coverage-engine.
+                The org.camunda.community.process_test_coverage:camunda-process-test-coverage-engine-platform-7 3.0.x line is final; update your dependency coordinates.
+                See https://github.com/holunda-io/c7 for the new location.
+            </message>
+        </relocation>
+    </distributionManagement>
+
     <properties>
         <dokka.skip>true</dokka.skip>
     </properties>
-
 
     <dependencies>
         <dependency>

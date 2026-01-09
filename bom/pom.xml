@@ -12,6 +12,20 @@
     <artifactId>camunda-process-test-coverage-bom</artifactId>
     <packaging>pom</packaging>
 
+    <!-- Inform users that this artifact has been relocated to new Maven coordinates. -->
+    <distributionManagement>
+        <relocation>
+            <groupId>io.holunda.c7</groupId>
+            <artifactId>c7-process-test-coverage-bom</artifactId>
+            <version>2025.12.2</version>
+            <message>
+                This artifact has moved: please use io.holunda.c7:c7-process-test-coverage-bom.
+                The org.camunda.community.process_test_coverage:camunda-process-test-coverage-bom 3.0.x line is final; update your dependency coordinates.
+                See https://github.com/holunda-io/c7 for the new location.
+            </message>
+        </relocation>
+    </distributionManagement>
+
     <dependencyManagement>
         <dependencies>
             <!-- Own modules -->

@@ -1,11 +1,17 @@
-[![](https://img.shields.io/badge/Lifecycle-Stable-brightgreen)](https://github.com/Camunda-Community-Hub/community/blob/main/extension-lifecycle.md#stable-)
+[![](https://img.shields.io/badge/Lifecycle-Deprecated-red)](https://github.com/Camunda-Community-Hub/community/blob/main/extension-lifecycle.md#deprecated-[https://github.com/Camunda-Community-Hub/community/blob/main/extension-lifecycle.md#relocated-)
 [![](https://img.shields.io/badge/Community%20Extension-An%20open%20source%20community%20maintained%20project-FF4700)](https://github.com/camunda-community-hub/community)
 ![Compatible with: Camunda Platform 7](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%207-26d07c)
 ![Compatible with: Camunda Platform 8](https://img.shields.io/badge/Compatible%20with-Camunda%20Platform%208-26d07c)
 ![Supported Camunda versions](https://img.shields.io/badge/Camunda%20Version-%207.20%20to%207.24%20and%208-orange.svg)
 
+> [!WARNING]
+> ### Discontinued/Moved
+> Due to the end of live of Camunda 7 CE with 7.24, we decided to discontinue this extension and archive the repository.
+> The Release 3.0.1 will be the last one. If you are looking for functionality for Camunda 8, please refer to official 
+> [Camunda Process Testing](https://docs.camunda.io/docs/next/apis-tools/testing/getting-started/) documentation.
+>
+> However, we included the current state of the extension into the [holunda-io/c7](https://github.com/holunda-io/c7/) repository, where we will maintain it together with other extensions and keep it working for future C7-EE releases.
 
-![Camunda Logo](docs/assets/img/Favicons-Circle-Colour.png)
 
 # Camunda Process Test Coverage
 

@@ -10,6 +10,20 @@
     <artifactId>camunda-process-test-coverage-report-generator</artifactId>
     <name>Camunda Process Test Coverage Report Generator</name>
 
+    <!-- Inform users that this artifact has been relocated to new Maven coordinates. -->
+    <distributionManagement>
+        <relocation>
+            <groupId>io.holunda.c7</groupId>
+            <artifactId>c7-process-test-coverage-report-generator</artifactId>
+            <version>2025.12.2</version>
+            <message>
+                This artifact has moved: please use io.holunda.c7:c7-process-test-coverage-report-generator.
+                The org.camunda.community.process_test_coverage:camunda-process-test-coverage-report-generator 3.0.x line is final; update your dependency coordinates.
+                See https://github.com/holunda-io/c7 for the new location.
+            </message>
+        </relocation>
+    </distributionManagement>
+
     <properties>
         <dokka.skip>true</dokka.skip>
     </properties>

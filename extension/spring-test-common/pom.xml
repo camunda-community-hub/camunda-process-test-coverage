@@ -9,6 +9,19 @@
     <name>Camunda Process Test Coverage Spring-Testing Common</name>
     <artifactId>camunda-process-test-coverage-spring-test-common</artifactId>
 
+    <!-- Inform users that this artifact has been relocated to new Maven coordinates. -->
+    <distributionManagement>
+        <relocation>
+            <groupId>io.holunda.c7</groupId>
+            <artifactId>c7-process-test-coverage-spring-test-common</artifactId>
+            <version>2025.12.2</version>
+            <message>
+                This artifact has moved: please use io.holunda.c7:c7-process-test-coverage-spring-test-common.
+                The org.camunda.community.process_test_coverage:camunda-process-test-coverage-spring-test-common 3.0.x line is final; update your dependency coordinates.
+                See https://github.com/holunda-io/c7 for the new location.
+            </message>
+        </relocation>
+    </distributionManagement>
 
     <dependencies>
         <dependency>

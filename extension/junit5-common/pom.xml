@@ -9,6 +9,20 @@
     <name>Camunda Process Test Coverage JUnit5 Common</name>
     <artifactId>camunda-process-test-coverage-junit5-common</artifactId>
 
+    <!-- Inform users that this artifact has been relocated to new Maven coordinates. -->
+    <distributionManagement>
+        <relocation>
+            <groupId>io.holunda.c7</groupId>
+            <artifactId>c7-process-test-coverage-junit5-common</artifactId>
+            <version>2025.12.2</version>
+            <message>
+                This artifact has moved: please use io.holunda.c7:c7-process-test-coverage-junit5-common.
+                The org.camunda.community.process_test_coverage:camunda-process-test-coverage-junit5-common 3.0.x line is final; update your dependency coordinates.
+                See https://github.com/holunda-io/c7 for the new location.
+            </message>
+        </relocation>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
