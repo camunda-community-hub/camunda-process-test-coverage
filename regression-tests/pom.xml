@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.camunda.community.process_test_coverage</groupId>
         <artifactId>camunda-process-test-coverage-root</artifactId>
-        <version>3.0.0</version>
+        <version>3.0.1-SNAPSHOT</version>
     </parent>
 
     <name>Camunda Process Test Coverage Regression Tests Parent</name>
